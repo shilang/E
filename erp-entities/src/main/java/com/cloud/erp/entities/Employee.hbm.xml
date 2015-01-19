@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.orbita.entities">
+	<class name="Employee" table="EMPLOYEES">
+		
+		<id name="eid" type="integer">
+			<column name="E_ID"></column>
+			<generator class="native"></generator>
+		</id>
+		
+		<property name="employeeCn" type="string">
+			<column name="EMPLOYEE_CN"></column>
+		</property>
+		
+		<property name="employeeEn" type="string">
+			<column name="EMPLOYEE_EN"></column>
+		</property>
+		
+		<property name="employeeNumber" type="string">
+			<column name="EMPLOYEE_NUMBER"></column>
+		</property>
+		
+		<property name="duty" type="string">
+			<column name="DUTY"></column>
+		</property>
+		
+		<property name="telephone" type="time">
+			<column name="TELEPHONE"></column>
+		</property>
+		
+		<property name="email" type="time">
+			<column name="EMAIL"></column>
+		</property>
+		
+		<property name="identityCard" type="time">
+			<column name="IDENTITY_CARD"></column>
+		</property>
+		
+		<property name="remarks" type="string">
+			<column name="REMARKS"></column>
+		</property>
+		
+		<many-to-one name="department">
+		    <column name="DEPARTMENT_ID"></column>
+		</many-to-one>
+		
+	</class>
+</hibernate-mapping>
