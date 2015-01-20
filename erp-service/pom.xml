@@ -26,5 +26,10 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>erp-dao</artifactId>
+		</dependency>
 	</dependencies>
 </project>

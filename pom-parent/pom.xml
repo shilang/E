@@ -30,6 +30,12 @@
 			<!-- basic component -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>erp-utils</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>erp-entities</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -37,6 +43,24 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>erp-dao</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>erp-exception</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>erp-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>erp-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -79,6 +103,13 @@
 				<version>4.1.4.RELEASE</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>1.8.4</version>
+			</dependency>
+
+
 			<!-- hibernate framework -->
 
 			<dependency>
@@ -93,6 +124,14 @@
 				<artifactId>druid</artifactId>
 				<version>1.0.11</version>
 			</dependency>
+
+			<!-- mysql connector -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>5.1.34</version>
+			</dependency>
+
 
 
 		</dependencies>
