@@ -5,8 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
+
+	<jsp:include page="../inc.jsp"></jsp:include>
+
 </head>
 <body>
+
+
 
 </body>
 </html>

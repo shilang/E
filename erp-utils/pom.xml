@@ -8,8 +8,6 @@
 		<relativePath>../pom-parent/pom.xml</relativePath>
 	</parent>
   
-  
-  
   <artifactId>erp-utils</artifactId>
  
   <packaging>jar</packaging>

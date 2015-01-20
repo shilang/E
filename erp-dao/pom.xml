@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-		<parent>
+	<parent>
 		<groupId>com.cloud.erp</groupId>
 		<artifactId>pom-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
@@ -16,13 +16,13 @@
 
 	<dependencies>
 
-	    <dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-		
+
 		<dependency>
-			<groupId>org.hibernate</groupId> 
+			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
 
