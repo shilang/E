@@ -4,7 +4,7 @@
 
 	<class name="Department" table="DEPARTMENTS">
 
-		<id name="DID" type="integer">
+		<id name="did" type="integer">
 			<column name="D_ID"></column>
 			<generator class="native"></generator>
 		</id>
