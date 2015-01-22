@@ -1,5 +1,12 @@
 package com.cloud.erp.entities;
 
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,6 +17,15 @@ import junit.framework.TestSuite;
 public class AppTest 
     extends TestCase
 {
+	private SessionFactory sessionFactory = null;
+	
+	{
+		Configuration configuration = new Configuration().configure();
+		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+		
+		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+	}
+	
     /**
      * Create the test case
      *
@@ -33,6 +49,6 @@ public class AppTest
      */
     public void testApp()
     {
-        assertTrue( true );
+        
     }
 }

@@ -8,35 +8,31 @@ public class Role
 	
 	private String remarks;
 
-	public Integer getRid()
-	{
+	public Integer getRid() {
 		return rid;
 	}
 
-	public void setR_id(Integer rid)
-	{
+	public void setRid(Integer rid) {
 		this.rid = rid;
 	}
 
-	public String getRoleName()
-	{
+	public String getRoleName() {
 		return roleName;
 	}
 
-	public void setRoleName(String roleName)
-	{
+	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
 
-	public String getRemarks()
-	{
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(String remarks)
-	{
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
+	
 	
 	
 }

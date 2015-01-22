@@ -19,8 +19,22 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
+
+		<!-- dependency for testing -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
-	
+
 	<build>
 		<resources>
 			<resource>
@@ -31,5 +45,5 @@
 			</resource>
 		</resources>
 	</build>
-	
+
 </project>
