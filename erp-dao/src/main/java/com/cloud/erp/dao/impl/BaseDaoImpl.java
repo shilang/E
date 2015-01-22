@@ -8,12 +8,16 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.cloud.erp.dao.IBaseDao;
+import com.cloud.erp.dao.BaseDao;
 
-public class BaseDaoImpl<T> implements IBaseDao<T> {
+public class BaseDaoImpl<T> implements BaseDao<T> {
 
 	private SessionFactory sessionFactory;
 	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 	private Session getSession(){
 		return sessionFactory.getCurrentSession();
 	}

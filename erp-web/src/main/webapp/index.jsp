@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-   用户名
+    <a href="dept-list.action">department list</a>
 </body>
 </html>
