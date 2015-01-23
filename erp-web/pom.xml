@@ -67,6 +67,7 @@
 		<finalName>erp-web</finalName>
 		<plugins>
 
+<!-- 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -75,6 +76,8 @@
 					<warName>com.orbita.cloud.erp</warName>
 				</configuration>
 			</plugin>
+			
+			 -->
 
 			<!-- copy specify the directory resources to output directory -->
 			<!-- <plugin> <artifactId>maven-resources-plugin</artifactId> <version>2.7</version> 

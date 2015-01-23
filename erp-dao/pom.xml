@@ -12,7 +12,7 @@
 	<artifactId>erp-dao</artifactId>
 	<packaging>jar</packaging>
 
-	<name>erp-dao</name>
+	<name>erp-dao</name> 
 
 	<dependencies>
 

@@ -11,7 +11,6 @@
 
 	<artifactId>erp-service</artifactId>
 
-
 	<packaging>jar</packaging> 
 
 	<name>erp-service</name>
@@ -31,7 +30,8 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>erp-dao</artifactId>
 		</dependency>
-
+		 
+		 <!--  
 		<dependency>  
 			<groupId>org.jbpm.jbpm4</groupId> 
 			<artifactId>jbpm-api</artifactId> 
@@ -42,25 +42,30 @@
 			<artifactId>jbpm-log</artifactId> 
 		</dependency>
 
+	
 		<dependency>
 			<groupId>org.jbpm.jbpm4</groupId>
 			<artifactId>jbpm-bpmn</artifactId>
 		</dependency>
-
+		
+		
 		<dependency>
 			<groupId>org.jbpm.jbpm4</groupId>
 			<artifactId>jbpm-db</artifactId>
 		</dependency> 
-
+		
+	
 		<dependency>
 			<groupId>org.jbpm.jbpm4</groupId>
 			<artifactId>jbpm-jpdl</artifactId>
 		</dependency>
+		
 
 		<dependency>
 			<groupId>org.jbpm.jbpm4</groupId>
 			<artifactId>jbpm-pvm</artifactId>
-		</dependency>
+		</dependency>	
+		-->
 		
 	</dependencies>
 </project>

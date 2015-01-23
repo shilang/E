@@ -16,8 +16,8 @@
      	 <property name="mappingLocations" value="classpath*:com/cloud/erp/entities/*.hbm.xml"></property>	 
     </bean>
     
-    <bean id="departmentDao2" class="com.cloud.erp.dao.impl.BaseDaoImpl">
-    	<property name="sessionFactory" ref="seesionFactory"></property>
+    <bean id="baseDao" class="com.cloud.erp.dao.impl.BaseDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
     <!-- 
