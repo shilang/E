@@ -61,13 +61,17 @@
 			<artifactId>struts2-core</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-spring-plugin</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
 		<finalName>erp-web</finalName>
 		<plugins>
 
-<!-- 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -76,8 +80,6 @@
 					<warName>com.orbita.cloud.erp</warName>
 				</configuration>
 			</plugin>
-			
-			 -->
 
 			<!-- copy specify the directory resources to output directory -->
 			<!-- <plugin> <artifactId>maven-resources-plugin</artifactId> <version>2.7</version> 

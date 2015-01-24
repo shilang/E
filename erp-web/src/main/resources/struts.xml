@@ -3,10 +3,11 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 	
 <struts>
+    <constant name="struts.objectFactory" value="spring"></constant>
     
-    <package name="default" namespace="/">
-        <action name="dept-*" class="com.cloud.erp.actions.DeparmentAction" method="{1}">
-            <result>/view/dept-{1}.jsp</result>
+    <package name="default" namespace="/" extends="struts-default">
+        <action name="dept-*" class="deparmentAction" method="{1}">
+            <result>view/dept-{1}.jsp</result>
         </action>
     </package>
     

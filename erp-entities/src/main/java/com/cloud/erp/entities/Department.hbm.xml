@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="com.cloud.erp.entities">
-
 	<class name="Department" table="DEPARTMENTS">
-
 		<id name="did" type="integer">
 			<column name="D_ID"></column>
 			<generator class="native"></generator>
 		</id>
-
 		<property name="number" type="int">
 			<column name="NUMBER"></column>
 		</property>
-
 		<property name="name" type="string">
 			<column name="NAME"></column>
 		</property>
-
 		<property name="remarks">
 			<column name="REMARKS"></column>
 		</property>
-
 	</class>
-
 </hibernate-mapping>

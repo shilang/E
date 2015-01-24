@@ -8,8 +8,6 @@ public class AppTest extends TestCase {
 
 	public void test(){
 
-		DepartmentService departmentService = new DepartmentService();
 		
-		assertNotNull(departmentService.getAllDepartments());
 	}
 }

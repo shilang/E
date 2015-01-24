@@ -31,7 +31,7 @@
 			<artifactId>erp-dao</artifactId>
 		</dependency>
 		 
-		 <!--  
+		
 		<dependency>  
 			<groupId>org.jbpm.jbpm4</groupId> 
 			<artifactId>jbpm-api</artifactId> 
@@ -65,7 +65,6 @@
 			<groupId>org.jbpm.jbpm4</groupId>
 			<artifactId>jbpm-pvm</artifactId>
 		</dependency>	
-		-->
 		
 	</dependencies>
 </project>
