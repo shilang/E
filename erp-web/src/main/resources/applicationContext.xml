@@ -11,17 +11,30 @@
         <property name="dataSource">
             <ref bean="dataSource"/>
         </property>	
-        
+         
         <property name="configLocations" value="classpath*:hibernate.cfg.xml"></property> 
+     	 
      	 <property name="mappingLocations" value="classpath*:com/cloud/erp/entities/*.hbm.xml"></property>	 
+     	  <!-- -->
     </bean>
     
-    <bean id="baseDao" class="com.cloud.erp.dao.impl.BaseDaoImpl">
+  
+    <bean id="departmentDaoImpl" class="com.cloud.erp.dao.impl.DepartmentDaoImpl">
     	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="departmentService" class="com.cloud.erp.service.DepartmentService">
+    	<property name="departmentDao" ref="departmentDaoImpl"></property>
+    </bean>
+    
+    <bean id="deparmentAction" class="com.cloud.erp.actions.DeparmentAction">
+    	<property name="departmentService" ref="departmentService"></property>
     </bean>
     
     <!-- 
     <import resource="classpath:beans/*-beans.xml"/>
+    
+    -->
     
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
     	<property name="sessionFactory" ref="sessionFactory"></property>
@@ -29,7 +42,7 @@
 	
 	<tx:advice transaction-manager="transactionManager" id="txAdvice">
 		<tx:attributes>
-			<tx:method name="*" read-only="true"/>
+			<tx:method name="*"/>
 		</tx:attributes>
 	</tx:advice>
 	
@@ -37,6 +50,6 @@
 		<aop:pointcut expression="execution(* com.cloud.erp.service.*.*(..))" id="pointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
 	</aop:config>
- -->
+ 
 	
 </beans>

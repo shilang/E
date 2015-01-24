@@ -20,7 +20,12 @@ public class DepartmentDaoImpl extends BaseDaoImpl<Department> implements Depart
 	@Override
 	public List<Department> getAllDepartments() {
 		String hql = "from Department";
-		return getForList(hql, null);
+		 return getForList(hql, null);
+	}
+
+	@Override
+	public void saveDepartment(Department department) {
+		save(department);
 	}
 
 }

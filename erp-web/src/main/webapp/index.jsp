@@ -8,5 +8,7 @@
 </head>
 <body>
     <a href="dept-list.action">department list</a>
+    <br><br>
+    <a href="dept-save.action">Save Department</a>
 </body>
 </html>
