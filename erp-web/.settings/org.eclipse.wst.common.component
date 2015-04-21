@@ -17,7 +17,13 @@
         <dependent-module archiveName="erp-utils-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-utils/erp-utils">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="erp-shiro-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-shiro/erp-shiro">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="erp-exceptions-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-exceptions/erp-exceptions">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/erp-web/target/classes"/>
-        <property name="context-root" value="com.orbita.cloud.erp"/>
+        <property name="context-root" value="erp-web"/>
     </wb-module>
 </project-modules>

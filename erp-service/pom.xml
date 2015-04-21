@@ -11,12 +11,12 @@
 
 	<artifactId>erp-service</artifactId>
 
-	<packaging>jar</packaging> 
+	<packaging>jar</packaging>
 
 	<name>erp-service</name>
 	<url>http://maven.apache.org</url>
 
-	<properties>
+	<properties> 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -30,41 +30,12 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>erp-dao</artifactId>
 		</dependency>
-		 
-		
-		<dependency>  
-			<groupId>org.jbpm.jbpm4</groupId> 
-			<artifactId>jbpm-api</artifactId> 
-		</dependency>
 
 		<dependency>
-			<groupId>org.jbpm.jbpm4</groupId>
-			<artifactId>jbpm-log</artifactId> 
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
-	
-		<dependency>
-			<groupId>org.jbpm.jbpm4</groupId>
-			<artifactId>jbpm-bpmn</artifactId>
-		</dependency>
-		
-		
-		<dependency>
-			<groupId>org.jbpm.jbpm4</groupId>
-			<artifactId>jbpm-db</artifactId>
-		</dependency> 
-		
-	
-		<dependency>
-			<groupId>org.jbpm.jbpm4</groupId>
-			<artifactId>jbpm-jpdl</artifactId>
-		</dependency>
-		
-
-		<dependency>
-			<groupId>org.jbpm.jbpm4</groupId>
-			<artifactId>jbpm-pvm</artifactId>
-		</dependency>	
-		
 	</dependencies>
 </project>

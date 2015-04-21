@@ -1,6 +1,6 @@
 package com.cloud.erp.actions;
 
-import com.cloud.erp.service.DepartmentService;
+import com.cloud.erp.service.UserService;
 
 import junit.framework.TestCase;
 

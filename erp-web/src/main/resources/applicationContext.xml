@@ -3,38 +3,86 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
-
+	 
+	<context:component-scan base-package="com.cloud.erp.dao.impl, com.cloud.erp.service.impl"></context:component-scan>
+	
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource">
             <ref bean="dataSource"/>
         </property>	
-         
         <property name="configLocations" value="classpath*:hibernate.cfg.xml"></property> 
-     	 
-     	 <property name="mappingLocations" value="classpath*:com/cloud/erp/entities/*.hbm.xml"></property>	 
-     	  <!-- -->
+        
+        <property name="packagesToScan">
+        	<list>
+        		<value>com.cloud.erp.entities</value>
+        	</list>
+        </property>
+        
+        <!--
+		 <property name="mappingDirectoryLocations"> <list> <value>classpath:com/erp/model</value> 
+			</list> </property> -->
+        
     </bean>
     
-  
-    <bean id="departmentDaoImpl" class="com.cloud.erp.dao.impl.DepartmentDaoImpl">
-    	<property name="sessionFactory" ref="sessionFactory"></property>
+    <!-- shiro configuration -->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+    	<property name="configLocation">
+    		<value>classpath:ehcache.xml</value>
+    	</property>
     </bean>
     
-    <bean id="departmentService" class="com.cloud.erp.service.DepartmentService">
-    	<property name="departmentDao" ref="departmentDaoImpl"></property>
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    	<property name="cacheManager" ref="cacheManager"></property>
     </bean>
     
-    <bean id="deparmentAction" class="com.cloud.erp.actions.DeparmentAction">
-    	<property name="departmentService" ref="departmentService"></property>
+    <bean id="myShiroRealm" class="com.cloud.erp.shiro.realm.MyShiroRealm">
+    	<property name="cacheManager" ref="shiroCacheManager"></property>
+    	<property name="authenticationCacheName" value="shiroAuthorizationCache"></property>
     </bean>
     
-    <!-- 
-    <import resource="classpath:beans/*-beans.xml"/>
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    	<property name="realm" ref="myShiroRealm"></property>
+    </bean>
+     
+    <bean id="formLoginFilter" class="com.cloud.erp.shiro.filter.FormLoginFilter">
+    	<property name="loginUrlParam" value="/login.jsp"></property>
+    	<property name="successUrlParam" value="/index.jsp"></property>
+    </bean>
     
-    -->
+    <bean id="simplePermFilter" class="com.cloud.erp.shiro.filter.PermissionAuthorizationFilter"></bean>
+    
+    <bean id="formAuthenticationFilter"   class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"/>
+    
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    	<property name="securityManager" ref="securityManager"></property>
+    	<property name="loginUrl" value="/login.jsp"></property>
+    	<property name="successUrl" value="/index.jsp"></property>
+    	<property name="unauthorizedUrl" value="/error/error.jsp"></property>
+    	
+    	<property name="filters">
+    		<util:map>
+    			<entry key="authc" value-ref="formAuthenticationFilter"/> 
+    		</util:map>
+    	</property>
+    	 
+    	<property name="filterChainDefinitions">
+    		<value>			
+		         /Kaptcha.jpg = anon 
+		         /web-static/** = anon
+		       	 /loginAction!load.action =  anon
+	             /** = authc
+    		</value>
+    	</property>
+    </bean>
+    
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
     
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
     	<property name="sessionFactory" ref="sessionFactory"></property>
@@ -42,7 +90,22 @@
 	
 	<tx:advice transaction-manager="transactionManager" id="txAdvice">
 		<tx:attributes>
-			<tx:method name="*"/>
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="upd*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="modify*" propagation="REQUIRED"/>
+			<tx:method name="edit*" propagation="REQUIRED"/>
+			<tx:method name="del*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="remove*" propagation="REQUIRED"/>
+			<tx:method name="repair" propagation="REQUIRED"/>
+			<tx:method name="persistence*" propagation="REQUIRED"/>
+
+			<tx:method name="get*" propagation="SUPPORTS" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="load*" propagation="SUPPORTS" />
+			<tx:method name="search*" propagation="SUPPORTS" />
 		</tx:attributes>
 	</tx:advice>
 	
@@ -51,5 +114,22 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
 	</aop:config>
  
+	<!-- 配置druid监控spring jdbc -->
+	<bean id="druid-stat-interceptor" 
+		class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"
+	></bean>
+	
+	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+		scope="prototype">
+		<property name="patterns">
+			<list>
+				<value>com.cloud.erp.service.*</value>
+			</list>
+		</property>		
+	</bean>
+	
+	<aop:config>
+		<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut"/>
+	</aop:config>
 	
 </beans>
