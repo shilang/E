@@ -44,8 +44,8 @@ import org.apache.shiro.subject.Subject;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Session;
 
-import com.cloud.erp.entities.Log;
 import com.cloud.erp.entities.shiro.ShiroUser;
+import com.cloud.erp.entities.table.Log;
 
 /**
  * @ClassName  Constants
@@ -87,6 +87,7 @@ public class Constants {
 	public static final String TREE_STATUS_OPEN = "open";
 	public static final String TREE_STATUS_CLOSED = "closed";
 	public static final String IS_EXT_SUBMENU = " 或可能包含菜单!";
+	public static final String IS_EXT_SUBITEM = " 可能包含子项目!";
 	public static final String SHIRO_USER = "shiroUser";
 	public static final String LOGS_INSERT = "insert:";
 	public static final String LOGS_INSERT_TEXT = "插入:";
@@ -177,10 +178,10 @@ public class Constants {
 	 * @param param
 	 * @return
 	 */
-	public static String getSearchConditionsHQL(String asName ,Map<String, Object> param){
+	public static String getSearchConditionsHQL(String asName ,Map<String, Object> params){
 		StringBuffer sb=new StringBuffer();
-		if (param != null && !param.isEmpty()) {
-			for (String name : param.keySet())
+		if (params != null && !params.isEmpty()) {
+			for (String name : params.keySet())
 			{
 				sb.append(" and "+asName+Constants.IS_DOT+name+" like :"+name+"");
 			}

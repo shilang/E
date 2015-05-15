@@ -16,7 +16,7 @@ package com.cloud.erp.dao;
 
 import java.util.List;
 
-import com.cloud.erp.entities.Permission;
+import com.cloud.erp.entities.table.Permission;
 import com.cloud.erp.entities.viewmodel.TreeGridModel;
 import com.cloud.erp.entities.viewmodel.TreeModel;
 

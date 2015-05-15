@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.BugDao;
-import com.cloud.erp.entities.Bug;
+import com.cloud.erp.entities.table.Bug;
 import com.cloud.erp.service.BugService;
 import com.cloud.erp.utils.PageUtil;
 

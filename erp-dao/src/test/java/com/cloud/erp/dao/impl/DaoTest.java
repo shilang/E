@@ -18,7 +18,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.cloud.erp.entities.User;
+import com.cloud.erp.entities.table.User;
 
 import junit.framework.TestCase;
 
@@ -43,7 +43,7 @@ public class DaoTest extends TestCase{
 	
 	public void test() {
 		
-		shiroDao.setSessionFactory(sessionFactory);
+		//shiroDao.setSessionFactory(sessionFactory);
 		
 		User user = shiroDao.getUser("admin");
 		assertNotNull(shiroDao.getUser("admin"));

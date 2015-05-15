@@ -14,13 +14,15 @@
  */
 package com.cloud.erp.entities;
 
+import junit.framework.TestCase;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import junit.framework.TestCase;
+import com.cloud.erp.entities.table.Log;
 
 /**
  * @ClassName  AppTest
@@ -50,22 +52,6 @@ public class AppTest extends TestCase {
 		
 		Session session = sessionFactory.openSession();
 		Transaction transaction =  session.beginTransaction();
-		
-		SalesPriceList salesPriceList = new SalesPriceList();
-		salesPriceList.setStatus("T");
-		
-		SalesPriceListItem salesPriceListItem = new SalesPriceListItem();
-		salesPriceListItem.setItem(1);
-		
-		SalesPriceListItem salesPriceListItem2 = new SalesPriceListItem();
-		salesPriceListItem2.setItem(2);
-		
-		salesPriceList.getItems().add(salesPriceListItem);
-		salesPriceList.getItems().add(salesPriceListItem2);
-		
-		
-		session.save(salesPriceList);
-		
 		
 		transaction.commit();
 		

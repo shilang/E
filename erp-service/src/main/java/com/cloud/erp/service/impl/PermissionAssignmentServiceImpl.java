@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.PermissionAssignmentDao;
-import com.cloud.erp.entities.Permission;
-import com.cloud.erp.entities.Role;
+import com.cloud.erp.entities.table.Permission;
+import com.cloud.erp.entities.table.Role;
 import com.cloud.erp.entities.viewmodel.TreeGrid;
 import com.cloud.erp.service.PermissionAssignmentService;
 

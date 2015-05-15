@@ -9,7 +9,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
-import com.cloud.erp.entities.Role;
+import com.cloud.erp.entities.table.Role;
 import com.cloud.erp.entities.viewmodel.GridModel;
 import com.cloud.erp.entities.viewmodel.Json;
 import com.cloud.erp.service.PermissionAssignmentService;

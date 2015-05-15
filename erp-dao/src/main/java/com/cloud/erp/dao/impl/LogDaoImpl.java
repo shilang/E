@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.LogDao;
-import com.cloud.erp.entities.Log;
+import com.cloud.erp.entities.table.Log;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 

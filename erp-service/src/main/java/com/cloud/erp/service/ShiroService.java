@@ -16,7 +16,7 @@ package com.cloud.erp.service;
 
 import java.util.List;
 
-import com.cloud.erp.entities.User;
+import com.cloud.erp.entities.table.User;
 
 /**
  * @ClassName ShiroServcie

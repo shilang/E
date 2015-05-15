@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.SystemCodeDao;
-import com.cloud.erp.entities.SystemCode;
+import com.cloud.erp.entities.table.SystemCode;
 import com.cloud.erp.entities.viewmodel.TreeModel;
 import com.cloud.erp.utils.Constants;
 import com.sun.tools.javac.code.Attribute.Constant;

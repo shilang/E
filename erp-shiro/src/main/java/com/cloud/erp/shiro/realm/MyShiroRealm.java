@@ -32,8 +32,8 @@ import org.apache.shiro.util.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cloud.erp.entities.User;
 import com.cloud.erp.entities.shiro.ShiroUser;
+import com.cloud.erp.entities.table.User;
 import com.cloud.erp.exceptions.IncorrectCaptchaException;
 import com.cloud.erp.service.ShiroService;
 import com.cloud.erp.shiro.token.CaptchaUsernamePasswordToken;
@@ -99,8 +99,8 @@ public class MyShiroRealm extends AuthorizingRealm{
 			User user = shiroService.getUser(username);
 			if(user != null){
 				Subject subject = SecurityUtils.getSubject();
-				subject.getSession().setAttribute(Constants.SHIRO_USER, new ShiroUser(user.getUserId(), user.getAccount()));
-				return new SimpleAuthenticationInfo(new ShiroUser(user.getUserId(), user.getAccount()),user.getPassword(),getName());
+				subject.getSession().setAttribute(Constants.SHIRO_USER, new ShiroUser(user.getUserId(), user.getName()));
+				return new SimpleAuthenticationInfo(new ShiroUser(user.getUserId(), user.getName()),user.getPassword(),getName());
 			}
 		}
 		

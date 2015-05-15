@@ -14,15 +14,18 @@
  */
 package com.cloud.erp.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.ShiroDao;
-import com.cloud.erp.entities.User;
+import com.cloud.erp.entities.table.User;
 
 /**
  * @ClassName  ShiroDaoImpl
@@ -32,21 +35,18 @@ import com.cloud.erp.entities.User;
  *
  */
 
+@SuppressWarnings("rawtypes")
 @Repository("shiroDao")
 public class ShiroDaoImpl implements ShiroDao {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+	private BaseDao baseDao;
 	
 	/**
-	 * @param sessionFactory the sessionFactory to set
+	 * @param baseDao the baseDao to set
 	 */
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-	
-	private Session getSession(){
-		return this.sessionFactory.getCurrentSession();
+	@Autowired
+	public void setBaseDao(BaseDao baseDao) {
+		this.baseDao = baseDao;
 	}
 	
 	/* (non-Javadoc)
@@ -70,17 +70,21 @@ public class ShiroDaoImpl implements ShiroDao {
 					+ "WHERE rp.STATUS='A' and r.STATUS='A' and ur.STATUS='A' and u.STATUS='A' and p.STATUS='A' and p.TYPE='O' and p.ISUSED='Y'\n"
 					+ "and u.NAME ='" + username + "'";
 		}
-		return getSession().createSQLQuery(sql).list();
+		return baseDao.findBySQL(sql);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.cloud.erp.dao.ShiroDao#getUser(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public User getUser(String username) {
 		// TODO Auto-generated method stub
 		String hql = "from User t where t.status='A' and t.name=:name";
-		return (User) getSession().createQuery(hql).setParameter("name", username).uniqueResult();
+		//return (User) getSession().createQuery(hql).setParameter("name", username).uniqueResult();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("name", username);
+		return (User)baseDao.get(hql, params);
 	}
 
 }

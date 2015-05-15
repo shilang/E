@@ -20,7 +20,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
-import com.cloud.erp.entities.Permission;
+import com.cloud.erp.entities.table.Permission;
 import com.cloud.erp.entities.viewmodel.Json;
 import com.cloud.erp.logging.LogUtil;
 import com.cloud.erp.service.FunctionService;

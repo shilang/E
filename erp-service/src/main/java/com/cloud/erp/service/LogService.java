@@ -17,7 +17,7 @@ package com.cloud.erp.service;
 import java.util.List;
 import java.util.Map;
 
-import com.cloud.erp.entities.Log;
+import com.cloud.erp.entities.table.Log;
 import com.cloud.erp.utils.PageUtil;
 
 /**

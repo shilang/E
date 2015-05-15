@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.ShiroDao;
-import com.cloud.erp.entities.User;
+import com.cloud.erp.entities.table.User;
 import com.cloud.erp.service.ShiroService;
 
 /**

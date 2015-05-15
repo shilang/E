@@ -3,7 +3,7 @@
 <!DOCTYPE>
 <html>
 <head>
-<title>销售管理</title>
+<title>销售报价单</title>
 <jsp:include page="/inc.jsp"></jsp:include>
 <script type="text/javascript">
 	var $dg;
@@ -11,10 +11,13 @@
 	$(function(){
 		$dg = $("#dg");
 		$gird = $dg.datagrid({
+			url: 'salesPriceList/salesPriceListAction!findSalesPriceList.action',
+			width: 'auto',
+			height: $(this).height() - 85,
+			pagination: true,
 			rownumbers: true,
+			border: true,
 			striped: true,
-			idField: '',
-			url: '',
 			singleSelect: true,
 			columns:[[
 				{field: 'date', title: '日期'},
@@ -58,6 +61,5 @@
 		</div>
 		
 		<table id="dg" title="销售报价单"></table>
-
 </body>
 </html>

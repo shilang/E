@@ -119,5 +119,29 @@ div{
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
+.dlgcontent{
+	padding: 20px;
+}
 
+.dlgcontent table, .dlgcontent th, .dlgcontent td{
+	padding: 3px;
+}
 
+.dlgcontent #form .easyui-textbox{
+		height: 18px;
+		width: 170px;
+}
+
+.dlgcontent #form textarea{
+	font-size: 12px;
+	width: 416px;
+	height: 100px;
+}
+
+#tb{
+	padding: 2px 0;
+}
+
+#tb table td{
+	padding-left: 2px;
+}

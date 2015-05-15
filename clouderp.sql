@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50619
 File Encoding         : 65001
 
-Date: 2015-04-21 16:05:08
+Date: 2015-05-14 18:33:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `AREA`
+-- Table structure for AREA
 -- ----------------------------
 DROP TABLE IF EXISTS `AREA`;
 CREATE TABLE `AREA` (
@@ -36,7 +36,29 @@ CREATE TABLE `AREA` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `ATTACHMENT`
+-- Table structure for AREAS
+-- ----------------------------
+DROP TABLE IF EXISTS `AREAS`;
+CREATE TABLE `AREAS` (
+  `AREA_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CREATED` datetime DEFAULT NULL,
+  `CREATER` int(11) DEFAULT NULL,
+  `LASTMOD` datetime DEFAULT NULL,
+  `MODIFIER` int(11) DEFAULT NULL,
+  `NAME` varchar(255) DEFAULT NULL,
+  `NAME_EN` varchar(255) DEFAULT NULL,
+  `NUMBER` varchar(255) DEFAULT NULL,
+  `PARENT_ID` int(11) DEFAULT NULL,
+  `STATUS` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`AREA_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of AREAS
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ATTACHMENT
 -- ----------------------------
 DROP TABLE IF EXISTS `ATTACHMENT`;
 CREATE TABLE `ATTACHMENT` (
@@ -58,7 +80,78 @@ CREATE TABLE `ATTACHMENT` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `BRAND`
+-- Table structure for AUXILIARY_RES_MESSAGES
+-- ----------------------------
+DROP TABLE IF EXISTS `AUXILIARY_RES_MESSAGES`;
+CREATE TABLE `AUXILIARY_RES_MESSAGES` (
+  `MESSAGE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CODE` varchar(30) DEFAULT NULL,
+  `CREATED` datetime DEFAULT NULL,
+  `CREATER` int(11) DEFAULT NULL,
+  `DETAIL` int(11) DEFAULT NULL,
+  `LASTMOD` datetime DEFAULT NULL,
+  `MODIFIER` int(11) DEFAULT NULL,
+  `NAME` varchar(100) DEFAULT NULL,
+  `PID` int(11) DEFAULT NULL,
+  `REMARK` varchar(2000) DEFAULT NULL,
+  `RES_ID` int(11) DEFAULT NULL,
+  `STATUS` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`MESSAGE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of AUXILIARY_RES_MESSAGES
+-- ----------------------------
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('1', 'FSL01', '2015-05-06 11:05:07', '1', null, '2015-05-12 10:53:42', '1', '初中', null, null, '2', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('2', 'FSL02', '2015-05-06 11:17:57', '1', null, '2015-05-12 10:53:58', '1', '高中', null, null, '2', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('3', 'FZW001', null, null, null, '2015-05-12 10:56:48', '1', '总经理', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('4', 'FSL03', '2015-05-12 10:54:15', '1', null, '2015-05-12 10:54:15', '1', '中专', null, null, '2', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('5', 'FSL04', '2015-05-12 10:54:30', '1', null, '2015-05-12 10:54:30', '1', '大专', null, null, '2', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('6', 'FSL05', '2015-05-12 10:54:46', '1', null, '2015-05-12 10:54:46', '1', '本科', null, null, '2', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('7', 'FSL06', '2015-05-12 10:55:04', '1', null, '2015-05-12 10:55:04', '1', '硕士', null, null, '2', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('8', 'FSL07', '2015-05-12 10:55:17', '1', null, '2015-05-12 10:55:17', '1', '博士', null, null, '2', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('9', 'FZW002', '2015-05-12 10:57:07', '1', null, '2015-05-12 10:57:07', '1', '副总经理', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('10', 'FZW003', '2015-05-12 10:57:32', '1', null, '2015-05-12 10:57:32', '1', '部门经理', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('11', 'FZW004', '2015-05-12 10:57:47', '1', null, '2015-05-12 10:57:47', '1', '部门副经理', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('12', 'FZW005', '2015-05-12 10:58:12', '1', null, '2015-05-12 10:58:12', '1', '办事员', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('13', 'FZW006', '2015-05-12 10:58:35', '1', null, '2015-05-12 10:58:35', '1', '车间主任', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('14', 'FZW007', '2015-05-12 10:58:51', '1', null, '2015-05-12 10:58:51', '1', '车间副主任', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('15', 'FZW008', '2015-05-12 10:59:31', '1', null, '2015-05-12 10:59:31', '1', '技术员', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('16', 'FZW009', '2015-05-12 11:00:00', '1', null, '2015-05-12 11:00:00', '1', '主管会计', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('17', 'FZW010', '2015-05-12 11:00:15', '1', null, '2015-05-12 11:00:15', '1', '会计', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('18', 'FZW011', '2015-05-12 11:00:42', '1', null, '2015-05-12 11:00:42', '1', '出纳', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('19', 'FZW012', '2015-05-12 11:00:58', '1', null, '2015-05-12 11:00:58', '1', '检验员', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('20', 'FZW013', '2015-05-12 11:01:11', '1', null, '2015-05-12 11:01:11', '1', '业务员', null, null, '3', 'A');
+INSERT INTO `AUXILIARY_RES_MESSAGES` VALUES ('21', 'FZW014', '2015-05-12 11:01:24', '1', null, '2015-05-12 11:01:24', '1', '工人', null, null, '3', 'A');
+
+-- ----------------------------
+-- Table structure for AUXILIARY_RES_TYPES
+-- ----------------------------
+DROP TABLE IF EXISTS `AUXILIARY_RES_TYPES`;
+CREATE TABLE `AUXILIARY_RES_TYPES` (
+  `RES_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CREATED` datetime DEFAULT NULL,
+  `CREATER` int(11) DEFAULT NULL,
+  `DETAIL` int(11) DEFAULT NULL,
+  `LASTMOD` datetime DEFAULT NULL,
+  `MODIFIER` int(11) DEFAULT NULL,
+  `NAME` varchar(255) DEFAULT NULL,
+  `PID` int(11) DEFAULT NULL,
+  `REMARK` varchar(2000) DEFAULT NULL,
+  `STATUS` varchar(1) DEFAULT NULL,
+  `TYPE` int(11) DEFAULT NULL,
+  PRIMARY KEY (`RES_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of AUXILIARY_RES_TYPES
+-- ----------------------------
+INSERT INTO `AUXILIARY_RES_TYPES` VALUES ('1', null, null, null, null, null, '辅助资料', null, null, 'A', null);
+INSERT INTO `AUXILIARY_RES_TYPES` VALUES ('2', '2015-05-06 11:04:53', '1', null, '2015-05-12 10:53:12', '1', '文化程度', '1', null, 'A', null);
+INSERT INTO `AUXILIARY_RES_TYPES` VALUES ('3', '2015-05-06 11:05:21', '1', null, '2015-05-12 10:56:24', '1', '职务', '1', null, 'A', null);
+
+-- ----------------------------
+-- Table structure for BRAND
 -- ----------------------------
 DROP TABLE IF EXISTS `BRAND`;
 CREATE TABLE `BRAND` (
@@ -79,7 +172,7 @@ INSERT INTO `BRAND` VALUES ('1', '类别', '2013-06-27', '2013-06-27', 'A', '1',
 INSERT INTO `BRAND` VALUES ('2', '123123', '2013-06-27', '2013-06-27', 'A', '1', '1');
 
 -- ----------------------------
--- Table structure for `BUG`
+-- Table structure for BUG
 -- ----------------------------
 DROP TABLE IF EXISTS `BUG`;
 CREATE TABLE `BUG` (
@@ -119,7 +212,7 @@ INSERT INTO `BUG` VALUES ('23', 'I', '12312', '123', '<a href=\"/erp/attached/20
 INSERT INTO `BUG` VALUES ('24', 'A', '123123', '123123', '<a href=\"/erp2/attached/2013/08/02/1e97ac03b99d402eabf344eb9f68186f.zip\">bootstrap-master.zip</a>', '2013-07-15 15:49:23', '2013-08-02 10:50:26', '1', '1', null);
 
 -- ----------------------------
--- Table structure for `CITY`
+-- Table structure for CITY
 -- ----------------------------
 DROP TABLE IF EXISTS `CITY`;
 CREATE TABLE `CITY` (
@@ -150,7 +243,7 @@ INSERT INTO `CITY` VALUES ('10', '2', 'www', '2013-06-26', '2013-06-26', 'A', '1
 INSERT INTO `CITY` VALUES ('11', '2', '1121', '2013-08-05', '2013-08-05', 'A', '1', '1');
 
 -- ----------------------------
--- Table structure for `COMPANY_INFO`
+-- Table structure for COMPANY_INFO
 -- ----------------------------
 DROP TABLE IF EXISTS `COMPANY_INFO`;
 CREATE TABLE `COMPANY_INFO` (
@@ -212,7 +305,36 @@ INSERT INTO `COMPANY_INFO` VALUES ('32', '12312', '3123123', '12312', '1231', nu
 INSERT INTO `COMPANY_INFO` VALUES ('33', '123123', '123', '123', '123', null, '123', '123', 'A', '2013-08-05', '2013-08-05', null, null, null, '123213', '1', '1');
 
 -- ----------------------------
--- Table structure for `CURRENCY`
+-- Table structure for COMPANY_INFOS
+-- ----------------------------
+DROP TABLE IF EXISTS `COMPANY_INFOS`;
+CREATE TABLE `COMPANY_INFOS` (
+  `COMPANY_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ADDRESS` varchar(255) DEFAULT NULL,
+  `CONTACT` varchar(100) DEFAULT NULL,
+  `CREATED` datetime DEFAULT NULL,
+  `CREATER` int(11) DEFAULT NULL,
+  `DESCRIPTION` varchar(2000) DEFAULT NULL,
+  `EMAIL` varchar(100) DEFAULT NULL,
+  `FAX` varchar(50) DEFAULT NULL,
+  `LASTMOD` datetime DEFAULT NULL,
+  `MANAGER` varchar(100) DEFAULT NULL,
+  `MODIFIER` int(11) DEFAULT NULL,
+  `NAME` varchar(100) DEFAULT NULL,
+  `STATUS` varchar(1) DEFAULT NULL,
+  `TEL` varchar(50) DEFAULT NULL,
+  `ZIP` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`COMPANY_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of COMPANY_INFOS
+-- ----------------------------
+INSERT INTO `COMPANY_INFOS` VALUES ('1', '深圳市龙岗区布吉镇秀峰工业城B8栋5楼', '', '2015-05-12 17:19:18', '1', '', '', '0755-28559010', '2015-05-12 18:13:18', null, '1', 'ORBITA', 'A', '0755-83369158', null);
+INSERT INTO `COMPANY_INFOS` VALUES ('2', 'sdaf', 'sadf', '2015-05-12 18:04:01', '1', 'sadf', 'sadf', 'asdf', '2015-05-12 18:09:00', null, '1', 'sadf', 'I', 'sadf', null);
+
+-- ----------------------------
+-- Table structure for CURRENCY
 -- ----------------------------
 DROP TABLE IF EXISTS `CURRENCY`;
 CREATE TABLE `CURRENCY` (
@@ -234,7 +356,7 @@ INSERT INTO `CURRENCY` VALUES ('1', '人民币', '2013-06-25', '2013-06-25', '1'
 INSERT INTO `CURRENCY` VALUES ('2', '美元', '2013-06-25', '2013-06-25', '1', '1', '1', '$');
 
 -- ----------------------------
--- Table structure for `CUSTOMER`
+-- Table structure for CUSTOMER
 -- ----------------------------
 DROP TABLE IF EXISTS `CUSTOMER`;
 CREATE TABLE `CUSTOMER` (
@@ -311,7 +433,7 @@ INSERT INTO `CUSTOMER` VALUES ('25', '12312', '3123123', 'A', '2013-06-26', '201
 INSERT INTO `CUSTOMER` VALUES ('26', '123', '123', 'A', '2013-06-27', '2013-07-02', '1', '1', null, '', '', '', '', null, null, null, null, null, '', '', null, null, '', null, null, null, null, null, '', null, '', '', null, '', null, null, '', null, '', '', '', '', null, null, null, '', null, '', null, null, 'T', '', null, null, null, null, '', '', 'Y');
 
 -- ----------------------------
--- Table structure for `CUSTOMER_CONTACT`
+-- Table structure for CUSTOMER_CONTACT
 -- ----------------------------
 DROP TABLE IF EXISTS `CUSTOMER_CONTACT`;
 CREATE TABLE `CUSTOMER_CONTACT` (
@@ -349,7 +471,7 @@ INSERT INTO `CUSTOMER_CONTACT` VALUES ('6', '25', null, '432423', null, null, 'M
 INSERT INTO `CUSTOMER_CONTACT` VALUES ('7', '26', null, '123123', null, null, 'F', null, '123', '123', '123@qq.com', null, '123123', 'A', '2013-06-27', '2013-06-27', '1', '1', null, '123', '2013-06-10');
 
 -- ----------------------------
--- Table structure for `CUSTOMER_TERMS`
+-- Table structure for CUSTOMER_TERMS
 -- ----------------------------
 DROP TABLE IF EXISTS `CUSTOMER_TERMS`;
 CREATE TABLE `CUSTOMER_TERMS` (
@@ -383,7 +505,110 @@ CREATE TABLE `CUSTOMER_TERMS` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `ENQUIRY_PURCHASE`
+-- Table structure for CUSTOMERS
+-- ----------------------------
+DROP TABLE IF EXISTS `CUSTOMERS`;
+CREATE TABLE `CUSTOMERS` (
+  `CUSTOMER_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ADDRESS` varchar(255) DEFAULT NULL,
+  `CREATED` datetime DEFAULT NULL,
+  `CREATER` int(11) DEFAULT NULL,
+  `EMAIL` varchar(20) DEFAULT NULL,
+  `FAX` varchar(30) DEFAULT NULL,
+  `FULL_NAME` varchar(100) DEFAULT NULL,
+  `HELP_CODE` varchar(20) DEFAULT NULL,
+  `HOME_PAGE` varchar(100) DEFAULT NULL,
+  `LASTMOD` datetime DEFAULT NULL,
+  `MODIFIER` int(11) DEFAULT NULL,
+  `NAME` varchar(50) DEFAULT NULL,
+  `NUMBER` varchar(20) DEFAULT NULL,
+  `PARENT_ID` int(11) DEFAULT NULL,
+  `PHONE` varchar(30) DEFAULT NULL,
+  `REGION` int(11) DEFAULT NULL,
+  `REMARK` varchar(2000) DEFAULT NULL,
+  `SALE_MODE` int(11) DEFAULT NULL,
+  `STATUS` varchar(1) DEFAULT NULL,
+  `TYPE_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of CUSTOMERS
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for DEPARTMENTS
+-- ----------------------------
+DROP TABLE IF EXISTS `DEPARTMENTS`;
+CREATE TABLE `DEPARTMENTS` (
+  `DEPARTMENT_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ASSISTANT_MANAGER` int(11) DEFAULT NULL,
+  `CREATED` datetime DEFAULT NULL,
+  `CREATER` int(11) DEFAULT NULL,
+  `DESCRIPTION` varchar(2000) DEFAULT NULL,
+  `EMP_QTY` int(11) DEFAULT NULL,
+  `ENAME` varchar(100) DEFAULT NULL,
+  `FAX` varchar(50) DEFAULT NULL,
+  `FULL_NAME` varchar(255) DEFAULT NULL,
+  `ICONCLS` varchar(100) DEFAULT NULL,
+  `LASTMOD` datetime DEFAULT NULL,
+  `MANAGER` int(11) DEFAULT NULL,
+  `MODIFIER` int(11) DEFAULT NULL,
+  `NUMBER` varchar(25) DEFAULT NULL,
+  `PID` int(11) DEFAULT NULL,
+  `SHORT_NAME` varchar(50) DEFAULT NULL,
+  `STATE` varchar(20) DEFAULT NULL,
+  `STATUS` varchar(1) DEFAULT NULL,
+  `TEL` varchar(50) DEFAULT NULL,
+  `NAME` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`DEPARTMENT_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of DEPARTMENTS
+-- ----------------------------
+INSERT INTO `DEPARTMENTS` VALUES ('1', null, '2015-05-14 09:36:05', '1', 'sdf', null, '测试', 'sdf', '测试', null, '2015-05-14 11:12:06', null, '1', 'D0001', null, null, 'closed', 'A', 'sdf', '测试');
+INSERT INTO `DEPARTMENTS` VALUES ('2', null, '2015-05-14 09:52:17', '1', '', null, '研发部', '', '研发部', null, '2015-05-14 09:52:17', null, '1', 'D0001', null, null, 'closed', 'A', '', '研发部');
+INSERT INTO `DEPARTMENTS` VALUES ('3', null, '2015-05-14 10:00:17', '1', '', null, '开发部', '', '开发部', null, '2015-05-14 11:06:09', null, '1', 'D0002', '2', null, 'closed', 'I', '', '开发部');
+INSERT INTO `DEPARTMENTS` VALUES ('4', null, '2015-05-14 10:18:28', '1', '', null, 'sdaf', '', 'sdf', null, '2015-05-14 10:18:37', null, '1', 'asdf', '2', null, 'closed', 'I', 'sadf', 'sadf');
+INSERT INTO `DEPARTMENTS` VALUES ('5', null, '2015-05-14 10:19:26', '1', '', null, 'sdf', 'sd', 'sdaf', null, '2015-05-14 10:27:17', null, '1', 'sadf', '2', null, 'closed', 'I', 'sadf', 'sdaf');
+INSERT INTO `DEPARTMENTS` VALUES ('6', null, '2015-05-14 11:07:05', '1', '', null, 'asdf', 'sadf', 'sadf', null, '2015-05-14 11:08:57', null, '1', 'sadf', '2', null, 'closed', 'I', 'asdf', 'asdf');
+
+-- ----------------------------
+-- Table structure for EMPLOYEES
+-- ----------------------------
+DROP TABLE IF EXISTS `EMPLOYEES`;
+CREATE TABLE `EMPLOYEES` (
+  `EMPLOYEE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ADDRESS` varchar(255) DEFAULT NULL,
+  `BIRTHDAY` date DEFAULT NULL,
+  `CREATED` datetime DEFAULT NULL,
+  `CREATER` int(11) DEFAULT NULL,
+  `DEGREE` varchar(30) DEFAULT NULL,
+  `DEPARTMENT_ID` int(11) DEFAULT NULL,
+  `DUTY` varchar(25) DEFAULT NULL,
+  `EMAIL` varchar(20) DEFAULT NULL,
+  `GENDER` varchar(10) DEFAULT NULL,
+  `HIRE_DATE` date DEFAULT NULL,
+  `IDENTITY` varchar(25) DEFAULT NULL,
+  `LASTMOD` datetime DEFAULT NULL,
+  `LEAVE_DATE` date DEFAULT NULL,
+  `MOBILE` varchar(25) DEFAULT NULL,
+  `MODIFIER` int(11) DEFAULT NULL,
+  `NAME` varchar(50) DEFAULT NULL,
+  `NUMBER` varchar(25) DEFAULT NULL,
+  `REMARK` varchar(2000) DEFAULT NULL,
+  `STATUS` varchar(1) DEFAULT NULL,
+  `TEL` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`EMPLOYEE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of EMPLOYEES
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ENQUIRY_PURCHASE
 -- ----------------------------
 DROP TABLE IF EXISTS `ENQUIRY_PURCHASE`;
 CREATE TABLE `ENQUIRY_PURCHASE` (
@@ -435,7 +660,7 @@ CREATE TABLE `ENQUIRY_PURCHASE` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `ENQUIRY_PURCHASE_LINE`
+-- Table structure for ENQUIRY_PURCHASE_LINE
 -- ----------------------------
 DROP TABLE IF EXISTS `ENQUIRY_PURCHASE_LINE`;
 CREATE TABLE `ENQUIRY_PURCHASE_LINE` (
@@ -475,7 +700,50 @@ CREATE TABLE `ENQUIRY_PURCHASE_LINE` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `ITEM`
+-- Table structure for ICITEM_BASE
+-- ----------------------------
+DROP TABLE IF EXISTS `ICITEM_BASE`;
+CREATE TABLE `ICITEM_BASE` (
+  `itemId` int(11) NOT NULL,
+  `defaultLoc` int(11) DEFAULT NULL,
+  `highLimit` int(11) DEFAULT NULL,
+  `lowLimit` int(11) DEFAULT NULL,
+  `source` int(11) DEFAULT NULL,
+  `useState` int(11) DEFAULT NULL,
+  PRIMARY KEY (`itemId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ICITEM_BASE
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ICITEM_CORE
+-- ----------------------------
+DROP TABLE IF EXISTS `ICITEM_CORE`;
+CREATE TABLE `ICITEM_CORE` (
+  `ITEM_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `created` datetime DEFAULT NULL,
+  `creater` int(11) DEFAULT NULL,
+  `helpCode` varchar(255) DEFAULT NULL,
+  `lastmod` datetime DEFAULT NULL,
+  `model` varchar(255) DEFAULT NULL,
+  `modifier` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `number` varchar(255) DEFAULT NULL,
+  `parentId` int(11) DEFAULT NULL,
+  `shortNumber` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `topId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ITEM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ICITEM_CORE
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ITEM
 -- ----------------------------
 DROP TABLE IF EXISTS `ITEM`;
 CREATE TABLE `ITEM` (
@@ -526,7 +794,7 @@ INSERT INTO `ITEM` VALUES ('6', '002', '花生牛奶002', '10', '潜在客户', 
 INSERT INTO `ITEM` VALUES ('7', '003', '花生牛奶003', '10', '潜在客户', '', null, '', '个', '个', '12', null, '17', 'Y', 'Y', '23.69000000', '12.00000000', null, null, '', null, '', null, '', '2013-07-02', '2013-07-02', 'A', '1', '1', null, '', null);
 
 -- ----------------------------
--- Table structure for `ITEM_CLASS`
+-- Table structure for ITEM_CLASS
 -- ----------------------------
 DROP TABLE IF EXISTS `ITEM_CLASS`;
 CREATE TABLE `ITEM_CLASS` (
@@ -546,7 +814,7 @@ CREATE TABLE `ITEM_CLASS` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `LOCATION`
+-- Table structure for LOCATION
 -- ----------------------------
 DROP TABLE IF EXISTS `LOCATION`;
 CREATE TABLE `LOCATION` (
@@ -570,7 +838,7 @@ CREATE TABLE `LOCATION` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `LOG`
+-- Table structure for LOG
 -- ----------------------------
 DROP TABLE IF EXISTS `LOG`;
 CREATE TABLE `LOG` (
@@ -587,7 +855,7 @@ CREATE TABLE `LOG` (
   `EVENT_RECORD` varchar(500) DEFAULT NULL COMMENT '详细描述',
   PRIMARY KEY (`LOG_ID`),
   KEY `FK_LOG1` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1268 DEFAULT CHARSET=utf8 COMMENT='日录资料表';
+) ENGINE=InnoDB AUTO_INCREMENT=1273 DEFAULT CHARSET=utf8 COMMENT='日录资料表';
 
 -- ----------------------------
 -- Records of LOG
@@ -640,9 +908,14 @@ INSERT INTO `LOG` VALUES ('1264', '1', 'admin', '2013-08-05 10:13:17', '2', '10:
 INSERT INTO `LOG` VALUES ('1265', '1', 'admin', '2013-08-05 10:13:17', '2', '10:78:D2:C7:82:DC', '192.168.95.20', null, '1', 'update:ProjectFollow', '更新:com.erp.model.ProjectFollow');
 INSERT INTO `LOG` VALUES ('1266', '1', 'admin', '2013-08-05 10:15:51', '2', '10:78:D2:C7:82:DC', '192.168.95.20', null, '33', 'insert:CompanyInfo', '插入:com.erp.model.CompanyInfo');
 INSERT INTO `LOG` VALUES ('1267', null, 'system', '2013-08-06 02:02:00', '1', '**************', '**************', null, 'dbBackUp-20130806020200.sql', '数据备份', 'D:\\server\\apache-tomcat-7.0.41\\webapps\\erp2\\attachment\\dbBackUp\\dbBackUp-20130806020200.sql');
+INSERT INTO `LOG` VALUES ('1268', null, 'hello', null, null, null, null, null, null, null, null);
+INSERT INTO `LOG` VALUES ('1269', null, 'hello', null, null, null, null, null, null, null, null);
+INSERT INTO `LOG` VALUES ('1270', null, 'hello', null, null, null, null, null, null, null, null);
+INSERT INTO `LOG` VALUES ('1271', null, 'bollen55777', null, null, null, null, null, null, null, null);
+INSERT INTO `LOG` VALUES ('1272', null, 'hello22', null, null, null, null, null, null, null, null);
 
 -- ----------------------------
--- Table structure for `ORDER_PURCHASE`
+-- Table structure for ORDER_PURCHASE
 -- ----------------------------
 DROP TABLE IF EXISTS `ORDER_PURCHASE`;
 CREATE TABLE `ORDER_PURCHASE` (
@@ -715,7 +988,7 @@ CREATE TABLE `ORDER_PURCHASE` (
 INSERT INTO `ORDER_PURCHASE` VALUES ('10', 'KS-001', '2013-07-25 00:00:00', '1', '2', 'teste', 'testes', '4', '123', null, '123123', '123', null, null, null, '65', '物流公司', '2013-07-03 00:00:00', null, null, null, null, null, null, '1', '总经理室', '物流仓', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '62', '普通采购', '1', '', 'Y', '001', '37506.86000000', '6376.16000000', '43883.02000000', '120.00000000', '2013-07-03 12:22:50', '2013-07-03 14:44:58', 'A', '1', '1', null, '1', '人民币');
 
 -- ----------------------------
--- Table structure for `ORDER_PURCHASE_LINE`
+-- Table structure for ORDER_PURCHASE_LINE
 -- ----------------------------
 DROP TABLE IF EXISTS `ORDER_PURCHASE_LINE`;
 CREATE TABLE `ORDER_PURCHASE_LINE` (
@@ -831,7 +1104,7 @@ INSERT INTO `ORDER_PURCHASE_LINE` VALUES ('78', '10', '6', '002', '花生牛奶0
 INSERT INTO `ORDER_PURCHASE_LINE` VALUES ('79', '10', '7', '003', '花生牛奶003', null, '个', null, null, '18', null, '2013-07-03 12:22:50', '2013-07-03 14:44:59', 'A', '1', '1', '23.69000000', '0.00000000', null, '383.78000000', '65.24000000', null, '17', null, '0.90000000');
 
 -- ----------------------------
--- Table structure for `ORDER_SALE`
+-- Table structure for ORDER_SALE
 -- ----------------------------
 DROP TABLE IF EXISTS `ORDER_SALE`;
 CREATE TABLE `ORDER_SALE` (
@@ -907,7 +1180,7 @@ INSERT INTO `ORDER_SALE` VALUES ('2', '123123', '2013-07-09', null, null, null, 
 INSERT INTO `ORDER_SALE` VALUES ('3', '123123', '2013-07-30', null, '1', '22', '12312', '3123123', '5', '123', null, '123123', '123', null, null, null, '66', '客户自提', '2013-07-09', null, null, null, null, '123', '', null, '', '物流仓', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '63', '紧急采购', '123', '', 'Y', '', '509.00000000', '86.53000000', '595.53000000', '0.00000000', '2013-07-09', '2013-07-09', 'A', '1', '1', null, '1', '人民币');
 
 -- ----------------------------
--- Table structure for `ORDER_SALE_LINE`
+-- Table structure for ORDER_SALE_LINE
 -- ----------------------------
 DROP TABLE IF EXISTS `ORDER_SALE_LINE`;
 CREATE TABLE `ORDER_SALE_LINE` (
@@ -946,7 +1219,7 @@ INSERT INTO `ORDER_SALE_LINE` VALUES ('1', '3', '5', '001', '花生牛奶001', n
 INSERT INTO `ORDER_SALE_LINE` VALUES ('2', '3', '6', '002', '花生牛奶002', null, '个', null, null, '8', null, '2013-07-09', '2013-07-09', 'A', '1', '1', '8.00000000', '0.00000000', '0.00000000', '64.00000000', '10.88000000', '0.00000000', '17', '0', '0.00000000');
 
 -- ----------------------------
--- Table structure for `ORGANIZATION`
+-- Table structure for ORGANIZATION
 -- ----------------------------
 DROP TABLE IF EXISTS `ORGANIZATION`;
 CREATE TABLE `ORGANIZATION` (
@@ -1001,7 +1274,7 @@ INSERT INTO `ORGANIZATION` VALUES ('21', null, 'QWEQ', '1', 'QWE', 'WE', null, '
 INSERT INTO `ORGANIZATION` VALUES ('22', null, '123', null, '123', '123', null, '', 'closed', null, null, 'I', '2013-06-20', '2013-06-21', '123', '123', '123', '123123123', '1', '1', null);
 
 -- ----------------------------
--- Table structure for `ORGANIZATIONS`
+-- Table structure for ORGANIZATIONS
 -- ----------------------------
 DROP TABLE IF EXISTS `ORGANIZATIONS`;
 CREATE TABLE `ORGANIZATIONS` (
@@ -1033,7 +1306,7 @@ CREATE TABLE `ORGANIZATIONS` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `PARAMETER`
+-- Table structure for PARAMETER
 -- ----------------------------
 DROP TABLE IF EXISTS `PARAMETER`;
 CREATE TABLE `PARAMETER` (
@@ -1064,7 +1337,7 @@ INSERT INTO `PARAMETER` VALUES ('4', 'sysPar', '系统参数', '123', '123123123
 INSERT INTO `PARAMETER` VALUES ('5', 'autoAudit', '是否自动审核', 'true', '123123', 'Y', '{\"options\":{\"off\":false,\"on\":true},\"type\":\"checkbox\"}', 'checkbox', '单据设置', 'A', '2013-07-05', '2013-07-05', '1', '1');
 
 -- ----------------------------
--- Table structure for `PERMISSION`
+-- Table structure for PERMISSION
 -- ----------------------------
 DROP TABLE IF EXISTS `PERMISSION`;
 CREATE TABLE `PERMISSION` (
@@ -1088,14 +1361,14 @@ CREATE TABLE `PERMISSION` (
   `ISSUED` varchar(1) DEFAULT NULL,
   `MODIFIER` int(11) DEFAULT NULL,
   PRIMARY KEY (`PERMISSION_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COMMENT='权限资料表';
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COMMENT='权限资料表';
 
 -- ----------------------------
 -- Records of PERMISSION
 -- ----------------------------
 INSERT INTO `PERMISSION` VALUES ('1', null, '系统管理', '', '0', 'sysMgr', 'F', 'Y', 'closed', 'javascript:void(0);', 'icon-sys', 'A', '系统管理', '2013-05-23 00:00:00', '2013-06-18 00:00:00', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('2', '1', '程式管理', '系统管理', '0', 'funMgr', 'F', 'Y', 'closed', 'view/function/functionMain.jsp', 'icon-pro', 'A', '程式管理', '2013-05-23 00:00:00', '2013-05-27 00:00:00', '1', '1', null, null);
-INSERT INTO `PERMISSION` VALUES ('3', '1', '公司管理', '系统管理', '0', 'compMgr', 'F', 'Y', 'closed', 'javascript:void(0);', 'icon-comp', 'A', '公司管理', '2013-05-23 00:00:00', '2013-06-20 15:33:13', '1', '1', null, null);
+INSERT INTO `PERMISSION` VALUES ('3', '101', '公司', '基础资料', '0', 'compMgr', 'F', 'Y', 'closed', 'view/company/companyMain.jsp', 'icon-comp', 'A', '公司管理', '2013-05-23 00:00:00', '2013-06-20 15:33:13', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('4', '1', '数据库管理', '系统管理', '2', '1123', 'F', 'Y', 'open', 'druid/index.html', 'icon-db', 'A', '123123123123123123', '2013-05-23 00:00:00', '2013-06-20 15:08:45', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('7', '1', '权限分派', '系统管理', '3', 'funOMgr', 'F', 'Y', 'closed', 'view/permission/permissionAssignmentMain.jsp', 'icon-config', 'A', '菜单功能分派', '2013-05-23 00:00:00', '2013-06-22 09:15:57', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('10', '3', '公司档案录入', '公司管理', '0', 'compMain', 'F', 'Y', 'closed', 'view/company/companyMain.jsp', 'icon-edit', 'A', '公司维护页面', '2013-05-24 00:00:00', '2013-06-27 08:46:23', '1', '1', null, null);
@@ -1119,7 +1392,7 @@ INSERT INTO `PERMISSION` VALUES ('40', '1', '组织管理', '系统管理', '6',
 INSERT INTO `PERMISSION` VALUES ('41', '40', '组织增加', '组织管理', '0', 'orgzAdd', 'O', 'Y', 'open', 'javascript:void(0);', 'icon-edit', 'A', '', '2013-06-14 00:00:00', '2013-06-14 00:00:00', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('42', '40', '组织编辑', '组织管理', '1', 'orgzEdit', 'O', 'Y', 'open', 'javascript:void(0);', 'icon-edit', 'A', '', '2013-06-17 00:00:00', '2013-06-17 00:00:00', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('43', '40', '组织删除', '组织管理', '2', 'orgzDel', 'O', 'Y', 'open', 'javascript:void(0);', 'icon-remove', 'A', '', '2013-06-17 00:00:00', '2013-06-17 00:00:00', '1', '1', null, null);
-INSERT INTO `PERMISSION` VALUES ('44', '1', '日志管理', '系统管理', '45', 'logMgr', 'F', 'Y', 'closed', 'view/logs/logsMain.jsp', 'icon-pro', 'A', '日志管理', '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', null, null);
+INSERT INTO `PERMISSION` VALUES ('44', '1', '日志管理', '系统管理', '45', 'logMgr', 'F', 'Y', 'closed', 'view/log/logMain.jsp', 'icon-pro', 'A', '日志管理', '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('47', '44', '日志新增', '日志管理', '1', 'logAdd', 'O', 'Y', 'open', 'javascript:void(0);', 'icon-edit', 'A', '', '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('48', '44', '日志编辑', '日志管理', '2', 'logEdit', 'O', 'Y', 'open', 'javascript:void(0);', 'icon-remove', 'A', '', '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('49', '44', '日志删除', '日志管理', '3', 'logDel', 'O', 'Y', 'open', 'javascript:void(0);', 'icon-cancel', 'A', '', '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', null, null);
@@ -1136,9 +1409,18 @@ INSERT INTO `PERMISSION` VALUES ('64', '63', 'Bug新增', 'Bug管理', '9', 'bug
 INSERT INTO `PERMISSION` VALUES ('65', '63', 'Bug编辑', 'Bug管理', '10', 'bugEdit', 'O', 'Y', 'open', 'javascript:void(0);', 'icon-bedit', 'A', '', '2013-06-22 10:05:34', '2013-06-22 10:05:34', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('66', '63', 'Bug删除', 'Bug管理', '11', 'bugDel', 'O', 'Y', 'open', 'javascript:void(0);', 'icon-bdel', 'A', '', '2013-06-22 10:06:12', '2013-06-22 10:06:12', '1', '1', null, null);
 INSERT INTO `PERMISSION` VALUES ('93', '1', '数据备份', '系统管理', '1', 'dbBackUpMain', 'F', 'Y', 'closed', 'view/dbBackUp/dbBackUpMain.jsp', 'icon-end', 'A', '', '2013-06-28 13:34:21', '2013-06-28 13:50:29', '1', '1', null, null);
+INSERT INTO `PERMISSION` VALUES ('101', null, '基础资料', '', '0', 'bmbmbm', 'F', 'Y', 'closed', '0000', 'icon-comp', 'A', '', '2015-04-24 17:44:19', '2015-04-24 17:44:19', '1', null, null, '1');
+INSERT INTO `PERMISSION` VALUES ('102', '101', '辅助资料管理', '基础资料', '1111', 'bmbmbmb', 'F', 'Y', 'closed', 'view/auxiliaryRes/auxiliaryResMain.jsp', 'icon-comp', 'A', '', '2015-04-24 17:49:13', '2015-04-24 17:49:13', '1', null, null, '1');
+INSERT INTO `PERMISSION` VALUES ('103', '101', '部门', '基础资料', '2', 'bmbmbm', 'F', 'Y', 'closed', 'view/department/departmentMain.jsp', 'icon-comp', 'A', '', '2015-04-24 17:53:13', '2015-04-24 17:53:13', '1', null, null, '1');
+INSERT INTO `PERMISSION` VALUES ('104', '101', '职员', '基础资料', '3', 'bmbm', 'F', 'Y', 'closed', 'view/employee/employeeMain.jsp', 'icon-comp', 'A', '', '2015-04-24 17:53:46', '2015-04-24 17:53:46', '1', null, null, '1');
+INSERT INTO `PERMISSION` VALUES ('105', '101', '客户', '基础资料', '3', '00', 'F', 'Y', 'closed', 'view/customer/customerMain.jsp', 'icon-comp', 'A', '', '2015-04-24 17:57:26', '2015-04-24 17:57:26', '1', null, null, '1');
+INSERT INTO `PERMISSION` VALUES ('106', '101', '物料', '基础资料', '3', '00', 'F', 'Y', 'closed', '00', 'icon-comp', 'A', '', '2015-04-24 17:58:32', '2015-04-24 17:58:32', '1', null, null, '1');
+INSERT INTO `PERMISSION` VALUES ('107', '101', '仓库', '基础资料', '3', '00', 'F', 'Y', 'closed', 'view/stock/stockMain.jsp', 'icon-comp', 'A', '', '2015-04-24 17:59:34', '2015-04-24 17:59:34', '1', null, null, '1');
+INSERT INTO `PERMISSION` VALUES ('108', '101', '国别地区', '基础资料', '3', '00', 'F', 'Y', 'closed', 'view/area/areaMain.jsp', 'icon-comp', 'A', '', '2015-04-24 18:01:26', '2015-04-24 18:01:26', '1', null, null, '1');
+INSERT INTO `PERMISSION` VALUES ('109', null, 'ddd', '', '0', '00', 'F', null, 'closed', '00', '', 'I', '00', '2015-05-04 14:08:00', '2015-05-05 15:56:51', '1', null, null, '1');
 
 -- ----------------------------
--- Table structure for `PERMISSIONS`
+-- Table structure for PERMISSIONS
 -- ----------------------------
 DROP TABLE IF EXISTS `PERMISSIONS`;
 CREATE TABLE `PERMISSIONS` (
@@ -1167,7 +1449,7 @@ CREATE TABLE `PERMISSIONS` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `PLAN_PURCHASE`
+-- Table structure for PLAN_PURCHASE
 -- ----------------------------
 DROP TABLE IF EXISTS `PLAN_PURCHASE`;
 CREATE TABLE `PLAN_PURCHASE` (
@@ -1216,7 +1498,7 @@ CREATE TABLE `PLAN_PURCHASE` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `PLAN_PURCHASE_LINE`
+-- Table structure for PLAN_PURCHASE_LINE
 -- ----------------------------
 DROP TABLE IF EXISTS `PLAN_PURCHASE_LINE`;
 CREATE TABLE `PLAN_PURCHASE_LINE` (
@@ -1253,7 +1535,7 @@ CREATE TABLE `PLAN_PURCHASE_LINE` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `PROJECT`
+-- Table structure for PROJECT
 -- ----------------------------
 DROP TABLE IF EXISTS `PROJECT`;
 CREATE TABLE `PROJECT` (
@@ -1305,7 +1587,7 @@ INSERT INTO `PROJECT` VALUES ('10', '23123123', '1231', null, null, '', null, ''
 INSERT INTO `PROJECT` VALUES ('11', '12323123', '123123', null, null, '', null, '', '', '', '', null, '', '', null, null, '', null, null, null, null, '', null, null, '2013-07-01', '2013-07-02', 'I', '1', '1');
 
 -- ----------------------------
--- Table structure for `PROJECT_FOLLOW`
+-- Table structure for PROJECT_FOLLOW
 -- ----------------------------
 DROP TABLE IF EXISTS `PROJECT_FOLLOW`;
 CREATE TABLE `PROJECT_FOLLOW` (
@@ -1355,7 +1637,7 @@ INSERT INTO `PROJECT_FOLLOW` VALUES ('12', '10', null, null, null, '2013-06-28',
 INSERT INTO `PROJECT_FOLLOW` VALUES ('13', '11', null, null, null, '2013-07-10', '3123', '76', '重点跟踪', '79', '已签约', '44', '123', '123', null, null, '2013-07-01', '2013-07-02', 'I', '1', '1', null, null, null, null);
 
 -- ----------------------------
--- Table structure for `PROVINCE`
+-- Table structure for PROVINCE
 -- ----------------------------
 DROP TABLE IF EXISTS `PROVINCE`;
 CREATE TABLE `PROVINCE` (
@@ -1377,7 +1659,7 @@ INSERT INTO `PROVINCE` VALUES ('1', '0', '江苏', '2013-06-25', '2013-06-25', '
 INSERT INTO `PROVINCE` VALUES ('2', '0', '浙江', '2013-06-25', '2013-06-25', 'A', '1', '1');
 
 -- ----------------------------
--- Table structure for `QUOTE_PURCHASE`
+-- Table structure for QUOTE_PURCHASE
 -- ----------------------------
 DROP TABLE IF EXISTS `QUOTE_PURCHASE`;
 CREATE TABLE `QUOTE_PURCHASE` (
@@ -1446,7 +1728,7 @@ CREATE TABLE `QUOTE_PURCHASE` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QUOTE_PURCHASE_LINE`
+-- Table structure for QUOTE_PURCHASE_LINE
 -- ----------------------------
 DROP TABLE IF EXISTS `QUOTE_PURCHASE_LINE`;
 CREATE TABLE `QUOTE_PURCHASE_LINE` (
@@ -1493,7 +1775,7 @@ CREATE TABLE `QUOTE_PURCHASE_LINE` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `REQUISITION_PURCHASE`
+-- Table structure for REQUISITION_PURCHASE
 -- ----------------------------
 DROP TABLE IF EXISTS `REQUISITION_PURCHASE`;
 CREATE TABLE `REQUISITION_PURCHASE` (
@@ -1551,7 +1833,7 @@ CREATE TABLE `REQUISITION_PURCHASE` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `REQUISITION_PURCHASE_LINE`
+-- Table structure for REQUISITION_PURCHASE_LINE
 -- ----------------------------
 DROP TABLE IF EXISTS `REQUISITION_PURCHASE_LINE`;
 CREATE TABLE `REQUISITION_PURCHASE_LINE` (
@@ -1600,7 +1882,7 @@ CREATE TABLE `REQUISITION_PURCHASE_LINE` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `ROLE`
+-- Table structure for ROLE
 -- ----------------------------
 DROP TABLE IF EXISTS `ROLE`;
 CREATE TABLE `ROLE` (
@@ -1632,7 +1914,7 @@ INSERT INTO `ROLE` VALUES ('10', 'test', '测试角色', 'A', '2013-06-19 00:00:
 INSERT INTO `ROLE` VALUES ('11', 'rwerwer', '3123123112312312', 'I', '2013-06-19 00:00:00', '2013-06-19 00:00:00', '12312', '1', '1', null);
 
 -- ----------------------------
--- Table structure for `ROLE_PERMISSION`
+-- Table structure for ROLE_PERMISSION
 -- ----------------------------
 DROP TABLE IF EXISTS `ROLE_PERMISSION`;
 CREATE TABLE `ROLE_PERMISSION` (
@@ -1763,7 +2045,7 @@ INSERT INTO `ROLE_PERMISSION` VALUES ('273', '10', '52', 'A', '2013-06-20 15:57:
 INSERT INTO `ROLE_PERMISSION` VALUES ('274', '10', '53', 'A', '2013-06-20 15:57:48', '2013-06-20 15:57:48', '1', '1', null);
 
 -- ----------------------------
--- Table structure for `ROLES`
+-- Table structure for ROLES
 -- ----------------------------
 DROP TABLE IF EXISTS `ROLES`;
 CREATE TABLE `ROLES` (
@@ -1784,7 +2066,7 @@ CREATE TABLE `ROLES` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SALES_PRICE_LIST`
+-- Table structure for SALES_PRICE_LIST
 -- ----------------------------
 DROP TABLE IF EXISTS `SALES_PRICE_LIST`;
 CREATE TABLE `SALES_PRICE_LIST` (
@@ -1805,14 +2087,14 @@ CREATE TABLE `SALES_PRICE_LIST` (
   `SALES` int(11) DEFAULT NULL,
   `STATUS` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`SALES_PRICE_LIST_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of SALES_PRICE_LIST
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SALES_PRICE_LIST_ITEM`
+-- Table structure for SALES_PRICE_LIST_ITEM
 -- ----------------------------
 DROP TABLE IF EXISTS `SALES_PRICE_LIST_ITEM`;
 CREATE TABLE `SALES_PRICE_LIST_ITEM` (
@@ -1831,14 +2113,14 @@ CREATE TABLE `SALES_PRICE_LIST_ITEM` (
   PRIMARY KEY (`SALES_PRICE_LIST_ITEM_ID`),
   KEY `FK_cr0cg38ofjwmpowtju1cb24ur` (`SALES_PRICE_LIST_ID`),
   CONSTRAINT `FK_cr0cg38ofjwmpowtju1cb24ur` FOREIGN KEY (`SALES_PRICE_LIST_ID`) REFERENCES `SALES_PRICE_LIST` (`SALES_PRICE_LIST_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of SALES_PRICE_LIST_ITEM
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `STOCK_COUNT`
+-- Table structure for STOCK_COUNT
 -- ----------------------------
 DROP TABLE IF EXISTS `STOCK_COUNT`;
 CREATE TABLE `STOCK_COUNT` (
@@ -1872,7 +2154,35 @@ CREATE TABLE `STOCK_COUNT` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SUPLIER`
+-- Table structure for STOCKS
+-- ----------------------------
+DROP TABLE IF EXISTS `STOCKS`;
+CREATE TABLE `STOCKS` (
+  `stockId` int(11) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `creater` int(11) DEFAULT NULL,
+  `empId` int(11) DEFAULT NULL,
+  `helpCode` varchar(255) DEFAULT NULL,
+  `lastmod` datetime DEFAULT NULL,
+  `modifier` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `number` varchar(255) DEFAULT NULL,
+  `parentId` int(11) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `property` int(11) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `stockManager` int(11) DEFAULT NULL,
+  `typeId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`stockId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of STOCKS
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for SUPLIER
 -- ----------------------------
 DROP TABLE IF EXISTS `SUPLIER`;
 CREATE TABLE `SUPLIER` (
@@ -1943,7 +2253,7 @@ INSERT INTO `SUPLIER` VALUES ('2', 'teste', 'testes', 'A', '2013-06-26', '2013-0
 INSERT INTO `SUPLIER` VALUES ('3', '123123', '123123', 'A', '2013-07-01', '2013-07-11', '1', '1', null, '', '', '', '', null, null, null, null, null, '', '', null, null, '', null, null, null, '', null, '', '', null, '', null, null, '', null, '', '', '', '', null, null, null, '', null, '', null, null, 'T', '', null, '', '1', '人民币', 'Y', null);
 
 -- ----------------------------
--- Table structure for `SUPLIER_CONTACT`
+-- Table structure for SUPLIER_CONTACT
 -- ----------------------------
 DROP TABLE IF EXISTS `SUPLIER_CONTACT`;
 CREATE TABLE `SUPLIER_CONTACT` (
@@ -1976,7 +2286,7 @@ INSERT INTO `SUPLIER_CONTACT` VALUES ('2', '2', null, '123123', null, null, 'F',
 INSERT INTO `SUPLIER_CONTACT` VALUES ('3', '3', null, '12312', null, null, 'M', null, '123', '123', '123@q.com', null, '123', 'A', '2013-07-01', '2013-07-11', '1', '1', '123');
 
 -- ----------------------------
--- Table structure for `SUPLIER_TERMS`
+-- Table structure for SUPLIER_TERMS
 -- ----------------------------
 DROP TABLE IF EXISTS `SUPLIER_TERMS`;
 CREATE TABLE `SUPLIER_TERMS` (
@@ -2010,7 +2320,7 @@ CREATE TABLE `SUPLIER_TERMS` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYSTEM_CODE`
+-- Table structure for SYSTEM_CODE
 -- ----------------------------
 DROP TABLE IF EXISTS `SYSTEM_CODE`;
 CREATE TABLE `SYSTEM_CODE` (
@@ -2142,7 +2452,7 @@ INSERT INTO `SYSTEM_CODE` VALUES ('136', '123', '123', '123', 'D', '', 'open', '
 INSERT INTO `SYSTEM_CODE` VALUES ('137', '', '201-500人', null, 'D', 'icon-tip', 'open', '1', '23', '', 'A', '2013-06-24 16:58:30', '2013-06-24 16:58:30', '1', '1', null);
 
 -- ----------------------------
--- Table structure for `SYSTEM_INFO`
+-- Table structure for SYSTEM_INFO
 -- ----------------------------
 DROP TABLE IF EXISTS `SYSTEM_INFO`;
 CREATE TABLE `SYSTEM_INFO` (
@@ -2165,7 +2475,7 @@ CREATE TABLE `SYSTEM_INFO` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `TERMS`
+-- Table structure for TERMS
 -- ----------------------------
 DROP TABLE IF EXISTS `TERMS`;
 CREATE TABLE `TERMS` (
@@ -2183,7 +2493,7 @@ CREATE TABLE `TERMS` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `TERMS_copy`
+-- Table structure for TERMS_copy
 -- ----------------------------
 DROP TABLE IF EXISTS `TERMS_copy`;
 CREATE TABLE `TERMS_copy` (
@@ -2201,7 +2511,7 @@ CREATE TABLE `TERMS_copy` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `TEST`
+-- Table structure for TEST
 -- ----------------------------
 DROP TABLE IF EXISTS `TEST`;
 CREATE TABLE `TEST` (
@@ -2221,7 +2531,7 @@ CREATE TABLE `TEST` (
 INSERT INTO `TEST` VALUES ('1', null, '13123', '123123');
 
 -- ----------------------------
--- Table structure for `USER_ROLE`
+-- Table structure for USER_ROLE
 -- ----------------------------
 DROP TABLE IF EXISTS `USER_ROLE`;
 CREATE TABLE `USER_ROLE` (
@@ -2266,7 +2576,7 @@ INSERT INTO `USER_ROLE` VALUES ('23', '23', '4', 'I', '2013-06-22 13:42:32', '20
 INSERT INTO `USER_ROLE` VALUES ('24', '23', '3', 'I', '2013-06-22 13:42:32', '2013-06-22 13:42:59', '1', '1', null);
 
 -- ----------------------------
--- Table structure for `USERS`
+-- Table structure for USERS
 -- ----------------------------
 DROP TABLE IF EXISTS `USERS`;
 CREATE TABLE `USERS` (
@@ -2300,29 +2610,33 @@ CREATE TABLE `USERS` (
   `TEL` varchar(30) DEFAULT NULL COMMENT '用户电话',
   `LAST_VISIT` datetime DEFAULT NULL,
   `MODIFIER` int(11) DEFAULT NULL,
+  `EMPLOYEE_ID` int(11) DEFAULT NULL,
+  `FORBIDDEN` int(11) DEFAULT NULL,
+  `PRIMARY_GROUP` int(11) DEFAULT NULL,
+  `SALT` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='用户资料表';
 
 -- ----------------------------
 -- Records of USERS
 -- ----------------------------
-INSERT INTO `USERS` VALUES ('1', 'admin', 'admin', 'admin', '2', 'MIS', null, null, 'admin', '12@qq.com', null, null, null, null, null, null, null, 'A', null, '111111', null, null, null, null, '2013-06-14 00:00:00', '1', '1', '1111111', null, null);
-INSERT INTO `USERS` VALUES ('2', 'root', 'root', 'root', '2', 'MIS', null, null, 'root', '123@qq.com', null, null, null, null, null, null, null, 'A', null, '12312312323', null, null, null, null, '2013-06-19 00:00:00', '1', '1', '123', null, null);
-INSERT INTO `USERS` VALUES ('13', 'gsdgsgdsgdg', '123', 'twerywrt', '4', 'asdfasd', null, null, 'ert', 'ewrtewrt', null, null, null, null, null, null, null, 'I', null, '123123123', null, null, null, '2013-06-14 00:00:00', '2013-06-14 00:00:00', '1', '1', 'ert', null, null);
-INSERT INTO `USERS` VALUES ('14', 'ttt', 'ttt', 'ttttttt', '2', 'MIS', null, null, 'tt', 'ttt', null, null, null, null, null, null, null, 'I', null, '', null, null, null, '2013-06-14 00:00:00', '2013-06-14 00:00:00', '1', '1', 'tt', null, null);
-INSERT INTO `USERS` VALUES ('15', '234', '234', '234', '1', '总经理室', null, null, '234', '234', null, null, null, null, null, null, null, 'I', null, '234234234', null, null, null, '2013-06-14 00:00:00', '2013-06-14 00:00:00', '1', '1', '342', null, null);
-INSERT INTO `USERS` VALUES ('16', '123', '123', '123', '2', 'MIS', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123', null, null, null, '2013-06-14 00:00:00', '2013-06-14 00:00:00', '1', '1', '123', null, null);
-INSERT INTO `USERS` VALUES ('17', '12312', '31231', '2312', '5', '12333', null, null, '312', '123', null, null, null, null, null, null, null, 'I', null, '123123123123123123123324234', null, null, null, '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', '3123', null, null);
-INSERT INTO `USERS` VALUES ('18', '123', '123', '3123', '4', 'asdfasd', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123123123', null, null, null, '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', '132', null, null);
-INSERT INTO `USERS` VALUES ('19', '123', '124', '123', '2', 'MIS', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123', null, null, null, '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', '123', null, null);
-INSERT INTO `USERS` VALUES ('20', '123', '3123', '123', '12', '123', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123123123', null, null, null, '2013-06-18 00:00:00', '2013-06-19 00:00:00', '1', '1', '123', null, null);
-INSERT INTO `USERS` VALUES ('21', 'test', 'test', 'test', '2', 'MIS', null, null, 'test', 'test@163.com', null, null, null, null, null, null, null, 'I', null, '', null, null, null, '2013-06-19 00:00:00', '2013-06-19 00:00:00', '1', '1', '111', null, null);
-INSERT INTO `USERS` VALUES ('22', '123', '123', '123', null, '', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123', null, null, null, '2013-06-19 00:00:00', '2013-06-19 00:00:00', '1', '1', '123', null, null);
-INSERT INTO `USERS` VALUES ('23', 'test', 'test', 'test', '1', '总经理室', null, null, 'test', 'atest', null, null, null, null, null, null, null, 'A', null, '测试账号', null, null, null, '2013-06-19 00:00:00', '2013-06-19 00:00:00', '1', '1', '123123', null, null);
-INSERT INTO `USERS` VALUES ('24', 'hy', 'ww', 'ee', '1', '总经理室', null, null, 'ee', '123', null, null, null, null, null, null, null, 'A', null, '123', null, null, null, '2013-06-21 09:19:56', '2013-06-24 15:00:14', '1', '1', '123', null, null);
+INSERT INTO `USERS` VALUES ('1', 'admin', 'admin', 'admin', '2', 'MIS', null, null, 'admin', '12@qq.com', null, null, null, null, null, null, null, 'A', null, '111111', null, null, null, null, '2013-06-14 00:00:00', '1', '1', '1111111', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('2', 'root', 'root', 'root', '2', 'MIS', null, null, 'root', '123@qq.com', null, null, null, null, null, null, null, 'A', null, '12312312323', null, null, null, null, '2013-06-19 00:00:00', '1', '1', '123', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('13', 'gsdgsgdsgdg', '123', 'twerywrt', '4', 'asdfasd', null, null, 'ert', 'ewrtewrt', null, null, null, null, null, null, null, 'I', null, '123123123', null, null, null, '2013-06-14 00:00:00', '2013-06-14 00:00:00', '1', '1', 'ert', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('14', 'ttt', 'ttt', 'ttttttt', '2', 'MIS', null, null, 'tt', 'ttt', null, null, null, null, null, null, null, 'I', null, '', null, null, null, '2013-06-14 00:00:00', '2013-06-14 00:00:00', '1', '1', 'tt', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('15', '234', '234', '234', '1', '总经理室', null, null, '234', '234', null, null, null, null, null, null, null, 'I', null, '234234234', null, null, null, '2013-06-14 00:00:00', '2013-06-14 00:00:00', '1', '1', '342', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('16', '123', '123', '123', '2', 'MIS', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123', null, null, null, '2013-06-14 00:00:00', '2013-06-14 00:00:00', '1', '1', '123', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('17', '12312', '31231', '2312', '5', '12333', null, null, '312', '123', null, null, null, null, null, null, null, 'I', null, '123123123123123123123324234', null, null, null, '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', '3123', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('18', '123', '123', '3123', '4', 'asdfasd', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123123123', null, null, null, '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', '132', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('19', '123', '124', '123', '2', 'MIS', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123', null, null, null, '2013-06-18 00:00:00', '2013-06-18 00:00:00', '1', '1', '123', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('20', '123', '3123', '123', '12', '123', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123123123', null, null, null, '2013-06-18 00:00:00', '2013-06-19 00:00:00', '1', '1', '123', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('21', 'test', 'test', 'test', '2', 'MIS', null, null, 'test', 'test@163.com', null, null, null, null, null, null, null, 'I', null, '', null, null, null, '2013-06-19 00:00:00', '2013-06-19 00:00:00', '1', '1', '111', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('22', '123', '123', '123', null, '', null, null, '123', '123', null, null, null, null, null, null, null, 'I', null, '123123123', null, null, null, '2013-06-19 00:00:00', '2013-06-19 00:00:00', '1', '1', '123', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('23', 'test', 'test', 'test', '1', '总经理室', null, null, 'test', 'atest', null, null, null, null, null, null, null, 'A', null, '测试账号', null, null, null, '2013-06-19 00:00:00', '2013-06-19 00:00:00', '1', '1', '123123', null, null, null, null, null, null);
+INSERT INTO `USERS` VALUES ('24', 'hy', 'ww', 'ee', '1', '总经理室', null, null, 'ee', '123', null, null, null, null, null, null, null, 'A', null, '123', null, null, null, '2013-06-21 09:19:56', '2013-06-24 15:00:14', '1', '1', '123', null, null, null, null, null, null);
 
 -- ----------------------------
--- Table structure for `WAREHOUSE`
+-- Table structure for WAREHOUSE
 -- ----------------------------
 DROP TABLE IF EXISTS `WAREHOUSE`;
 CREATE TABLE `WAREHOUSE` (

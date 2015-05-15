@@ -127,7 +127,6 @@
 						<td><input name="name" id="name" placeholder="请输入程式名称" class="easyui-textbox easyui-validatebox" type="text"/></td>
 						<th>父程序名称</th>
 						<td><input name="pid"  class="easyui-textbox" id="pid" type="text"/><input name="pname" id="pname"  type="hidden"/></td>
-						
 					 </tr>
 					 <tr>
 					    <th>排序编码</th>

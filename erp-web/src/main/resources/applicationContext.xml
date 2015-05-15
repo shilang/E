@@ -21,7 +21,7 @@
         
         <property name="packagesToScan">
         	<list>
-        		<value>com.cloud.erp.entities</value>
+        		<value>com.cloud.erp.entities.table</value>
         	</list>
         </property>
         

@@ -26,10 +26,10 @@ import org.springframework.stereotype.Repository;
 
 import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.UserDao;
-import com.cloud.erp.entities.Role;
-import com.cloud.erp.entities.User;
-import com.cloud.erp.entities.UserRole;
 import com.cloud.erp.entities.shiro.ShiroUser;
+import com.cloud.erp.entities.table.Role;
+import com.cloud.erp.entities.table.User;
+import com.cloud.erp.entities.table.UserRole;
 import com.cloud.erp.entities.viewmodel.UserRoleModel;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
@@ -64,7 +64,6 @@ public class UserDaoImpl implements UserDao {
 			for(User user : addList){
 				user.setCreated(new Date());
 				user.setLastmod(new Date());
-				user.setLastVisit(new Date());
 				user.setCreater(shiroUser.getUserId());
 				user.setModifier(shiroUser.getUserId());
 				user.setStatus(Constants.PERSISTENCE_STATUS);

@@ -17,7 +17,7 @@ package com.cloud.erp.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.cloud.erp.entities.Parameter;
+import com.cloud.erp.entities.table.Parameter;
 import com.cloud.erp.entities.viewmodel.ParameterModel;
 
 /**

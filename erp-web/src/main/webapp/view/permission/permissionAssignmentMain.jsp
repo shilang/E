@@ -56,8 +56,7 @@
 				});
 
 		$function = $("#function");
-		$function
-				.treegrid({
+		$function.treegrid({
 					width : 'auto',
 					height : $(this).height() - 120,
 					url : "permission/permissionAssignmentAction!findAllFunctionList.action",
@@ -238,9 +237,7 @@
 		});
 	}
 	function getPermission(rowIndex, rowData) {
-		$
-				.post(
-						"permission/permissionAssignmentAction!getRolePermission.action",
+		$.post("permission/permissionAssignmentAction!getRolePermission.action",
 						{
 							roleId : rowData.roleId
 						},

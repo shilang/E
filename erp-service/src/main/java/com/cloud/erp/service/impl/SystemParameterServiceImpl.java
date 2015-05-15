@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.SystemParameterDao;
-import com.cloud.erp.entities.Parameter;
+import com.cloud.erp.entities.table.Parameter;
 import com.cloud.erp.entities.viewmodel.ParameterModel;
 import com.cloud.erp.service.SystemParameterService;
 

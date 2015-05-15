@@ -21,7 +21,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cloud.erp.entities.Log;
+import com.cloud.erp.entities.table.Log;
 import com.cloud.erp.entities.viewmodel.GridModel;
 import com.cloud.erp.service.LogService;
 import com.cloud.erp.utils.Constants;

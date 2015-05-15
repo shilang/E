@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.LogDao;
-import com.cloud.erp.entities.Log;
+import com.cloud.erp.entities.table.Log;
 import com.cloud.erp.service.LogService;
 import com.cloud.erp.utils.PageUtil;
 

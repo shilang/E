@@ -16,6 +16,7 @@
 <script type="text/javascript" src="web-static/script/jquery-easyui-1.4.1/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="web-static/script/jquery-easyui-1.4.1/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="web-static/script/jqueryUtil.js"></script>
+<script type="text/javascript" src="web-static/script/jquery.erp.js"></script>
 
 <style type="text/css">
 	body{

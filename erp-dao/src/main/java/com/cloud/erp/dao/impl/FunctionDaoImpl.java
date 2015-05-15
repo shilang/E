@@ -24,7 +24,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.FunctionDao;
-import com.cloud.erp.entities.Permission;
+import com.cloud.erp.entities.table.Permission;
 import com.cloud.erp.entities.viewmodel.TreeGridModel;
 import com.cloud.erp.entities.viewmodel.TreeModel;
 import com.cloud.erp.utils.Constants;
@@ -65,7 +65,7 @@ public class FunctionDaoImpl implements FunctionDao {
 			hql += " and t.pid=" + pid;
 		}
 
-		List<Permission> list = baseDao.find(hql, null);
+		List<Permission> list = baseDao.find(hql);
 		List<TreeGridModel> tempList = new ArrayList<TreeGridModel>();
 		for (Permission function : list) {
 			TreeGridModel treeGridModel = new TreeGridModel();
@@ -92,7 +92,7 @@ public class FunctionDaoImpl implements FunctionDao {
 	public boolean delFunction(Integer id) {
 		// TODO Auto-generated method stub
 		String hql = " from Permission t where t.status='A' and t.pid=" + id;
-		List<Permission> list = baseDao.find(hql, null);
+		List<Permission> list = baseDao.find(hql);
 		if (list.size() != 0) {
 			return false;
 		} else {
@@ -140,7 +140,7 @@ public class FunctionDaoImpl implements FunctionDao {
 	public List<TreeModel> findAllFunctionList() {
 		// TODO Auto-generated method stub
 		String hql = "from Permission t where t.status='A' and t.type='F' ";
-		List<Permission> list = baseDao.find(hql, null);
+		List<Permission> list = baseDao.find(hql);
 		List<TreeModel> tempList = new ArrayList<TreeModel>();
 		for (Permission function : list) {
 			TreeModel treeModel = new TreeModel();

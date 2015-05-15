@@ -14,7 +14,7 @@
  */
 package com.cloud.erp.service;
 
-import com.cloud.erp.entities.Bug;
+import com.cloud.erp.entities.table.Bug;
 import com.cloud.erp.utils.PageUtil;
 
 import java.util.List;

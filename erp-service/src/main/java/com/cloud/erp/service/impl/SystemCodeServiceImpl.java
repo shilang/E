@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.SystemCodeDao;
-import com.cloud.erp.entities.SystemCode;
+import com.cloud.erp.entities.table.SystemCode;
 import com.cloud.erp.entities.viewmodel.TreeModel;
 import com.cloud.erp.service.SystemCodeService;
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import com.cloud.erp.entities.Role;
+import com.cloud.erp.entities.table.Role;
 
 public interface BaseDao<T> {
 

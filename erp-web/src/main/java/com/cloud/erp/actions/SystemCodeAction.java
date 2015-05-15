@@ -18,7 +18,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cloud.erp.entities.SystemCode;
+import com.cloud.erp.entities.table.SystemCode;
 import com.cloud.erp.entities.viewmodel.Json;
 import com.cloud.erp.service.SystemCodeService;
 import com.cloud.erp.utils.Constants;

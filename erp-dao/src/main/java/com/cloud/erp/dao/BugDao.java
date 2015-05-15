@@ -17,7 +17,7 @@ package com.cloud.erp.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.cloud.erp.entities.Bug;
+import com.cloud.erp.entities.table.Bug;
 import com.cloud.erp.utils.PageUtil;
 
 /**

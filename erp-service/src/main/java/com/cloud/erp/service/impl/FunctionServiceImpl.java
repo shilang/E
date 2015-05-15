@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.FunctionDao;
-import com.cloud.erp.entities.Permission;
+import com.cloud.erp.entities.table.Permission;
 import com.cloud.erp.entities.viewmodel.TreeGridModel;
 import com.cloud.erp.entities.viewmodel.TreeModel;
 import com.cloud.erp.service.FunctionService;

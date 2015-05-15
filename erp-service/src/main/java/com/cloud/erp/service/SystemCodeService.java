@@ -16,7 +16,7 @@ package com.cloud.erp.service;
 
 import java.util.List;
 
-import com.cloud.erp.entities.SystemCode;
+import com.cloud.erp.entities.table.SystemCode;
 import com.cloud.erp.entities.viewmodel.TreeModel;
 
 /**

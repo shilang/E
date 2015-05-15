@@ -26,8 +26,8 @@ import org.springframework.stereotype.Repository;
 
 import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.SystemParameterDao;
-import com.cloud.erp.entities.Parameter;
 import com.cloud.erp.entities.shiro.ShiroUser;
+import com.cloud.erp.entities.table.Parameter;
 import com.cloud.erp.entities.viewmodel.CheckBoxModel;
 import com.cloud.erp.entities.viewmodel.Options;
 import com.cloud.erp.entities.viewmodel.ParameterModel;

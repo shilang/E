@@ -36,7 +36,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
 
-import com.cloud.erp.entities.Bug;
+import com.cloud.erp.entities.table.Bug;
 import com.cloud.erp.entities.viewmodel.GridModel;
 import com.cloud.erp.service.BugService;
 import com.cloud.erp.utils.Constants;

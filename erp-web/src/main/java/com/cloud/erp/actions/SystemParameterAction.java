@@ -23,7 +23,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
-import com.cloud.erp.entities.Parameter;
+import com.cloud.erp.entities.table.Parameter;
 import com.cloud.erp.service.SystemParameterService;
 import com.opensymphony.xwork2.ModelDriven;
 
