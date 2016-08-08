@@ -1,7 +1,7 @@
 /**
  * @Title:  AuxiliaryResMessage.java
  * @Package:  com.cloud.erp.entities.table
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月23日 下午2:16:35
@@ -30,7 +30,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName AuxiliaryResMessage
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月23日 下午2:16:35
  *
@@ -54,6 +54,19 @@ public class AuxiliaryResMessage implements Serializable {
 	private Date lastmod;
 	private Integer creater;
 	private Integer modifier;
+
+	/**
+	 * 
+	 */
+	public AuxiliaryResMessage() {
+	}
+
+	/**
+	 * @param messageId
+	 */
+	public AuxiliaryResMessage(Integer messageId) {
+		this.messageId = messageId;
+	}
 
 	@Id
 	@GeneratedValue

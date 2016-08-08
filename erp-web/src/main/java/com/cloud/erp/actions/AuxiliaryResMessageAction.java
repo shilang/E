@@ -1,7 +1,7 @@
 /**
  * @Title:  AuxiliaryResMessageAction.java
  * @Package:  com.cloud.erp.actions
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月5日 上午11:07:17
@@ -14,41 +14,33 @@
  */
 package com.cloud.erp.actions;
 
+import javax.annotation.Resource;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cloud.erp.common.BaseAction;
 import com.cloud.erp.entities.table.AuxiliaryResMessage;
-import com.cloud.erp.entities.viewmodel.GridModel;
 import com.cloud.erp.service.AuxiliaryResMessageService;
-import com.cloud.erp.utils.Constants;
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * @ClassName AuxiliaryResMessageAction
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年5月5日 上午11:07:17
  *
  */
 @Namespace("/auxiliaryResMessage")
-@Action("auxiliaryResMessageAction")
 public class AuxiliaryResMessageAction extends BaseAction implements ModelDriven<AuxiliaryResMessage>{
 
 	private static final long serialVersionUID = 1L;
+	
+	@Resource
 	private AuxiliaryResMessageService auxiliaryResMessageService;
+	
 	private AuxiliaryResMessage auxiliaryResMessage;
 	private Integer id;
-	
-	/**
-	 * @param auxiliaryResMessageService
-	 *            the auxiliaryResMessageService to set
-	 */
-	@Autowired
-	public void setAuxiliaryResMessageService(
-			AuxiliaryResMessageService auxiliaryResMessageService) {
-		this.auxiliaryResMessageService = auxiliaryResMessageService;
-	}
 
 	public AuxiliaryResMessage getAuxiliaryResMessage() {
 		return auxiliaryResMessage;
@@ -66,39 +58,29 @@ public class AuxiliaryResMessageAction extends BaseAction implements ModelDriven
 		this.id = id;
 	}
 	
+	@Action(value = "find")
 	public String findAuxiliaryResMessages() throws Exception {
-
-		GridModel gridModel = new GridModel();
-		gridModel.setRows(auxiliaryResMessageService.findAuxiliaryResMessages(id));
-		gridModel.setTotal(auxiliaryResMessageService.getCount(id));
-
-		OutputJson(gridModel);
-
-		return null;
+		JSONWriter(auxiliaryResMessageService.findAuxiliaryResMessages(id), 
+				auxiliaryResMessageService.getCount(id));
+		return RJSON;
 	}
 
+	@Action(value = "persist")
 	public String persistenceAuxiliaryResMessage() throws Exception {
-		OutputJson(
-				getMessage(auxiliaryResMessageService
-						.persistenceAuxiliaryResMessage(getModel())),
-				Constants.TEXT_TYPE_PLAIN);
-		return null;
+		boolean result = auxiliaryResMessageService.persistence(getModel());
+		JSONWriter(result);
+		return RJSON;
 	}
 
+	@Action(value = "delete")
 	public String delAuxiliaryResMessage() throws Exception {
-		OutputJson(getMessage(auxiliaryResMessageService
-				.delAuxiliaryResMessage(id)));
-		return null;
+		boolean result = auxiliaryResMessageService.deleteToUpdate(id);
+		JSONWriter(result);
+		return RJSON;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
-	 */
 	@Override
 	public AuxiliaryResMessage getModel() {
-		// TODO Auto-generated method stub
 		if (null == auxiliaryResMessage) {
 			auxiliaryResMessage = new AuxiliaryResMessage();
 		}

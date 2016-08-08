@@ -1,7 +1,7 @@
 /**
- * @Title:  SalesPriceListDaoImpl.java
+\ * @Title:  SalesPriceListDaoImpl.java
  * @Package:  com.cloud.erp.dao.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月22日 上午9:16:31
@@ -17,75 +17,87 @@ package com.cloud.erp.dao.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
-import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.SalesPriceListDao;
+import com.cloud.erp.dao.common.GeneralDaoSupport;
+import com.cloud.erp.dao.common.ReferenceDao;
+import com.cloud.erp.dao.common.SingleEntryDaoSupport;
+import com.cloud.erp.dao.common.StatusFields;
 import com.cloud.erp.entities.table.SalesPriceList;
-import com.cloud.erp.utils.Constants;
+import com.cloud.erp.exceptions.UpdateReferenceException;
 import com.cloud.erp.utils.PageUtil;
 
 /**
- * @ClassName  SalesPriceListDaoImpl
- * @Description  TODO
- * @author  bollen bollen@live.cn
- * @date  2015年4月22日 上午9:16:31
+ * @ClassName SalesPriceListDaoImpl
+ * @Description 
+ * @author bollen bollen@live.cn
+ * @date 2015年4月22日 上午9:16:31
  *
  */
 @Repository("salesPriceListDao")
 public class SalesPriceListDaoImpl implements SalesPriceListDao {
 
-	private BaseDao<SalesPriceList> baseDao;
+	@Resource
+	private GeneralDaoSupport<SalesPriceList> generalDao;
 	
-	/**
-	 * @param baseDao the baseDao to set
-	 */
-	@Autowired
-	public void setBaseDao(BaseDao<SalesPriceList> baseDao) {
-		this.baseDao = baseDao;
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.SalesPriceListDao#findSalesPriceList(com.sun.xml.internal.xsom.impl.scd.Iterators.Map, com.cloud.erp.utils.PageUtil)
-	 */
+	@Resource
+	private SingleEntryDaoSupport<SalesPriceList> singleEntryDao;
+	
+	@Resource
+	private ReferenceDao<SalesPriceList> referenceDao;
+
 	@Override
-	public List<SalesPriceList> findSalesPriceList(Map<String, Object> params,
-			PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		String hql = "from SalesPriceList t where t.status='A' ";
-		hql += Constants.getSearchConditionsHQL("t", params);
-		hql += Constants.getGradeSearchConditionsHQL("t", pageUtil);
-		
-		return baseDao.find(hql, params, pageUtil.getPage(), pageUtil.getRows());
+	public List<SalesPriceList> findAll(Map<String, Object> params, PageUtil pageUtil) {
+		return generalDao.findAll(this.getClass(), params, pageUtil);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.SalesPriceListDao#persistenceSalesPriceList(com.cloud.erp.entities.SalesPriceList)
-	 */
 	@Override
-	public boolean persistenceSalesPriceList(SalesPriceList salesPriceList) {
-		// TODO Auto-generated method stub	
-		return false;
+	public long getCount(Map<String, Object> params) {
+		return generalDao.getCount(this.getClass(), params);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.SalesPriceListDao#delSalesPriceList(java.lang.Integer)
-	 */
 	@Override
-	public boolean delSalesPriceList(Integer salesPriceListId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.SalesPriceListDao#getCount(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
-	@Override
-	public Long getCount(Map<String, Object> params, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		String hql = "select count(*) from SalesPriceList t where t.status='A' ";
-		hql += Constants.getSearchConditionsHQL("t", params);
-		hql += Constants.getGradeSearchConditionsHQL("t", pageUtil);
-		return baseDao.count(hql, params);
+	public SalesPriceList get(Integer id) {
+		return generalDao.get(SalesPriceList.class, id);
 	}
 
+	@Override
+	public void update(SalesPriceList master) {
+		generalDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(SalesPriceList master) throws Exception {
+		return generalDao.persistence(master, new StatusFields());
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return generalDao.deleteToUpdate(SalesPriceList.class, pid, new StatusFields());
+	}
+
+	@Override
+	public <E> List<E> findEntriesById(Integer pid, Class<E> entry) {
+		return singleEntryDao.findEntriesById(SalesPriceList.class, pid, entry);
+	}
+
+	@Override
+	public <E> boolean persistenceEntries(SalesPriceList master,
+			Map<String, List<E>> entries) {
+		return singleEntryDao.persistenceEntries(master, entries, new StatusFields());
+	}
+
+	@Override
+	public boolean deleteToUpdateEntries(Integer pid) {
+		return singleEntryDao.deleteToUpdateEntries(SalesPriceList.class, pid, new StatusFields());
+	}
+
+	@Override
+	public boolean updateReference(Class<SalesPriceList> clazz, String number, boolean mode)
+			throws UpdateReferenceException {
+		return referenceDao.updateReference(clazz, number, mode);
+	}
 }

@@ -1,7 +1,7 @@
 /**
  * @Title:  LoginServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月4日  下午5:31:14
@@ -25,7 +25,7 @@ import com.cloud.erp.service.LoginService;
 
 /**
  * @ClassName  LoginServiceImpl
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月4日  下午5:31:14
  *
@@ -43,13 +43,10 @@ public class LoginServiceImpl implements LoginService {
 	public void setLoginDao(LoginDao loginDao) {
 		this.loginDao = loginDao;
 	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.LoginService#findMenuList()
-	 */
+
 	@Override
-	public List<MenuModel> findMenuList() {
-		// TODO Auto-generated method stub
-		return loginDao.findMenuList();
+	public List<MenuModel> findMenuList(Integer pid) {
+		return loginDao.findMenuList(pid);
 	}
 
 }

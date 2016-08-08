@@ -1,7 +1,7 @@
 /**
  * @Title:  Area.java
  * @Package:  com.cloud.erp.entities.table
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月23日 下午2:50:10
@@ -30,7 +30,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName Area
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月23日 下午2:50:10
  *
@@ -47,6 +47,7 @@ public class Area implements Serializable {
 	private String name;
 	private String nameEn;
 	private Integer parentId;
+	private String remark;
 	private String status;
 	private Date created;
 	private Date lastmod;
@@ -98,6 +99,15 @@ public class Area implements Serializable {
 
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
+	}
+
+	@Column(name = "REMARK", length = 2000)
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	@Column(name = "STATUS", length = 1)

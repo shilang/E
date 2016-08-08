@@ -1,7 +1,7 @@
 /**
  * @Title:  AuxiliaryResMessageServiceImpl.java
  * @Package:  AuxiliaryResMessageService
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月5日 上午11:14:16
@@ -23,62 +23,61 @@ import org.springframework.stereotype.Service;
 import com.cloud.erp.dao.AuxiliaryResMessageDao;
 import com.cloud.erp.entities.table.AuxiliaryResMessage;
 import com.cloud.erp.service.AuxiliaryResMessageService;
+import com.cloud.erp.utils.PageUtil;
 
 /**
- * @ClassName  AuxiliaryResMessageServiceImpl
- * @Description  TODO
- * @author  bollen bollen@live.cn
- * @date  2015年5月5日 上午11:14:16
+ * @ClassName AuxiliaryResMessageServiceImpl
+ * @Description 
+ * @author bollen bollen@live.cn
+ * @date 2015年5月5日 上午11:14:16
  *
  */
 @Service("auxiliaryResMessageService")
 public class AuxiliaryResMessageServiceImpl implements
 		AuxiliaryResMessageService {
 
-	private AuxiliaryResMessageDao auxiliaryResMessageDao;
-	
-	/**
-	 * @param auxiliaryResMessageDao the auxiliaryResMessageDao to set
-	 */
 	@Autowired
-	public void setAuxiliaryResMessageDao(
-			AuxiliaryResMessageDao auxiliaryResMessageDao) {
-		this.auxiliaryResMessageDao = auxiliaryResMessageDao;
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AuxiliaryResMessageService#findAuxiliaryResMessages(java.util.Map)
-	 */
+	private AuxiliaryResMessageDao auxiliaryResMessageDao;
+
 	@Override
 	public List<AuxiliaryResMessage> findAuxiliaryResMessages(Integer resId) {
-		// TODO Auto-generated method stub
 		return auxiliaryResMessageDao.findAuxiliaryResMessages(resId);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AuxiliaryResMessageService#persistenceAuxiliaryResMessage(com.cloud.erp.entities.table.AuxiliaryResMessage)
-	 */
-	@Override
-	public boolean persistenceAuxiliaryResMessage(
-			AuxiliaryResMessage auxiliaryResMessage) {
-		// TODO Auto-generated method stub
-		return auxiliaryResMessageDao.persistenceAuxiliaryResMessage(auxiliaryResMessage);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AuxiliaryResMessageService#delAuxiliaryResMessage(java.lang.Integer)
-	 */
-	@Override
-	public boolean delAuxiliaryResMessage(Integer id) {
-		// TODO Auto-generated method stub
-		return auxiliaryResMessageDao.delAuxiliaryResMessage(id);
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AuxiliaryResMessageService#getCount(java.lang.Integer)
-	 */
 	@Override
 	public Long getCount(Integer resId) {
-		// TODO Auto-generated method stub
 		return auxiliaryResMessageDao.getCount(resId);
+	}
+
+	@Override
+	public List<AuxiliaryResMessage> findAll(Map<String, Object> params,
+			PageUtil pageUtil) {
+		return auxiliaryResMessageDao.findAll(params, pageUtil);
+	}
+
+	@Override
+	public long getCount(Map<String, Object> params) {
+		return auxiliaryResMessageDao.getCount(params);
+	}
+
+	@Override
+	public AuxiliaryResMessage get(Integer id) {
+		return auxiliaryResMessageDao.get(id);
+	}
+
+	@Override
+	public void update(AuxiliaryResMessage master) {
+		auxiliaryResMessageDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(AuxiliaryResMessage master) throws Exception {
+		return auxiliaryResMessageDao.persistence(master);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return auxiliaryResMessageDao.deleteToUpdate(pid);
 	}
 
 }

@@ -1,7 +1,7 @@
 /**
  * @Title:  BugDao.java
  * @Package:  com.cloud.erp.dao
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午10:20:45
@@ -14,26 +14,16 @@
  */
 package com.cloud.erp.dao;
 
-import java.util.List;
-import java.util.Map;
-
+import com.cloud.erp.dao.common.GeneralDao;
 import com.cloud.erp.entities.table.Bug;
-import com.cloud.erp.utils.PageUtil;
 
 /**
  * @ClassName BugDao
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年3月31日 上午10:20:45
  *
  */
-public interface BugDao {
+public interface BugDao extends GeneralDao<Bug>{
 
-	List<Bug> findBugList(Map<String, Object> param, PageUtil pageUtil);
-
-	Long getCount(Map<String, Object> param, PageUtil pageUtil);
-
-	boolean addBug(Bug bug);
-
-	boolean delBug(Integer bugId);
 }

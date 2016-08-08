@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.erp.mapper.UserMapper">
+	
+	<resultMap type="UserInfo" id="userResultMap">
+		<id property="id" column="u_id"/>
+		<result property="name" column="u_name"/>
+		<result property="employeeId" column="e_id"/>
+		<result property="employeeName" column="e_name"/>
+		<result property="departmentId" column="d_id"/>
+		<result property="departmentName" column="d_name"/>
+		<association property="deptManager" javaType="Employee" column="d_manager" select="getEmpById"></association>
+	</resultMap>
+	
+	<resultMap type="Employee" id="empResultMap">
+		<id property="employeeId" column="EMPLOYEE_ID"/>
+		<result property="name" column="NAME"/>
+	</resultMap>
+
+	<select id="getUserById" parameterType="int" resultMap="userResultMap">
+		select u.USER_ID u_id, u.NAME u_name, e.EMPLOYEE_ID e_id, e.NAME e_name, d.DEPARTMENT_ID d_id, 
+		d.NAME d_name, d.MANAGER d_manager  
+		from USERS u, EMPLOYEES e, DEPARTMENTS d 
+		where u.EMPLOYEE_ID=e.EMPLOYEE_ID and e.DEPARTMENT_ID=d.DEPARTMENT_ID and u.USER_ID=#{id} 
+	</select>
+	
+	<select id="getEmpById" parameterType="int" resultMap="empResultMap">
+		select EMPLOYEE_ID, NAME from USERS u where u.EMPLOYEE_ID=#{id}
+	</select>
+	
+</mapper>

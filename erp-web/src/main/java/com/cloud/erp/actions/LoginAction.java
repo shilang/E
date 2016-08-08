@@ -1,7 +1,7 @@
 /**
  * @Title:  LoginAction.java
  * @Package:  com.cloud.erp.actions
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月4日  下午4:55:28
@@ -14,156 +14,126 @@
  */
 package com.cloud.erp.actions;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
+import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.session.UnknownSessionException;
-import org.apache.shiro.subject.Subject;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cloud.erp.entities.viewmodel.Json;
-import com.cloud.erp.exceptions.IncorrectCaptchaException;
+import com.cloud.erp.common.BaseAction;
+import com.cloud.erp.entities.shiro.ShiroUser;
+import com.cloud.erp.entities.viewmodel.Account;
 import com.cloud.erp.service.LoginService;
-import com.cloud.erp.shiro.token.CaptchaUsernamePasswordToken;
+import com.cloud.erp.service.UserService;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 
 /**
  * @ClassName  LoginAction
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月4日  下午4:55:28
  *
  */
 
-@Action(value = "loginAction")
 public class LoginAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;
-	private String username;
-	private String password;
-	private String captcha;
-	private String userMacAddr;
-	private String userKey;
 	
 	@Autowired
 	private LoginService loginService;
 	
-	public String getUsername() {
-		return username;
+	@Autowired
+	private UserService userService;
+	
+	private Integer menuId;
+	
+	private boolean success;
+	
+	public Integer getMenuId() {
+		return menuId;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setMenuId(Integer menuId) {
+		this.menuId = menuId;
 	}
 
-	public String getPassword() {
-		return password;
+	public boolean getSuccess() {
+		return success;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 
-	public String getCaptcha() {
-		return captcha;
-	}
-
-	public void setCaptcha(String captcha) {
-		this.captcha = captcha;
-	}
-
-	public String getUserMacAddr() {
-		return userMacAddr;
-	}
-
-	public void setUserMacAddr(String userMacAddr) {
-		this.userMacAddr = userMacAddr;
-	}
-
-	public String getUserKey() {
-		return userKey;
-	}
-
-	public void setUserKey(String userKey) {
-		this.userKey = userKey;
-	}
-
+	@Action(value = "login", results = {@Result(name="input", location="/login.jsp")})
 	public String load() throws Exception{
-		Subject subject = SecurityUtils.getSubject();
-		CaptchaUsernamePasswordToken token = new CaptchaUsernamePasswordToken();
-		token.setUsername(username);
-		token.setPassword(password.toCharArray());
-		token.setCaptcha(captcha);
-		token.setRememberMe(true);
-		
-		Json json = new Json();
-		json.setTitle("登录提示");
-		
-		try {
-			subject.login(token);
-			json.setStatus(true);
-		} catch (UnknownSessionException use) {
-			// TODO: handle exception
-			subject = new Subject.Builder().buildSubject();
-			subject.login(token);
-			json.setMessage(Constants.UNKNOWN_SESSION_EXCEPTION);
-		} catch (UnknownAccountException ex) {
-			// TODO: handle exception
-			json.setMessage(Constants.UNKNOWN_ACCOUNT_EXCEPTION);
-		} catch (IncorrectCredentialsException ice) {
-			// TODO: handle exception
-			json.setMessage(Constants.INCORRECT_CREDENTIALS_EXCEPTION);
-		}catch (LockedAccountException lae) {
-			// TODO: handle exception
-			json.setMessage(Constants.LOCKED_ACCOUNT_EXCEPTION);
-		}catch (IncorrectCaptchaException ie) {
-			// TODO: handle exception
-			json.setMessage(Constants.INCORRECT_CAPTCHA_EXCEPTION);
-		}catch (AuthenticationException ae) {
-			// TODO: handle exception
-			json.setMessage(Constants.AUTHENTICATION_EXCEPTION);
-		}catch (Exception e) {
-			// TODO: handle exception
-			json.setMessage(Constants.UNKNOWN_EXCEPTION);
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String shiroLoginFailure = (String) request.getAttribute("shiroLoginFailure");
+		String loginErr = null;
+		setSuccess(true);
+		if (null != shiroLoginFailure){
+			if(UnknownAccountException.class.getName().equals(shiroLoginFailure)) {
+				loginErr = "未知用户";
+			}else if(IncorrectCredentialsException.class.getName().equals(shiroLoginFailure)) {
+				loginErr = "密码错误";
+			}else if(LockedAccountException.class.getName().equals(shiroLoginFailure)){
+				loginErr = "账户锁定";
+			}else if(Constants.CAPTCHA_ERR.equals(shiroLoginFailure)){
+				loginErr = "验证码错误";
+			}else if(AuthenticationException.class.getName().equals(shiroLoginFailure)) {
+				loginErr = "认证错误";
+			}else{
+				loginErr = "未知错误";
+			}
+			setSuccess(false);
+			request.setAttribute("loginMsg", loginErr);
 		}
-		
-		OutputJson(json, Constants.TEXT_TYPE_PLAIN);
-		
+		return INPUT;
+	}
+	
+	@Action(value = "getAccount")
+	public String getAccount() throws Exception{
+		OutputJson(getCurrUser());
+		return null;
+	}
+	
+	@Action(value = "getAccounts")
+	public Account getAccounts() throws Exception{
+		ShiroUser user = getCurrUser();
+		Account account = new Account();
+		account.setAccId(user.getUserId());
+		account.setAccName(user.getAccount());
+		account.setUsers(userService.findUsers());
+		OutputJson(account);
 		return null;
 	}
 	
 	/**
 	 * 
-	 * function: TODO user logout
-	 *
-	 * @Title:  logout
-	 * @param: 
-	 * @return:  String
-	 * @throws:
-	 */
-	public String logout() throws Exception{
-		SecurityUtils.getSubject().logout();
-		Json json = new Json();
-		json.setStatus(true);
-		OutputJson(json);
-		return null;
-	}
-	
-	/**
-	 * 
-	 * function: TODO search all menu for the user
+	 * function: search all menu for the user
 	 *
 	 * @Title:  findAllFunctionList
 	 * @param: 
 	 * @return:  String
 	 * @throws:
 	 */
+	@Action(value = "findMenus")
 	public String findAllFunctionList() throws Exception{
-		OutputJson(loginService.findMenuList());
+		OutputJson(loginService.findMenuList(getMenuId()));
 		return null;
+	}
+	
+	private ShiroUser getCurrUser(){
+		ShiroUser user = new ShiroUser();
+		user.setUserId(Commons.getCurrentUser().getUserId());
+		user.setAccount(Commons.getCurrentUser().getAccount());
+		return user;
 	}
 
 }

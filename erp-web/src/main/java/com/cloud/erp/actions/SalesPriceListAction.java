@@ -1,7 +1,7 @@
 /**
  * @Title:  SalesPriceListAction.java
  * @Package:  com.cloud.erp.actions
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月22日 上午10:34:07
@@ -14,45 +14,37 @@
  */
 package com.cloud.erp.actions;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cloud.erp.common.BaseAction;
 import com.cloud.erp.entities.table.SalesPriceList;
-import com.cloud.erp.entities.viewmodel.GridModel;
+import com.cloud.erp.entities.table.SalesPriceListEntry;
 import com.cloud.erp.service.SalesPriceListService;
-import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * @ClassName SalesPriceListAction
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月22日 上午10:34:07
  *
  */
 @Namespace("/salesPriceList")
-@Action("salesPriceListAction")
 public class SalesPriceListAction extends BaseAction implements
 		ModelDriven<SalesPriceList> {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Resource
 	private SalesPriceListService salesPriceListService;
 	private SalesPriceList salesPriceList;
-
-	/**
-	 * @param salesPriceListService
-	 *            the salesPriceListService to set
-	 */
-	@Autowired
-	public void setSalesPriceListService(
-			SalesPriceListService salesPriceListService) {
-		this.salesPriceListService = salesPriceListService;
-	}
 
 	public SalesPriceList getSalesPriceList() {
 		return salesPriceList;
@@ -62,34 +54,53 @@ public class SalesPriceListAction extends BaseAction implements
 		this.salesPriceList = salesPriceList;
 	}
 
-	public String findSalesPriceList() throws Exception {
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (null != searchValue && "".equals(searchValue)) {
-			map.put(getSearchName(), Constants.GET_SQL_LIKE + searchValue
-					+ Constants.GET_SQL_LIKE);
-		}
-		PageUtil pageUtil = new PageUtil(page, rows, searchAnds,
-				searchColumnNames, searchConditions, searchVals);
-		GridModel gridModel = new GridModel();
-		gridModel.setRows(salesPriceListService.findSalesPriceList(map,pageUtil));
-		gridModel.setTotal(salesPriceListService.getCount(map, pageUtil));
-		OutputJson(gridModel);
-		return null;
+	@Action("findAll")
+	public String findAll() throws Exception {
+		Map<String, Object> params = getQueryParamsForMain();
+		PageUtil pageUtil = getPageUtil();
+		JSONWriter(salesPriceListService.findAll(params,pageUtil), 
+				salesPriceListService.getCount(params));
+		return RJSON;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
-	 */
+	
+	@Action("findEntriesById")
+	public String findEntriesById() throws Exception{
+		JSONWriter(salesPriceListService.findEntriesById(getId(), SalesPriceListEntry.class), null);
+		return RJSON;
+	}
+	
+	@Action("persistence")
+	public String persistence() throws Exception{
+		Map<String, List<SalesPriceListEntry>> entries = getEntriesParams(SalesPriceListEntry.class);
+		boolean result = salesPriceListService.persistence(salesPriceList, entries);
+		JSONWriter(result);
+		return RJSON;
+	}
+	
+	@Action("delete")
+	public String delete() throws Exception{
+		boolean result = salesPriceListService.deleteToUpdateAll(getId());
+		JSONWriter(result);
+		return RJSON;
+	}
+	
+	@Action("exportExcel")
+	public String exportExcel() throws Exception{
+		String fileName = salesPriceListService.exportExcel(salesPriceListService.findAll(null, null), 
+				getOutputStream());
+		setFileName(fileName);
+		return DOWNLOAD;
+	}
+	
 	@Override
 	public SalesPriceList getModel() {
-		// TODO Auto-generated method stub
 		if (null == salesPriceList) {
 			salesPriceList = new SalesPriceList();
 		}
 		return salesPriceList;
 	}
-
+	
+	private Integer getId(){
+		return this.salesPriceList.getInterId();
+	}
 }

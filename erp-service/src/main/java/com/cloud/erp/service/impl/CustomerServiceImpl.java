@@ -1,7 +1,7 @@
 /**
  * @Title:  CustomerServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月12日 上午9:15:08
@@ -26,59 +26,46 @@ import com.cloud.erp.service.CustomerService;
 import com.cloud.erp.utils.PageUtil;
 
 /**
- * @ClassName  CustomerServiceImpl
- * @Description  TODO
- * @author  bollen bollen@live.cn
- * @date  2015年5月12日 上午9:15:08
+ * @ClassName CustomerServiceImpl
+ * @Description 
+ * @author bollen bollen@live.cn
+ * @date 2015年5月12日 上午9:15:08
  *
  */
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
 
-	private CustomerDao customerDao;
-	
-	/**
-	 * @param customerDao the customerDao to set
-	 */
 	@Autowired
-	public void setCustomerDao(CustomerDao customerDao) {
-		this.customerDao = customerDao;
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.CustomerService#findCustomers(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
+	private CustomerDao customerDao;
+
 	@Override
-	public List<Customer> findCustomers(Map<String, Object> params,
-			PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return customerDao.findCustomers(params, pageUtil);
+	public List<Customer> findAll(Map<String, Object> params, PageUtil pageUtil) {
+		return customerDao.findAll(params, pageUtil);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.CustomerService#getCount(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
 	@Override
-	public Long getCount(Map<String, Object> params, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return customerDao.getCount(params, pageUtil);
+	public long getCount(Map<String, Object> params) {
+		return customerDao.getCount(params);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.CustomerService#persistenceCustomer(com.cloud.erp.entities.table.Customer)
-	 */
 	@Override
-	public boolean persistenceCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return customerDao.persistenceCustomer(customer);
+	public Customer get(Integer id) {
+		return customerDao.get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.CustomerService#delCustomer(java.lang.Integer)
-	 */
 	@Override
-	public boolean delCustomer(Integer id) {
-		// TODO Auto-generated method stub
-		return customerDao.delCustomer(id);
+	public void update(Customer master) {
+		customerDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(Customer master) throws Exception {
+		return customerDao.persistence(master);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return customerDao.deleteToUpdate(pid);
 	}
 
 }

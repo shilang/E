@@ -1,7 +1,7 @@
 /**
  * @Title:  SystemParameterAction.java
  * @Package:  com.cloud.erp.actions
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月30日 下午5:00:19
@@ -23,13 +23,13 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
+import com.cloud.erp.common.BaseAction;
 import com.cloud.erp.entities.table.Parameter;
 import com.cloud.erp.service.SystemParameterService;
-import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * @ClassName  SystemParameterAction
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月30日 下午5:00:19
  *

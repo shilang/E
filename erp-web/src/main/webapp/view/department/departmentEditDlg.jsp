@@ -1,44 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
+	var $form;
+	var entry;
 	$(function(){
-		$("#form").form({
-			url: 'department/departmentAction!persistenceDepartment.action',
-			onSubmit: function(){
-				parent.$.messager.progress({
-					title: '提示',
-					msg: '数据处理中,请稍后...'
-				});
-				var isValid = $(this).form('validate');
-				if(!isValid){
-					parent.$.messager.progress('close');
-				}
-				return isValid;
-			},
-			success: function(result){
-				parent.$.messager.progress('close');
-				result = $.parseJSON(result);
-				if(result.status){
-					parent.$.modalDialog.openner.treegrid('reload');
-					parent.$.modalDialog.handler.dialog('close');
-				}
-				parent.$.messager.show({
-					title: result.title,
-					msg: result.message,
-					timeout: 1000 * 2
-				});
-			}
+		$("#manager").erpEmployee();
+		$form = $("#form")
+		$form.form({
+			url: 'department/persist.action',
+			onSubmit: submit,
+			success: success
 		});
 		
-		$("#managerName").combobox({
-			url: '',
-			valueField: '',
-			textField: '',
-			onSelect: function(node){
-				$("#manager").val(node.id);
-			}
-		});
+		entry = new $.erp.simpleEntry();
 	});
+	
+	function submit(){
+		return entry.submit($form);
+	}
+	
+	function success(result){
+		entry.success(result, function(){
+			parent.$.modalDialog.openner.treegrid('reload');
+			parent.$.modalDialog.handler.dialog('close');
+		});
+	}
 </script>
 
 <div class="dlgcontent">
@@ -48,7 +34,7 @@
 		<input id="created" name="created" type="hidden" />
 		<input id="creater" name="creater" type="hidden" />
 		<input id="status" name="status" type="hidden" />
-		<table>
+		<table class="simple">
 			<tr>
 				<th>代码</th>
 				<td>
@@ -82,8 +68,7 @@
 			<tr>
 				<th>主管</th>
 				<td>
-					<input id="managerName" name="managerName" class="easyui-textbox"/>
-					<input id="manager" name="manager" type="hidden"/>
+					<input id="manager" name="manager" class="easyui-textbox"/>
 				</td>
 			</tr>
 			<tr>

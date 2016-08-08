@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	$(function(){
 		$("#form").form({
-			url: 'auxiliaryResType/auxiliaryResTypeAction!persistenceAuxiliaryResType.action',
+			url: 'auxiliaryResType/persist.action',
 			onSubmit:function(){
 				parent.$.messager.progress({
 					title: '提示',

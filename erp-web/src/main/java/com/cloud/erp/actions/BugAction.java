@@ -1,7 +1,7 @@
 /**
  * @Title:  BugAction.java
  * @Package:  com.cloud.erp.actions
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午10:02:04
@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,12 +34,12 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
 
+import com.cloud.erp.common.BaseAction;
 import com.cloud.erp.entities.table.Bug;
-import com.cloud.erp.entities.viewmodel.GridModel;
 import com.cloud.erp.service.BugService;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 import com.cloud.erp.utils.ResourceUtil;
@@ -46,29 +47,23 @@ import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * @ClassName  BugAction
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月31日 上午10:02:04
  *
  */
 @Namespace("/bug")
-@Action("bugAction")
 public class BugAction extends BaseAction implements ModelDriven<Bug>{
 
 	private static final long serialVersionUID = 1L;
+	
+	@Resource
 	private BugService bugService;
+	
 	private Bug bug;
 	private File filedata;
 	private String filedataFileName;
 	private String filedataContentType;
-
-	/**
-	 * @param bugService the bugService to set
-	 */
-	@Autowired
-	public void setBugService(BugService bugService) {
-		this.bugService = bugService;
-	}
 	
 	public Bug getBug() {
 		return bug;
@@ -102,34 +97,30 @@ public class BugAction extends BaseAction implements ModelDriven<Bug>{
 		this.filedataContentType = filedataContentType;
 	}
 	
-
+	@Action(value = "find")
 	public String findBugList() throws Exception
 	{
-		Map<String, Object> map=new HashMap<String, Object>();
-		if (null!=searchValue&&!"".equals(searchValue))
-		{
-			map.put(getSearchName(), Constants.GET_SQL_LIKE+searchValue+Constants.GET_SQL_LIKE);
-		}
-		PageUtil pageUtil=new PageUtil(page, rows, searchAnds, searchColumnNames, searchConditions, searchVals);
-		GridModel gridModel=new GridModel();
-		gridModel.setRows(bugService.findBugList(map, pageUtil));
-		gridModel.setTotal(bugService.getCount(map,pageUtil));
-		OutputJson(gridModel);
-		return null;
+		Map<String, Object> params = getQueryParamsForMain();
+		PageUtil pageUtil = getPageUtil();
+		JSONWriter(bugService.findAll(params, pageUtil), 
+				bugService.getCount(params));
+		return RJSON;
 	}
 	
-
+	@Action(value = "persist")
 	public String addBug() throws Exception
 	{
-		OutputJson(getMessage(bugService.addBug(getModel())),Constants.TEXT_TYPE_PLAIN);
-		return null;
+		boolean result = bugService.persistence(getModel());
+		JSONWriter(result);
+		return RJSON;
 	}
 	
-
+	@Action(value = "delete")
 	public String delBug() throws Exception
 	{
-		OutputJson(getMessage(bugService.delBug(getModel().getBugId())));
-		return null;
+		boolean result = bugService.deleteToUpdate(getModel().getBugId());
+		JSONWriter(result);
+		return RJSON;
 	}
 	
 	
@@ -209,7 +200,7 @@ public class BugAction extends BaseAction implements ModelDriven<Bug>{
 				}else {
 					String fileExt = filedataFileName.substring(filedataFileName.lastIndexOf(".") + 1).toLowerCase();
 					String newFileName = UUID.randomUUID().toString().replaceAll("-", "") + "." + fileExt;
-					Constants.copy(filedata, savePath+newFileName);
+					Commons.copy(filedata, savePath+newFileName);
 					Map<String, Object> nm = new HashMap<String, Object>();
 					map.put("err", "");
 					nm.put("url", saveUrl+newFileName);

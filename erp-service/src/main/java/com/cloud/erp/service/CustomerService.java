@@ -1,7 +1,7 @@
 /**
  * @Title:  CustomerService.java
  * @Package:  com.cloud.erp.service
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月12日 上午9:12:24
@@ -14,26 +14,16 @@
  */
 package com.cloud.erp.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.cloud.erp.entities.table.Customer;
-import com.cloud.erp.utils.PageUtil;
+import com.cloud.erp.service.common.GeneralService;
 
 /**
  * @ClassName  CustomerService
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年5月12日 上午9:12:24
  *
  */
-public interface CustomerService {
+public interface CustomerService extends GeneralService<Customer>{
 
-	List<Customer> findCustomers(Map<String, Object> params, PageUtil pageUtil);
-	
-	Long getCount(Map<String, Object> params, PageUtil pageUtil);
-	
-	boolean persistenceCustomer(Customer customer);
-	
-	boolean delCustomer(Integer id);
 }

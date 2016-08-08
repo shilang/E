@@ -1,7 +1,7 @@
 /**
  * @Title:  FunctionDaoImpl.java
  * @Package:  com.cloud.erp.dao.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月13日  下午5:29:54
@@ -14,158 +14,85 @@
  */
 package com.cloud.erp.dao.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.FunctionDao;
+import com.cloud.erp.dao.common.BaseDao;
+import com.cloud.erp.dao.common.GeneralDaoSupport;
+import com.cloud.erp.dao.common.StatusFields;
 import com.cloud.erp.entities.table.Permission;
-import com.cloud.erp.entities.viewmodel.TreeGridModel;
-import com.cloud.erp.entities.viewmodel.TreeModel;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
+import com.cloud.erp.utils.PageUtil;
 
 /**
  * @ClassName FunctionDaoImpl
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月13日 下午5:29:54
  *
  */
 @Repository("functionDao")
 public class FunctionDaoImpl implements FunctionDao {
-
-	private BaseDao<Permission> baseDao;
-
-	/**
-	 * @param baseDao
-	 *            the baseDao to set
-	 */
-	@Autowired
-	public void setBaseDao(BaseDao<Permission> baseDao) {
-		this.baseDao = baseDao;
+	
+	private final StatusFields statusFields = new StatusFields();
+	
+	{
+		statusFields.setInterId("permissionId");
 	}
+	
+	@Resource
+	private GeneralDaoSupport<Permission> generalDao;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.cloud.erp.dao.FunctionDao#findAllFunctionList(java.lang.Integer)
-	 */
+	@Autowired
+	private BaseDao<Permission> baseDao;
+	
 	@Override
-	public List<TreeGridModel> findAllFunctionList(Integer pid) {
-		// TODO Auto-generated method stub
+	public List<Permission> findFunctionsById(Integer pid) {
 		String hql = "from Permission t where t.status='A' ";
 		if (pid == null || "".equals(pid)) {
 			hql += " and t.pid is null";
 		} else {
 			hql += " and t.pid=" + pid;
 		}
-
-		List<Permission> list = baseDao.find(hql);
-		List<TreeGridModel> tempList = new ArrayList<TreeGridModel>();
-		for (Permission function : list) {
-			TreeGridModel treeGridModel = new TreeGridModel();
-			try {
-				BeanUtils.copyProperties(treeGridModel, function);
-				if (pid == null || "".equals(pid)) {
-					treeGridModel.setPid(null);
-				}
-				tempList.add(treeGridModel);
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-		}
-		return tempList;
+		return baseDao.find(hql);
+	}
+	
+	@Override
+	public List<Permission> findAllWithExtHql() {
+		return generalDao.findAll(Permission.class, null, null, "and type='F'");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.cloud.erp.dao.FunctionDao#delFunction(java.lang.Integer)
-	 */
 	@Override
-	public boolean delFunction(Integer id) {
-		// TODO Auto-generated method stub
-		String hql = " from Permission t where t.status='A' and t.pid=" + id;
-		List<Permission> list = baseDao.find(hql);
-		if (list.size() != 0) {
-			return false;
-		} else {
-			Permission function = baseDao.get(Permission.class, id);
-			function.setStatus(Constants.PERSISTENCE_DELETE_STATUS);
-			function.setLastmod(new Date());
-			function.setModifier(Constants.getCurrentUser().getUserId());
-			baseDao.deleteToUpdate(function);
-			return true;
-		}
+	public List<Permission> findAll(Map<String, Object> params, PageUtil pageUtil) {
+		return generalDao.findAll(Permission.class, params, pageUtil);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.cloud.erp.dao.FunctionDao#persistenceFunction(java.util.List)
-	 */
 	@Override
-	public boolean persistenceFunction(List<Permission> list) {
-		// TODO Auto-generated method stub
-		Integer userId = Constants.getCurrentUser().getUserId();
-		for (Permission function : list) {
-			function.setLastmod(new Date());
-			function.setModifier(userId);
-			if (Constants.TREE_GRID_ADD_STATUS.equals(function.getStatus())) {
-				function.setPermissionId(null);
-				function.setCreated(new Date());
-				function.setLastmod(new Date());
-				function.setModifier(userId);
-				function.setCreater(userId);
-				function.setStatus(Constants.PERSISTENCE_STATUS);
-			}
-
-			baseDao.saveOrUpdate(function);
-		}
-		return true;
+	public long getCount(Map<String, Object> params) {
+		return generalDao.getCount(Permission.class, params);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.cloud.erp.dao.FunctionDao#findAllFunctionList()
-	 */
 	@Override
-	public List<TreeModel> findAllFunctionList() {
-		// TODO Auto-generated method stub
-		String hql = "from Permission t where t.status='A' and t.type='F' ";
-		List<Permission> list = baseDao.find(hql);
-		List<TreeModel> tempList = new ArrayList<TreeModel>();
-		for (Permission function : list) {
-			TreeModel treeModel = new TreeModel();
-			treeModel.setId(function.getPermissionId().toString());
-			treeModel.setPid(function.getPid() == null ? "" : function.getPid()
-					.toString());
-			treeModel.setName(function.getName());
-			treeModel.setIconCls(function.getIconCls());
-			treeModel.setState(Constants.TREE_STATUS_OPEN);
-			tempList.add(treeModel);
-		}
-		return tempList;
+	public Permission get(Integer id) {
+		return generalDao.get(Permission.class, id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.cloud.erp.dao.FunctionDao#persistenceFunction(com.cloud.erp.entities
-	 * .Permission)
-	 */
 	@Override
-	public boolean persistenceFunction(Permission permission) {
-		// TODO Auto-generated method stub
-		Integer userId = Constants.getCurrentUser().getUserId();
+	public void update(Permission master) {
+		generalDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(Permission permission) throws Exception {
+		Integer userId = Commons.getCurrentUser().getUserId();
 		if (null == permission.getPermissionId()
 				|| "".equals(permission.getPermissionId())) {
 			permission.setCreated(new Date());
@@ -190,6 +117,17 @@ public class FunctionDaoImpl implements FunctionDao {
 			baseDao.update(permission);
 		}
 		return true;
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		String hql = " from Permission t where t.status='A' and t.pid=" + pid;
+		List<Permission> list = baseDao.find(hql);
+		if (list.size() != 0) {
+			return false;
+		} 
+		
+		return generalDao.deleteToUpdate(Permission.class, pid, statusFields);
 	}
 
 }

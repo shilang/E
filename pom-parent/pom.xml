@@ -8,13 +8,15 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>../erp-utils</module>
-		<module>../erp-entities</module>
-		<module>../erp-dao</module>
 		<module>../erp-exceptions</module>
+		<module>../erp-entities</module>
+		<module>../erp-utils</module>
+		<module>../erp-dao</module>
 		<module>../erp-service</module>
-		<module>../erp-jbpm</module>
-		<module>../erp-shiro</module>
+		<module>../erp-workflow</module>
+		<module>../erp-logging</module>
+		<module>../erp-servicefacade</module>
+		<module>../erp-security</module>
 		<module>../erp-web</module>
 	</modules>
 
@@ -62,7 +64,25 @@
 
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>erp-shiro</artifactId>
+				<artifactId>erp-logging</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>erp-workflow</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>erp-servicefacade</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>erp-security</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -95,8 +115,14 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>3.8.1</version>
+				<version>4.12</version>
 				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>1.7.10</version>
 			</dependency>
 
 			<dependency>
@@ -111,18 +137,25 @@
 				<version>1.2</version>
 			</dependency>
 
+			<!-- h2 database -->
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>1.4.191</version>
+			</dependency>
+
 			<!-- mysql connector -->
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<version>5.1.34</version>
+				<version>5.1.36</version>
 			</dependency>
 
 			<!-- alibaba data source -->
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
-				<version>1.0.11</version>
+				<version>1.0.15</version>
 				<!-- <exclusions> <exclusion> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
 					</exclusion> <exclusion> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> 
 					</exclusion> </exclusions> -->
@@ -135,6 +168,26 @@
 				<version>1.2.4</version>
 			</dependency>
 
+			<!-- jackson -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>2.6.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>2.6.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>2.6.3</version>
+			</dependency>
+
+
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
@@ -145,8 +198,23 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
-				<version>4.3.8.Final</version>
+				<version>4.3.10.Final</version>
 			</dependency>
+
+			<!-- mybatis framework -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>3.3.0</version>
+			</dependency>
+
+			<!-- mybatis spring -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>1.2.3</version>
+			</dependency>
+
 
 			<!-- ehcache -->
 			<dependency>
@@ -192,6 +260,30 @@
 				<version>4.1.4.RELEASE</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>4.1.4.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>4.1.4.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>4.1.4.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>4.1.4.RELEASE</version>
+			</dependency>
+
 
 			<!-- aspectj -->
 			<dependency>
@@ -200,11 +292,29 @@
 				<version>1.8.4</version>
 			</dependency>
 
-			<!-- struts2 -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>1.8.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>3.2.0</version>
+			</dependency>
+
+			<!-- struts2 排除 javassist 解决 $$_javassist_13 cannot be cast to javassist.util.proxy.Proxy -->
 			<dependency>
 				<groupId>org.apache.struts</groupId>
 				<artifactId>struts2-core</artifactId>
 				<version>2.3.20</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javassist</groupId>
+						<artifactId>javassist</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<dependency>
@@ -216,6 +326,12 @@
 			<dependency>
 				<groupId>org.apache.struts</groupId>
 				<artifactId>struts2-convention-plugin</artifactId>
+				<version>2.3.20</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-json-plugin</artifactId>
 				<version>2.3.20</version>
 			</dependency>
 
@@ -247,6 +363,28 @@
 				<version>2.3</version>
 				<classifier>jdk15</classifier>
 			</dependency>
+			
+			<!-- POI -->
+			<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+			<dependency>
+			    <groupId>org.apache.poi</groupId>
+			    <artifactId>poi</artifactId>
+			    <version>3.15-beta2</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.poi</groupId>
+			    <artifactId>poi-ooxml</artifactId>
+			    <version>3.15-beta2</version>
+			</dependency>
+			
+			<!-- Jaxen is a universal Java XPath engine -->
+			<dependency>
+			    <groupId>jaxen</groupId>
+			    <artifactId>jaxen</artifactId>
+			    <version>1.1.6</version>
+			</dependency>
+			
 
 			<!-- jBPM4.4 -->
 			<dependency>
@@ -314,6 +452,7 @@
 				<artifactId>jbpm-pvm</artifactId>
 				<version>4.4</version>
 				<exclusions>
+
 					<exclusion>
 						<groupId>juel</groupId>
 						<artifactId>juel-api</artifactId>
@@ -350,7 +489,34 @@
 						<groupId>org.hibernate</groupId>
 						<artifactId>hibernate-core</artifactId>
 					</exclusion>
+
 				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sun.mail</groupId>
+				<artifactId>javax.mail</artifactId>
+				<version>1.5.5</version>
+			</dependency>
+
+			<!-- activiti5 -->
+
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-engine</artifactId>
+				<version>5.19.0.2</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>4.1.4.RELEASE</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-spring</artifactId>
+				<version>5.19.0.2</version>
 			</dependency>
 
 			<!-- <dependency> <groupId>xerces</groupId> <artifactId>xercesImpl</artifactId> 
@@ -362,6 +528,18 @@
 
 	<build>
 		<plugins>
+
+			<!-- maven中java版本问题和编码问题 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
 			<!-- skip test -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -372,6 +550,8 @@
 				</configuration>
 			</plugin>
 
+
+
 			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-dependency-plugin</artifactId> 
 				<version>2.9</version> <executions> <execution> <id>copy-dependencies</id> 
 				<phase>package</phase> <goals> <goal>copy-dependencies</goal> </goals> <configuration> 
@@ -380,29 +560,13 @@
 				<overWriteIfNewer>true</overWriteIfNewer> </configuration> </execution> </executions> 
 				</plugin> -->
 
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<configuration>
-					<webAppSourceDirectory>../erp-web/target/erp-web</webAppSourceDirectory>
-					<classesDirectory>../erp-web/target/erp-web/WEB-INF/classes</classesDirectory>
-					<!-- -->
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<webApp>
-						<contextPath>/test</contextPath>
-					</webApp>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>start-jetty</id>
-						<phase>install</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!-- <plugin> <groupId>org.eclipse.jetty</groupId> <artifactId>jetty-maven-plugin</artifactId> 
+				<configuration> <webAppSourceDirectory>../erp-web/target/erp-web</webAppSourceDirectory> 
+				<classesDirectory>../erp-web/target/erp-web/WEB-INF/classes</classesDirectory> 
+				<scanIntervalSeconds>10</scanIntervalSeconds> <webApp> <contextPath>/test</contextPath> 
+				</webApp> </configuration> <executions> <execution> <id>start-jetty</id> 
+				<phase>install</phase> <goals> <goal>run</goal> </goals> </execution> </executions> 
+				</plugin> -->
 
 			<!-- <plugin> <groupId>org.apache.tomcat.maven</groupId> <artifactId>tomcat6-maven-plugin</artifactId> 
 				<version>2.2</version> <configuration> </configuration> </plugin> -->
@@ -421,10 +585,8 @@
 			<url>http://repository.sonatype.org/content/groups/public/</url>
 		</repository>
 
-		<repository>
-			<id>ibiblio</id>
-			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2/org/acegisecurity/</url>
-		</repository>
+		<!-- <repository> <id>ibiblio</id> <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/org/acegisecurity/</url> 
+			</repository> -->
 
 		<repository>
 			<id>jboss</id>

@@ -1,7 +1,7 @@
 /**
  * @Title:  AuxiliaryResTypeServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月30日 下午2:33:53
@@ -15,6 +15,7 @@
 package com.cloud.erp.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,51 +23,55 @@ import org.springframework.stereotype.Service;
 import com.cloud.erp.dao.AuxiliaryResTypeDao;
 import com.cloud.erp.entities.table.AuxiliaryResType;
 import com.cloud.erp.service.AuxiliaryResTypeService;
+import com.cloud.erp.utils.PageUtil;
 
 /**
- * @ClassName  AuxiliaryResTypeServiceImpl
- * @Description  TODO
- * @author  bollen bollen@live.cn
- * @date  2015年4月30日 下午2:33:53
+ * @ClassName AuxiliaryResTypeServiceImpl
+ * @Description 
+ * @author bollen bollen@live.cn
+ * @date 2015年4月30日 下午2:33:53
  *
  */
 @Service("auxiliaryResTypeService")
 public class AuxiliaryResTypeServiceImpl implements AuxiliaryResTypeService {
 
-	private AuxiliaryResTypeDao auxiliaryResTypeDao;
-	
-	/**
-	 * @param auxiliaryResTypeDao the auxiliaryResTypeDao to set
-	 */
 	@Autowired
-	public void setAuxiliaryResTypeDao(AuxiliaryResTypeDao auxiliaryResTypeDao) {
-		this.auxiliaryResTypeDao = auxiliaryResTypeDao;
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AuxiliaryResTypeService#findAuxiliaryResTypes(java.util.Map)
-	 */
+	private AuxiliaryResTypeDao auxiliaryResTypeDao;
+
 	@Override
 	public List<AuxiliaryResType> findAuxiliaryResTypes() {
-		// TODO Auto-generated method stub
-		return auxiliaryResTypeDao.findAuxiliaryResTypes();
+		return auxiliaryResTypeDao.findAll(null, null);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AuxiliaryResTypeService#persistenceAuxiliaryResType(com.cloud.erp.entities.table.AuxiliaryResType)
-	 */
 	@Override
-	public boolean persistenceAuxiliaryResType(AuxiliaryResType auxiliaryResType) {
-		// TODO Auto-generated method stub
-		return auxiliaryResTypeDao.persistenceAuxiliaryResType(auxiliaryResType);
+	public List<AuxiliaryResType> findAll(Map<String, Object> params,
+			PageUtil pageUtil) {
+		return auxiliaryResTypeDao.findAll(params, pageUtil);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AuxiliaryResTypeService#delAuxiliaryResType(java.lang.Integer)
-	 */
 	@Override
-	public boolean delAuxiliaryResType(Integer id) {
-		// TODO Auto-generated method stub
-		return auxiliaryResTypeDao.delAuxiliaryResType(id);
+	public long getCount(Map<String, Object> params) {
+		return auxiliaryResTypeDao.getCount(params);
+	}
+
+	@Override
+	public AuxiliaryResType get(Integer id) {
+		return auxiliaryResTypeDao.get(id);
+	}
+
+	@Override
+	public void update(AuxiliaryResType master) {
+		auxiliaryResTypeDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(AuxiliaryResType master) throws Exception {
+		return auxiliaryResTypeDao.persistence(master);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return auxiliaryResTypeDao.deleteToUpdate(pid);
 	}
 
 }

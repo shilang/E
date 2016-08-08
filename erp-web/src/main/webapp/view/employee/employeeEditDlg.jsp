@@ -2,7 +2,7 @@
 <script type="text/javascript"> 
 	$(function(){
 		$("#form").form({
-			url: 'employee/employeeAction!persistenceEmployee.action',
+			url: 'employee/persist.action',
 			onSubmit: function(){
 				parent.$.messager.progress({
 					title: $.erp.hint,
@@ -15,6 +15,7 @@
 				return isValid;
 			},
 			success: function(result){
+				parent.$.messager.progress("close");
 				result = $.parseJSON(result);
 				if(result.status){
 					parent.$.modalDialog.openner.datagrid("reload");
@@ -23,53 +24,31 @@
 				$.erp.submitSuccess(result.title, result.message);
 			}
 		});
-		
 	
-		$("#departmentName").combobox({
-			width: 176,
-			url: '',
-			valueField: '',
-			textField: '',
-			onSelect: function(node){
-				$("#departmentId").val(node.id);
-			}
-		});
-		
-		$("#degreeName").combobox({
-			width: 176,
-			url: '',
-			valueField: '',
-			textField: '',
-			onSelect: function(node){
-				$("#degree").val(node.id);
-			}
-		});
-		
-		$("#dutyName").combobox({
-			width: 176,
-			url: '',
-			valueField: '',
-			textField: '',
-			onSelect: function(node){
-				$("#duty").val(node.id);
-			}
-		});
 	});
+	
+	function init(){
+		$("#degree").erpResGrid({},2);
+		$("#duty").erpResGrid({},3);
+	}
 </script>
 
 <div class="dlgcontent">
 	<form id="form" method="post">
-		<table>
+		<input id="employeeId" name="employeeId" type="hidden"/>
+		<input id="created" name="created" type="hidden"/>
+		<input id="creater" name="creater" type="hidden"/>
+		<input id="status" name="status" type="hidden"/>
+		<table class="simple">
 			<tr>
 				<th>代码</th>
 				<td><input id="number" name="number" class="easyui-textbox" data-options="required:true"/></td>
 				<th>名称</th>
-				<td><input id="name" name="名称" class="easyui-textbox" data-options="required:true"/></td>
+				<td><input id="name" name="name" class="easyui-textbox" data-options="required:true"/></td>
 			</tr>
 			<tr>
 				<th>部门名称</th>
-				<td><input id="departmentId" name="departmentId" type="hidden" />
-					<input id="departmentName" name="departmentName" class="easyui-textbox" data-options="required:true"/></td>
+				<td><input id="departmentId" name="departmentId" class="easyui-combotree" />
 				<th>性别</th>
 				<td><select id="gender" name="gender" class="easyui-combobox" data-options="required:true">
 						<option value="男">男</option>
@@ -78,10 +57,11 @@
 			</tr>
 			<tr>
 				<th>出生日期</th>
-				<td><input id="birthday" name="birthday" class="easyui-textbox"/></td>
+				<td><input id="birthday" name="birthday" class="easyui-datebox"/></td>
 				<th>文化程度</th>
-				<td><input id="degree" name="degree" type="hidden" /> <input
-					id="degreeName" name="degreeName" class="easyui-textbox"/></td>
+				<td>
+					<input id="degree" name="degree" class="easyui-textbox" /> 
+				</td>
 			</tr>
 			<tr>
 				<th>电话</th>
@@ -91,14 +71,15 @@
 			</tr>
 			<tr>
 				<th>职务</th>
-				<td><input id="duty" name="duty" type="hidden" /> <input
-					id="dutyName" name="dutyName" class="easyui-textbox"/></td>
+				<td>
+					<input id="duty" name="duty" class="easyui-textbox" />
+				</td>
 				<th>入职日期</th>
-				<td><input id="hireDate" name="hireDate" class="easyui-textbox"/></td>
+				<td><input id="hireDate" name="hireDate" class="easyui-datebox" /></td>
 			</tr>
 			<tr>
 				<th>离职日期</th>
-				<td><input id="leaveDate" name="leaveDate" class="easyui-textbox"/></td>
+				<td><input id="leaveDate" name="leaveDate" class="easyui-datebox" /></td>
 				<th>住址</th>
 				<td><input id="address" name="address" class="easyui-textbox"/></td>
 			</tr>

@@ -4,27 +4,28 @@
 <html>
 <head>
 <title>国别地区管理</title>
-<jsp:include page="/inc.jsp"></jsp:include>
+<jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
 	var $dg;
 	var $grid;
 	$(function(){
 		$dg = $('#dg');
 		$grid = $dg.datagrid({
-				url: 'area/areaAction!findAreas.action',
-				width: $(this).width() - 10,
-				height: $(this).height() - 82,
+				url: 'area/findAreas.action',
+				width: $(this).width(),
+				height: $(this).height(),
 				collapsible: true,
 				pagination: true,
 				rownumbers: true,
 				striped: true,
 				singleSelect: true,
-				border: true,
+				border: false,
 				idField: 'areaId',
 				columns: [[
-					{field: 'number', title: '代码'},
-					{field: 'name', title: '名称'},
-					{field: 'nameEn', title: '英文名称'},
+					{field: 'number', title: '代码', width: parseInt($(this).width() * 0.05)},
+					{field: 'name', title: '名称', width: parseInt($(this).width() * 0.1)},
+					{field: 'nameEn', title: '英文名称', width: parseInt($(this).width() * 0.1)},
+					{field: 'remark', title: '备注', width: parseInt($(this).width() * 0.1)}
 				]],
 				toolbar: '#tb'
 
@@ -40,62 +41,20 @@
 		});
 	});
 	
+	function showDlg(title, iconCls, type, row, status){
+		var viewPath = 'view/area/areaEditDlg.jsp';
+		$.erp.showBusinessDlg(title,iconCls,viewPath,type,'',row,
+				$grid,'','',600, 400);
+	}
+	
 	function addAreaDlg(){
-		parent.$.modalDialog({
-			title: '添加国别地区',
-			iconCls: 'icon-add',
-			width: 600,
-			height: 400,
-			href: 'view/area/areaEditDlg.jsp',
-			buttons: [{
-				text: '保存',
-				iconCls: 'icon-ok',
-				handler: function(){
-					parent.$.modalDialog.openner = $grid;
-					var f = parent.$.modalDialog.handler.find("#form");
-					f.submit();
-				}
-			},{
-				text: '取消',
-				iconCls: 'icon-cancel',
-				handler: function(){
-					parent.$.modalDialog.handler.dialog("destroy");
-					parent.$.modalDialog.handler = undefined;
-				}
-			}]
-		});		
+		showDlg('添加国别地区','icon-add','add');
 	}
 	
 	function updateAreaDlg(){
 		var row = $dg.datagrid('getSelected');
 		if(row){
-			parent.$.modalDialog({
-				title: '修改国别地区',
-				iconCls: 'icon-edit',
-				width: 600,
-				height: 400,
-				href: 'view/area/areaEditDlg.jsp',
-				onLoad: function(){
-					var f = parent.$.modalDialog.handler.find("#form");
-					f.form('load', row);
-				},
-				buttons: [{
-					text: '修改',
-					iconCls: 'icon-edit',
-					handler: function(){
-						parent.$.modalDialog.openner = $grid;
-						var f = parent.$.modalDialog.handler.find("#form");
-						f.submit();
-					}
-				},{
-					text: '取消',
-					iconCls: 'icon-cancel',
-					handler: function(){
-						parent.$.modalDialag.handler.dialog("destroy");
-						parent.$.modalDialog.handler = undefined;
-					}
-				}]
-			});
+			showDlg('修改国别地区','icon-edit','update',row);
 		}else{
 			$.erp.noSelectErr();
 		}
@@ -106,11 +65,11 @@
 		if(row){
 			parent.$.messager.confirm($.erp.hint, $.erp.deleteQueryMsg, function(r){
 				if(r){
-					$.post("area/areaAction!delArea.action",{"areaId": row.areaId},function(rsp){
+					$.post("area/delArea.action",{"areaId": row.areaId},function(rsp){
 						if(rsp.status){
-							var idx = $dg.datagrid('getRowIndex');
+							var idx = $dg.datagrid('getRowIndex', row);
 							$dg.datagrid('deleteRow', idx);
-						}
+						} 
 						$.erp.submitSuccess(rsp.title, rsp.message);
 					},"JSON").error(function(){
 						$.erp.submitErr();
@@ -125,14 +84,7 @@
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true,border:false">
-		<div data-options="region:'center', border:false" style="padding: 5px;">
-			<div class="well well-small" style="margin-bottom: 5px;">
-				<span class="badge">提示</span>
-				<p>
-					在此你可以对<span class="label-info"><strong>国家</strong></span>进行编辑!
-				</p>
-			</div>
-			
+		<div data-options="region:'center', border:false" >
 			<div id="tb">
 				<table>
 					<tr>
@@ -156,7 +108,7 @@
 				<div name="name">国家名称</div>	
 			</div>
 			
-			<table id="dg" title="国别地区管理"></table>
+			<table id="dg" title=""></table>
 		</div>
 	</div>
 </body>

@@ -1,7 +1,7 @@
 /**
  * @Title:  AreaService.java
  * @Package:  com.cloud.erp.service
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月12日 上午10:23:59
@@ -14,26 +14,16 @@
  */
 package com.cloud.erp.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.cloud.erp.entities.table.Area;
-import com.cloud.erp.utils.PageUtil;
+import com.cloud.erp.service.common.GeneralService;
 
 /**
  * @ClassName  AreaService
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年5月12日 上午10:23:59
  *
  */
-public interface AreaService {
+public interface AreaService extends GeneralService<Area>{
 
-	List<Area> findAreas(Map<String, Object> params, PageUtil pageUtil);
-	
-	Long getCount(Map<String, Object> params, PageUtil pageUtil);
-	
-	boolean persistenceArea(Area area);
-	
-	boolean delArea(Integer id);
 }

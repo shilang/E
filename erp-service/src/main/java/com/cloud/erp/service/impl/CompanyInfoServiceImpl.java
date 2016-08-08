@@ -1,7 +1,7 @@
 /**
  * @Title:  CompanyInfoServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月28日 上午10:40:55
@@ -27,7 +27,7 @@ import com.cloud.erp.utils.PageUtil;
 
 /**
  * @ClassName CompanyInfoServiceImpl
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月28日 上午10:40:55
  *
@@ -35,63 +35,48 @@ import com.cloud.erp.utils.PageUtil;
 @Service("companyInfoService")
 public class CompanyInfoServiceImpl implements CompanyInfoService {
 
+	@Autowired
 	private CompanyInfoDao companyInfoDao;
 
-	/**
-	 * @param companyInfoDao
-	 *            the companyInfoDao to set
-	 */
-	@Autowired
-	public void setCompanyInfoDao(CompanyInfoDao companyInfoDao) {
-		this.companyInfoDao = companyInfoDao;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.cloud.erp.service.CompanyInfoService#findCompanyInfos()
-	 */
 	@Override
 	public List<CompanyInfo> findCompanyInfos() {
-		// TODO Auto-generated method stub
-		return companyInfoDao.findCompanyInfos();
+		return companyInfoDao.findAll(null, null);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.cloud.erp.service.CompanyInfoService#getCount()
-	 */
 	@Override
 	public long getCount() {
-		// TODO Auto-generated method stub
-		return companyInfoDao.getCount();
+		return companyInfoDao.getCount(null);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.cloud.erp.service.CompanyInfoService#persistenceCompanyInfo(com.cloud
-	 * .erp.entities.table.CompanyInfo)
-	 */
 	@Override
-	public boolean persistenceCompanyInfo(CompanyInfo companyInfo) {
-		// TODO Auto-generated method stub
-		return companyInfoDao.persistenceCompanyInfo(companyInfo);
+	public List<CompanyInfo> findAll(Map<String, Object> params,
+			PageUtil pageUtil) {
+		return companyInfoDao.findAll(params, pageUtil);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.cloud.erp.service.CompanyInfoService#delCompanyInfo(java.lang.Integer
-	 * )
-	 */
 	@Override
-	public boolean delCompanyInfo(Integer companyId) {
-		// TODO Auto-generated method stub
-		return companyInfoDao.delCompanyInfo(companyId);
+	public long getCount(Map<String, Object> params) {
+		return companyInfoDao.getCount(params);
+	}
+
+	@Override
+	public CompanyInfo get(Integer id) {
+		return companyInfoDao.get(id);
+	}
+
+	@Override
+	public void update(CompanyInfo master) {
+		companyInfoDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(CompanyInfo master) throws Exception {
+		return companyInfoDao.persistence(master);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return companyInfoDao.deleteToUpdate(pid);
 	}
 
 }

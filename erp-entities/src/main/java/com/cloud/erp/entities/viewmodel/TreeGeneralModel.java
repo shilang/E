@@ -1,7 +1,7 @@
 /**
  * @Title:  TreeGeneralModel.java
  * @Package:  com.cloud.erp.entities.viewmodel
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月29日 下午6:06:10
@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * @ClassName TreeGeneralModel
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月29日 下午6:06:10
  *

@@ -3,31 +3,36 @@
 <html>
 <head>
 <title>客户管理</title>
-<jsp:include page="/inc.jsp"></jsp:include>
+<jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
 	var $dg;
 	var $grid;
 	$(function(){
 		$dg = $("#dg");
 		$grid = $dg.datagrid({
-			url: 'customer/customerAction!findCustomers.action',
-			width: $(this).width() - 10,
-			height: $(this).height() - 82,
+			url: 'customer/find.action',
+			width: $(this).width(),
+			height: $(this).height(),
 			pagination: true,
 			collapsible: true,
 			rownumbers: true,
 			striped: true,
-			simpleSelect: true,
-			border: true,
+			singleSelect: true,
+			border: false,
 			idField: 'customerId',
 			columns: [[
-				{field: 'number', title: '代码'},
-				{field: 'name', title: '名称'},
-				{field: 'fullName', title: '全名'},
-				{field: 'country', title: '国家'},
-				{field: 'phone', title: '电话'},
-				{field: 'fax', title: '传真'},
-				{field: 'email', title: '邮箱'},
+				{field: 'number', title: '代码', width: parseInt($(this).width()* 0.05)},
+				{field: 'name', title: '名称', width: parseInt($(this).width()* 0.1)},
+				{field: 'fullName', title: '全名', width: parseInt($(this).width()* 0.1)},
+				{field: 'regionName', title: '国家', width: parseInt($(this).width()* 0.1)},
+				{field: 'typeName', title: '客户分类', width: parseInt($(this).width()*0.1)},
+				{field: 'salesModeName', title: '销售方式', width: parseInt($(this).width()*0.1)},
+				{field: 'address', title: '地址', width: parseInt($(this).width()*0.1)},
+				{field: 'phone', title: '电话', width: parseInt($(this).width()* 0.1)},
+				{field: 'fax', title: '传真', width: parseInt($(this).width()* 0.1)},
+				{field: 'email', title: '邮箱', width: parseInt($(this).width()* 0.1)},
+				{field: 'homePage', title: '主页', width: parseInt($(this).width()* 0.1)},
+				{field: 'remark', title: '备注', width: parseInt($(this).width()* 0.1)}
 			]],
 			toolbar: '#tb'
 		});
@@ -42,62 +47,20 @@
 		});
 	});
 	
+	function showDlg(title, iconCls, type, row, status){
+		var viewPath = 'view/customer/customerEditDlg.jsp';
+		$.erp.showBusinessDlg(title,iconCls,viewPath,type,'',row,
+				$grid,'','',600, 450);
+	}
+	
 	function addCustomerDlg(){
-		parent.$.modalDialog({
-			title: '添加客户',
-			iconCls: 'icon-add',
-			width: 600,
-			height: 450,
-			href: 'view/customer/customerEditDlg.jsp',
-			buttons:[{
-				text: '保存',
-				iconCls: 'icon-ok',
-				handler: function(){
-					parent.$.modalDialog.openner = $grid;
-					var f = parent.$.modalDialog.handler.find("#form");
-					f.submit();
-				}
-			},{
-				text: '取消',
-				iconCls: 'icon-cancel',
-				handler: function(){
-					parent.$.modalDialog.handler.dialog('destroy');
-					parent.$.modalDialog.handler = undefined;
-				}
-			}]
-		});
+		showDlg('添加客户','icon-add','add');
 	}
 	
 	function updateCustomerDlg(){
 		var row = $dg.datagrid('getSelected');
 		if(row){
-			parent.$.modalDialog({
-				title: '修改客户',
-				iconCls: 'icon-edit',
-				width: 600,
-				height: 450,
-				href: 'view/customer/customerEditDlg.jsp',
-				onLoad: function(){
-					var f = parent.$.modalDialog.handler.find("#form");
-					f.form('load',row);
-				},
-				buttons: [{
-					text: '修改',
-					iconCls: 'icon-edit',
-					handler: function(){
-						parent.$.modalDialog.openner = $grid;
-						var f = parent.$.modalDialog.handler.find("#form");
-						f.submit();
-					}
-				},{
-					text: '取消',
-					iconCls: 'icon-cancel',
-					handler: function(){
-						parent.$.modalDialog.handler.dialog('destroy');
-						parent.$.modalDialog.handler = undefined;
-					}
-				}]
-			});
+			showDlg('修改客户','icon-edit','update',row);
 		}else{
 			$.erp.noSelectErr();
 		}
@@ -108,7 +71,7 @@
 		if(row){
 			parent.$.messager.confirm($.erp.hint, $.erp.deleteQueryMsg, function(r){
 				if(r){
-					$.post("customer/customerAction!delCustomer.action",{id: customerId},function(rsp){
+					$.post("customer/delete.action",{"customerId": row.customerId},function(rsp){
 						if(rsp.status){
 							var idx = $dg.datagrid('getRowIndex', row);
 							$dg.datagrid('deleteRow', idx);
@@ -127,14 +90,7 @@
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true,border:false" >
-		<div data-options="region:'center', border:false" style="padding: 5px;">
-			<div class="well well-small" style="margin-bottm: 5px;">
-				<span class="badge">提示</span>
-				<p>
-					在此你可以对<span class="label-info"><strong>客户</strong></span>进行编辑!
-				</p>
-			</div>
-			
+		<div data-options="region:'center', border:false">
 			<div id="tb">
 				<table>
 					<tr>
@@ -158,7 +114,7 @@
 				<div name="name">客户名称</div>
 				<div email="email">客户邮件</div>
 			</div>
-			<table id="dg" title="客户管理"></table>
+			<table id="dg" title=""></table>
 		</div>
 	</div>
 </body>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+    
+    <!-- shiro configuration -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    	<property name="realm" ref="myShiroRealm"></property>
+    	<property name="cacheManager" ref="shiroCacheManager"></property>
+    	<property name="sessionManager" ref="sessionManager"></property>
+    	<property name="rememberMeManager" ref="rememberMeManager"></property>
+    </bean>
+    
+   <!--  shiro cache manager -->
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    	<property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"></property>
+    </bean>
+    
+    <!-- shiro md5 -->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+    	<property name="hashAlgorithmName" value="md5"></property>
+    	<property name="hashIterations" value="1"></property>
+    </bean>
+    
+    <!-- shiro realm -->
+    <bean id="myShiroRealm" class="com.cloud.erp.shiro.realm.MyShiroRealm">
+    	<property name="credentialsMatcher" ref="credentialsMatcher"></property>
+    </bean>
+    
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+    	<property name="cookie" ref="rememberMeCookie"></property>
+    </bean>
+    
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+    	<constructor-arg value="rememberMe"></constructor-arg>
+    	<!-- 记住我cookie生效时间30天 -->
+    	<property name="maxAge" value="2592000"></property>
+    </bean>
+    
+    <!-- shiro session manager -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+    	<!-- session 的失效时长， 单位毫秒 -->
+    	<property name="globalSessionTimeout" value="600000"></property>
+    	<property name="deleteInvalidSessions" value="true"></property>
+    </bean>
+
+   <!--  <bean id="loginFilter" class="com.cloud.erp.shiro.filter.LoginFilter"></bean> -->
+     
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    	<property name="securityManager" ref="securityManager"></property>
+    	<property name="loginUrl" value="/login.action"></property>
+    	<property name="unauthorizedUrl" value="/refuse.jsp"></property>
+    	
+    	<!-- <property name="filters">
+    		<util:map>
+    			<entry key="authc" value-ref="loginFilter"/> 
+    		</util:map>
+    	</property> -->
+    	 
+    	<property name="filterChainDefinitions">
+    		<value>		
+    			 /logout.action = logout	
+		        <!--  /Kaptcha.jpg = anon  -->
+		         /web-static/** = anon
+		         /index.jsp = user
+	             /** = authc
+    		</value>
+    	</property>
+    </bean>
+    
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    
+</beans>

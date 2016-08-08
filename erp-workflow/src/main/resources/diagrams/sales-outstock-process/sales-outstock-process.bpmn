@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="sales-outstock-process" name="sales outstock process" isExecutable="true">
+    <endEvent id="theEnd" name="End"></endEvent>
+    <userTask id="salesOutStockCheck1" name="销售出库一级审核" activiti:candidateGroups="物料经理">
+      <extensionElements>
+        <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="salesOutStockCommit" name="销售出库提交" activiti:assignee="${initiator}">
+      <extensionElements>
+        <activiti:formProperty id="taskBusinessType" name="Task Business Type" expression="${auditModel.taskBusinessType}" default="check"></activiti:formProperty>
+        <activiti:formProperty id="path" name="path" type="string" expression="${auditModel.path}" default="view/salesMgmt/salesOutStock/salesOutStockEditDlg.jsp"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow6" sourceRef="salesOutStockCheck1" targetRef="exclusivegateway2"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="salesOutStockCommit" targetRef="servicetask1"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="servicetask1" targetRef="salesOutStockCheck1"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="servicetask2" targetRef="theEnd"></sequenceFlow>
+    <sequenceFlow id="flow14" name="通过" sourceRef="exclusivegateway1" targetRef="servicetask2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='approve'}]]></conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="servicetask1" name="Commit Service Task" activiti:class="com.cloud.erp.activiti.CommitJavaDelegate"></serviceTask>
+    <serviceTask id="servicetask2" name="Check Service Task" activiti:class="com.cloud.erp.activiti.CheckJavaDelegate"></serviceTask>
+    <serviceTask id="servicetask3" name="Cancel Check Service Task" activiti:class="com.cloud.erp.activiti.CancelCheckJavaDelegate"></serviceTask>
+    <serviceTask id="servicetask4" name="Update Relation Service Task" activiti:class="com.cloud.erp.activiti.UpdateRelationJavaDelegate"></serviceTask>
+    <sequenceFlow id="flow16" sourceRef="servicetask4" targetRef="salesOutStockCommit"></sequenceFlow>
+    <userTask id="salesOutStockCheck2" name="销售出库二级审核" activiti:candidateGroups="销售经理">
+      <extensionElements>
+        <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow17" sourceRef="salesOutStockCheck2" targetRef="exclusivegateway1"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow19" name="通过" sourceRef="exclusivegateway2" targetRef="salesOutStockCheck2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='approve'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow21" sourceRef="servicetask3" targetRef="salesOutStockCommit"></sequenceFlow>
+    <startEvent id="theStart" name="Start" activiti:initiator="initiator"></startEvent>
+    <sequenceFlow id="flow23" sourceRef="theStart" targetRef="servicetask4"></sequenceFlow>
+    <sequenceFlow id="flow24" name="驳回" sourceRef="exclusivegateway2" targetRef="servicetask3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='reject'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow25" name="驳回" sourceRef="exclusivegateway1" targetRef="servicetask3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='reject'}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_sales-outstock-process">
+    <bpmndi:BPMNPlane bpmnElement="sales-outstock-process" id="BPMNPlane_sales-outstock-process">
+      <bpmndi:BPMNShape bpmnElement="theEnd" id="BPMNShape_theEnd">
+        <omgdc:Bounds height="35.0" width="35.0" x="1130.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesOutStockCheck1" id="BPMNShape_salesOutStockCheck1">
+        <omgdc:Bounds height="55.0" width="119.0" x="514.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesOutStockCommit" id="BPMNShape_salesOutStockCommit">
+        <omgdc:Bounds height="55.0" width="105.0" x="250.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="927.0" y="137.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="380.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
+        <omgdc:Bounds height="55.0" width="105.0" x="1000.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask3" id="BPMNShape_servicetask3">
+        <omgdc:Bounds height="63.0" width="105.0" x="410.0" y="255.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask4" id="BPMNShape_servicetask4">
+        <omgdc:Bounds height="55.0" width="105.0" x="120.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesOutStockCheck2" id="BPMNShape_salesOutStockCheck2">
+        <omgdc:Bounds height="55.0" width="119.0" x="760.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="680.0" y="137.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="theStart" id="BPMNShape_theStart">
+        <omgdc:Bounds height="35.0" width="35.0" x="50.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="633.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="680.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="355.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="485.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="514.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="1105.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1130.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="967.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1000.0" y="157.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="966.0" y="130.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="225.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="250.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
+        <omgdi:waypoint x="879.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="927.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
+        <omgdi:waypoint x="720.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="760.0" y="157.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="729.0" y="130.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="410.0" y="286.0"></omgdi:waypoint>
+        <omgdi:waypoint x="303.0" y="286.0"></omgdi:waypoint>
+        <omgdi:waypoint x="302.0" y="185.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
+        <omgdi:waypoint x="85.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="120.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
+        <omgdi:waypoint x="700.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="591.0" y="216.0"></omgdi:waypoint>
+        <omgdi:waypoint x="462.0" y="255.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="653.0" y="209.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
+        <omgdi:waypoint x="947.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="947.0" y="286.0"></omgdi:waypoint>
+        <omgdi:waypoint x="515.0" y="286.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="960.0" y="212.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

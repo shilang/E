@@ -1,7 +1,7 @@
 /**
  * @Title:  ShiroUser.java
  * @Package:  com.cloud.erp.shiro.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月3日  下午3:47:43
@@ -18,7 +18,7 @@ import java.io.Serializable;
 
 /**
  * @ClassName  ShiroUser
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月3日  下午3:47:43
  *
@@ -29,6 +29,12 @@ public class ShiroUser implements Serializable {
 
 	private Integer userId;
 	private String account;
+	
+	/**
+	 * 
+	 */
+	public ShiroUser() {
+	}
 	
 	/**
 	 * @param userId
@@ -61,7 +67,6 @@ public class ShiroUser implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return account;
 	}
 	

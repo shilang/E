@@ -1,7 +1,7 @@
 /**
  * @Title:  Parameter.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月30日 下午5:05:20
@@ -29,7 +29,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName Parameter
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年3月30日 下午5:05:20
  *

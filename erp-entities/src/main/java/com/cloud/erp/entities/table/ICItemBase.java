@@ -1,7 +1,7 @@
 /**
  * @Title:  ICItemBase.java
  * @Package:  com.cloud.erp.entities.table
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月22日 下午5:20:08
@@ -25,7 +25,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName ICItemBase
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月22日 下午5:20:08
  *

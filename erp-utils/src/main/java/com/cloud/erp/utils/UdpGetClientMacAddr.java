@@ -1,7 +1,7 @@
 /**
  * @Title:  UdpGetClientMacAddr.java
  * @Package:  com.cloud.erp.utils
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午10:46:23
@@ -21,7 +21,7 @@ import java.net.InetAddress;
 
 /**
  * @ClassName  UdpGetClientMacAddr
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月31日 上午10:46:23
  *

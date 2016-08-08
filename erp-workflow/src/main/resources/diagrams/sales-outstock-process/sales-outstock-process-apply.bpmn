@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="sales-outstock-process-apply" name="sales outstock process apply" isExecutable="true">
+    <startEvent id="startevent1" name="Start" activiti:initiator="initiator"></startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <userTask id="salesOutStockCheck1-modify" name="销售出库一级审核-修改" activiti:candidateGroups="物料经理">
+      <extensionElements>
+        <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="servicetask1"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="servicetask1" targetRef="salesOutStockCheck1-modify"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow3" sourceRef="salesOutStockCheck1-modify" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow4" name="驳回" sourceRef="exclusivegateway1" targetRef="servicetask2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='reject'}]]></conditionExpression>
+    </sequenceFlow>
+    <callActivity id="MainCallActivity" name="Main Call Activity" calledElement="sales-outstock-process">
+      <extensionElements>
+        <activiti:in source="auditModel" target="auditModel"></activiti:in>
+        <activiti:in source="initiator" target="initiator"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <endEvent id="endevent2" name="End"></endEvent>
+    <sequenceFlow id="flow5" name="通过" sourceRef="exclusivegateway1" targetRef="salesOutStockCheck2-modify">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='approve'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="servicetask3" targetRef="MainCallActivity"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="MainCallActivity" targetRef="endevent2"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="servicetask2" targetRef="endevent1"></sequenceFlow>
+    <serviceTask id="servicetask1" name="Change Commit Service Task" activiti:class="com.cloud.erp.activiti.ChangeCommitJavaDelegate"></serviceTask>
+    <serviceTask id="servicetask2" name="Recover Check Service Task" activiti:class="com.cloud.erp.activiti.CheckJavaDelegate"></serviceTask>
+    <serviceTask id="servicetask3" name="Cancel Check Service Task" activiti:class="com.cloud.erp.activiti.CancelCheckJavaDelegate"></serviceTask>
+    <userTask id="salesOutStockCheck2-modify" name="销售出库二级审核-修改" activiti:candidateGroups="销售经理">
+      <extensionElements>
+        <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow9" sourceRef="salesOutStockCheck2-modify" targetRef="exclusivegateway2"></sequenceFlow>
+    <sequenceFlow id="flow10" name="通过" sourceRef="exclusivegateway2" targetRef="servicetask3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='approve'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow11" name="驳回" sourceRef="exclusivegateway2" targetRef="servicetask2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='reject'}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_sales-outstock-process-apply">
+    <bpmndi:BPMNPlane bpmnElement="sales-outstock-process-apply" id="BPMNPlane_sales-outstock-process-apply">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="98.0" y="119.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="573.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesOutStockCheck1-modify" id="BPMNShape_salesOutStockCheck1-modify">
+        <omgdc:Bounds height="55.0" width="150.0" x="350.0" y="109.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="570.0" y="116.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MainCallActivity" id="BPMNShape_MainCallActivity">
+        <omgdc:Bounds height="55.0" width="105.0" x="741.0" y="394.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="776.0" y="500.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="190.0" y="109.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
+        <omgdc:Bounds height="55.0" width="105.0" x="538.0" y="208.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask3" id="BPMNShape_servicetask3">
+        <omgdc:Bounds height="55.0" width="105.0" x="741.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesOutStockCheck2-modify" id="BPMNShape_salesOutStockCheck2-modify">
+        <omgdc:Bounds height="55.0" width="147.0" x="720.0" y="109.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="773.0" y="215.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="133.0" y="136.0"></omgdi:waypoint>
+        <omgdi:waypoint x="190.0" y="136.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="295.0" y="136.0"></omgdi:waypoint>
+        <omgdi:waypoint x="350.0" y="136.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="500.0" y="136.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="136.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="590.0" y="156.0"></omgdi:waypoint>
+        <omgdi:waypoint x="590.0" y="208.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="552.0" y="173.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="610.0" y="136.0"></omgdi:waypoint>
+        <omgdi:waypoint x="720.0" y="136.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="660.0" y="120.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="793.0" y="345.0"></omgdi:waypoint>
+        <omgdi:waypoint x="793.0" y="394.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="793.0" y="449.0"></omgdi:waypoint>
+        <omgdi:waypoint x="793.0" y="500.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="590.0" y="263.0"></omgdi:waypoint>
+        <omgdi:waypoint x="590.0" y="320.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="793.0" y="164.0"></omgdi:waypoint>
+        <omgdi:waypoint x="793.0" y="215.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="793.0" y="255.0"></omgdi:waypoint>
+        <omgdi:waypoint x="793.0" y="290.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="800.0" y="257.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="773.0" y="235.0"></omgdi:waypoint>
+        <omgdi:waypoint x="643.0" y="235.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="685.0" y="242.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

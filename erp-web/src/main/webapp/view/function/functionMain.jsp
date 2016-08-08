@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>程管理</title>
-<jsp:include page="/inc.jsp"></jsp:include>
+<title>程序管理</title>
+<jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
 	var $dg;
 	var $grid;
@@ -15,35 +15,33 @@
 	$(function() {
 		$dg = $("#dg");
 		$grid = $dg.treegrid({
-					width : 'auto',
-					height : $(this).height() - 90,
-					url : "function/functionAction!findAllFunctionList.action",
+					width : $(this).width(),
+					height : $(this).height(),
+					url : "function/findById.action",
 					rownumbers : true,
 					animate : true,
 					collapsible : true,
 					fitColumns : true,
 					striped : true,
-					border : true,
+					border : false,
 					//singleSelect:false,
 					idField : 'permissionId',
 					treeField : 'name',
 					frozenColumns : [ [ {
-						title : '程序名称',
-						field : 'name',
-						editor : {
-							type : 'validatebox',
-							options : {
-								required : true
-							}
-						},
+						title : '程序名称',field : 'name',
 						width : parseInt($(this).width() * 0.2),
 						formatter : function(value) {
 							return '<span style="color:red">' + value
 									+ '</span>';
 						}
 					} ] ],
-					columns : [ [ //{field:'ck',checkbox:true},
-							//{field : 'name',title : '程式名称',width : 250,editor : {type:'validatebox',options:{required:true}}},
+					columns : [ [ 
+							{
+								field : 'description',
+								title : '程序描述',
+								width : parseInt($(this).width() * 0.1),
+								align : 'left'
+							},
 							{
 								field : 'pname',
 								title : '父程序名称',
@@ -53,10 +51,7 @@
 							{
 								field : 'sort',
 								title : '排序编码',
-								width : parseInt($(this).width() * 0.1),
-								editor : {
-									type : 'numberbox'
-								}
+								width : parseInt($(this).width() * 0.1)
 							},
 							{
 								field : 'iconCls',
@@ -65,43 +60,18 @@
 								width : parseInt($(this).width() * 0.1),
 								formatter : function(value, row) {
 									return "<span class='"+row.iconCls+"' style='display:inline-block;vertical-align:middle;width:16px;height:16px;'></span>";
-								},
-								editor : {
-									type : 'combobox',
-									options : {
-										//valueField:'type',
-										//textField:'typeName',
-										data : $.iconData,
-										formatter : function(v) {
-											return $.formatString(
-															'<span class="{0}" style="display:inline-block;vertical-align:middle;width:16px;height:16px;"></span>{1}',
-															v.value, v.value);
-										},
-										value : 'wrench'
-									}
 								}
+
 							}, {
 								field : 'url',
 								title : '程序路径',
 								width : parseInt($(this).width() * 0.1),
-								align : 'left',
-								editor : {
-									type : 'validatebox',
-									options : {
-										required : true
-									}
-								}
+								align : 'left'
 							}, {
 								field : 'myid',
 								title : '程序编码',
 								width : parseInt($(this).width() * 0.1),
-								align : 'left',
-								editor : {
-									type : 'validatebox',
-									options : {
-										required : true
-									}
-								}
+								align : 'left'
 							}, {
 								field : 'type',
 								title : '程序类型',
@@ -112,15 +82,6 @@
 										return "<font color=green>菜单<font>";
 									else
 										return "<font color=red>操作<font>";
-								},
-								editor : {
-									type : 'combobox',
-									options : {
-										valueField : 'type',
-										textField : 'typeName',
-										data : typedata,
-										required : true
-									}
 								}
 							}, {
 								field : 'isused',
@@ -132,190 +93,53 @@
 										return "<font color=green>是<font>";
 									else
 										return "<font color=red>否<font>";
-								},
-								editor : {
-									type : 'checkbox',
-									options : {
-										on : 'Y',
-										off : 'N'
-									}
 								}
-							}, {
-								field : 'description',
-								title : '程序描述',
-								width : parseInt($(this).width() * 0.2),
-								align : 'left',
-								editor : "text"
 							} ] ],
 					toolbar : '#tb'
 				});
 	});
-	var flag = true;
-	function endEdit() {
-		var select = $dg.treegrid('getSelections');
-		if (select) {
-			var nodes = $dg.treegrid('getData');
-			checkedNodes(nodes);
-		}
-		return flag;
-	}
-	//遍历节点和子节点
-	function checkedNodes(nodes) {
-		if (nodes) {
-			$.each(nodes, function(i, node) {
-				if (node) {
-					$dg.treegrid('endEdit', node.permissionId);
-					var temp = $dg.treegrid('validateRow', node.permissionId);
-					if (!temp) {
-						flag = false;
-					}
-				}
-				if (node.children) {
-					checkedNodes(node.children);
-				}
-			});
-		}
-		return flag;
-	}
-
-	function editNode() {
-		var nodes = $dg.treegrid('getSelections');
-		if (nodes == null || nodes == "") {
-			$.messager.alert("提示", "请选择行记录!");
-		} else {
-			$.each(nodes, function(i, node) {
-				if (node) {
-					$dg.treegrid('beginEdit', node.permissionId);
-				}
-			});
-		}
-	}
-	function removeNode() {
+	
+	function delFunction() {
 		var node = $dg.treegrid('getSelected');
 		if (node) {
-			parent.$.messager.confirm("提示", "确定要删除记录吗?", function(r) {
+			parent.$.messager.confirm($.erp.hint, $.erp.deleteQueryMsg, function(r) {
 				if (r) {
-					$.post("function/functionAction!delFunction.action", {
+					$.post("function/delete.action", {
 						id : node.permissionId
 					}, function(rsp) {
 						if (rsp.status) {
 							$dg.treegrid('remove', node.permissionId);
 						}
-						parent.$.messager.show({
-							title : rsp.title,
-							msg : rsp.message,
-							timeout : 1000 * 2
-						});
+						$.erp.submitSuccess(rsp.title, rsp.message);
 					}, "JSON").error(function() {
-						parent.$.messager.show({
-							title : "提示",
-							msg : "提交错误了！",
-							timeout : 1000 * 2
-						});
+						$.erp.submitErr();
 					});
 				}
 			});
 		} else {
-			parent.$.messager.show({
-				title : "提示",
-				msg : "请选择一行记录!",
-				timeout : 1000 * 2
-			});
+			$.erp.noSelectErr();
 		}
 	}
-	function saveNodes() {
-		if (endEdit()) {
-			if ($dg.treegrid('getChanges').length) {
-				var inserted = $dg.treegrid('getChanges', "inserted");
-				var deleted = $dg.treegrid('getChanges', "deleted");
-				var updated = $dg.treegrid('getChanges', "updated");
-
-				var effectRow = new Object();
-				if (inserted.length) {
-					effectRow["inserted"] = JSON.stringify(inserted);
-				}
-				if (deleted.length) {
-					effectRow["deleted"] = JSON.stringify(deleted);
-				}
-				if (updated.length) {
-					effectRow["updated"] = JSON.stringify(updated);
-				}
-				$.post("function/functionAction!persistenceFunction.action",
-						effectRow, function(rsp) {
-							if (rsp.status) {
-								$dg.datagrid('acceptChanges');
-							}
-							$.messager.alert(rsp.title, rsp.message);
-						}, "JSON").error(function() {
-					$.messager.alert("提示", "提交错误了！");
-				});
-			}
-		} else {
-			$.messager.alert("提示", "字段验证未通过!请查看");
-		}
-	}
-	//增加并列项
-	function addStandPlaceNode() {
-		var temp = jqueryUtil.getRandTime();
-		var node = $dg.treegrid('getSelected');
-		if (node) {
-			$dg.treegrid('insert', {
-				after : node.permissionId,
-				data : {
-					permissionId : temp,
-					pid : node.pid,
-					pname : node.pname,
-					sort : node.sort + 1,
-					url : 'javascript:void(0);',
-					status : 'add'
-				}
-			});
-			$dg.treegrid('unselect', node.permissionId);
-			$dg.treegrid('select', temp);
-			$dg.treegrid('beginEdit', temp);
-		} else {
-			$.messager.alert("提示", "请选择一行记录!");
-		}
-	}
-	//增加子项
-	function addSubitemNode() {
-		var temp = jqueryUtil.getRandTime();
-		var node = $dg.treegrid('getSelected');
-		if (node) {
-			$dg.treegrid('insert', {
-				after : node.permissionId,
-				data : {
-					permissionId : temp,
-					pid : node.permissionId,
-					pname : node.name,
-					sort : node.sort + 1,
-					url : 'javascript:void(0);',
-					status : 'add'
-				}
-			});
-			$dg.treegrid('unselect', node.permissionId);
-			$dg.treegrid('select', temp);
-			$dg.treegrid('beginEdit', temp);
-		} else {
-			$.messager.alert("提示", "请选择一行记录!");
-		}
-	}
-	//弹窗修改
-	function updRowsOpenDlg() {
+	
+	function updateFunctionDlg() {
 		var row = $dg.treegrid('getSelected');
 		if (row) {
 			parent.$.modalDialog({
-				title : "编辑程序",
+				title : "修改程序",
+				iconCls: 'icon-edit',
 				width : 600,
 				height : 400,
-				href : "view/function/functionEditDlg.jsp?tempId=" + row.type,
+				href : "view/function/functionEditDlg.jsp",
 				onLoad : function() {
+					if(!row.pid){
+						row.pid = "null";
+					}
 					var f = parent.$.modalDialog.handler.find("#form");
 					f.form("load", row);
 				},
 				buttons : [ {
-					text : '编辑',
-					iconCls : 'icon-ok',
+					text : '修改',
+					iconCls : 'icon-save',
 					handler : function() {
 						parent.$.modalDialog.openner = $grid;//因为添加成功之后，需要刷新这个treegrid，所以先预定义好
 						var f = parent.$.modalDialog.handler.find("#form");
@@ -331,15 +155,11 @@
 				} ]
 			});
 		} else {
-			parent.$.messager.show({
-				title : "提示",
-				msg : "请选择一行记录!",
-				timeout : 1000 * 2
-			});
+			$.erp.noSelectErr();
 		}
 	}
-	//弹窗增加
-	function addRowsOpenDlg() {
+	
+	function addFunctionDlg() {
 		var row = $dg.treegrid('getSelected');
 		if (row) {
 			if (row.type == "O") {
@@ -349,8 +169,15 @@
 					timeout : 1000 * 2
 				});
 			} else {
+				
+				function closeDlg(){
+					parent.$.modalDialog.handler.dialog('destroy');
+					parent.$.modalDialog.handler = undefined;
+				}
+				
 				parent.$.modalDialog({
 					title : "添加程序",
+					iconCls: 'icon-add',
 					width : 600,
 					height : 400,
 					href : "view/function/functionEditDlg.jsp",
@@ -364,18 +191,19 @@
 					},
 					buttons : [ {
 						text : '保存',
-						iconCls : 'icon-ok',
+						iconCls : 'icon-save',
 						handler : function() {
 							parent.$.modalDialog.openner = $grid;//因为添加成功之后，需要刷新这个treegrid，所以先预定义好
 							var f = parent.$.modalDialog.handler.find("#form");
 							f.submit();
+							//$grid.treegrid('reload');
+							//closeDlg();
 						}
 					}, {
 						text : '取消',
 						iconCls : 'icon-cancel',
 						handler : function() {
-							parent.$.modalDialog.handler.dialog('destroy');
-							parent.$.modalDialog.handler = undefined;
+							closeDlg();
 						}
 					} ]
 				});
@@ -383,20 +211,13 @@
 		} else {
 			parent.$.modalDialog({
 				title : "添加程序",
+				iconCls: 'icon-add',
 				width : 600,
 				height : 400,
 				href : "view/function/functionEditDlg.jsp",
-				onLoad : function() {
-					if (row) {
-						var f = parent.$.modalDialog.handler.find("#form");
-						f.form("load", {
-							"pid" : row.permissionId
-						});
-					}
-				},
 				buttons : [ {
 					text : '保存',
-					iconCls : 'icon-ok',
+					iconCls : 'icon-save',
 					handler : function() {
 						parent.$.modalDialog.openner = $grid;//因为添加成功之后，需要刷新这个treegrid，所以先预定义好
 						var f = parent.$.modalDialog.handler.find("#form");
@@ -416,41 +237,41 @@
 </script>
 </head>
 <body>
-	<div class="well well-small" style="margin-left: 5px; margin-top: 5px">
-		<span class="badge">提示</span>
-		<p>
-			在此你可以对<span class="label-info"><strong>菜单功能</strong></span>进行编辑!
-			&nbsp;<span class="label-info"><strong>注意</strong></span>操作功能是对菜单功能的操作权限！
-			请谨慎填写程序编码，权限区分标志，请勿重复!
-		</p>
-	</div>
-	<div id="tb" style="padding: 10px; height: auto">
-		<div style="margin-bottom: 5px">
-			<shiro:hasPermission name="funAdd">
-				<!--  <a href="javascript:void(0);" class="easyui-splitbutton" data-options="menu:'#mm1',iconCls:'icon-add'">添加</a>
-				<div id="mm1" style="width:150px;">
-					<div data-options="iconCls:'icon-undo'" onclick="addStandPlaceNode();">增加并列项</div>
-					<div data-options="iconCls:'icon-redo'" onclick="addSubitemNode();">增加子项</div>
-				</div>-->
-				<a href="javascript:void(0);" class="easyui-linkbutton"
-					iconCls="icon-add" plain="true" onclick="addRowsOpenDlg();">添加</a>
-			</shiro:hasPermission>
-			<shiro:hasPermission name="funEdit">
-				<a href="javascript:void(0);" class="easyui-linkbutton"
-					iconCls="icon-edit" plain="true" onclick="updRowsOpenDlg();">编辑</a>
-			</shiro:hasPermission>
-			<shiro:hasPermission name="funDel">
-				<a href="javascript:void(0);" class="easyui-linkbutton"
-					iconCls="icon-remove" plain="true" onclick="removeNode();">删除</a>
-			</shiro:hasPermission>
-			<!-- <shiro:hasPermission name="funEndEdit">
-				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="endEdit();">结束编辑</a>
-			</shiro:hasPermission>
-			<shiro:hasPermission name="funSave">
-				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="saveNodes();">保存</a>
-			</shiro:hasPermission> -->
+	<div class="easyui-layout" data-options="fit:true,border:false">
+		<div data-options="region:'center',border:false" >
+			<div id="tb">
+				<table>
+					<tr>
+						<td>
+							<shiro:hasPermission name="funAdd">
+								<!--  <a href="javascript:void(0);" class="easyui-splitbutton" data-options="menu:'#mm1',iconCls:'icon-add'">添加</a>
+								<div id="mm1" style="width:150px;">
+									<div data-options="iconCls:'icon-undo'" onclick="addStandPlaceNode();">增加并列项</div>
+									<div data-options="iconCls:'icon-redo'" onclick="addSubitemNode();">增加子项</div>
+								</div>-->
+								<a href="javascript:void(0);" class="easyui-linkbutton"
+									iconCls="icon-add" plain="true" onclick="addFunctionDlg();">添加</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="funMod">
+								<a href="javascript:void(0);" class="easyui-linkbutton"
+									iconCls="icon-edit" plain="true" onclick="updateFunctionDlg();">修改</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="funDel">
+								<a href="javascript:void(0);" class="easyui-linkbutton"
+									iconCls="icon-remove" plain="true" onclick="delFunction();">删除</a>
+							</shiro:hasPermission>
+							<!-- <shiro:hasPermission name="funEndEdit">
+								<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="endEdit();">结束编辑</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="funSave">
+								<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="saveNodes();">保存</a>
+							</shiro:hasPermission> -->
+						</td>
+					</tr>
+				</table>
+			</div>
+			<table id="dg" title=""></table>
 		</div>
 	</div>
-	<table id="dg" title="程序管理"></table>
 </body>
 </html>

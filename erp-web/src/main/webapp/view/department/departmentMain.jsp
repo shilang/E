@@ -4,22 +4,22 @@
 <html>
 <head>
 <title>部门</title>
-<jsp:include page="/inc.jsp"></jsp:include>
+<jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
 	var $dg;
 	var $grid;
 	$(function(){
 		$dg = $("#dg");
 		$grid = $dg.treegrid({
-			url:'department/departmentAction!findDepartmentsByeId.action',
-			width: $(this).width() - 10,
-			height: $(this).height() - 82,
+			url:'department/findById.action',
+			width: $(this).width(),
+			height: $(this).height(),
 			rownumbers: true,
 			animate: true,
 			collapsible: true,
-			fitColumns: true,
+			fitColumns: false,
 			striped: true,
-			border: true,
+			border: false,
 			idField: 'departmentId',
 			treeField: 'name',
 			frozenColumns: [[
@@ -30,9 +30,12 @@
 			]],
 			columns:[[
 			         {field: 'number', title:'代码',width:parseInt($(this).width() * 0.1)},
-			         {field: 'fullName', title: '全名', width: parseInt($(this).width()* 0.1)},
+			         {field: 'fullName', title: '全名', width: parseInt($(this).width()* 0.15)},
+			         {field: 'ename', title: '英文名', width: parseInt($(this).width()* 0.15)},
 			         {field: 'tel', title: '电话', width: parseInt($(this).width()* 0.1)},
-			         {field: 'fax', title: '传真', width: parseInt($(this).width()* 0.1)}
+			         {field: 'fax', title: '传真', width: parseInt($(this).width()* 0.1)},
+			         {field: 'managerName', title: '主管', width: parseInt($(this).width()* 0.1)},
+			         {field: 'description', title: '描述', width: parseInt($(this).width()* 0.1)},
 			]],toolbar: '#tb'
 		});
 	});
@@ -113,42 +116,27 @@
 	function delDepartment(){
 		var node = $dg.treegrid('getSelected');
 		if(node){
-			$.post("department/departmentAction!delDepartment.action",{departmentId: node.departmentId}, function(rsp){
-				if(rsp.status){
-					$dg.treegrid('remove', node.departmentId);
+			parent.$.messager.confirm($.erp.hint, $.erp.deleteQueryMsg, function(r){
+				if(r){
+					$.post("department/delete.action",{departmentId: node.departmentId}, function(rsp){
+						if(rsp.status){
+							$dg.treegrid('remove', node.departmentId);
+						}
+						$.erp.submitSuccess(rsp.title, rsp.message);
+					},"JSON").error(function(){
+						$.erp.submitErr();
+					});
 				}
-				parent.$.messager.show({
-					title: rsp.title,
-					msg: rsp.message,
-					timeout: 1000 * 2
-				});
-			},"JSON").error(function(){
-				parent.$.mesager.show({
-					title: '提示',
-					msg: '提交错误！',
-					timeout: 1000 * 2
-				});
 			});
 		}else{
-			parent.$.messager.show({
-				title: '提示',
-				msg: '请选择一行记录!',
-				timeout: 1000 * 2
-			});
+			$.erp.noSelectErr();
 		}
 	}
 </script>
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true,border:false">
-		<div data-options="region:'center',border:false" style="padding: 5px;">
-			<div class="well well-small" style="margin-bottom: 5px;">
-				<span class="badge">提示</span>
-				<p>
-					在此你可以对<span class="label-info"><strong>部门</strong></span>进行编辑！
-				</p>
-			</div>
-			
+		<div data-options="region:'center',border:false" >
 			<div id="tb">
 				<table>
 					<tr>
@@ -162,7 +150,7 @@
 				</table>
 			</div>
 				
-			<table id="dg" title="部门管理"></table>
+			<table id="dg" title=""></table>
 		</div>
 	</div>
 </body>

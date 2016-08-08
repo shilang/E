@@ -1,7 +1,7 @@
 /**
  * @Title:  Log.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月19日 下午3:30:52
@@ -27,10 +27,11 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 
 /**
  * @ClassName Log
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年3月19日 下午3:30:52
  *
@@ -43,16 +44,18 @@ public class Log implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Integer logId;
+	private Date date;
 	private Integer userId;
 	private String name;
-	private Date logDate;
-	private Integer type;
-	private String mac;
-	private String ip;
-	private Integer objectType;
-	private String objectId;
-	private String eventName;
-	private String eventRecord;
+	private String module;
+	private String content;
+	private String machine;
+	private String ipAddr;
+	private String status;
+	private Integer creater;
+	private Date created;
+	private Integer modifier;
+	private Date lastmod;
 
 	@Id
 	@GeneratedValue
@@ -65,6 +68,16 @@ public class Log implements Serializable {
 		this.logId = logId;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE")
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	@Column(name = "USER_ID")
 	public Integer getUserId() {
 		return userId;
@@ -74,7 +87,7 @@ public class Log implements Serializable {
 		this.userId = userId;
 	}
 
-	@Column(name = "NAME", length = 20)
+	@Formula("(SELECT t.NAME FROM USERS t WHERE t.USER_ID = USER_ID)")
 	public String getName() {
 		return name;
 	}
@@ -83,77 +96,87 @@ public class Log implements Serializable {
 		this.name = name;
 	}
 
+	@Column(name = "MODULE", length = 100)
+	public String getModule() {
+		return module;
+	}
+
+	public void setModule(String module) {
+		this.module = module;
+	}
+
+	@Column(name = "CONTENT", length = 200)
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	@Column(name = "MACHINE", length = 50)
+	public String getMachine() {
+		return machine;
+	}
+
+	public void setMachine(String machine) {
+		this.machine = machine;
+	}
+
+	@Column(name = "IP_ADDR", length = 20)
+	public String getIpAddr() {
+		return ipAddr;
+	}
+
+	public void setIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
+	}
+
+	@Column(name = "STATUS", length = 1)
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Column(name = "CREATER")
+	public Integer getCreater() {
+		return creater;
+	}
+
+	public void setCreater(Integer creater) {
+		this.creater = creater;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "LOG_DATE", length = 10)
-	public Date getLogDate() {
-		return logDate;
+	@Column(name = "CREATED")
+	public Date getCreated() {
+		return created;
 	}
 
-	public void setLogDate(Date logDate) {
-		this.logDate = logDate;
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
-	@Column(name = "TYPE")
-	public Integer getType() {
-		return type;
+	@Column(name = "MODIFIER")
+	public Integer getModifier() {
+		return modifier;
 	}
 
-	public void setType(Integer type) {
-		this.type = type;
+	public void setModifier(Integer modifier) {
+		this.modifier = modifier;
 	}
 
-	@Column(name = "MAC", length = 20)
-	public String getMac() {
-		return mac;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LASTMOD")
+	public Date getLastmod() {
+		return lastmod;
 	}
 
-	public void setMac(String mac) {
-		this.mac = mac;
+	public void setLastmod(Date lastmod) {
+		this.lastmod = lastmod;
 	}
-
-	@Column(name = "IP", length = 20)
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	@Column(name = "OBJECT_TYPE")
-	public Integer getObjectType() {
-		return objectType;
-	}
-
-	public void setObjectType(Integer objectType) {
-		this.objectType = objectType;
-	}
-
-	@Column(name = "OBJECT_ID", length = 100)
-	public String getObjectId() {
-		return objectId;
-	}
-
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
-	}
-
-	@Column(name = "EVENT_NAME", length = 100)
-	public String getEventName() {
-		return eventName;
-	}
-
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
-	}
-
-	@Column(name = "EVENT_RECORD", length = 500)
-	public String getEventRecord() {
-		return eventRecord;
-	}
-
-	public void setEventRecord(String eventRecord) {
-		this.eventRecord = eventRecord;
-	}
-
+	
 }

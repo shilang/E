@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- config datasource DriverManagerDataSource -->
+<!-- 	<bean id="dataSource2" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://192.168.1.10:3306/clouderp"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123456"></property>
+	</bean> -->
+
+	<!-- mybatis sqlSession factory: SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource">
+			 <ref bean="dataSource"/>
+		</property>
+		<property name="mapperLocations" value="classpath*:com/cloud/erp/mapper/*.xml"></property>
+		<property name="typeAliasesPackage" value="com.cloud.erp.entities.table"></property>
+	</bean>
+	
+	<!-- mybatis load mapper file automatically -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.cloud.erp.mapper"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+
+</beans>

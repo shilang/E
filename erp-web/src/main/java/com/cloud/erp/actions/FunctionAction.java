@@ -1,7 +1,7 @@
 /**
  * @Title:  FunctionAction.java
  * @Package:  com.cloud.erp.actions
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月13日  下午2:23:52
@@ -14,43 +14,39 @@
  */
 package com.cloud.erp.actions;
 
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.fastjson.JSON;
+import com.cloud.erp.common.BaseAction;
 import com.cloud.erp.entities.table.Permission;
 import com.cloud.erp.entities.viewmodel.Json;
-import com.cloud.erp.logging.LogUtil;
+import com.cloud.erp.entities.viewmodel.TreeGridModel;
+import com.cloud.erp.entities.viewmodel.TreeModel;
 import com.cloud.erp.service.FunctionService;
 import com.cloud.erp.utils.Constants;
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * @ClassName  FunctionAction
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月13日  下午2:23:52
  *
  */
 @Namespace("/function")
-@Action(value = "functionAction")
 public class FunctionAction extends BaseAction implements ModelDriven<Permission>{
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LogUtil.getLogger(FunctionAction.class);
+	@Resource
 	private FunctionService functionService;
 	private Permission permission;
 	private Integer id;
-	
-	/**
-	 * @param functionService the functionService to set
-	 */
-	@Autowired
-	public void setFunctionService(FunctionService functionService) {
-		this.functionService = functionService;
-	}
 	
 	public Permission getPermission() {
 		return permission;
@@ -68,84 +64,66 @@ public class FunctionAction extends BaseAction implements ModelDriven<Permission
 		this.id = id;
 	}
 
-
-	/**
-	 * function: TODO persistance function entity
-	 *
-	 * @Title:  persistenceFunction
-	 * @param: 
-	 * @return:  String
-	 * @throws:
-	 */
+	@Action(value = "persist")
 	public String persistenceFunction() throws Exception{
-		Json json = new Json();
-		if(functionService.persistenceFunction(JSON.parseArray(updated, Permission.class))){
-			json.setStatus(true);
-			json.setMessage(Constants.POST_DATA_SUCCESS);
-		}else {
-			json.setMessage(Constants.POST_DATA_FAIL);
-		}
-		OutputJson(json);
-		return null;		
+		boolean result = functionService.persistence(getModel());
+		JSONWriter(result);
+		return RJSON;
 	}
 	
-	/**
-	 * function: TODO show editor
-	 *
-	 * @Title:  persistenceFunctionDig
-	 * @param: 
-	 * @return:  String
-	 * @throws:
-	 */
-	public String persistenceFunctionDig() throws Exception{
-		OutputJson(getMessage(functionService.persistenceFunction(getModel())),Constants.TEXT_TYPE_PLAIN);
-		return null;
-	}
-	
-	/**
-	 * function: TODO delete function
-	 *
-	 * @Title:  delFunction
-	 * @param: 
-	 * @return:  String
-	 * @throws:
-	 */
+	@Action(value = "delete")
 	public String delFunction() throws Exception{
 		Json json = new Json();
-		if(functionService.delFunction(id)){
+		if(functionService.deleteToUpdate(id)){
 			json.setStatus(true);
 			json.setMessage(Constants.POST_DATA_SUCCESS);
 		}else {
 			json.setMessage(Constants.POST_DATA_FAIL + Constants.IS_EXT_SUBMENU);
 		}
-		OutputJson(json);
-		return null;
+		JSONWriter(json);
+		return RJSON;
 	}
 	
-	/**
-	 * function: TODO query all function by node
-	 *
-	 * @Title:  findAllFunctionList
-	 * @param: 
-	 * @return:  String
-	 * @throws:
-	 */
-	public String findAllFunctionList() throws Exception{
-		OutputJson(functionService.findAllFunctionList(id));
-		return null;
+	@Action(value = "findById")
+	public String findFunctionsById() throws Exception{
+		List<Permission> permissions = functionService.findFunctionsById(id);
+		List<TreeGridModel> tempList = new ArrayList<TreeGridModel>();
+		for (Permission function : permissions) {
+			TreeGridModel treeGridModel = new TreeGridModel();
+			try {
+				BeanUtils.copyProperties(treeGridModel, function);
+				if (id == null || "".equals(id)) {
+					treeGridModel.setPid(null);
+				}
+				tempList.add(treeGridModel);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		JSONWriterGeneral(tempList);
+		return RJSON;
 	}
 	
-	public String findAllFunctionLists() throws Exception{
-		OutputJson(functionService.findAllFunctionList());
-		return null;
+	@Action(value = "find")
+	public String findFunctions() throws Exception{
+		List<Permission> permissions = functionService.findFunctions();
+		List<TreeModel> tempList = new ArrayList<TreeModel>();
+		for (Permission function : permissions) {
+			TreeModel treeModel = new TreeModel();
+			treeModel.setId(function.getPermissionId().toString());
+			treeModel.setPid(function.getPid() == null ? "" : function.getPid()
+					.toString());
+			treeModel.setName(function.getName());
+			treeModel.setIconCls(function.getIconCls());
+			treeModel.setState(Constants.TREE_STATUS_OPEN);
+			tempList.add(treeModel);
+		}
+		JSONWriterGeneral(tempList);
+		return RJSON;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
-	 */
 	@Override
 	public Permission getModel() {
-		// TODO Auto-generated method stub
 		if(null == permission){
 			permission = new Permission();
 		}

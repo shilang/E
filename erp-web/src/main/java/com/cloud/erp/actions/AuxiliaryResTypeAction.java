@@ -1,7 +1,7 @@
 /**
  * @Title:  AuxiliaryResAction.java
  * @Package:  com.cloud.erp.actions
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月29日 下午6:16:23
@@ -17,10 +17,12 @@ package com.cloud.erp.actions;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cloud.erp.common.BaseAction;
 import com.cloud.erp.entities.table.AuxiliaryResType;
 import com.cloud.erp.entities.viewmodel.Json;
 import com.cloud.erp.entities.viewmodel.TreeGeneralModel;
@@ -30,26 +32,21 @@ import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * @ClassName AuxiliaryResAction
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月29日 下午6:16:23
  *
  */
 @Namespace("/auxiliaryResType")
-@Action("auxiliaryResTypeAction")
 public class AuxiliaryResTypeAction extends BaseAction implements
 		ModelDriven<AuxiliaryResType> {
 
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private AuxiliaryResTypeService auxiliaryResTypeService;
+	
 	private AuxiliaryResType auxiliaryResType;
 	private Integer id;
-
-	@Autowired
-	public void setAuxiliaryResTypeService(
-			AuxiliaryResTypeService auxiliaryResTypeService) {
-		this.auxiliaryResTypeService = auxiliaryResTypeService;
-	}
 
 	public AuxiliaryResType getAuxiliaryResType() {
 		return auxiliaryResType;
@@ -67,6 +64,7 @@ public class AuxiliaryResTypeAction extends BaseAction implements
 		this.id = id;
 	}
 
+	@Action(value = "find")
 	public String findAuxiliaryResTypes() throws Exception {
 		List<AuxiliaryResType> auxiliaryResTypes = auxiliaryResTypeService
 				.findAuxiliaryResTypes();
@@ -96,37 +94,34 @@ public class AuxiliaryResTypeAction extends BaseAction implements
 				treeGeneralModels.add(treeGeneralModel);
 			}
 		}
-		OutputJson(treeGeneralModels);
-		return null;
+		JSONWriterGeneral(treeGeneralModels);
+		return RJSON;
 	}
 
+	@Action(value = "persist")
 	public String persistenceAuxiliaryResType() throws Exception {
-		OutputJson(getMessage(auxiliaryResTypeService.persistenceAuxiliaryResType(getModel())),
-				Constants.TEXT_TYPE_PLAIN);
-		return null;
+		boolean result = auxiliaryResTypeService.persistence(getModel());
+		JSONWriter(result);
+		return RJSON;
 	}
 
+	@Action(value = "delete")
 	public String delAuxiliaryResType() throws Exception {
 		Json json = new Json();
-		if (auxiliaryResTypeService.delAuxiliaryResType(id)) {
+		if (auxiliaryResTypeService.deleteToUpdate(id)) {
 			json.setStatus(true);
 			json.setMessage(Constants.POST_DATA_SUCCESS);
 		} else {
 			json.setStatus(false);
 			json.setMessage(Constants.POST_DATA_FAIL + Constants.IS_EXT_SUBITEM);
 		}
-		OutputJson(json);
-		return null;
+		JSONWriter(json);
+		return RJSON;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
-	 */
+	
 	@Override
 	public AuxiliaryResType getModel() {
-		// TODO Auto-generated method stub
 		if (null == auxiliaryResType) {
 			auxiliaryResType = new AuxiliaryResType();
 		}

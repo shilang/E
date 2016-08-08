@@ -2,7 +2,7 @@
 <script type="text/javascript">
 	$(function() {
 		$("#form").form({
-			url :"companyInfo/companyInfoAction!persistenceCompanyInfo.action",
+			url :"companyInfo/persist.action",
 			onSubmit : function() {
 				parent.$.messager.progress({
 					title : '提示',
@@ -44,7 +44,7 @@
 			<input name="created" id="created"  type="hidden"/>
 			<input name="creater" id="creater"  type="hidden"/>
 			<input name="status" id="status"  type="hidden"/>
-			 <table>
+			 <table class="simple">
 				 <tr>
 				    <th>公司名称</th>
 					<td><input name="name" id="name" class="easyui-textbox" data-options="required:true"/></td>

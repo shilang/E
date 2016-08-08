@@ -1,7 +1,7 @@
 /**
  * @Title:  DepartmentServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月18日 上午10:45:33
@@ -22,13 +22,12 @@ import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.DepartmentDao;
 import com.cloud.erp.entities.table.Department;
-import com.cloud.erp.entities.viewmodel.TreeModel;
 import com.cloud.erp.service.DepartmentService;
 import com.cloud.erp.utils.PageUtil;
 
 /**
  * @ClassName DepartmentServiceImpl
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年3月18日 上午10:45:33
  *
@@ -36,79 +35,48 @@ import com.cloud.erp.utils.PageUtil;
 @Service("departmentService")
 public class DepartmentServiceImpl implements DepartmentService {
 
-	private DepartmentDao departmentDao;
-
-	/**
-	 * @param departmentDao
-	 *            the departmentDao to set
-	 */
 	@Autowired
-	public void setDepartmentDao(DepartmentDao departmentDao) {
-		this.departmentDao = departmentDao;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.cloud.erp.service.DepartmentService#findDepartments(java.util.Map,
-	 * com.cloud.erp.utils.PageUtil)
-	 */
-	@Override
-	public List<Department> findDepartments(Map<String, Object> params,
-			PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return departmentDao.findDepartments(params, pageUtil);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.cloud.erp.service.DepartmentService#findDepartments(java.lang.Integer
-	 * )
-	 */
+	private DepartmentDao departmentDao;
+	
 	@Override
 	public List<Department> findDepartments(Integer id) {
-		// TODO Auto-generated method stub
 		return departmentDao.findDepartments(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.cloud.erp.service.DepartmentService#getCount(java.util.Map,
-	 * com.cloud.erp.utils.PageUtil)
-	 */
 	@Override
-	public long getCount(Map<String, Object> params, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return departmentDao.getCount(params, pageUtil);
+	public List<Department> findDepartments() {
+		return departmentDao.findAll(null, null);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.cloud.erp.service.DepartmentService#persistenceDepartment(com.cloud
-	 * .erp.entities.table.Department)
-	 */
 	@Override
-	public boolean persistenceDepartment(Department department) {
-		// TODO Auto-generated method stub
-		return departmentDao.persistenceDepartment(department);
+	public List<Department> findAll(Map<String, Object> params,
+			PageUtil pageUtil) {
+		return departmentDao.findAll(params, pageUtil);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.cloud.erp.service.DepartmentService#delDepartment(java.lang.Integer)
-	 */
 	@Override
-	public boolean delDepartment(Integer id) {
-		// TODO Auto-generated method stub
-		return departmentDao.delDepartment(id);
+	public Department get(Integer id) {
+		return departmentDao.get(id);
+	}
+
+	@Override
+	public void update(Department master) {
+		departmentDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(Department master) throws Exception {
+		return departmentDao.persistence(master);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return departmentDao.deleteToUpdate(pid);
+	}
+
+	@Override
+	public long getCount(Map<String, Object> params) {
+		return departmentDao.getCount(params);
 	}
 
 }

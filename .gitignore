@@ -1,7 +1,10 @@
 .metadata/
+.recommenders/
 RemoteSystemsTempFiles/
 bin/
 target/
 Servers/
 lib/
 #[Tt]est*
+tempdata/
+tools/

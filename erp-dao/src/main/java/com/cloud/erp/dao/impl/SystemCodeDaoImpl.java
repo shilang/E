@@ -1,7 +1,7 @@
 /**
  * @Title:  SystemCodeDaoImpl.java
  * @Package:  com.cloud.erp.dao.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月30日 上午11:01:24
@@ -21,16 +21,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.SystemCodeDao;
+import com.cloud.erp.dao.common.BaseDao;
 import com.cloud.erp.entities.table.SystemCode;
 import com.cloud.erp.entities.viewmodel.TreeModel;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
-import com.sun.tools.javac.code.Attribute.Constant;
 
 /**
  * @ClassName  SystemCodeDaoImpl
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月30日 上午11:01:24
  *
@@ -47,12 +47,10 @@ public class SystemCodeDaoImpl implements SystemCodeDao {
 	public void setBaseDao(BaseDao<SystemCode> baseDao) {
 		this.baseDao = baseDao;
 	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.SystemCodeDao#findSystemCodeList(java.lang.Integer)
-	 */
+
 	@Override
 	public List<SystemCode> findSystemCodeList(Integer id) {
-		// TODO Auto-generated method stub
+		
 		String hql = "from SystemCode t where t.status = 'A'";
 		if(null == id || "".equals(id)){
 			hql += " and t.parentId is null";
@@ -62,12 +60,9 @@ public class SystemCodeDaoImpl implements SystemCodeDao {
 		return baseDao.find(hql);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.SystemCodeDao#findSystemCodeList()
-	 */
 	@Override
 	public List<TreeModel> findSystemCodeList() {
-		// TODO Auto-generated method stub
+		
 		String hql = "from SystemCode t where t.status = 'A'";
 		List<SystemCode> list = baseDao.find(hql);
 		List<TreeModel> tempList = new ArrayList<TreeModel>();
@@ -85,15 +80,12 @@ public class SystemCodeDaoImpl implements SystemCodeDao {
 		return tempList;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.SystemCodeDao#persistenceSystemCodeDig(com.cloud.erp.entities.SystemCode, java.lang.String, java.lang.Integer)
-	 */
 	@Override
 	public boolean persistenceSystemCodeDig(SystemCode systemCode,
 			String permissionName, Integer codePid) {
-		// TODO Auto-generated method stub
 		
-		Integer userid = Constants.getCurrentUser().getUserId();
+		
+		Integer userid = Commons.getCurrentUser().getUserId();
 		Integer pid = systemCode.getParentId();
 		Integer codeId = systemCode.getCodeId();
 		if(null == codeId || "".equals(codeId)){
@@ -145,7 +137,7 @@ public class SystemCodeDaoImpl implements SystemCodeDao {
 	}
 	
 	/**
-	 * function: TODO check
+	 * function: check
 	 * @Author: bollen bollen@live.cn
 	 * @Date: 2015年3月30日 上午11:24:42
 	 * @Title: isExtPermissionId
@@ -158,9 +150,6 @@ public class SystemCodeDaoImpl implements SystemCodeDao {
 		return baseDao.find(hql);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.SystemCodeDao#delSystemCode(java.lang.Integer)
-	 */
 	@Override
 	public boolean delSystemCode(Integer codeId) {
 		String hql=" from SystemCode t where t.status='A' and t.parentId="+codeId;
@@ -169,7 +158,7 @@ public class SystemCodeDaoImpl implements SystemCodeDao {
 		{
 			return false;
 		}else {
-			Integer userid = Constants.getCurrentUser().getUserId();
+			Integer userid = Commons.getCurrentUser().getUserId();
 			SystemCode s = baseDao.get(SystemCode.class,codeId);
 			s.setLastmod(new Date());
 			s.setModifier(userid);
@@ -179,9 +168,6 @@ public class SystemCodeDaoImpl implements SystemCodeDao {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.SystemCodeDao#findSystemCodeByType(java.lang.String)
-	 */
 	@Override
 	public List<SystemCode> findSystemCodeByType(String codeMyid) {
 		String hql="from SystemCode t where t.status='A' and t.type='D' and t.codeMyid='"+codeMyid+"'";

@@ -204,6 +204,7 @@
 		 * 
 		 * 扩展tree，使其支持平滑数据格式
 		 */
+		
 		$.fn.tree.defaults.loadFilter = function(data, parent) {
 			var opt = $(this).data().tree.options;
 			var idFiled, textFiled, parentField;
@@ -237,6 +238,7 @@
 		 * 
 		 * 扩展combotree，使其支持平滑数据格式
 		 */
+		
 		$.fn.combotree.defaults.loadFilter = function(data, parent) {
 			var opt = $(this).data().tree.options;
 			var idFiled, textFiled, parentField;
@@ -263,6 +265,7 @@
 			}
 			return data;
 		};
+		
 		//序列化表单到对象
 		jqueryUtil.serializeObject = function(form) {
 			//console.dir(form.serializeArray());
@@ -277,10 +280,11 @@
 			//console.dir(o);
 			return o;
 		};
-		/*$.extend($.fn.datagrid.defaults.editors, {
-	        combotree: {
+		
+/*		$.extend($.fn.datagrid.defaults.editors, {
+	        combotrees: {
 	            init: function(container, options){
-	                var editor = jQuery('<input type="text">').appendTo(container);
+	                var editor = jQuery('<input type="text" class="datagrid-editable-input">').appendTo(container);
 	                editor.combotree(options);
 	                return editor;
 	            },
@@ -288,21 +292,57 @@
 	                jQuery(target).combotree('destroy');
 	            },
 	            getValue: function(target){
-	                var temp = jQuery(target).combotree('getValue');
-	                var temp2 = jQuery(target).combotree('getText');
-	                alert("getValue=>"+temp+"===>"+temp2);
-	                return temp+","+temp2;
+	                //var value = jQuery(target).combotree('getValue');
+	                //return value;
+	            	var temp = jQuery(target).combotree('getValues');
+	            	return temp.join(',');
 	            },
 	            setValue: function(target, value){
-	               //var temp = value.toString.split(",");
-	                alert("setValue=11>"+value);
-	               // jQuery(target).combotree('setValue', temp[0]);
+	               //jQuery(target).combotree('setValue', value);
+	            	var temp = value.split(',');
+	            	jQuery(target).combotree('setValues', temp);
 	            },
 	            resize: function(target, width){
 	                jQuery(target).combotree('resize', width);
 	            }
 	        }
 		});*/
+		
+		/*
+		$.extend($.fn.datagrid.defaults.editors, {
+	        textbox: {
+	            init: function(container, options){
+	                var editor = jQuery('<input type="text">').appendTo(container);
+	                editor.textbox(options);
+	                return editor;
+	            },
+	            destroy: function(target){
+	                jQuery(target).textbox('destroy');
+	            },
+	            getValue: function(target){
+	                var value = jQuery(target).textbox('getValue');
+	                return value;
+	            },
+	            setValue: function(target, value){
+	               jQuery(target).textbox('setValue', value);
+	            },
+	            resize: function(target, width){
+	                jQuery(target).textbox('resize', width);
+	            }
+	        }
+		});*/
+		
+		/**
+		 * 检查是否为空对象
+		 * author: bollen
+		 */
+		
+		jqueryUtil.isEmptyObj = function(obj){
+			for(var name in obj){
+				return false;
+			}
+			return true;
+		};
 
 		
 		
@@ -312,6 +352,7 @@
 		 * 		cascadeCheck ：普通级联（不包括未加载的子节点）
 		 * 		deepCascadeCheck ：深度级联（包括未加载的子节点）
 		 */
+		
 		$.extend($.fn.treegrid.defaults,{
 			onLoadSuccess : function() {
 				var target = $(this);
@@ -337,6 +378,160 @@
 					e.stopPropagation();//停止事件传播
 				});
 			}
+		}); 
+		
+		/**
+		 * 扩展表格combogrid编辑器
+		 * author: bollen
+		 */
+		$.extend($.fn.datagrid.defaults.editors, {
+			combogrid: {
+				init: function(container, options){
+					var input = $('<input type="text" class="datagrid-editable-input">').appendTo(container); 
+					input.combogrid(options);
+					return input;
+				},
+				destroy: function(target){
+					$(target).combogrid('destroy');
+				},
+				getValue: function(target){
+					return $(target).combogrid('getValue');
+				},
+				setValue: function(target, value){
+					$(target).combogrid('setValue', value);
+				},
+				resize: function(target, width){
+					$(target).combogrid('resize',width);
+				}
+			}
+		});
+		
+		/**
+		 * 扩展datagrid统计方法
+		 * author: bollen
+		 */
+		$.extend($.fn.datagrid.methods, {
+		    statistics: function (jq) {
+		        var opt=$(jq).datagrid('options').columns;
+		        var rows = $(jq).datagrid("getRows");
+		        
+		        var footer = new Array();
+		        footer['sum'] = "";
+		        footer['avg'] = "";
+		        footer['max'] = "";
+		        footer['min'] = "";
+		         
+		        for(var i=0; i<opt[0].length; i++){
+		            if(opt[0][i].sum){
+		                footer['sum'] = footer['sum'] + sum(opt[0][i].field)+ ',';
+		            }
+		            if(opt[0][i].avg){
+		                footer['avg'] = footer['avg'] + avg(opt[0][i].field)+ ',';
+		            }
+		            if(opt[0][i].max){
+		                footer['max'] = footer['max'] + max(opt[0][i].field)+ ',';
+		            }
+		            if(opt[0][i].min){
+		                footer['min'] = footer['min'] + min(opt[0][i].field)+ ',';
+		            }
+		        }
+		 
+		        var footerObj = new Array();
+		         
+		        if(footer['sum'] != ""){
+		            var tmp = '{' + footer['sum'].substring(0,footer['sum'].length - 1) + "}";
+		            var obj = eval('(' + tmp + ')');
+		            if(obj[opt[0][0].field] == undefined){
+		                footer['sum'] += '"' + opt[0][0].field + '":"<b>合计:</b>"';
+		                obj = eval('({' + footer['sum'] + '})');
+		            }else{
+		                obj[opt[0][0].field] = "<b>合计:</b>" + obj[opt[0][0].field];
+		            }
+		            footerObj.push(obj);
+		        }
+		         
+		        if(footer['avg'] != ""){
+		            var tmp = '{' + footer['avg'].substring(0,footer['avg'].length - 1) + "}";
+		            var obj = eval('(' + tmp + ')');
+		            if(obj[opt[0][0].field] == undefined){
+		                footer['avg'] += '"' + opt[0][0].field + '":"<b>均值:</b>"';
+		                obj = eval('({' + footer['avg'] + '})');
+		            }else{
+		                obj[opt[0][0].field] = "<b>均值:</b>" + obj[opt[0][0].field];
+		            }
+		            footerObj.push(obj);
+		        }
+		         
+		        if(footer['max'] != ""){
+		            var tmp = '{' + footer['max'].substring(0,footer['max'].length - 1) + "}";
+		            var obj = eval('(' + tmp + ')');
+		             
+		            if(obj[opt[0][0].field] == undefined){
+		                footer['max'] += '"' + opt[0][0].field + '":"<b>最大值:</b>"';
+		                obj = eval('({' + footer['max'] + '})');
+		            }else{
+		                obj[opt[0][0].field] = "<b>最大值:</b>" + obj[opt[0][0].field];
+		            }
+		            footerObj.push(obj);
+		        }
+		         
+		        if(footer['min'] != ""){
+		            var tmp = '{' + footer['min'].substring(0,footer['min'].length - 1) + "}";
+		            var obj = eval('(' + tmp + ')');
+		             
+		            if(obj[opt[0][0].field] == undefined){
+		                footer['min'] += '"' + opt[0][0].field + '":"<b>最小值:</b>"';
+		                obj = eval('({' + footer['min'] + '})');
+		            }else{
+		                obj[opt[0][0].field] = "<b>最小值:</b>" + obj[opt[0][0].field];
+		            }
+		            footerObj.push(obj);
+		        }
+		         
+		        if(footerObj.length){
+		            $(jq).datagrid('reloadFooter',footerObj); 
+		        }
+		         
+		        function sum(filed){
+		            var sumNum = 0;
+		            for(var i=0;i<rows.length;i++){
+		                sumNum += Number(rows[i][filed]);
+		            }
+		            return '"' + filed + '":"' + sumNum.toFixed(2) +'"';
+		        };
+		         
+		        function avg(filed){
+		            var sumNum = 0;
+		            for(var i=0;i<rows.length;i++){
+		                sumNum += Number(rows[i][filed]);
+		            }
+		            return '"' + filed + '":"'+ (sumNum/rows.length).toFixed(2) +'"';
+		        }
+		 
+		        function max(filed){
+		            var max = 0;
+		            for(var i=0;i<rows.length;i++){
+		                if(i==0){
+		                    max = Number(rows[i][filed]);
+		                }else{
+		                    max = Math.max(max,Number(rows[i][filed]));
+		                }
+		            }
+		            return '"' + filed + '":"'+ max +'"';
+		        }
+		         
+		        function min(filed){
+		            var min = 0;
+		            for(var i=0;i<rows.length;i++){
+		                if(i==0){
+		                    min = Number(rows[i][filed]);
+		                }else{
+		                    min = Math.min(min,Number(rows[i][filed]));
+		                }
+		            }
+		            return '"' + filed + '":"'+ min +'"';
+		        }
+		    }
 		});
 		
 		/**
@@ -345,6 +540,7 @@
 		 * @param {Object} options
 		 * @return {TypeName} 
 		 */
+		
 		$.extend($.fn.treegrid.methods,{
 			/**
 			 * 级联选择
@@ -355,6 +551,7 @@
 		     *			deepCascade:是否深度级联
 		     * @return {TypeName} 
 			 */
+			
 			cascadeCheck : function(target,param){
 				var opts = $.data(target[0], "treegrid").options;
 				if(opts.singleSelect)

@@ -1,7 +1,7 @@
 /**
  * @Title:  Department.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月2日  上午11:18:01
@@ -24,13 +24,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 
 /**
  * @ClassName Department
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月2日 上午11:18:01
  *
@@ -54,6 +56,8 @@ public class Department implements Serializable {
 	private Integer assistantManager;
 	private Integer empQty;
 	private Integer manager;
+	private Employee deptManager;
+	private String managerName;
 	private String iconCls;
 	private String description;
 	private String status;
@@ -62,6 +66,13 @@ public class Department implements Serializable {
 	private Integer creater;
 	private Integer modifier;
 	private String state = "closed";
+	
+	public Department() {
+	}
+	
+	public Department(Integer departmentId){
+		this.departmentId = departmentId;
+	}
 
 	@Id
 	@GeneratedValue
@@ -117,6 +128,24 @@ public class Department implements Serializable {
 
 	public void setManager(Integer manager) {
 		this.manager = manager;
+	}
+	
+	@Transient
+	public Employee getDeptManager() {
+		return deptManager;
+	}
+
+	public void setDeptManager(Employee deptManager) {
+		this.deptManager = deptManager;
+	}
+
+	@Formula("(SELECT t.NAME FROM EMPLOYEES t WHERE t.EMPLOYEE_ID=MANAGER)")
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
 	}
 
 	@Column(name = "ICONCLS", length = 100)

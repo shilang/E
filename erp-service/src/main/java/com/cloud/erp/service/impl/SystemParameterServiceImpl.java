@@ -1,7 +1,7 @@
 /**
  * @Title:  SystemParameterServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午9:48:30
@@ -27,7 +27,7 @@ import com.cloud.erp.service.SystemParameterService;
 
 /**
  * @ClassName  SystemParameterServiceImpl
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月31日 上午9:48:30
  *
@@ -44,21 +44,16 @@ public class SystemParameterServiceImpl implements SystemParameterService {
 	public void setSystemParameterDao(SystemParameterDao systemParameterDao) {
 		this.systemParameterDao = systemParameterDao;
 	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.SystemParameterService#findParameterList(java.lang.String)
-	 */
+
 	@Override
 	public List<ParameterModel> findParameterList(String type) {
-		// TODO Auto-generated method stub
+		
 		return systemParameterDao.findParameterList(type);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.SystemParameterService#persistenceParameter(java.util.Map)
-	 */
 	@Override
 	public boolean persistenceParameter(Map<String, List<Parameter>> map) {
-		// TODO Auto-generated method stub
+		
 		return systemParameterDao.persistenceParameter(map);
 	}
 

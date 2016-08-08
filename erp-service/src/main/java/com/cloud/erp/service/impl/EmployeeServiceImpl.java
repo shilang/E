@@ -1,7 +1,7 @@
 /**
  * @Title:  EmployeeServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月12日 上午10:03:33
@@ -26,59 +26,50 @@ import com.cloud.erp.service.EmployeeService;
 import com.cloud.erp.utils.PageUtil;
 
 /**
- * @ClassName  EmployeeServiceImpl
- * @Description  TODO
- * @author  bollen bollen@live.cn
- * @date  2015年5月12日 上午10:03:33
+ * @ClassName EmployeeServiceImpl
+ * @Description 
+ * @author bollen bollen@live.cn
+ * @date 2015年5月12日 上午10:03:33
  *
  */
 @Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
 
-	private EmployeeDao employeeDao;
-	
-	/**
-	 * @param employeeDao the employeeDao to set
-	 */
 	@Autowired
-	public void setEmployeeDao(EmployeeDao employeeDao) {
-		this.employeeDao = employeeDao;
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.EmployeeService#findEmployees(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
+	private EmployeeDao employeeDao;
+
 	@Override
-	public List<Employee> findEmployees(Map<String, Object> params,
-			PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return employeeDao.findEmployees(params, pageUtil);
+	public List<Employee> findEmployees() {
+		return employeeDao.findAll(null, null);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.EmployeeService#getCount(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
 	@Override
-	public Long getCount(Map<String, Object> params, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return employeeDao.getCount(params, pageUtil);
+	public List<Employee> findAll(Map<String, Object> params, PageUtil pageUtil) {
+		return employeeDao.findAll(params, pageUtil);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.EmployeeService#persistenceEmployee(com.cloud.erp.entities.table.Employee)
-	 */
 	@Override
-	public boolean persistenceEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return employeeDao.persistenceEmployee(employee);
+	public long getCount(Map<String, Object> params) {
+		return employeeDao.getCount(params);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.EmployeeService#delEmployee(java.lang.Integer)
-	 */
 	@Override
-	public boolean delEmployee(Integer id) {
-		// TODO Auto-generated method stub
-		return employeeDao.delEmployee(id);
+	public Employee get(Integer id) {
+		return employeeDao.get(id);
 	}
 
+	@Override
+	public void update(Employee master) {
+		employeeDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(Employee master) throws Exception {
+		return employeeDao.persistence(master);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return employeeDao.deleteToUpdate(pid);
+	}
 }

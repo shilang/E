@@ -11,125 +11,41 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 	 
-	<context:component-scan base-package="com.cloud.erp.dao.impl, com.cloud.erp.service.impl"></context:component-scan>
+	<import resource="classpath*:datasource-context.xml"/>
+	<import resource="classpath*:hibernate-context.xml"/>
+	<!-- <import resource="classpath*:mybatis-context.xml"/> -->
+	<import resource="classpath*:shiro-context.xml"/>
+	<import resource="classpath*:activiti-context.xml"/>
 	
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource">
-            <ref bean="dataSource"/>
-        </property>	
-        <property name="configLocations" value="classpath*:hibernate.cfg.xml"></property> 
-        
-        <property name="packagesToScan">
-        	<list>
-        		<value>com.cloud.erp.entities.table</value>
-        	</list>
-        </property>
-        
-        <!--
-		 <property name="mappingDirectoryLocations"> <list> <value>classpath:com/erp/model</value> 
-			</list> </property> -->
-        
-    </bean>
+	
+	<!-- 配置自动扫描的包 -->
+	<context:component-scan 
+	base-package="com.cloud.erp.dao.common, com.cloud.erp.dao.impl, com.cloud.erp.service.common, com.cloud.erp.service.impl, com.cloud.erp.servicefacade, com.cloud.erp.logging, com.cloud.erp.activiti">
+	</context:component-scan>
     
-    <!-- shiro configuration -->
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+    <!-- 配置自动为匹配 aspectJ 注解的 Java 类生成代理对象 -->
+   <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+    
+    <bean class="com.cloud.erp.utils.SpringUtil"></bean>
+    
+	<!--<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
     	<property name="configLocation">
     		<value>classpath:ehcache.xml</value>
     	</property>
-    </bean>
+    </bean> -->
     
-    <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-    	<property name="cacheManager" ref="cacheManager"></property>
-    </bean>
-    
-    <bean id="myShiroRealm" class="com.cloud.erp.shiro.realm.MyShiroRealm">
-    	<property name="cacheManager" ref="shiroCacheManager"></property>
-    	<property name="authenticationCacheName" value="shiroAuthorizationCache"></property>
-    </bean>
-    
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-    	<property name="realm" ref="myShiroRealm"></property>
-    </bean>
-     
-    <bean id="formLoginFilter" class="com.cloud.erp.shiro.filter.FormLoginFilter">
-    	<property name="loginUrlParam" value="/login.jsp"></property>
-    	<property name="successUrlParam" value="/index.jsp"></property>
-    </bean>
-    
-    <bean id="simplePermFilter" class="com.cloud.erp.shiro.filter.PermissionAuthorizationFilter"></bean>
-    
-    <bean id="formAuthenticationFilter"   class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"/>
-    
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-    	<property name="securityManager" ref="securityManager"></property>
-    	<property name="loginUrl" value="/login.jsp"></property>
-    	<property name="successUrl" value="/index.jsp"></property>
-    	<property name="unauthorizedUrl" value="/error/error.jsp"></property>
-    	
-    	<property name="filters">
-    		<util:map>
-    			<entry key="authc" value-ref="formAuthenticationFilter"/> 
-    		</util:map>
-    	</property>
-    	 
-    	<property name="filterChainDefinitions">
-    		<value>			
-		         /Kaptcha.jpg = anon 
-		         /web-static/** = anon
-		       	 /loginAction!load.action =  anon
-	             /** = authc
-    		</value>
-    	</property>
-    </bean>
-    
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-    
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-    	<property name="sessionFactory" ref="sessionFactory"></property>
-    </bean>
-	
-	<tx:advice transaction-manager="transactionManager" id="txAdvice">
-		<tx:attributes>
-			<tx:method name="add*" propagation="REQUIRED"/>
-			<tx:method name="save*" propagation="REQUIRED"/>
-			<tx:method name="upd*" propagation="REQUIRED"/>
-			<tx:method name="update*" propagation="REQUIRED"/>
-			<tx:method name="modify*" propagation="REQUIRED"/>
-			<tx:method name="edit*" propagation="REQUIRED"/>
-			<tx:method name="del*" propagation="REQUIRED"/>
-			<tx:method name="delete*" propagation="REQUIRED"/>
-			<tx:method name="remove*" propagation="REQUIRED"/>
-			<tx:method name="repair" propagation="REQUIRED"/>
-			<tx:method name="persistence*" propagation="REQUIRED"/>
+ <!--    <bean name="logger" class="com.cloud.erp.logging.LoggingInterceptor"></bean>
 
-			<tx:method name="get*" propagation="SUPPORTS" />
-			<tx:method name="find*" propagation="SUPPORTS" />
-			<tx:method name="load*" propagation="SUPPORTS" />
-			<tx:method name="search*" propagation="SUPPORTS" />
-		</tx:attributes>
-	</tx:advice>
-	
-	<aop:config>
-		<aop:pointcut expression="execution(* com.cloud.erp.service.*.*(..))" id="pointcut"/>
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
-	</aop:config>
- 
-	<!-- 配置druid监控spring jdbc -->
-	<bean id="druid-stat-interceptor" 
-		class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"
-	></bean>
-	
-	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
-		scope="prototype">
-		<property name="patterns">
+	<bean id="loggingAutoProxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
 			<list>
-				<value>com.cloud.erp.service.*</value>
+				<value>/login</value>
 			</list>
-		</property>		
-	</bean>
-	
-	<aop:config>
-		<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut"/>
-	</aop:config>
-	
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>logger</value>
+			</list>
+		</property>
+	</bean> -->
 </beans>

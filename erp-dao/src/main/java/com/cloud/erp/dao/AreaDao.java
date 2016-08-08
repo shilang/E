@@ -1,7 +1,7 @@
 /**
  * @Title:  AreaDao.java
  * @Package:  com.cloud.erp.dao
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月12日 上午10:27:43
@@ -14,26 +14,16 @@
  */
 package com.cloud.erp.dao;
 
-import java.util.List;
-import java.util.Map;
-
+import com.cloud.erp.dao.common.GeneralDao;
 import com.cloud.erp.entities.table.Area;
-import com.cloud.erp.utils.PageUtil;
 
 /**
  * @ClassName  AreaDao
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年5月12日 上午10:27:43
  *
  */
-public interface AreaDao {
+public interface AreaDao extends GeneralDao<Area>{
 
-	List<Area> findAreas(Map<String, Object> params, PageUtil pageUtil);
-	
-	Long getCount(Map<String, Object> params, PageUtil pageUtil);
-	
-	boolean persistenceArea(Area area);
-	
-	boolean delArea(Integer id);
 }

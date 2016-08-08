@@ -1,7 +1,7 @@
 /**
  * @Title:  IncorrectCaptchaException.java
  * @Package:  com.cloud.erp.shiro.exception
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月3日  下午4:53:33
@@ -18,7 +18,7 @@ import org.apache.shiro.authc.AuthenticationException;
 
 /**
  * @ClassName  IncorrectCaptchaException
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月3日  下午4:53:33
  *
@@ -32,7 +32,6 @@ public class IncorrectCaptchaException extends AuthenticationException {
 	 */
 	public IncorrectCaptchaException() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -41,7 +40,6 @@ public class IncorrectCaptchaException extends AuthenticationException {
 	 */
 	public IncorrectCaptchaException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -49,7 +47,6 @@ public class IncorrectCaptchaException extends AuthenticationException {
 	 */
 	public IncorrectCaptchaException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -57,7 +54,6 @@ public class IncorrectCaptchaException extends AuthenticationException {
 	 */
 	public IncorrectCaptchaException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 	
 }

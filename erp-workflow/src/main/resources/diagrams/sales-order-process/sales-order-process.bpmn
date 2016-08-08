@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="sales-order-process" name="Sales Order Process" isExecutable="true">
+    <startEvent id="theStart" name="Start" activiti:initiator="initiator"></startEvent>
+    <endEvent id="theEnd" name="End"></endEvent>
+    <userTask id="salesOrderCheck" name="销售订单审核" activiti:candidateGroups="销售经理">
+      <extensionElements>
+        <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="salesOrderCommit" name="销售订单提交" activiti:assignee="${initiator}">
+      <extensionElements>
+        <activiti:formProperty id="taskBusinessType" name="Task Business Type" expression="${auditModel.taskBusinessType}" default="check"></activiti:formProperty>
+        <activiti:formProperty id="path" name="path" type="string" expression="${auditModel.path}" default="view/salesMgmt/salesOrder/salesOrderEditDlg.jsp"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow6" sourceRef="salesOrderCheck" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow7" name="驳回" sourceRef="exclusivegateway1" targetRef="servicetask3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='reject'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="salesOrderCommit" targetRef="servicetask1"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="servicetask1" targetRef="salesOrderCheck"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="servicetask2" targetRef="theEnd"></sequenceFlow>
+    <sequenceFlow id="flow13" sourceRef="servicetask3" targetRef="salesOrderCommit"></sequenceFlow>
+    <sequenceFlow id="flow14" name="通过" sourceRef="exclusivegateway1" targetRef="servicetask2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='approve'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow15" sourceRef="theStart" targetRef="servicetask4"></sequenceFlow>
+    <serviceTask id="servicetask1" name="Commit Service Task" activiti:class="com.cloud.erp.activiti.CommitJavaDelegate"></serviceTask>
+    <serviceTask id="servicetask2" name="Check Service Task" activiti:class="com.cloud.erp.activiti.CheckJavaDelegate"></serviceTask>
+    <serviceTask id="servicetask3" name="Cancel Check Service Task" activiti:class="com.cloud.erp.activiti.CancelCheckJavaDelegate"></serviceTask>
+    <serviceTask id="servicetask4" name="Update Relation Service Task" activiti:class="com.cloud.erp.activiti.UpdateRelationJavaDelegate"></serviceTask>
+    <sequenceFlow id="flow16" sourceRef="servicetask4" targetRef="salesOrderCommit"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_sales-order-process">
+    <bpmndi:BPMNPlane bpmnElement="sales-order-process" id="BPMNPlane_sales-order-process">
+      <bpmndi:BPMNShape bpmnElement="theStart" id="BPMNShape_theStart">
+        <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="143.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="theEnd" id="BPMNShape_theEnd">
+        <omgdc:Bounds height="35.0" width="35.0" x="950.0" y="143.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesOrderCheck" id="BPMNShape_salesOrderCheck">
+        <omgdc:Bounds height="55.0" width="105.0" x="562.0" y="133.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesOrderCommit" id="BPMNShape_salesOrderCommit">
+        <omgdc:Bounds height="55.0" width="105.0" x="260.0" y="133.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="713.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="410.0" y="133.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
+        <omgdc:Bounds height="55.0" width="105.0" x="801.0" y="133.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask3" id="BPMNShape_servicetask3">
+        <omgdc:Bounds height="63.0" width="105.0" x="439.0" y="229.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask4" id="BPMNShape_servicetask4">
+        <omgdc:Bounds height="55.0" width="105.0" x="110.0" y="133.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="667.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="713.0" y="160.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="733.0" y="180.0"></omgdi:waypoint>
+        <omgdi:waypoint x="733.0" y="260.0"></omgdi:waypoint>
+        <omgdi:waypoint x="544.0" y="260.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="737.0" y="209.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="365.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="410.0" y="160.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="515.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="562.0" y="160.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="906.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="950.0" y="160.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="439.0" y="260.0"></omgdi:waypoint>
+        <omgdi:waypoint x="333.0" y="261.0"></omgdi:waypoint>
+        <omgdi:waypoint x="312.0" y="261.0"></omgdi:waypoint>
+        <omgdi:waypoint x="312.0" y="188.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="753.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="801.0" y="160.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="759.0" y="140.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="75.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="110.0" y="160.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="215.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="260.0" y="160.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

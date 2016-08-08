@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	$(function(){
 		$("#form").form({
-			url: 'customer/customerAction!persistenceCustomer.action',
+			url: 'customer/persist.action',
 			onSubmit: function(){
 				parent.$.messager.progress({
 					title: $.erp.hint,
@@ -26,11 +26,24 @@
 			}
 		});
 	});
+	
+	function init(){
+		$("#typeId").erpResGrid({}, 12);
+		$("#saleMode").erpResGrid({}, 7);
+		$("#region").erpGrid({
+			url: 'area/findAreas.action',
+			idField:'areaId'
+		});
+	}
 </script>
 	
 <div class="dlgcontent">
 	<form id="form" method="post">
-			<table>
+			<input id="customerId" name="customerId" type="hidden" />
+			<input id="created" name="created" type="hidden" />
+			<input id="creater" name="creater" type="hidden" />
+			<input id="status" name="status" type="hidden" />
+			<table class="simple">
 				<tr>
 					<th>代码</th>
 					<td>

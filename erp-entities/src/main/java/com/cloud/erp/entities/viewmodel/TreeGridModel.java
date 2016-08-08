@@ -1,7 +1,7 @@
 /**
  * @Title:  TreeGridModel.java
  * @Package:  com.cloud.erp.entities.viewmodel
- * @Description:  TODO
+ * @Description: 
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月13日  下午5:15:22
@@ -18,7 +18,7 @@ import java.util.Date;
 
 /**
  * @ClassName TreeGridModel
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月13日 下午5:15:22
  *

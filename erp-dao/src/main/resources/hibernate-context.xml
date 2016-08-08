@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+	 
+	<!-- hibernate configuration -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>	
+        <property name="configLocations" value="classpath:hibernate.cfg.xml"></property> 
+        
+        <property name="packagesToScan">
+        	<list>
+        		<value>com.cloud.erp.entities.table</value>
+        	</list>
+        </property>
+        
+        <!--
+		 <property name="mappingDirectoryLocations"> <list> <value>classpath:com/erp/model</value> 
+			</list> </property> -->
+        
+    </bean>	
+    
+        <!-- 声明事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+	
+	<!-- 声明事务通知 -->
+	<tx:advice transaction-manager="transactionManager" id="txAdvice">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="upd*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="modify*" propagation="REQUIRED"/>
+			<tx:method name="edit*" propagation="REQUIRED"/>
+			<tx:method name="del*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="remove*" propagation="REQUIRED"/>
+			<tx:method name="repair" propagation="REQUIRED"/>
+			<tx:method name="persistence*" propagation="REQUIRED"/>
+			<tx:method name="cancel*" propagation="REQUIRED"/>
+			<tx:method name="check*" propagation="REQUIRED"/>
+			<tx:method name="signed*" propagation="REQUIRED"/>
+			<tx:method name="submit*" propagation="REQUIRED"/>
+			<tx:method name="startProcess" propagation="REQUIRED"/>
+			
+			<!-- 
+			<tx:method name="increment" propagation="REQUIRED"/>
+			 -->
+			
+			<tx:method name="*" read-only="true"/>
+			 
+		<!-- 	<tx:method name="get*" propagation="SUPPORTS" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="load*" propagation="SUPPORTS" />
+			<tx:method name="search*" propagation="SUPPORTS" />
+			<tx:method name="test*" propagation="SUPPORTS"/> -->
+
+		</tx:attributes>
+	</tx:advice>   
+	
+	<!-- 声明事务通知需要通知的方法(需要进行事务管理的方法) -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.cloud.erp.service.*.*(..))||execution(* com.cloud.erp.activiti.*.*(..))||execution(* com.cloud.erp.servicefacade.*.*(..))" id="pointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+	</aop:config>
+	
+</beans>

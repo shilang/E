@@ -10,7 +10,7 @@ $(document).ready(function(){
 	});
 	
 	$('#btn_login').click(function(){
-		login();
+		//login();
 	});
 });
 
@@ -23,6 +23,7 @@ function login(){
 	$(":input").each(function(){
 		formData[this.name] = $("#" + this.name).val();
 	});
+	showMsg('正在登录...',true);
 	$.ajax({
 		cache: false,
 		type: "POST",
@@ -37,7 +38,7 @@ function login(){
 				//loginSuccess();
 				setTimeout("window.location.href='index.jsp'", 1000);
 			}else{
-				showError(d.message);
+				showMsg(d.message,false);
 			}
 		}
 	});
@@ -68,11 +69,14 @@ function loginSuccess(){
 }
 
 //show error
-function showError(str){
-	$('#alertMessage').addClass('error').html(str).stop(true, true).show().animate({
-		opacity : 1,
-		right: '0'
-	}, 500);
+function showMsg(str,status){
+	var color;
+	if(status){
+		color = 'success';
+	}else{
+		color = 'error';
+	}
+	$('#alertMessage').attr('class','').addClass(color).show().html(str);
 }
 
 //set cookie

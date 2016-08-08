@@ -1,7 +1,7 @@
 /**
  * @Title:  AreaServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月12日 上午10:26:41
@@ -26,58 +26,46 @@ import com.cloud.erp.service.AreaService;
 import com.cloud.erp.utils.PageUtil;
 
 /**
- * @ClassName  AreaServiceImpl
- * @Description  TODO
- * @author  bollen bollen@live.cn
- * @date  2015年5月12日 上午10:26:41
+ * @ClassName AreaServiceImpl
+ * @Description 
+ * @author bollen bollen@live.cn
+ * @date 2015年5月12日 上午10:26:41
  *
  */
 @Service("areaService")
 public class AreaServiceImpl implements AreaService {
 
-	private AreaDao areaDao;
-	
-	/**
-	 * @param areaDao the areaDao to set
-	 */
 	@Autowired
-	public void setAreaDao(AreaDao areaDao) {
-		this.areaDao = areaDao;
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AreaService#findAreas(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
+	private AreaDao areaDao;
+
 	@Override
-	public List<Area> findAreas(Map<String, Object> params, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return areaDao.findAreas(params, pageUtil);
+	public List<Area> findAll(Map<String, Object> params, PageUtil pageUtil) {
+		return areaDao.findAll(params, pageUtil);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AreaService#getCount(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
 	@Override
-	public Long getCount(Map<String, Object> params, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return areaDao.getCount(params, pageUtil);
+	public long getCount(Map<String, Object> params) {
+		return areaDao.getCount(params);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AreaService#persistenceArea(com.cloud.erp.entities.table.Area)
-	 */
 	@Override
-	public boolean persistenceArea(Area area) {
-		// TODO Auto-generated method stub
-		return areaDao.persistenceArea(area);
+	public Area get(Integer id) {
+		return areaDao.get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.AreaService#delArea(java.lang.Integer)
-	 */
 	@Override
-	public boolean delArea(Integer id) {
-		// TODO Auto-generated method stub
-		return areaDao.delArea(id);
+	public void update(Area master) {
+		areaDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(Area master) throws Exception {
+		return areaDao.persistence(master);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return areaDao.deleteToUpdate(pid);
 	}
 
 }

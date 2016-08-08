@@ -1,7 +1,7 @@
 /**
  * @Title:  LoginService.java
  * @Package:  com.cloud.erp.service
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月4日  下午5:26:10
@@ -20,13 +20,13 @@ import com.cloud.erp.entities.viewmodel.MenuModel;
 
 /**
  * @ClassName  LoginService
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月4日  下午5:26:10
  *
  */
 public interface LoginService {
 	
-	List<MenuModel> findMenuList();
+	List<MenuModel> findMenuList(Integer pid);
 	
 }

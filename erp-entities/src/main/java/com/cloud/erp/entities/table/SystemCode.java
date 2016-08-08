@@ -1,7 +1,7 @@
 /**
  * @Title:  SystemCode.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月30日 上午9:58:40
@@ -27,11 +27,10 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.type.TrueFalseType;
 
 /**
  * @ClassName SystemCode
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年3月30日 上午9:58:40
  *

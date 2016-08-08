@@ -1,7 +1,7 @@
 /**
  * @Title:  AuxiliaryResMessageDao.java
  * @Package:  com.cloud.erp.dao
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月5日 上午11:15:36
@@ -15,25 +15,21 @@
 package com.cloud.erp.dao;
 
 import java.util.List;
-import java.util.Map;
 
+import com.cloud.erp.dao.common.GeneralDao;
 import com.cloud.erp.entities.table.AuxiliaryResMessage;
 
 /**
  * @ClassName  AuxiliaryResMessageDao
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年5月5日 上午11:15:36
  *
  */
-public interface AuxiliaryResMessageDao {
+public interface AuxiliaryResMessageDao extends GeneralDao<AuxiliaryResMessage>{
 	
 	List<AuxiliaryResMessage> findAuxiliaryResMessages(Integer resId);
 	
 	Long getCount(Integer resId);
-	
-	boolean persistenceAuxiliaryResMessage(AuxiliaryResMessage auxiliaryResMessage);
-	
-	boolean delAuxiliaryResMessage(Integer id);
 	
 }

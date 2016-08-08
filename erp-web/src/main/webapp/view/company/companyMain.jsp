@@ -5,21 +5,21 @@
 <html>
 <head>
 <title>公司管理</title>
-<jsp:include page="/inc.jsp"></jsp:include>
+<jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
 	var $dg;
 	var $grid;
 	$(function(){
 		$dg = $("#dg");
 		$grid = $dg.datagrid({
-			url: 'companyInfo/companyInfoAction!findCompanyInfos.action',
-			width: $(this).width() - 10,
-			height: $(this).height() - 82,
+			url: 'companyInfo/find.action',
+			width: $(this).width(),
+			height: $(this).height(),
 			collapsible: true,
 			pagination: false,
 			rownumbers: true,
 			striped: true,
-			border: true,
+			border: false,
 			singleSelect: true,
 			columns: [[
 				{field: 'name', title: '公司名称', width: parseInt($(this).width() * 0.1), editor: {type: 'validatebox', options:{
@@ -44,7 +44,7 @@
 		if(row){
 			parent.$.messager.confirm("提示","确认要删除记录吗？", function(r){
 				if(r){
-					$.post("companyInfo/companyInfoAction!delCompanyInfo.action",{companyId:row.companyId},function(rsp){
+					$.post("companyInfo/delete.action",{companyId:row.companyId},function(rsp){
 						if(rsp.status){
 							var idx = $dg.datagrid('getRowIndex', row);
 							$dg.datagrid('deleteRow', idx);
@@ -162,14 +162,7 @@
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true,border:false">
-		<div data-options="region:'center', border: false" style="padding: 5px;">
-			<div class="well well-small" style="margin-bottom: 5px;">
-				<span class="badge">提示</span>
-				<p>
-					在此你可以对<span class="label-info"><strong>公司</strong></span>进行编辑!
-				</p>
-			</div>
-
+		<div data-options="region:'center', border: false">
 			<div id="tb">
 				<table>
 					<tr>
@@ -189,7 +182,7 @@
 					</tr>
 				</table>
 			</div>
-			<table id="dg" title="公司管理"></table>
+			<table id="dg" title=""></table>
 		</div>
 	</div>
 </body>

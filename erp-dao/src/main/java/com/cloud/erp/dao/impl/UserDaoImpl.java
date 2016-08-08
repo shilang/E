@@ -1,7 +1,7 @@
 /**
  * @Title:  UserDaoImpl.java
  * @Package:  com.cloud.erp.dao.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月2日  下午5:58:20
@@ -17,26 +17,32 @@ package com.cloud.erp.dao.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.UserDao;
-import com.cloud.erp.entities.shiro.ShiroUser;
+import com.cloud.erp.dao.common.BaseDao;
+import com.cloud.erp.dao.common.GeneralDaoSupport;
+import com.cloud.erp.dao.common.StatusFields;
 import com.cloud.erp.entities.table.Role;
 import com.cloud.erp.entities.table.User;
+import com.cloud.erp.entities.table.UserInfo;
 import com.cloud.erp.entities.table.UserRole;
 import com.cloud.erp.entities.viewmodel.UserRoleModel;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
 /**
  * @ClassName  UserDaoImpl
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月2日  下午5:58:20
  *
@@ -44,99 +50,22 @@ import com.cloud.erp.utils.PageUtil;
 @SuppressWarnings("unchecked")
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
-
-
-	@SuppressWarnings("rawtypes")
-	private BaseDao baseDao;
 	
-	/**
-	 * @param baseDao the baseDao to set
-	 */
+	private final StatusFields statusFields = new StatusFields();
+	
+	{
+		statusFields.setInterId("userId");
+	}
+	
+	@Resource
+	private GeneralDaoSupport<User> generalDao;
+
 	@SuppressWarnings("rawtypes")
 	@Autowired
-	public void setBaseDao(BaseDao baseDao) {
-		this.baseDao = baseDao;
-	}
+	private BaseDao baseDao;
 	
-	private boolean addUser(List<User> addList){
-		if(addList != null && addList.size() != 0){
-			ShiroUser shiroUser = Constants.getCurrentUser();
-			for(User user : addList){
-				user.setCreated(new Date());
-				user.setLastmod(new Date());
-				user.setCreater(shiroUser.getUserId());
-				user.setModifier(shiroUser.getUserId());
-				user.setStatus(Constants.PERSISTENCE_STATUS);
-				baseDao.save(user);
-			}
-		}
-		return true;
-	}
-	
-	private boolean updUser(List<User> updList){
-		if(updList != null && updList.size() != 0){
-			ShiroUser shiroUser = Constants.getCurrentUser();
-			for(User user : updList){
-				user.setLastmod(new Date());
-				user.setModifier(shiroUser.getUserId());
-				baseDao.update(user);
-			}
-		}
-		return true;
-	}
-	
-	private boolean delUser(List<User> delList){
-		ShiroUser shiroUser = Constants.getCurrentUser();
-		if(delList != null && delList.size() != 0){
-			for(User user : delList){
-				user.setLastmod(new Date());
-				user.setStatus(Constants.PERSISTENCE_DELETE_STATUS);
-				user.setModifier(shiroUser.getUserId());
-				baseDao.update(user);
-			}
-		}
-		return true;
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.UserDao#persistenceUsers(java.util.Map)
-	 */
-	@Override
-	public boolean persistenceUsers(Map<String, List<User>> map) {
-		// TODO Auto-generated method stub
-		this.addUser(map.get("addList"));
-		this.updUser(map.get("updList"));
-		this.delUser(map.get("delList"));
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.UserDao#findAllUserList(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
-	@Override
-	public List<User> findAllUsersList(Map<String, Object> map, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		String hql = "from User u where u.status='A' ";
-		hql+=Constants.getSearchConditionsHQL("u", map);
-		hql+=Constants.getGradeSearchConditionsHQL("u", pageUtil);
-		List<User> list = baseDao.find(hql, map, pageUtil.getPage(), pageUtil.getRows());
-		for(User user : list){
-			user.setUserRoles(null);
-		}
-		return list;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.UserDao#getCount(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
-	@Override
-	public Long getCount(Map<String, Object> map, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		String hql = "select count(*) from User u where u.status='A' ";
-		hql += Constants.getSearchConditionsHQL("u", map);
-		hql += Constants.getGradeSearchConditionsHQL("u", pageUtil);
-		return baseDao.count(hql, map);
-	}
+	/*@Autowired
+	private UserMapper userMapper;*/
 
 	@SuppressWarnings("rawtypes")
 	private List<UserRoleModel> getUserRoleModelList(Integer userId, List list){
@@ -150,13 +79,11 @@ public class UserDaoImpl implements UserDao {
 		}
 		return listm;
 	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.UserDao#findUsersRolesList(java.lang.Integer)
-	 */
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List<UserRoleModel> findUserRolesList(Integer userId) {
-		// TODO Auto-generated method stub
+		
 		String sql = "SELECT ur.USER_ID, ur.ROLE_ID FROM\n" +
 				"USER_ROLE AS ur WHERE ur.STATUS = 'A' AND ur.USER_ID=" + userId;
 		List list = baseDao.findBySQL(sql);
@@ -164,42 +91,34 @@ public class UserDaoImpl implements UserDao {
 		return listm;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.UserDao#saveUserRoles(java.lang.Integer, java.lang.String)
-	 */
 	@Override
 	public boolean saveUserRoles(Integer userId, String isCheckedIds) {
-		// TODO Auto-generated method stub
+		
+		Integer currUserId = Commons.getCurrentUser().getUserId();
 		User user = (User) baseDao.get(User.class, userId);
-		Set<UserRole> set = user.getUserRoles();
+		Set<UserRole> userRoles =  user.getUserRoles();
+		Iterator<UserRole> iterator = userRoles.iterator();
 		Map<Integer, UserRole>	map = new HashMap<Integer, UserRole>();
-		for(UserRole userRole : set){
+		while(iterator.hasNext()){
+			UserRole userRole = iterator.next();
 			map.put(userRole.getRole().getRoleId(), userRole);
-			userRole.setLastmod(new Date());
-			userRole.setStatus(Constants.PERSISTENCE_DELETE_STATUS);
-			baseDao.deleteToUpdate(userRole);
+			this.updateUserRole(userRole, Constants.PERSISTENCE_DELETE_STATUS);
 		}
-		if(!"".equals(isCheckedIds) && isCheckedIds.length() != 0){
+		if(null != isCheckedIds && !"".equals(isCheckedIds)){
 			String[] ids = isCheckedIds.split(",");
-			ShiroUser currUser = Constants.getCurrentUser();
 			for(String id : ids){
 				Integer tempId = Integer.valueOf(id);
-				Role role = (Role) baseDao.get(Role.class, Integer.valueOf(id));
-				UserRole userRole = null;
-				if(map.containsKey(tempId)){
-					userRole = map.get(tempId);
-					userRole.setStatus(Constants.PERSISTENCE_STATUS);
-					userRole.setCreater(currUser.getUserId());
-					userRole.setModifier(currUser.getUserId());
-					baseDao.update(userRole);
+				UserRole userRole = map.get(tempId);
+				if(null != userRole){
+					this.updateUserRole(userRole, Constants.PERSISTENCE_STATUS);
 				}else {
 					userRole = new UserRole();
+					userRole.setRole((Role) baseDao.get(Role.class, Integer.valueOf(id)));
+					userRole.setUser(user);
 					userRole.setCreated(new Date());
 					userRole.setLastmod(new Date());
-					userRole.setRole(role);
-					userRole.setUser(user);
-					userRole.setCreater(currUser.getUserId());
-					userRole.setModifier(currUser.getUserId());
+					userRole.setCreater(currUserId);
+					userRole.setModifier(currUserId);
 					userRole.setStatus(Constants.PERSISTENCE_STATUS);
 					baseDao.save(userRole);
 				}
@@ -207,41 +126,100 @@ public class UserDaoImpl implements UserDao {
 		}
 		return true;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.UserDao#persistenceUsers(com.cloud.erp.entities.User)
-	 */
-	@Override
-	public boolean persistenceUser(User u) {
-		// TODO Auto-generated method stub
-		Integer userId = Constants.getCurrentUser().getUserId();
-		if(null == u.getUserId() || "".equals(u.getUserId())){
-			u.setCreated(new Date());
-			u.setLastmod(new Date());
-			u.setCreater(userId);
-			u.setModifier(userId);
-			u.setStatus(Constants.PERSISTENCE_STATUS);
-			baseDao.save(u);
-		}else {
-			u.setLastmod(new Date());
-			u.setModifier(userId);
-			baseDao.update(u);
-		}
+	
+	private boolean updateUserRole(UserRole userRole, String status){
+		Integer userId = Commons.getCurrentUser().getUserId();
+		userRole.setLastmod(new Date());
+		userRole.setModifier(userId);
+		userRole.setStatus(status);
+		baseDao.update(userRole);
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.UserDao#delUsers(java.lang.Integer)
-	 */
 	@Override
-	public boolean delUser(Integer userId) {
-		// TODO Auto-generated method stub
-		User user = (User) baseDao.get(User.class, userId);
-		user.setStatus(Constants.PERSISTENCE_DELETE_STATUS);
-		user.setLastmod(new Date());
-		user.setModifier(Constants.getCurrentUser().getUserId());
-		baseDao.deleteToUpdate(user);
-		return true;
+	public User getUser(String username) {
+		String hql = "from User t where t.status = 'A' and t.name = :name";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("name", username);
+		return (User) baseDao.get(hql, params);
+	}
+
+	@Override
+	public Role getRole(Integer roleId) {
+		
+		return (Role) baseDao.get(Role.class, roleId);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public UserInfo getUserById(Integer id) {
+		UserInfo userInfo = new UserInfo();
+		String sql = "";
+		
+		sql = "select u.USER_ID u_id, u.NAME u_name, e.EMPLOYEE_ID e_id, e.NAME e_name, d.DEPARTMENT_ID d_id, " + 
+		"d.NAME d_name, d.MANAGER d_manager " +
+		"from USERS u, EMPLOYEES e, DEPARTMENTS d " + 
+		"where u.EMPLOYEE_ID=e.EMPLOYEE_ID and e.DEPARTMENT_ID=d.DEPARTMENT_ID and u.USER_ID=" + id;
+		
+		List userList = baseDao.findBySQL(sql);
+		if(null != userList && userList.size() > 0){
+			Object[] user = (Object[])userList.get(0);
+			userInfo.setId((Integer) user[0]);
+			userInfo.setName(user[1].toString());
+			userInfo.setEmployeeId((Integer) user[2]);
+			userInfo.setEmployeeName(user[3].toString());
+			userInfo.setDepartmentId((Integer) user[4]);
+			userInfo.setDepartmentName(user[5].toString());
+			
+			if(null != user[6]){
+				sql = "select e.EMPLOYEE_ID e_id, e.NAME e_name from EMPLOYEES e where e.EMPLOYEE_ID=" + user[6];
+			 	List empList = baseDao.findBySQL(sql);
+			 	if(null != empList && empList.size() > 0){
+			 		Object[] emp = (Object[])empList.get(0);
+			 		userInfo.setManagerId((Integer) emp[0]);
+			 		userInfo.setManagerName(emp[1].toString());
+			 	}
+			}
+			
+		}
+		
+		return userInfo;
+	}
+
+	@Override
+	public List<User> findAll(Map<String, Object> params, PageUtil pageUtil) {
+		
+		return generalDao.findAll(User.class, params, pageUtil);
+	}
+
+	@Override
+	public long getCount(Map<String, Object> params) {
+		
+		return generalDao.getCount(User.class, params);
+	}
+
+	@Override
+	public User get(Integer id) {
+		
+		return generalDao.get(User.class, id);
+	}
+
+	@Override
+	public void update(User master) {
+		
+		generalDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(User master) throws Exception {
+		
+		return generalDao.persistence(master, statusFields);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		
+		return generalDao.deleteToUpdate(User.class, pid, statusFields);
 	}
 
 }

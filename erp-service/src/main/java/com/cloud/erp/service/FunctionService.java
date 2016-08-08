@@ -1,7 +1,7 @@
 /**
  * @Title:  FunctionService.java
  * @Package:  com.cloud.erp.service
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月13日  下午5:04:03
@@ -17,26 +17,19 @@ package com.cloud.erp.service;
 import java.util.List;
 
 import com.cloud.erp.entities.table.Permission;
-import com.cloud.erp.entities.viewmodel.TreeGridModel;
-import com.cloud.erp.entities.viewmodel.TreeModel;
+import com.cloud.erp.service.common.GeneralService;
 
 /**
  * @ClassName  FunctionService
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月13日  下午5:04:03
  *
  */
-public interface FunctionService {
+public interface FunctionService extends GeneralService<Permission>{
 	
-	List<TreeGridModel> findAllFunctionList(Integer pid);
-	
-	boolean delFunction(Integer id);
-	
-	boolean persistenceFunction(List<Permission> list);
-	
-	List<TreeModel> findAllFunctionList();
-	
-	boolean persistenceFunction(Permission permission);
+	List<Permission> findFunctionsById(Integer pid);
+
+	List<Permission> findFunctions();
 	
 }

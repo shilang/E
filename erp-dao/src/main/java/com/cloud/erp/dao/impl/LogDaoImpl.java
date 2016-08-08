@@ -1,7 +1,7 @@
 /**
  * @Title:  LogsDaoImpl.java
  * @Package:  com.cloud.erp.dao.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月19日 下午3:57:31
@@ -14,89 +14,67 @@
  */
 package com.cloud.erp.dao.impl;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
-import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.LogDao;
+import com.cloud.erp.dao.common.GeneralDaoSupport;
+import com.cloud.erp.dao.common.StatusFields;
 import com.cloud.erp.entities.table.Log;
-import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
 /**
- * @ClassName  LogsDaoImpl
- * @Description  TODO
- * @author  bollen bollen@live.cn
- * @date  2015年3月19日 下午3:57:31
+ * @ClassName LogsDaoImpl
+ * @Description 
+ * @author bollen bollen@live.cn
+ * @date 2015年3月19日 下午3:57:31
  *
  */
 @Repository("logDao")
 public class LogDaoImpl implements LogDao {
-
-	private BaseDao<Log> baseDao;
 	
-	/**
-	 * @param baseDao the baseDao to set
-	 */
-	@Autowired
-	public void setBaseDao(BaseDao<Log> baseDao) {
-		this.baseDao = baseDao;
+	private final StatusFields statusFields = new StatusFields();
+	
+	{
+		statusFields.setInterId("logId");
 	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.LogsDao#findLogsAllList(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
+	
+	@Resource
+	private GeneralDaoSupport<Log> generalDao;
+
 	@Override
-	public List<Log> findLogAllList(Map<String, Object> map, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		String hql = "from Log t where 1=1";
-		hql+=Constants.getSearchConditionsHQL("t", map);
-		hql+=Constants.getGradeSearchConditionsHQL("t", pageUtil);
+	public List<Log> findAll(Map<String, Object> params, PageUtil pageUtil) {
 		
-		return baseDao.find(hql, map, pageUtil.getPage(), pageUtil.getRows());
+		return generalDao.findAll(Log.class, params, pageUtil);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.LogsDao#getCount(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
 	@Override
-	public Long getCount(Map<String, Object> map, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		String hql = "select count(*) from Log t where 1=1";
-		hql+=Constants.getSearchConditionsHQL("t", map);
-		hql+=Constants.getGradeSearchConditionsHQL("t", pageUtil);
-		
-		return baseDao.count(hql, map);
+	public long getCount(Map<String, Object> params) {
+		return generalDao.getCount(Log.class, params);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.LogsDao#persistenceLogs(com.cloud.erp.entities.Log)
-	 */
 	@Override
-	public boolean persistenceLog(Log l) {
-		// TODO Auto-generated method stub
-		if(null == l.getLogId() || "".equals(l.getLogId())){
-			l.setLogDate(new Date());
-			l.setUserId(Constants.getCurrentUser().getUserId());
-			baseDao.save(l);
-		}else {
-			l.setUserId(Constants.getCurrentUser().getUserId());
-			baseDao.update(l);
-		}
-		return true;
+	public Log get(Integer id) {
+		return generalDao.get(Log.class, id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.LogsDao#delLogs(java.lang.Integer)
-	 */
 	@Override
-	public boolean delLog(Integer logId) {
-		// TODO Auto-generated method stub
-		baseDao.delete(baseDao.get(Log.class, logId));
-		return true;
+	public void update(Log master) {
+		generalDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(Log master) throws Exception {
+		return generalDao.persistence(master, statusFields);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return generalDao.deleteToUpdate(Log.class, pid, statusFields);
 	}
 
 }

@@ -1,7 +1,7 @@
 /**
  * @Title:  ParameterModel.java
  * @Package:  com.cloud.erp.entities.viewmodel
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午9:26:45
@@ -18,7 +18,7 @@ import java.util.Date;
 
 /**
  * @ClassName  ParameterModel
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月31日 上午9:26:45
  *

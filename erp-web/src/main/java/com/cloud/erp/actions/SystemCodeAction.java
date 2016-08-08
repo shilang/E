@@ -1,7 +1,7 @@
 /**
  * @Title:  SystemCodeAction.java
  * @Package:  com.cloud.erp.actions
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月30日 上午9:56:09
@@ -18,6 +18,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cloud.erp.common.BaseAction;
 import com.cloud.erp.entities.table.SystemCode;
 import com.cloud.erp.entities.viewmodel.Json;
 import com.cloud.erp.service.SystemCodeService;
@@ -26,7 +27,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * @ClassName  SystemCodeAction
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月30日 上午9:56:09
  *
@@ -80,7 +81,7 @@ public class SystemCodeAction extends BaseAction implements ModelDriven<SystemCo
 	}
 
 	/**
-	 * function: TODO query all by node
+	 * function: query all by node
 	 * @Author: bollen bollen@live.cn
 	 * @Date: 2015年3月30日 下午2:43:29
 	 * @Title: findSystemCodeList
@@ -121,12 +122,10 @@ public class SystemCodeAction extends BaseAction implements ModelDriven<SystemCo
 		OutputJson(systemCodeService.findSystemCodeByType(getModel().getCodeMyid()));
 		return null;
 	}
-	/* (non-Javadoc)
-	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
-	 */
+
 	@Override
 	public SystemCode getModel() {
-		// TODO Auto-generated method stub
+		
 		if( null == systemCode){
 			systemCode = new SystemCode();
 		}

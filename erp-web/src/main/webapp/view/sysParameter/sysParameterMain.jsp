@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>Insert title here</title>
-<jsp:include page="/inc.jsp"></jsp:include>
+<jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
 var $pg;
 $(function() {

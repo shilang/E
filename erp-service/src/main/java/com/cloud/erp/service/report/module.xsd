@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:m="http://www.orbitatech.com/schema/module" targetNamespace="http://www.orbitatech.com/schema/module" elementFormDefault="qualified">
+	<xs:simpleType name="stringType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attributeGroup name="entityAttr">
+		<xs:attribute name="name" type="m:stringType" use="required"/>
+		<xs:attribute name="class" type="m:stringType" use="required"/>
+	</xs:attributeGroup>
+	<xs:element name="field">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="title" type="m:stringType" use="required"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fields">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="m:field" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="module">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="m:stringType"/>
+				<xs:element name="master">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="m:fields"/>
+						</xs:sequence>
+						<xs:attributeGroup ref="m:entityAttr"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="entries" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="entry" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="m:fields"/>
+									</xs:sequence>
+									<xs:attributeGroup ref="m:entityAttr"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

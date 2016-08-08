@@ -1,0 +1,32 @@
+<table id="baseCost"></table>
+<label>备注:<textarea id="remark" name="remark" style="width:729px;height:25px;"></textarea></label>
+<script type="text/javascript">
+	function initForm(entity){
+		$('#baseCost').datagrid({
+			url: 'transportInfo/findByPid',
+			queryParams: {pid: entity.interId},
+			fitColumns:true,
+			border:true,
+			columns: [[
+				{field:'customsCost',title:'报关费'},
+				{field:'commodityInspCost',title:'商检费'},
+				{field:'deliverGoodsCost',title:'送货费'},
+				{field:'storageCost',title:'入仓费'},
+				{field:'fileCost',title:'文件费'},
+				{field:'buildCost',title:'港建费'},
+				{field:'transportCost',title:'海运费'},
+				{field:'thcOrcCost',title:'THC/ORC'},
+				{field:'securityCost',title:'港口安全费'},
+				{field:'operationCost',title:'操作费'},
+				{field:'otherCost',title:'其它费'},
+				{field:'total',title:'总计'}
+			]],
+			onLoadSuccess: function(data){
+				var obj = data.rows[0];
+				if(obj){
+					$('#remark').val(obj.remark);
+				}
+			}
+		});
+	}
+</script>

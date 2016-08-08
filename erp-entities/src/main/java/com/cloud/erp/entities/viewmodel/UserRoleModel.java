@@ -1,7 +1,7 @@
 /**
  * @Title:  UserRoleModel.java
  * @Package:  com.cloud.erp.entities.viewmodel
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月20日 上午11:34:05
@@ -16,7 +16,7 @@ package com.cloud.erp.entities.viewmodel;
 
 /**
  * @ClassName  UserRoleModel
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月20日 上午11:34:05
  *

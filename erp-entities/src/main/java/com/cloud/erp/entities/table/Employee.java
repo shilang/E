@@ -1,7 +1,7 @@
 /**
  * @Title:  Employee.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月22日 下午3:12:00
@@ -27,10 +27,11 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 
 /**
  * @ClassName Employee
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月22日 下午3:12:00
  *
@@ -49,10 +50,12 @@ public class Employee implements Serializable {
 	private String gender;
 	private Date birthday;
 	private Integer degree;
+	private String degreeName;
 	private String tel;
 	private String mobile;
 	private String identity;
-	private String duty;
+	private Integer duty;
+	private String dutyName;
 	private Date hireDate;
 	private Date leaveDate;
 	private String address;
@@ -63,6 +66,14 @@ public class Employee implements Serializable {
 	private Date lastmod;
 	private Integer creater;
 	private Integer modifier;
+	
+	public Employee() {
+
+	}
+	
+	public Employee(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
 
 	@Id
 	@GeneratedValue
@@ -129,6 +140,15 @@ public class Employee implements Serializable {
 	public void setDegree(Integer degree) {
 		this.degree = degree;
 	}
+	
+	@Formula("(SELECT t.NAME FROM AUXILIARY_RES_MESSAGES t WHERE t.MESSAGE_ID=DEGREE)")
+	public String getDegreeName() {
+		return degreeName;
+	}
+
+	public void setDegreeName(String degreeName) {
+		this.degreeName = degreeName;
+	}
 
 	@Column(name = "TEL", length = 25)
 	public String getTel() {
@@ -157,13 +177,22 @@ public class Employee implements Serializable {
 		this.identity = identity;
 	}
 
-	@Column(name = "DUTY", length = 25)
-	public String getDuty() {
+	@Column(name = "DUTY")
+	public Integer getDuty() {
 		return duty;
 	}
 
-	public void setDuty(String duty) {
+	public void setDuty(Integer duty) {
 		this.duty = duty;
+	}
+	
+	@Formula("(SELECT t.NAME FROM AUXILIARY_RES_MESSAGES t WHERE t.MESSAGE_ID=DUTY)")
+	public String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(String dutyName) {
+		this.dutyName = dutyName;
 	}
 
 	@Temporal(TemporalType.DATE)

@@ -1,7 +1,7 @@
 /**
  * @Title:  Bug.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午10:03:03
@@ -30,7 +30,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName Bug
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年3月31日 上午10:03:03
  *

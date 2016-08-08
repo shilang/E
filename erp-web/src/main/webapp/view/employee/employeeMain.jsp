@@ -4,38 +4,49 @@
 <html>
 <head>
 <title>员工管理</title>
-<jsp:include page="/inc.jsp"></jsp:include>
+<jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
+	var selSta = <%=request.getParameter("selSta")%>;
 	var $dg;
 	var $grid;
 	$(function(){
+		if(selSta){
+			$("#addOper").hide();
+			$("#updOper").hide();
+			$("#delOper").hide();
+			$("#showOper").hide();
+			$("#exportOper").hide();
+			$("#hint").hide();
+		}
+		
 		$dg = $("#dg");
 		$grid = $dg.datagrid({
-			url: 'employee/employeeAction!findEmployees.action',
-			width: $(this).width() - 10,
-			height: $(this).height() - 82,
+			url: 'employee/find.action',
+			width: $(this).width(),
+			height: $(this).height(),
 			pagination: true,
 			collapsible: true,
 			rownumbers: true,
 			striped: true,
-			border: true,
+			border: false,
 			singleSelect: true,
 			idField: 'employeeId',
-			buttons: [[
-				{field: 'number', title: '代码'},
-				{field: 'name', title: '名称'},
-				{field: 'gender', title: '性别'},
-				{field: 'birthday', title: '出生日期'},
-				{field: 'degree', title: '文化程度'},
-				{field: 'tel', title: '电话'},
-				{field: 'duty', title: '职位'},
-				{field: 'hireDate', title: '入职日期'},
-				{field: 'leaveDate', title: '离职日期'},
-				{field: 'address', title: '住址'},
-				{field: 'email', title: '电子邮件'},
-				{field: 'remark', title: '备注'}
+			columns: [[
+				{field: 'number', title: '代码', width: parseInt($(this).width()* 0.05)},
+				{field: 'name', title: '名称', width: parseInt($(this).width()* 0.1)},
+				{field: 'gender', title: '性别', width: parseInt($(this).width()* 0.03)},
+				{field: 'birthday', title: '出生日期', width: parseInt($(this).width()* 0.1)},
+				{field: 'degreeName', title: '文化程度', width: parseInt($(this).width()* 0.05)},
+				{field: 'tel', title: '电话', width: parseInt($(this).width()* 0.07)},
+				{field: 'dutyName', title: '职位', width: parseInt($(this).width()* 0.06)},
+				{field: 'hireDate', title: '入职日期', width: parseInt($(this).width()* 0.1)},
+				{field: 'leaveDate', title: '离职日期', width: parseInt($(this).width()* 0.1)},
+				{field: 'address', title: '住址', width: parseInt($(this).width()* 0.1)},
+				{field: 'email', title: '电子邮件', width: parseInt($(this).width()* 0.1)},
+				{field: 'remark', title: '备注', width: parseInt($(this).width()* 0.1)}
 			]],
-			toolbar: '#tb'
+			toolbar: '#tb',
+			onDblClickRow: onDblClickRow
 		});
 		
 		$("#searchbox").searchbox({ 
@@ -48,62 +59,31 @@
 		});
 	});
 	
+	function onDblClickRow(index, row){
+		if(selSta){
+			parent.$.modalDialog.handler.find("#name").textbox('setValue', row.name);
+			parent.$.modalDialog.handler.find("#employeeId").val(row.employeeId);
+			parent.$.modalDialog.selDlg.dialog("destroy");
+		}else{
+			return;
+		}
+	}
+	
+	function showDlg(title, iconCls, type, row, status){
+		var viewPath = 'view/employee/employeeEditDlg.jsp';
+		$.erp.showBusinessDlg(title,iconCls,viewPath,type,'',row,
+				$grid,'','',600, 450);
+	}
+	
+	
 	function addEmployeeDlg(){
-		parent.$.modalDialog({
-			title: '添加职员',
-			iconCls: 'icon-add',
-			width: 600,
-			height: 450,
-			href: 'view/employee/employeeEditDlg.jsp',
-			buttons:[{
-				text: '保存',
-				iconCls: 'icon-ok',
-				handler: function(){
-					parent.$.modalDialog.openner = $grid;
-					var f = parent.$.modalDialog.handler.find("#form");
-					f.submit();
-				}
-			},{
-				text: '取消',
-				iconCls: 'icon-cancel',
-				handler: function(){
-					parent.$.modalDialog.handler.dialog("destroy");
-					parent.$.modalDialog.handler = undefined;
-				}
-			}]
-		});
+		showDlg('添加职员','icon-add','add');
 	}
 	
 	function updateEmployeeDlg(){
 		var row = $dg.datagrid('getSelected');
 		if(row){
-			parent.$.modalDialog({
-				title: '修改职员',
-				iconCls: 'icon-edit',
-				width: 600,
-				height: 450,
-				href: 'view/employee/employeeEditDlg.jsp',
-				onLoad: function(){
-					var f = parent.$.modalDialog.handler.find("#form");
-					f.form('load', row);
-				},
-				buttons: [{
-					text: '修改',
-					iconCls: 'icon-edit',
-					handler: function(){
-						parent.$.modalDialog.openner = $grid;
-						var f = parent.$.modalDialog.handler.find("#form");
-						f.submit();
-					}
-				},{
-					text: '取消',
-					iconCls: 'icon-cancel',
-					handler: function(){
-						parent.$.modalDialog.handler.dialog("destroy");
-						parent.$.modalDialog.handler = undefined;
-					}
-				}]
-			});
+			showDlg('修改职员','icon-edit','update',row);
 		}else{
 			$.erp.noSelectErr();
 		}
@@ -114,11 +94,12 @@
 		if(row){
 			parent.$.messager.confirm($.erp.hint,$.erp.deleteQueryMsg, function(r){
 				if(r){
-					$.post("employee/employeeAction!delEmployee.action", {"employeeId": row.employeeId}, function(rsp){
+					$.post("employee/delete.action", {"employeeId": row.employeeId}, function(rsp){
 						if(rsp.status){
 							var idx = $dg.datagrid('getRowIndex', row);
 							$dg.datagrid('deleteRow', idx);
 						}
+						
 						$.erp.submitSuccess(rsp.title, rsp.message);
 					},"JSON").error(function(){
 						$.erp.submitErr();
@@ -129,26 +110,25 @@
 			$.erp.noSelectErr();
 		}
 	}
+	
+	function hold(){
+		$.erp.hold();
+	}
+	
 </script>
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true,border:false">
-		<div data-options="region: 'center', border: false" style="padding: 5px;">
-			<div class="well well-small" style="margin-bottom: 5px;">
-				<span class="badge">提示</span>
-				<p>
-					在此你可以对<span class="label-info"><strong>职员</strong></span>进行编辑!
-				</p>
-			</div>
-			
+		<div data-options="region: 'center', border: false" >
 			<div id="tb">
 				<table>
 					<tr>
 						<td>
-							<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addEmployeeDlg();">添加</a>
-							<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateEmployeeDlg();">修改</a>
-							<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="delEmployee();">删除</a> 
-							<a href="javascript:void(0);" class="easyui-linkbutton" icnoCls="icon-excel" plain="true" onclick="">导出Excel</a>
+							<a id="addOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addEmployeeDlg();">添加</a>
+							<a id="updOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateEmployeeDlg();">修改</a>
+							<a id="delOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="delEmployee();">删除</a> 
+							<a id="showOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-show" plain="true" onclick="hold();">查看</a>
+							<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton" icnoCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
 						</td>
 						<td>
 							<input id="searchbox" />
@@ -164,7 +144,7 @@
 				<div name="test">测试</div>
 			</div>
 			
-			<table id="dg" title="职员管理"></table>
+			<table id="dg" title=""></table>
 		</div>
 	</div>
 </body>

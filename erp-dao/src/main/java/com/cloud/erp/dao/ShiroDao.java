@@ -1,7 +1,7 @@
 /**
  * @Title:  ShiroDao.java
  * @Package:  com.cloud.erp.dao
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月3日  下午3:03:32
@@ -20,7 +20,7 @@ import com.cloud.erp.entities.table.User;
 
 /**
  * @ClassName ShiroDao
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月3日 下午3:03:32
  *

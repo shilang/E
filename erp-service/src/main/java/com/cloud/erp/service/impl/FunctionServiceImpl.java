@@ -1,7 +1,7 @@
 /**
  * @Title:  FunctionServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月2日  下午5:05:26
@@ -15,78 +15,68 @@
 package com.cloud.erp.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.FunctionDao;
 import com.cloud.erp.entities.table.Permission;
-import com.cloud.erp.entities.viewmodel.TreeGridModel;
-import com.cloud.erp.entities.viewmodel.TreeModel;
 import com.cloud.erp.service.FunctionService;
+import com.cloud.erp.utils.PageUtil;
 
 /**
- * @ClassName  FunctionServiceImpl
- * @Description  TODO
- * @author  bollen bollen@live.cn
- * @date  2015年3月2日  下午5:05:26
+ * @ClassName FunctionServiceImpl
+ * @Description 
+ * @author bollen bollen@live.cn
+ * @date 2015年3月2日 下午5:05:26
  *
  */
 @Service("functionService")
 public class FunctionServiceImpl implements FunctionService {
 
-	private FunctionDao functionDao;
-	
-	/**
-	 * @param functionDao the functionDao to set
-	 */
 	@Autowired
-	public void setFunctionDao(FunctionDao functionDao) {
-		this.functionDao = functionDao;
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.FunctionService#findAllFunctionList(java.lang.Integer)
-	 */
+	private FunctionDao functionDao;
+
 	@Override
-	public List<TreeGridModel> findAllFunctionList(Integer pid) {
-		// TODO Auto-generated method stub
-		return functionDao.findAllFunctionList(pid);
+	public List<Permission> findFunctionsById(Integer pid) {
+		return functionDao.findFunctionsById(pid);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.FunctionService#delFunction(java.lang.Integer)
-	 */
 	@Override
-	public boolean delFunction(Integer id) {
-		// TODO Auto-generated method stub
-		return functionDao.delFunction(id);
+	public List<Permission> findFunctions() {
+		return functionDao.findAllWithExtHql();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.FunctionService#persistenceFunction(java.util.List)
-	 */
 	@Override
-	public boolean persistenceFunction(List<Permission> list) {
-		// TODO Auto-generated method stub
-		return functionDao.persistenceFunction(list);
+	public List<Permission> findAll(Map<String, Object> params,
+			PageUtil pageUtil) {
+		return functionDao.findAll(params, pageUtil);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.FunctionService#findAllFunctionList()
-	 */
 	@Override
-	public List<TreeModel> findAllFunctionList() {
-		// TODO Auto-generated method stub
-		return functionDao.findAllFunctionList();
+	public long getCount(Map<String, Object> params) {
+		return functionDao.getCount(params);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.FunctionService#persistenceFunction(com.cloud.erp.entities.Permission)
-	 */
 	@Override
-	public boolean persistenceFunction(Permission permission) {
-		// TODO Auto-generated method stub
-		return functionDao.persistenceFunction(permission);
+	public Permission get(Integer id) {
+		return functionDao.get(id);
+	}
+
+	@Override
+	public void update(Permission master) {
+		functionDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(Permission master) throws Exception {
+		return functionDao.persistence(master);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return functionDao.deleteToUpdate(pid);
 	}
 
 }

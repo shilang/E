@@ -1,7 +1,7 @@
 /**
  * @Title:  SystemParameterDaoImpl.java
  * @Package:  com.cloud.erp.dao.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午9:33:55
@@ -24,18 +24,18 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.SystemParameterDao;
+import com.cloud.erp.dao.common.BaseDao;
 import com.cloud.erp.entities.shiro.ShiroUser;
 import com.cloud.erp.entities.table.Parameter;
 import com.cloud.erp.entities.viewmodel.CheckBoxModel;
 import com.cloud.erp.entities.viewmodel.Options;
 import com.cloud.erp.entities.viewmodel.ParameterModel;
-import com.cloud.erp.utils.Constants;
+import com.cloud.erp.utils.Commons;
 
 /**
  * @ClassName  SystemParameterDaoImpl
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月31日 上午9:33:55
  *
@@ -103,7 +103,7 @@ public class SystemParameterDaoImpl implements SystemParameterDao {
 	{
 		
 		if (addlist!=null&&addlist.size()!=0) {
-			ShiroUser users = Constants.getCurrentUser();
+			ShiroUser users = Commons.getCurrentUser();
 			for (Parameter companyInfo : addlist) {
 				companyInfo.setCreated(new Date());
 				companyInfo.setLastmod(new Date());
@@ -122,7 +122,7 @@ public class SystemParameterDaoImpl implements SystemParameterDao {
 	public boolean updParameter(List<Parameter>  updlist) 
 	{
 		if (updlist!=null&&updlist.size()!=0) {
-			ShiroUser users = Constants.getCurrentUser();
+			ShiroUser users = Commons.getCurrentUser();
 			for (Parameter companyInfo : updlist) {
 				
 				companyInfo.setLastmod(new Date());

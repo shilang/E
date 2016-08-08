@@ -5,60 +5,56 @@
 <html>
 <head>
 <title>权限编辑</title>
-<jsp:include page="/inc.jsp"></jsp:include>
+<jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
 	var $role;
 	var $function;
 	var $grid;
 	$(function() {
-		$("#panel").panel({
-			width : 'auto',
-			height : $(this).height(),
-			title : '权限编辑',
-		});
 		$role = $("#role");
-		$grid = $role
-				.datagrid({
-					url : "permission/permissionAssignmentAction!findAllRoleList.action",
-					width : 'auto',
-					height : $(this).height() - 120,
-					pagination : true,
-					border : false,
-					rownumbers : true,
-					singleSelect : true,
-					striped : true,
-					columns : [ [ {
-						field : 'name',
-						title : '角色名称',
-						width : parseInt($(this).width() * 0.1),
-						align : 'center',
-						editor : {
-							type : 'validatebox',
-							options : {
-								required : true
-							}
+		$grid = $role.datagrid({
+				url : "role/find.action",
+				width : 'auto',
+				height : $(this).height(),
+				collapsible: true,
+				pagination : true,
+				border : false,
+				rownumbers : true,
+				singleSelect : true,
+				striped : true,
+				columns : [ [ {
+					field : 'name',
+					title : '角色名称',
+					width : parseInt($(this).width() * 0.1),
+					align : 'center',
+					editor : {
+						type : 'validatebox',
+						options : {
+							required : true
 						}
-					}, {
-						field : 'sort',
-						title : '排序',
-						width : parseInt($(this).width() * 0.1),
-						align : 'center',
-						editor : "numberbox"
-					}, {
-						field : 'description',
-						title : '角色描述',
-						width : parseInt($(this).width() * 0.1),
-						align : 'center',
-						editor : "text"
-					} ] ],
-					toolbar : '#tbRole',
-					onDblClickRow : getPermission
-				});
+					}
+				}, {
+					field : 'description',
+					title : '角色描述',
+					width : parseInt($(this).width() * 0.1),
+					align : 'center',
+					editor : "text"
+				}, {
+					field : 'sort',
+					title : '排序',
+					width : parseInt($(this).width() * 0.1),
+					align : 'center',
+					editor : "numberbox"
+				} ] ],
+				toolbar : '#tbRole',
+				onClickRow : getPermission
+			});
 
 		$function = $("#function");
+		/*
 		$function.treegrid({
 					width : 'auto',
-					height : $(this).height() - 120,
+					height : $(this).height() - 44,
 					url : "permission/permissionAssignmentAction!findAllFunctionList.action",
 					rownumbers : true,
 					animate : true,
@@ -77,13 +73,9 @@
 						checkbox : true
 					}, {
 						field : 'name',
-						title : '程式名称',
-						width : parseInt($(this).width() * 0.2)
+						title : '程序名称',
+						width : parseInt($(this).width() * 0.25)
 					},
-					//{field : 'pName',title : '父程式名称',width : 100,align : 'center'},
-					//{field : 'sort',title : '排序编码',width : 50,align : 'center'},
-					//{field : 'image',title : '程式图标',width : 100},
-					//{field : 'path',title : '程式路径',width : 150,align : 'left'},
 					{
 						field : 'myid',
 						title : '程式编码',
@@ -127,128 +119,76 @@
 						});
 					}
 				});
+		*/
+		
+		$function.tree({
+			width : 'auto',
+			height : $(this).height() - 44,
+			url : "permission/find.action",
+			animate: true,
+			checkbox: true,
+			cascadeCheck: true,
+			lines: true,
+			idFiled : 'id',
+			textFiled : 'name',
+			parentField : 'pid'
+		});
+		
 		//搜索框
-		$("#searchbox").searchbox(
-				{
-					menu : "#mm",
-					prompt : '模糊查询',
-					searcher : function(value, name) {
-						var str = "{\"roleName\":\"" + name + "\",\"value\":\""
-								+ value + "\"}";
-						var obj = eval('(' + str + ')');
-						$role.datagrid('reload', obj);
-					}
-
-				});
+		$("#searchbox").searchbox({
+			width: 250,
+			menu : "#mm",
+			prompt : '模糊查询',
+			searcher : function(value, name) {
+				var str = "{\"roleName\":\"" + name + "\",\"value\":\""+ value + "\"}";
+				var obj = eval('(' + str + ')');
+				$role.datagrid('reload', obj);
+			}
+		});
 	});
-	function endEdit() {
-		var flag = true;
-		var rows = $role.datagrid('getRows');
-		for (var i = 0; i < rows.length; i++) {
-			$role.datagrid('endEdit', i);
-			var temp = $role.datagrid('validateRow', i);
-			if (!temp) {
-				flag = false;
-			}
-		}
-		return flag;
-	}
-	function addRows() {
-		$role.datagrid('appendRow', {});
-		var rows = $role.datagrid('getRows');
-		$role.datagrid('beginEdit', rows.length - 1);
-	}
-	function editRows() {
-		var rows = $role.datagrid('getSelections');
-		$.each(rows, function(i, row) {
-			if (row) {
-				var rowIndex = $role.datagrid('getRowIndex', row);
-				$role.datagrid('beginEdit', rowIndex);
-			}
-		});
-	}
-	function removeRows() {
-		var rows = $role.datagrid('getSelections');
-		$.each(rows, function(i, row) {
-			if (row) {
-				var rowIndex = $role.datagrid('getRowIndex', row);
-				$role.datagrid('deleteRow', rowIndex);
-			}
-		});
-	}
-	function saveRows() {
-		if (endEdit()) {
-			if ($role.datagrid('getChanges').length) {
-				var inserted = $role.datagrid('getChanges', "inserted");
-				var deleted = $role.datagrid('getChanges', "deleted");
-				var updated = $role.datagrid('getChanges', "updated");
 
-				var effectRow = new Object();
-				if (inserted.length) {
-					effectRow["inserted"] = JSON.stringify(inserted);
-				}
-				if (deleted.length) {
-					effectRow["deleted"] = JSON.stringify(deleted);
-				}
-				if (updated.length) {
-					effectRow["updated"] = JSON.stringify(updated);
-				}
-				$
-						.post(
-								"permission/permissionAssignmentAction!persistenceRole.action",
-								effectRow, function(rsp) {
-									if (rsp.status) {
-										$role.datagrid('acceptChanges');
-									}
-									$.messager.alert(rsp.title, rsp.message);
-								}, "JSON").error(function() {
-							$.messager.alert("提示", "提交错误了！");
-						});
-			}
-		} else {
-			$.messager.alert("提示", "字段验证未通过!请查看");
-		}
-	}
 	function collapseAll() {
-		var node = $function.treegrid('getSelected');
+		var node = $function.tree('getSelected');
 		if (node) {
-			$function.treegrid('collapseAll', node.id);
+			$function.tree('collapseAll', node.target);
 		} else {
-			$function.treegrid('collapseAll');
+			$function.tree('collapseAll');
 		}
 	}
+	
 	function expandAll() {
-		var node = $function.treegrid('getSelected');
+		var node = $function.tree('getSelected');
 		if (node) {
-			$function.treegrid('expandAll', node.id);
+			$function.tree('expandAll', node.target);
 		} else {
-			$function.treegrid('expandAll');
+			$function.tree('expandAll');
 		}
 	}
+	
 	function refresh() {
-		$function.treegrid('reload');
+		$function.tree('reload');
 	}
-	function selectNode() {
-		$function.treegrid('select', '1');
-	}
-	function getLoad() {
-		$role.datagrid('load', {
-			roleName : $("#roleName").val()
-		});
-	}
+	
+	
 	function getPermission(rowIndex, rowData) {
-		$.post("permission/permissionAssignmentAction!getRolePermission.action",
-						{
-							roleId : rowData.roleId
-						},
+		$.post("permission/getRolePermission.action",
+						{roleId : rowData.roleId},
 						function(rsp) {
-							$function.treegrid('unselectAll');
+							// uncheck 
+							var nodes = $function.tree('getChecked');
+							$.each(nodes, function(i, e){
+								$function.tree('uncheck',e.target);
+							});
+							//check
 							if (rsp.length != 0) {
-								$.each(rsp,
-										function(i, e) {
-											$function.treegrid('select',
-													e.permissionId);
-										});
+								$.each(rsp,function(i, e) {
+									var node = $function.tree('find', e.permissionId);
+									if(node){
+										if($function.tree('isLeaf', node.target)){
+											$function.tree('check',node.target);
+										}
+									}
+								});
 							} else {
 								parent.$.messager.show({
 									title : "提示",
@@ -264,17 +204,17 @@
 					});
 				});
 	}
+	
 	function savePermission() {
-		var selections = $function.treegrid('getSelections');
+		var selections = $function.tree('getChecked',['checked','indeterminate']);
 		var selectionRole = $role.datagrid('getSelected');
 		var checkedIds = [];
 		$.each(selections, function(i, e) {
 			checkedIds.push(e.id);
 		});
 		if (selectionRole) {
-			$
-					.ajax({
-						url : "permission/permissionAssignmentAction!savePermission.action",
+			$.ajax({
+						url : "permission/savePermission.action",
 						data : "roleId=" + selectionRole.roleId
 								+ "&checkedIds="
 								+ (checkedIds.length == 0 ? "" : checkedIds),
@@ -302,36 +242,36 @@
 			});
 		}
 	}
-	function delRows() {
+	
+	function delRole() {
 		var row = $role.datagrid('getSelected');
 		if (row) {
-			var rowIndex = $role.datagrid('getRowIndex', row);
-			$role.datagrid('deleteRow', rowIndex);
-			$.ajax({
-				url : "permission/permissionAssignmentAction!delRole.action",
-				data : "roleId=" + row.roleId,
-				success : function(rsp) {
-					parent.$.messager.show({
-						title : rsp.title,
-						msg : rsp.message,
-						timeout : 1000 * 2
+			parent.$.messager.confirm($.erp.hint, $.erp.deleteQueryMsg, function(r){
+				if(r){			
+					$.post("role/delete.action",{roleId:row.roleId},
+							function(rsp){
+								if(rsp.status){
+									var rowIndex = $role.datagrid('getRowIndex', row);
+									$role.datagrid('deleteRow', rowIndex);
+								}
+								$.erp.submitSuccess(rsp.title, rsp.message);
+					},"json").error(function(){
+						
 					});
 				}
+				
 			});
-		} else {
-			parent.$.messager.show({
-				title : "提示",
-				msg : "请选择行数据!",
-				timeout : 1000 * 2
-			});
+		}else {
+			$.erp.noSelectErr();
 		}
 	}
-	//弹窗修改
-	function updRowsOpenDlg() {
+	
+	function updateRoleDlg() {
 		var row = $role.datagrid('getSelected');
 		if (row) {
 			parent.$.modalDialog({
 				title : "编辑角色",
+				iconCls: 'icon-edit',
 				width : 600,
 				height : 400,
 				href : "view/permission/roleEditDlg.jsp",
@@ -356,18 +296,15 @@
 					}
 				} ]
 			});
-		} else {
-			parent.$.messager.show({
-				title : "提示",
-				msg : "请选择一行记录!",
-				timeout : 1000 * 2
-			});
+		}else {
+			$.erp.noSelectErr();	
 		}
 	}
-	//弹窗增加
-	function addRowsOpenDlg() {
+	
+	function addRoleDlg() {
 		parent.$.modalDialog({
 			title : "添加角色",
+			iconCls: 'icon-add',
 			width : 600,
 			height : 400,
 			href : "view/permission/roleEditDlg.jsp",
@@ -389,74 +326,62 @@
 			} ]
 		});
 	}
+	
 </script>
 </head>
 <body>
-	<div id="panel" data-options="border:false">
-		<div class="easyui-layout" data-options="fit:true">
-			<div data-options="region:'north',border:false" title=""
-				style="height: 82px; overflow: hidden; padding: 5px;">
-				<div class="well well-small">
-					<span class="badge">提示</span>
-					<p>
-						新增菜单功能不属于当前角色，请在<span class="label-info"><strong>菜单权限分派</strong></span>中为该角色进行资源分派！请<span
-							class="label-info"><strong>双击角色</strong></span>查看所属资源！ 超级管理员默认拥有<span
-							class="label-info"><strong>所有权限！</strong></span>
-					</p>
-				</div>
-			</div>
-			<div data-options="region:'west',split:true,border:true"
-				style="width: 500px;">
-				<div id="tbRole" style="padding: 2px 0">
-					<table cellpadding="0" cellspacing="0">
+	  <div class="easyui-panel" data-options="fit:true,border:false" >
+		<div class="easyui-layout" data-options="fit:true,border:false">
+			<div data-options="region:'west',split:true,border:false"
+				style="width: 65%;">
+				<div id="tbRole" class="tb">
+					<table>
 						<tr>
-							<td style="padding-left: 4px; padding-bottom: 4px;"><shiro:hasPermission
-									name="perConfig">
+							<td>
+								<shiro:hasPermission name="roleAdd">
 									<a href="javascript:void(0);" class="easyui-linkbutton"
-										iconCls="icon-config" plain="true" onclick="savePermission();">保存设置</a>
-								</shiro:hasPermission> <shiro:hasPermission name="roleAdd">
+										iconCls="icon-add" plain="true" onclick="addRoleDlg();">添加</a>
+								</shiro:hasPermission> 
+								<shiro:hasPermission name="roleMod">
 									<a href="javascript:void(0);" class="easyui-linkbutton"
-										iconCls="icon-add" plain="true" onclick="addRowsOpenDlg();">添加</a>
-								</shiro:hasPermission> <shiro:hasPermission name="roleEdit">
+										iconCls="icon-edit" plain="true" onclick="updateRoleDlg();">修改</a>
+								</shiro:hasPermission> 
+								<shiro:hasPermission name="roleDel">
 									<a href="javascript:void(0);" class="easyui-linkbutton"
-										iconCls="icon-edit" plain="true" onclick="updRowsOpenDlg();">编辑</a>
-								</shiro:hasPermission> <shiro:hasPermission name="roleDel">
-									<a href="javascript:void(0);" class="easyui-linkbutton"
-										iconCls="icon-remove" plain="true" onclick="delRows();">删除</a>
-								</shiro:hasPermission> <!--<shiro:hasPermission name="roleEndEdit">
-									<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="endEdit();">结束编辑</a>
+										iconCls="icon-remove" plain="true" onclick="delRole();">删除</a>
 								</shiro:hasPermission>
-								<shiro:hasPermission name="roleSave">
-									<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="saveRows();">保存</a>
-								</shiro:hasPermission>--></td>
-						</tr>
-						<tr>
-							<td style="padding-left: 4px; padding-bottom: 4px;">
-							
-							<input id="searchbox" type="text" /></td>  
+							</td>
+							<td>
+								<input id="searchbox" type="text" />
+							</td>  
 						</tr>
 					</table>
 				</div>
 				
 				<div id="mm">
 					<div name="name">角色名称</div>
-					<div name="description">角色描述</div>
 				</div>
 				 
 				<table id="role" title="角色"></table>
 			</div>
-			<div data-options="region:'center',border:true">
+			<div data-options="region:'center',border:false">
 				<div id="tb">
-					<div style="margin: 5px 5px 5px 5px;">
-						<a href="javascript:void(0);" class="easyui-linkbutton"
-							iconCls="icon-undo" plain="true" onclick="expandAll();">展开</a> 
-						<a	href="javascript:void(0);" class="easyui-linkbutton"
-							iconCls="icon-redo" plain="true" onclick="collapseAll();">收缩</a>
-						<a href="javascript:void(0);" class="easyui-linkbutton"
-							iconCls="icon-reload" plain="true" onclick="refresh();">刷新</a>
-					</div>
+					<table>
+						<tr>
+							<td>
+								<a href="javascript:void(0);" class="easyui-linkbutton"
+									iconCls="icon-undo" plain="true" onclick="expandAll();">展开</a> 
+								<a	href="javascript:void(0);" class="easyui-linkbutton"
+									iconCls="icon-redo" plain="true" onclick="collapseAll();">收缩</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton"
+									iconCls="icon-reload" plain="true" onclick="refresh();">刷新</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton"
+										iconCls="icon-config" plain="true" onclick="savePermission();">保存设置</a>
+							</td>
+						</tr>
+					</table>
 				</div>
-				<table id="function" title="程式"></table>
+				<table id="function" title="权限"></table>
 			</div>
 		</div>
 	</div>

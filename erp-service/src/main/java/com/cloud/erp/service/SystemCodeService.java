@@ -1,7 +1,7 @@
 /**
  * @Title:  SystemCodeService.java
  * @Package:  com.cloud.erp.service
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月30日 上午10:18:43
@@ -21,7 +21,7 @@ import com.cloud.erp.entities.viewmodel.TreeModel;
 
 /**
  * @ClassName  SystemCodeService
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月30日 上午10:18:43
  *

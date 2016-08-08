@@ -1,7 +1,7 @@
 /**
  * @Title:  RolePermission.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月2日  下午3:16:13
@@ -33,7 +33,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName RolePermission
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月2日 下午3:16:13
  *

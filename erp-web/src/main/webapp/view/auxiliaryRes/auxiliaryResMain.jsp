@@ -4,13 +4,20 @@
 <html>
 <head>
 <title>辅助资料管理</title>
-<jsp:include page="/inc.jsp"></jsp:include>
+<jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
+	var $panel;
 	var $tree;
 	var $grid;
 	$(function(){
+		$panel = $("#panel").panel({
+			title: "资源类别",
+			height: $(this).height() - 44,
+			border:false  
+		});
+		
 		$tree = $("#tt").tree({
-			url: 'auxiliaryResType/auxiliaryResTypeAction!findAuxiliaryResTypes.action',
+			url: 'auxiliaryResType/find.action',
 			animate: true,
 			onContextMenu: function(e, node){
 				e.preventDefault();
@@ -24,9 +31,9 @@
 		});
 		
 		$grid = $("#dg").datagrid({
-			url: 'auxiliaryResMessage/auxiliaryResMessageAction!findAuxiliaryResMessages.action',
-			width: 'auto',
-			height: $(this).height(),
+			url: 'auxiliaryResMessage/find.action',
+			width: $(this).width() - 310,
+			height: $(this).height() - 44,
 			rownumbers: true,
 			striped: true,
 			border: false,
@@ -118,7 +125,7 @@
 		if(node){
 			parent.$.messager.confirm("提示","确定要删除记录吗？",function(r){
 				if(r){
-					$.post("auxiliaryResType/auxiliaryResTypeAction!delAuxiliaryResType.action",{
+					$.post("auxiliaryResType/delete.action",{
 						id: node.id
 					}, function(rsp){
 						if(rsp.status){
@@ -225,34 +232,24 @@
 	function delResMessage(){
 		var row = $grid.datagrid('getSelected');
 		if(row){
-			parent.$.modalDialog.confirm("提示","确定删除资源代码?",function(r){
+			parent.$.messager.confirm("提示","确定删除资源代码?",function(r){
 			if(r){
-				$.post("auxiliaryRes/auxiliaryResMessage!delAuxiliaryResMessage.action",
+				$.post("auxiliaryResMessage/delete.action",
 						{id: row.messageId},function(rsp){
 							if(rsp.status){
 								var idx = $grid.datagrid('getRowIndex', row);
-								$grid.datagird('deleteRow', idx);
+								$grid.datagrid('deleteRow', idx);
 							}
-							parent.$.messager.show({
-								title: rsp.title,
-								msg: rsp.message,
-								timeout: 1000 * 2
-							});
+							
+							$.erp.submitSuccess(rsp.title, rsp.message);
+							
 						},"JSON").error(function(){
-							parent.$.modalDialog({
-								title: '提示',
-								msg: '提交错误！',
-								timeout: 1000 * 2
-							});
+							$.erp.submitErr();
 						});
 				}
 			});
 		}else{
-			parent.$.messager.show({
-				title: '提示',
-				msg: '请选择资源代码',
-				timeout: 1000 * 2
-			});
+			$.erp.noSelectErr();
 		}
 	}
 	
@@ -266,37 +263,29 @@
 </script>
 </head>
 <body>
-	<div class="easyui-layout" data-options="fit:true">
-		<div data-options="region:'north',border:false" title="" 
-		style="height:82px;overflow:hidden;padding:5px;">
-			<div class="well well-samll">
-				<span class="badge">提示</span>
-				<p>
-					在此你可以对<span class="label-info"><strong>辅助资料</strong></span>进行编辑！
-				</p>
+	<div class="easyui-panel" data-options="fit:true,border:false">
+		<div class="easyui-layout" data-options="fit:true, border:false">
+			<div data-options="region:'west',split:true,border:false" style="width:300px;">
+				<div id="panel" style="padding:10px;">
+					<ul id="tt"></ul>
+				</div>
+				<div id="tree-mm" class="easyui-menu" style="width:120px;">
+					<div onclick="addResTypeDlg();" data-options="iconCls:'icon-add'">添加类别</div>
+					<div onclick="updateResTypeDlg();" data-options="iconCls:'icon-edit'">编辑类别</div>
+					<div onclick="delResType();" data-options="iconCls:'icon-remove'">删除类别</div>
+					<div></div>
+				</div>
 			</div>
-		</div>
-		<div data-options="region:'west',split:true,border:true" style="width:300px;">
-			<div class="easyui-panel" data-options="border:false" title="资源类别" style="padding:10px;">
-				<ul id="tt"></ul>
+			<div data-options="region:'center',border:false,fit:true">
+				<div id="tb">
+					<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addResMessageDlg();">添加资源代码</a>
+					<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateResMessageDlg();">编辑资源代码</a>
+					<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="delResMessage();">删除资源代码</a>
+				</div>
+				
+				<table id="dg" title="资源代码"></table>
 			</div>
-			<div id="tree-mm" class="easyui-menu" style="width:120px;">
-				<div onclick="addResTypeDlg();" data-options="iconCls:'icon-add'">添加类别</div>
-				<div onclick="updateResTypeDlg();" data-options="iconCls:'icon-edit'">编辑类别</div>
-				<div onclick="delResType();" data-options="iconCls:'icon-remove'">删除类别</div>
-				<div></div>
-			</div>
-		</div>
-		<div data-options="region:'center',border:true,fit:true">
-			<div id="tb">
-				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addResMessageDlg();">添加资源代码</a>
-				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateResMessageDlg();">编辑资源代码</a>
-				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="delResMessage();">删除资源代码</a>
-			</div>
-			
-			<table id="dg" title="资源代码"></table>
 		</div>
 	</div>
-	
 </body>
 </html>

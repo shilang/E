@@ -1,7 +1,7 @@
 /**
  * @Title:  ShiroServcie.java
  * @Package:  com.cloud.erp.service
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月6日  上午11:23:52
@@ -20,7 +20,7 @@ import com.cloud.erp.entities.table.User;
 
 /**
  * @ClassName ShiroServcie
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月6日 上午11:23:52
  *

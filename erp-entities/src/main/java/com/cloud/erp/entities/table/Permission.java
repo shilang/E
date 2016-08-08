@@ -1,7 +1,7 @@
 /**
  * @Title:  Permission.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月2日  下午3:39:26
@@ -35,14 +35,14 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName Permission
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月2日 下午3:39:26
  *
  */
 
 @Entity
-@Table(name = "PERMISSION")
+@Table(name = "PERMISSIONS")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class Permission implements Serializable {
@@ -56,7 +56,7 @@ public class Permission implements Serializable {
 	private String myid;
 	private String type;
 	private String state;
-	private String issued;
+	private String isused;
 	private String url;
 	private String iconCls;
 	private String status;
@@ -141,13 +141,13 @@ public class Permission implements Serializable {
 		this.state = state;
 	}
 
-	@Column(name = "ISSUED", length = 1)
-	public String getIssued() {
-		return issued;
+	@Column(name = "ISUSED", length = 1)
+	public String getIsused() {
+		return isused;
 	}
 
-	public void setIssued(String issued) {
-		this.issued = issued;
+	public void setIsused(String isused) {
+		this.isused = isused;
 	}
 
 	@Column(name = "URL", length = 200)

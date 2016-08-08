@@ -1,7 +1,7 @@
 /**
  * @Title:  Attributes.java
  * @Package:  com.cloud.erp.entities.viewmodel
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月13日  下午5:12:46
@@ -16,7 +16,7 @@ package com.cloud.erp.entities.viewmodel;
 
 /**
  * @ClassName  Attributes
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月13日  下午5:12:46
  *

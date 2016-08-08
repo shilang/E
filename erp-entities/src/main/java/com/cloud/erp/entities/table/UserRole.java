@@ -1,7 +1,7 @@
 /**
  * @Title:  UserRole.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月2日  下午1:55:59
@@ -17,6 +17,7 @@ package com.cloud.erp.entities.table;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +34,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName UserRole
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月2日 下午1:55:59
  *
@@ -66,7 +67,7 @@ public class UserRole implements Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID", nullable = false)
 	public User getUser() {
 		return user;
@@ -76,7 +77,7 @@ public class UserRole implements Serializable {
 		this.user = user;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ROLE_ID", nullable = false)
 	public Role getRole() {
 		return role;

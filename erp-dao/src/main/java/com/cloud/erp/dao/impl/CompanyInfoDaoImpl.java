@@ -1,7 +1,7 @@
 /**
  * @Title:  CompanyInfoDaoImpl.java
  * @Package:  com.cloud.erp.dao.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月28日 上午11:16:47
@@ -14,97 +14,73 @@
  */
 package com.cloud.erp.dao.impl;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cloud.erp.dao.BaseDao;
 import com.cloud.erp.dao.CompanyInfoDao;
+import com.cloud.erp.dao.common.BaseDao;
+import com.cloud.erp.dao.common.GeneralDaoSupport;
+import com.cloud.erp.dao.common.StatusFields;
 import com.cloud.erp.entities.table.CompanyInfo;
-import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
 /**
  * @ClassName  CompanyInfoDaoImpl
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年4月28日 上午11:16:47
  *
  */
 @Repository("companyInfoDao")
 public class CompanyInfoDaoImpl implements CompanyInfoDao {
-
-	private BaseDao<CompanyInfo> baseDao;
 	
-	/**
-	 * @param baseDao the baseDao to set
-	 */
+	private final StatusFields statusFields = new StatusFields();
+	
+	{
+		statusFields.setInterId("companyId");
+	}
+	
+	@Resource
+	private GeneralDaoSupport<CompanyInfo> generalDao;
+
 	@Autowired
-	public void setBaseDao(BaseDao<CompanyInfo> baseDao) {
-		this.baseDao = baseDao;
-	}
+	private BaseDao<CompanyInfo> baseDao;
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.CompanyInfoDao#findCompanyInfos()
-	 */
 	@Override
-	public List<CompanyInfo> findCompanyInfos() {
-		// TODO Auto-generated method stub
-		String hql = "from CompanyInfo t where t.status='A'";
-		return baseDao.find(hql);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.CompanyInfoDao#getCount()
-	 */
-	@Override
-	public long getCount() {
-		// TODO Auto-generated method stub
-		String hql = "select count(*) from CompanyInfo t where t.status='A'";
-		return baseDao.count(hql, null);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.CompanyInfoDao#persistenceCompanyInfo(com.cloud.erp.entities.table.CompanyInfo)
-	 */
-	@Override
-	public boolean persistenceCompanyInfo(CompanyInfo companyInfo) {
-		// TODO Auto-generated method stub
-		Integer userId = Constants.getCurrentUser().getUserId();
-		if(null == companyInfo.getCompanyId() || "".equals(companyInfo.getCompanyId())){
-			companyInfo.setCreated(new Date());
-			companyInfo.setCreater(userId);
-			companyInfo.setLastmod(new Date());
-			companyInfo.setModifier(userId);
-			companyInfo.setStatus(Constants.PERSISTENCE_STATUS);
-			baseDao.save(companyInfo);
-		}else {
-			companyInfo.setLastmod(new Date());
-			companyInfo.setModifier(userId);
-			baseDao.update(companyInfo);
-		}
+	public List<CompanyInfo> findAll(Map<String, Object> params, PageUtil pageUtil) {
 		
-		return true;
+		return generalDao.findAll(CompanyInfo.class, params, pageUtil);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.dao.CompanyInfoDao#delCompanyInfo(java.lang.Integer)
-	 */
 	@Override
-	public boolean delCompanyInfo(Integer companyId) {
-		// TODO Auto-generated method stub
-		CompanyInfo companyInfo = baseDao.get(CompanyInfo.class, companyId);
-		companyInfo.setLastmod(new Date());
-		companyInfo.setModifier(Constants.getCurrentUser().getUserId());
-		companyInfo.setStatus(Constants.PERSISTENCE_DELETE_STATUS);
-		baseDao.deleteToUpdate(companyInfo);
+	public long getCount(Map<String, Object> params) {
 		
-		return true;
+		return generalDao.getCount(CompanyInfo.class, params);
 	}
 
-	
+	@Override
+	public CompanyInfo get(Integer id) {
+		return generalDao.get(CompanyInfo.class, id);
+	}
+
+	@Override
+	public void update(CompanyInfo master) {
+		generalDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(CompanyInfo master) throws Exception {
+		return generalDao.persistence(master, statusFields);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return generalDao.deleteToUpdate(CompanyInfo.class, pid, statusFields);
+	}
 
 }

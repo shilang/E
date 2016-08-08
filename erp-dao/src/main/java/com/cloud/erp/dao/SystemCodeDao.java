@@ -1,7 +1,7 @@
 /**
  * @Title:  SystemCodeDao.java
  * @Package:  com.cloud.erp.dao
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月30日 上午11:00:45
@@ -21,7 +21,7 @@ import com.cloud.erp.entities.viewmodel.TreeModel;
 
 /**
  * @ClassName SystemCodeDao
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年3月30日 上午11:00:45
  *

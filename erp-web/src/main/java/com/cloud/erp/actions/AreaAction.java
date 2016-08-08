@@ -1,7 +1,7 @@
 /**
  * @Title:  AreaAction.java
  * @Package:  com.cloud.erp.actions
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月12日 上午10:21:50
@@ -14,43 +14,35 @@
  */
 package com.cloud.erp.actions;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cloud.erp.common.BaseAction;
 import com.cloud.erp.entities.table.Area;
-import com.cloud.erp.entities.viewmodel.GridModel;
 import com.cloud.erp.service.AreaService;
-import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * @ClassName AreaAction
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年5月12日 上午10:21:50
  *
  */
 @Namespace("/area")
-@Action("areaAction")
 public class AreaAction extends BaseAction implements ModelDriven<Area> {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Resource
 	private AreaService areaService;
+	
 	private Area area;
-
-	/**
-	 * @param areaService
-	 *            the areaService to set
-	 */
-	@Autowired
-	public void setAreaService(AreaService areaService) {
-		this.areaService = areaService;
-	}
 
 	public Area getArea() {
 		return area;
@@ -60,38 +52,31 @@ public class AreaAction extends BaseAction implements ModelDriven<Area> {
 		this.area = area;
 	}
 	
+	@Action(value = "findAreas")
 	public String findAreas() throws Exception{
-		Map<String, Object> params = new HashMap<String, Object>();
-		if(null != searchValue && !"".equals(searchValue)){
-			params.put(searchName, Constants.GET_SQL_LIKE  + searchValue + Constants.GET_SQL_LIKE);
-		}
-		PageUtil pageUtil = new PageUtil(page, rows, searchAnds, searchColumnNames, searchConditions, searchVals);
-		GridModel gridModel = new GridModel();
-		gridModel.setRows(areaService.findAreas(params, pageUtil));
-		gridModel.setTotal(areaService.getCount(params, pageUtil));
-		OutputJson(gridModel);
-		
-		return null;
+		Map<String, Object> params = getQueryParamsForMain();
+		PageUtil pageUtil = getPageUtil();
+		JSONWriter(areaService.findAll(params, pageUtil),
+				areaService.getCount(params));
+		return RJSON;
 	}
 	
+	@Action(value = "persist")
 	public String persistenceArea() throws Exception{
-		OutputJson(getMessage(areaService.persistenceArea(getModel())));
-		return null;
+		boolean result = areaService.persistence(getModel());
+		JSONWriter(result);
+		return RJSON;
 	}
 	
+	@Action(value = "delArea")
 	public String delArea() throws Exception{
-		OutputJson(getMessage(areaService.delArea(getModel().getAreaId())));
-		return null;
+		boolean result = areaService.deleteToUpdate(getModel().getAreaId());
+		JSONWriter(result);
+		return RJSON;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
-	 */
 	@Override
 	public Area getModel() {
-		// TODO Auto-generated method stub
 		if(null == area){
 			area = new Area();
 		}

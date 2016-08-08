@@ -1,7 +1,7 @@
 /**
  * @Title:  LoginDao.java
  * @Package:  com.cloud.erp.dao
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月16日 下午4:40:32
@@ -20,12 +20,12 @@ import com.cloud.erp.entities.viewmodel.MenuModel;
 
 /**
  * @ClassName LoginDao
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月16日 下午4:40:32
  *
  */
 public interface LoginDao {
 
-	List<MenuModel> findMenuList();
+	List<MenuModel> findMenuList(Integer pid);
 }

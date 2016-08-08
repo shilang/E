@@ -1,7 +1,7 @@
 /**
  * @Title:  Users.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月2日  上午11:57:03
@@ -29,13 +29,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName Users
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月2日 上午11:57:03
  *
@@ -51,19 +53,20 @@ public class User implements Serializable {
 	private Integer userId;
 	private String name;
 	private String password;
+	private String email;
 	private String salt;
 	private Integer primaryGroup;
 	private String description;
 	private Integer forbidden;
 	private Integer employeeId;
+	private Employee employee;
+	private Department department;
 	private String lang;
 	private String theme;
 	private Integer loginCount;
-	private String status;
 	private String ip;
-	private Integer questionId;
-	private String answer;
 	private Integer isOnline;
+	private String status;
 	private Date created;
 	private Date lastmod;
 	private Integer creater;
@@ -80,8 +83,8 @@ public class User implements Serializable {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
-	@Column(name = "NAME", length = 50)
+	
+	@Column(name = "NAME", unique = true, nullable = false, length = 50)
 	public String getName() {
 		return name;
 	}
@@ -117,6 +120,24 @@ public class User implements Serializable {
 		this.employeeId = employeeId;
 	}
 
+	@Transient
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	@Transient
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
 	@Column(name = "PASSWORD", length = 128)
 	public String getPassword() {
 		return password;
@@ -125,8 +146,16 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
 
-	@Column(name = "SALT", length = 20)
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Column(name = "SALT", length = 128)
 	public String getSalt() {
 		return salt;
 	}
@@ -189,24 +218,6 @@ public class User implements Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "QUESTION_ID")
-	public Integer getQuestionId() {
-		return questionId;
-	}
-
-	public void setQuestionId(Integer questionId) {
-		this.questionId = questionId;
-	}
-
-	@Column(name = "ANSWER", length = 100)
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-
 	@Column(name = "ISONLINE")
 	public Integer getIsOnline() {
 		return isOnline;
@@ -254,6 +265,7 @@ public class User implements Serializable {
 		this.modifier = modifier;
 	}
 
+	@JSON(serialize=false)
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<UserRole> getUserRoles() {
 		return userRoles;
@@ -262,5 +274,5 @@ public class User implements Serializable {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-
+	
 }

@@ -1,7 +1,7 @@
 /**
  * @Title:  AuxiliaryResMessageService.java
  * @Package:  com.cloud.erp.service
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年5月5日 上午11:11:23
@@ -15,25 +15,21 @@
 package com.cloud.erp.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.cloud.erp.entities.table.AuxiliaryResMessage;
+import com.cloud.erp.service.common.GeneralService;
 
 /**
  * @ClassName  AuxiliaryResMessageService
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年5月5日 上午11:11:23
  *
  */
-public interface AuxiliaryResMessageService {
+public interface AuxiliaryResMessageService extends GeneralService<AuxiliaryResMessage>{
 	
 	List<AuxiliaryResMessage> findAuxiliaryResMessages(Integer resId);
 	
 	Long getCount(Integer resId);
-	
-	boolean persistenceAuxiliaryResMessage(AuxiliaryResMessage auxiliaryResMessage);
-	
-	boolean delAuxiliaryResMessage(Integer id);
 	
 }

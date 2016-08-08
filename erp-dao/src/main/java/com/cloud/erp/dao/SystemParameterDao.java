@@ -1,7 +1,7 @@
 /**
  * @Title:  SystemParameterDao.java
  * @Package:  com.cloud.erp.dao
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午9:32:56
@@ -22,7 +22,7 @@ import com.cloud.erp.entities.viewmodel.ParameterModel;
 
 /**
  * @ClassName SystemParameterDao
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年3月31日 上午9:32:56
  *

@@ -1,7 +1,7 @@
 /**
  * @Title:  Role.java
  * @Package:  com.cloud.erp.entities
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月2日  下午2:31:17
@@ -25,25 +25,25 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName Role
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月2日 下午2:31:17
  *
  */
 
 @Entity
-@Table(name = "ROLE")
+@Table(name = "ROLES")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class Role implements Serializable {
@@ -60,6 +60,13 @@ public class Role implements Serializable {
 	private Integer modifier;
 	private Set<UserRole> userRoles = new HashSet<UserRole>(0);
 	private Set<RolePermission> rolePermissions = new HashSet<RolePermission>(0);
+
+	public Role() {
+	}
+
+	public Role(Integer roleId) {
+		this.roleId = roleId;
+	}
 
 	@Id
 	@GeneratedValue
@@ -146,6 +153,7 @@ public class Role implements Serializable {
 		this.modifier = modifier;
 	}
 
+	@JSON(serialize = false)
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "role")
 	public Set<UserRole> getUserRoles() {
 		return userRoles;
@@ -155,6 +163,7 @@ public class Role implements Serializable {
 		this.userRoles = userRoles;
 	}
 
+	@JSON(serialize = false)
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "role")
 	public Set<RolePermission> getRolePermissions() {
 		return rolePermissions;

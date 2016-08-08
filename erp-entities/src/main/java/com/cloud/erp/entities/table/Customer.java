@@ -1,7 +1,7 @@
 /**
  * @Title:  Customer.java
  * @Package:  com.cloud.erp.entities.table
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月23日 上午10:18:07
@@ -27,10 +27,11 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 
 /**
  * @ClassName Customer
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月23日 上午10:18:07
  *
@@ -47,6 +48,7 @@ public class Customer implements Serializable {
 	private String name;
 	private String fullName;
 	private Integer region;
+	private String regionName;
 	private String helpCode;
 	private String address;
 	private Integer parentId;
@@ -55,13 +57,22 @@ public class Customer implements Serializable {
 	private String email;
 	private String homePage;
 	private Integer typeId;
+	private String typeName;
 	private Integer saleMode;
+	private String salesModeName;
 	private String remark;
 	private String status;
 	private Date created;
 	private Date lastmod;
 	private Integer creater;
 	private Integer modifier;
+	
+	public Customer() {
+	}
+
+	public Customer(Integer customerId) {
+		this.customerId = customerId;
+	}
 
 	@Id
 	@GeneratedValue
@@ -109,6 +120,15 @@ public class Customer implements Serializable {
 	public void setRegion(Integer region) {
 		this.region = region;
 	}
+	
+	@Formula("(SELECT t.NAME FROM AREAS t WHERE t.AREA_ID=REGION)")
+	public String getRegionName() {
+		return regionName;
+	}
+
+	public void setRegionName(String regionName) {
+		this.regionName = regionName;
+	}
 
 	@Column(name = "HELP_CODE", length = 20)
 	public String getHelpCode() {
@@ -155,7 +175,7 @@ public class Customer implements Serializable {
 		this.fax = fax;
 	}
 
-	@Column(name = "EMAIL", length = 20)
+	@Column(name = "EMAIL", length = 100)
 	public String getEmail() {
 		return email;
 	}
@@ -181,6 +201,15 @@ public class Customer implements Serializable {
 	public void setTypeId(Integer typeId) {
 		this.typeId = typeId;
 	}
+	
+	@Formula("(SELECT t.NAME FROM AUXILIARY_RES_MESSAGES t WHERE t.MESSAGE_ID=TYPE_ID)")
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
 
 	@Column(name = "SALE_MODE")
 	public Integer getSaleMode() {
@@ -189,6 +218,15 @@ public class Customer implements Serializable {
 
 	public void setSaleMode(Integer saleMode) {
 		this.saleMode = saleMode;
+	}
+	
+	@Formula("(SELECT t.NAME FROM AUXILIARY_RES_MESSAGES t WHERE t.MESSAGE_ID=SALE_MODE)")
+	public String getSalesModeName() {
+		return salesModeName;
+	}
+
+	public void setSalesModeName(String salesModeName) {
+		this.salesModeName = salesModeName;
 	}
 
 	@Column(name = "REMARK", length = 2000)

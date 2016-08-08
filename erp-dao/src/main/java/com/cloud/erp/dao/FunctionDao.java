@@ -1,7 +1,7 @@
 /**
  * @Title:  FunctionDao.java
  * @Package:  com.cloud.erp.dao
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月13日  下午5:24:45
@@ -16,27 +16,19 @@ package com.cloud.erp.dao;
 
 import java.util.List;
 
+import com.cloud.erp.dao.common.GeneralDao;
 import com.cloud.erp.entities.table.Permission;
-import com.cloud.erp.entities.viewmodel.TreeGridModel;
-import com.cloud.erp.entities.viewmodel.TreeModel;
 
 /**
  * @ClassName FunctionDao
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年2月13日 下午5:24:45
  *
  */
-public interface FunctionDao {
+public interface FunctionDao extends GeneralDao<Permission>{
+	
+	List<Permission> findAllWithExtHql();
 
-	List<TreeGridModel> findAllFunctionList(Integer pid);
-
-	boolean delFunction(Integer id);
-
-	boolean persistenceFunction(List<Permission> list);
-
-	List<TreeModel> findAllFunctionList();
-
-	boolean persistenceFunction(Permission permission);
-
+	List<Permission> findFunctionsById(Integer pid);
 }

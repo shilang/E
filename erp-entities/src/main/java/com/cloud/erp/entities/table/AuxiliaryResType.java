@@ -1,7 +1,7 @@
 /**
  * @Title:  AuxiliaryResType.java
  * @Package:  com.cloud.erp.entities.table
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月23日 下午2:02:40
@@ -30,7 +30,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName AuxiliaryResType
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月23日 下午2:02:40
  *

@@ -1,7 +1,7 @@
 /**
  * @Title:  BugServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午10:25:21
@@ -26,58 +26,46 @@ import com.cloud.erp.service.BugService;
 import com.cloud.erp.utils.PageUtil;
 
 /**
- * @ClassName  BugServiceImpl
- * @Description  TODO
- * @author  bollen bollen@live.cn
- * @date  2015年3月31日 上午10:25:21
+ * @ClassName BugServiceImpl
+ * @Description 
+ * @author bollen bollen@live.cn
+ * @date 2015年3月31日 上午10:25:21
  *
  */
 @Service("bugService")
 public class BugServiceImpl implements BugService {
 
-	private BugDao bugDao;
-	
-	/**
-	 * @param bugDao the bugDao to set
-	 */
 	@Autowired
-	public void setBugDao(BugDao bugDao) {
-		this.bugDao = bugDao;
-	}
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.BugService#findBugList(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
+	private BugDao bugDao;
+
 	@Override
-	public List<Bug> findBugList(Map<String, Object> param, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return bugDao.findBugList(param, pageUtil);
+	public List<Bug> findAll(Map<String, Object> params, PageUtil pageUtil) {
+		return bugDao.findAll(params, pageUtil);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.BugService#getCount(java.util.Map, com.cloud.erp.utils.PageUtil)
-	 */
 	@Override
-	public Long getCount(Map<String, Object> param, PageUtil pageUtil) {
-		// TODO Auto-generated method stub
-		return bugDao.getCount(param, pageUtil);
+	public long getCount(Map<String, Object> params) {
+		return bugDao.getCount(params);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.BugService#addBug(com.cloud.erp.entities.Bug)
-	 */
 	@Override
-	public boolean addBug(Bug bug) {
-		// TODO Auto-generated method stub
-		return bugDao.addBug(bug);
+	public Bug get(Integer id) {
+		return bugDao.get(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.BugService#delBug(java.lang.Integer)
-	 */
 	@Override
-	public boolean delBug(Integer bugId) {
-		// TODO Auto-generated method stub
-		return bugDao.delBug(bugId);
+	public void update(Bug master) {
+		bugDao.update(master);
+	}
+
+	@Override
+	public boolean persistence(Bug master) throws Exception {
+		return bugDao.persistence(master);
+	}
+
+	@Override
+	public boolean deleteToUpdate(Integer pid) {
+		return bugDao.deleteToUpdate(pid);
 	}
 
 }

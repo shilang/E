@@ -1,7 +1,7 @@
 /**
  * @Title:  ShiroServiceImpl.java
  * @Package:  com.cloud.erp.service.impl
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年2月6日  上午11:26:13
@@ -25,7 +25,7 @@ import com.cloud.erp.service.ShiroService;
 
 /**
  * @ClassName  ShiroServiceImpl
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年2月6日  上午11:26:13
  *
@@ -36,21 +36,16 @@ public class ShiroServiceImpl implements ShiroService {
 
 	@Autowired
 	private ShiroDao shiroDao;
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.ShiroService#getUser(java.lang.String)
-	 */
+
 	@Override
 	public User getUser(String username) {
-		// TODO Auto-generated method stub
+		
 		return shiroDao.getUser(username);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cloud.erp.service.ShiroService#getPermissions(boolean, java.lang.String)
-	 */
 	@Override
 	public List<Object> getPermissions(boolean isAdmin, String username) {
-		// TODO Auto-generated method stub
+		
 		return shiroDao.getPermissions(isAdmin, username);
 	}
 

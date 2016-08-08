@@ -1,7 +1,7 @@
 /**
  * @Title:  CompanyInfo.java
  * @Package:  com.cloud.erp.entities.table
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年4月28日 上午10:25:11
@@ -30,7 +30,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * @ClassName CompanyInfo
- * @Description TODO
+ * @Description 
  * @author bollen bollen@live.cn
  * @date 2015年4月28日 上午10:25:11
  *

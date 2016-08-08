@@ -1,7 +1,7 @@
 /**
  * @Title:  ResourceUtil.java
  * @Package:  com.cloud.erp.utils
- * @Description:  TODO
+ * @Description:  
  * Copyright:  Copyright(C) 2015
  * @author:  bollen bollen@live.cn
  * @date:  2015年3月31日 上午10:31:06
@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 /**
  * @ClassName  ResourceUtil
- * @Description  TODO
+ * @Description  
  * @author  bollen bollen@live.cn
  * @date  2015年3月31日 上午10:31:06
  *
@@ -28,7 +28,7 @@ public class ResourceUtil {
 	private static final ResourceBundle bundle = java.util.ResourceBundle.getBundle("config");
 	
 	/**
-	 * function: TODO get sessionInfo name
+	 * function: get sessionInfo name
 	 * @Author: bollen bollen@live.cn
 	 * @Date: 2015年3月31日 上午10:33:35
 	 * @Title: getSessionInfoName
@@ -39,7 +39,7 @@ public class ResourceUtil {
 	}
 	
 	/**
-	 * function: TODO get name of uploading form field
+	 * function: get name of uploading form field
 	 * @Author: bollen bollen@live.cn
 	 * @Date: 2015年3月31日 上午10:34:38
 	 * @Title: getUploadFieldName
