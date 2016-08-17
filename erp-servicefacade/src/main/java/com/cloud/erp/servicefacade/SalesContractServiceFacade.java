@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.cloud.erp.activiti.ProcessManager;
 import com.cloud.erp.activiti.model.AuditModel;
+import com.cloud.erp.dao.exception.NumberIncrementException;
 import com.cloud.erp.entities.table.SalesContract;
 import com.cloud.erp.entities.table.SalesContractEntry;
 import com.cloud.erp.entities.table.SalesContractScheme;
-import com.cloud.erp.exceptions.NumberIncrementException;
 import com.cloud.erp.service.SalesContractService;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;

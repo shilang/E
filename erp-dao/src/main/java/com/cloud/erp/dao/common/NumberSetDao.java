@@ -14,8 +14,8 @@
  */
 package com.cloud.erp.dao.common;
 
+import com.cloud.erp.dao.exception.NumberIncrementException;
 import com.cloud.erp.entities.table.NumberSet;
-import com.cloud.erp.exceptions.NumberIncrementException;
 
 /**
  * @ClassName  NumberSetDao

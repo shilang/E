@@ -32,12 +32,12 @@ import com.cloud.erp.dao.common.GeneralDaoSupport;
 import com.cloud.erp.dao.common.ReferenceDao;
 import com.cloud.erp.dao.common.SingleEntryDaoSupport;
 import com.cloud.erp.dao.common.StatusFields;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesOrder;
 import com.cloud.erp.entities.table.SalesOrderEntry;
 import com.cloud.erp.entities.table.SalesOutStock;
 import com.cloud.erp.entities.table.TransportInfo;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 

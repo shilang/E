@@ -1,6 +1,6 @@
 package com.cloud.erp.dao.common;
 
-import com.cloud.erp.exceptions.UpdateReferenceException;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 
 public interface ReferenceDao<T> {
 

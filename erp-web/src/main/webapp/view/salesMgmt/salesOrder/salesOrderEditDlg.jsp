@@ -5,8 +5,11 @@
 	var $form;
 	var entry;
 	var date;
+	var transitAheadTime;
 	
 	 $(function(){
+		 transitAheadTime = $('#transitAheadTime');
+		 
 		$form = $("#form");
 		$form.form({
 			url: 'salesOrder/persistence.action',
@@ -23,7 +26,10 @@
 		               {field:'amount',title:'金额',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{precision:2,required:true}}},
 		               {field:'date',title:'交货日期',width:parseInt($(this).width()*0.1),
 		            	   editor:{type:'datebox',options:{
-		            		   required:true
+		            		   required:true,
+		            		   onSelect: function(date){
+		            			   setMaxDate(date);
+		            		   }
 		            		   }}},
 		               {field:'remark',title:'备注',width:parseInt($(this).width()*0.1),editor:'textbox'},
 		               {field:'adviceDate',title:'建议交货日期',width:parseInt($(this).width()*0.1),editor:{type:'datebox',options:{required:true}}},
@@ -57,6 +63,7 @@
 		$("#salesScope").erpResGrid({}, 9);
 		$("#settlementId").erpResGrid({}, 6);
 		$("#salesWay").erpResGrid({}, 7);
+		transitAheadTime.erpCurrDate();
 		$("#fetchWay").erpResGrid({}, 8);
 		$("#fetchAddr").erpResGrid({},10);
 		date = $("#date").erpCurrDate();
@@ -162,6 +169,22 @@
 		parent.$.modalDialog.handler.dialog('close');
 	}
 	
+	function setMaxDate(currDate){
+	 	var max = currDate;
+		var rows = $dg.datagrid('getRows');
+		for(var i = 0; i < rows.length; i++){
+			var tmpDate = rows[i].date;
+			if(tmpDate){
+				tmpDate = new Date(tmpDate);
+				if(tmpDate > max){
+					max = tmpDate;
+				}
+			}
+		}
+		var dateStr = max.getFullYear() + '-' + (max.getMonth() + 1) + '-' + max.getDate();
+		transitAheadTime.datebox('setValue', dateStr);
+	}
+	
 </script>
 
 <div class="dlgcontent">
@@ -203,9 +226,9 @@
 				<td>
 					<input id="salesWay" name="salesWay" class="easyui-textbox" data-options="required:true"/>
 				</td>
-				<th>运输提前期</th>
+				<th>交货日期</th> <!-- 由运输提前期更改 -->
 				<td>
-					<input id="transitAheadTime" name="transitAheadTime" class="easyui-numberbox" data-options="value:0,required:true"/>
+					<input id="transitAheadTime" name="transitAheadTime" class="easyui-datebox" data-options="required:true"/>
 				</td>
 				<th>汇率</th>
 				<td>

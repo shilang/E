@@ -38,6 +38,8 @@ public interface SalesOrderService extends
 	SingleEntryService<SalesOrder>,
 	ShareEntryService<SalesShareEntry, SalesOrderEntry>{
 	
+	boolean updateOrderReview(Integer interId, String review);
+	
 	boolean persistence(SalesOrder salesOrder, Map<String, List<SalesOrderEntry>> entries) throws Exception;
 	
 	boolean deleteToUpdateAll(Integer pid) throws Exception;

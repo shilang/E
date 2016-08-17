@@ -19,9 +19,9 @@ import java.util.List;
 import com.cloud.erp.dao.common.GeneralDao;
 import com.cloud.erp.dao.common.ReferenceDao;
 import com.cloud.erp.dao.common.SingleEntryDao;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.ICStockBill;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 
 /**
  * @ClassName  SalesOutStockDao

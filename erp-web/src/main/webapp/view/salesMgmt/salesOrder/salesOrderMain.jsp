@@ -51,7 +51,7 @@
 			        	{field:'salesWayName',title:'销售方式',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'fetchWayName',title:'交货方式',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'fetchAddrName',title:'交货地点',width:parseInt($(this).width()*0.1),sortable:true},
-			        	{field:'transitAheadTime',title:'运输提前期',width:parseInt($(this).width()*0.1)},
+			        	{field:'transitAheadTime',title:'交货日期',width:parseInt($(this).width()*0.1)},
 			        	{field:'settlementName',title:'结算方式',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'settlementDate',title:'结算日期',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'currencyName',title:'币别',width:parseInt($(this).width()*0.1)},
@@ -178,6 +178,47 @@
 		}
 	}
 	
+	function orderReview(){
+		var row = $dg.datagrid('getSelected');
+		if(row){
+			parent.$.modalDialog({
+				title: '订单评审',
+				width: 800,
+				height: 600,
+				href: 'view/salesMgmt/salesOrder/salesOrderReview.jsp',
+				onLoad: function(){
+					var $parentWindow = parent.$.modalDialog.handler;
+					//load form data
+					var $form = $parentWindow.find('#form');
+					$form.form('load', row);
+					
+					//load entry data
+					var $entry = $parentWindow.find('#dg');
+					$entry.datagrid('reload', {interId: row.interId});
+				},
+				buttons: [{
+					text: '保存',
+					iconCls: 'icon-save',
+					width: 80,
+					handler: function(){
+						var f = parent.$.modalDialog.handler.find('#form');
+						f.submit();
+					}
+				},{
+					text: '取消',
+					iconCls: 'icon-cancel',
+					width: 80,
+					handler: function(){
+						parent.$.modalDialog.handler.dialog('destroy');
+						parent.$.modalDialog.handler = undefined;
+					}
+				}]
+			});
+		}else{
+			$.erp.noSelectErr();
+		}
+	}
+	
 	function checkPending(){
 		$.erp.checkPending($dg);
 	}	
@@ -213,6 +254,9 @@
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOrderCommit">
 								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-datago" plain="true" onclick="commitSalesOrder();">提交</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="salOrderReview">
+								<a id="ReviewOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cstbase" plain="true" onclick="orderReview();">订单评审</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOrderExport">
 								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>

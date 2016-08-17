@@ -27,17 +27,17 @@
 			<artifactId>jackson-annotations</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-				<scope>provided</scope>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
-				<groupId>org.apache.struts</groupId>
-				<artifactId>struts2-json-plugin</artifactId>
-				<scope>provided</scope>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>

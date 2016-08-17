@@ -14,6 +14,8 @@ public class AppTest {
 	public void test(){
 		ProcessEngine processEngine = activitiRule.getProcessEngine();
 		
+		
+		
 		System.out.println(processEngine);
 	}
 }

@@ -18,9 +18,10 @@
 		var $auditForm = $('#auditForm');
 		var param = $auditForm.serialize();
 		var remark = $auditForm.find('#remark').val();
-		if(!remark){
+		//don't verify audit remark
+		/* if(!remark){
 			return false;
-		}
+		} */
 		$.erp.ajax(url, param, function(rsp){
 			if(rsp.status){
 				if($mainGrid){

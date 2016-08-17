@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cloud.erp.activiti.exception.FoundMoreGroupOrRoleException;
+import com.cloud.erp.activiti.exception.FoundMoreUserException;
 import com.cloud.erp.entities.table.Role;
 import com.cloud.erp.entities.table.User;
-import com.cloud.erp.exceptions.FoundMoreGroupOrRoleException;
-import com.cloud.erp.exceptions.FoundMoreUserException;
 
 @Service("identityManager")
 public class IdentityManager {

@@ -26,10 +26,10 @@ import com.cloud.erp.dao.common.GeneralDaoSupport;
 import com.cloud.erp.dao.common.MultiEntryDaoSupport;
 import com.cloud.erp.dao.common.ReferenceDao;
 import com.cloud.erp.dao.common.StatusFields;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.table.SalesContract;
 import com.cloud.erp.entities.table.SalesContractEntry;
 import com.cloud.erp.entities.table.SalesContractScheme;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 import com.cloud.erp.utils.PageUtil;
 
 /**

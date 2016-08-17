@@ -2,7 +2,7 @@ package com.cloud.erp.service.common;
 
 import java.util.List;
 
-import com.cloud.erp.exceptions.NumberIncrementException;
+import com.cloud.erp.dao.exception.NumberIncrementException;
 
 /**
  * Auto number interface

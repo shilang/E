@@ -23,11 +23,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.SalesOutStockNoticeDao;
+import com.cloud.erp.dao.exception.NumberIncrementException;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesOutStock;
 import com.cloud.erp.entities.table.SalesOutStockEntry;
-import com.cloud.erp.exceptions.NumberIncrementException;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 import com.cloud.erp.service.SalesOutStockNoticeService;
 import com.cloud.erp.service.common.AutoNumber;
 import com.cloud.erp.utils.Constants;

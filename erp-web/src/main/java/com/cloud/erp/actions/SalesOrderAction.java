@@ -93,6 +93,13 @@ public class SalesOrderAction extends BaseAction implements ModelDriven<SalesOrd
 		return RJSON;
 	}
 	
+	@Action("updateOrderReview")
+	public String updateOrderReview() throws Exception{
+		boolean result = salesOrderService.updateOrderReview(salesOrder.getInterId(), salesOrder.getReview());
+		JSONWriter(result);
+		return RJSON;
+	}
+	
 	@Action("delete")
 	public String delete() throws Exception{
 		boolean result = salesOrderService.deleteToUpdateAll(getId());

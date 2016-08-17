@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.cloud.erp.exceptions.NumberIncrementException;
+import com.cloud.erp.dao.exception.NumberIncrementException;
 
 @Service("autoNumber")
 public class AutoNumberSupport<T> extends NumberService<T> implements AutoNumber<T> {

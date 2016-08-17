@@ -22,6 +22,7 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,7 +41,7 @@ import com.cloud.erp.utils.Constants;
  * @date  2015年2月4日  下午4:55:28
  *
  */
-
+@Namespace("/")
 public class LoginAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;

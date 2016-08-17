@@ -24,11 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.SalesPriceListDao;
+import com.cloud.erp.dao.exception.NumberIncrementException;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesPriceList;
 import com.cloud.erp.entities.table.SalesPriceListEntry;
-import com.cloud.erp.exceptions.NumberIncrementException;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 import com.cloud.erp.service.SalesPriceListService;
 import com.cloud.erp.service.common.AutoNumber;
 import com.cloud.erp.service.report.ReportPOI;

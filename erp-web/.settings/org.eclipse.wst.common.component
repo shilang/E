@@ -7,7 +7,10 @@
         <dependent-module archiveName="erp-security-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-security/erp-security">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="erp-logging-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-logging/erp-logging">
+        <dependent-module archiveName="erp-servicefacade-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-servicefacade/erp-servicefacade">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="erp-workflow-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-workflow/erp-workflow">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="erp-service-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-service/erp-service">
@@ -20,15 +23,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="erp-entities-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-entities/erp-entities">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="erp-exceptions-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-exceptions/erp-exceptions">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="erp-servicefacade-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-servicefacade/erp-servicefacade">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="erp-workflow-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/erp-workflow/erp-workflow">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/erp-web/target/classes"/>

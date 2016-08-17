@@ -32,13 +32,13 @@ import com.cloud.erp.dao.common.GeneralDaoSupport;
 import com.cloud.erp.dao.common.ReferenceDao;
 import com.cloud.erp.dao.common.SingleEntryDaoSupport;
 import com.cloud.erp.dao.common.StatusFields;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesContract;
 import com.cloud.erp.entities.table.SalesContractEntry;
 import com.cloud.erp.entities.table.SalesOrder;
 import com.cloud.erp.entities.table.SalesPriceList;
 import com.cloud.erp.entities.table.SalesPriceListEntry;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 import com.cloud.erp.utils.PageUtil;
 
 /**
@@ -50,7 +50,7 @@ import com.cloud.erp.utils.PageUtil;
  */
 @Repository("salesOrderDao")
 public class SalesOrderDaoImpl implements SalesOrderDao {
-
+	
 	@Resource
 	private GeneralDaoSupport<SalesOrder> generalDao;
 	
@@ -89,6 +89,14 @@ public class SalesOrderDaoImpl implements SalesOrderDao {
 	@Override
 	public boolean persistence(SalesOrder master) throws Exception {
 		return generalDao.persistence(master, new StatusFields());
+	}
+	
+	@Override
+	public boolean updateOrderReview(Integer interId, String review) {
+		SalesOrder salesOrder = get(interId);
+		salesOrder.setReview(review);
+		update(salesOrder);
+		return true;
 	}
 
 	@Override
@@ -161,5 +169,4 @@ public class SalesOrderDaoImpl implements SalesOrderDao {
 	public boolean updateContractReference(String number, boolean mode) throws UpdateReferenceException {
 		return salesContractDao.updateReference(SalesContract.class, number, mode);
 	}
-
 }

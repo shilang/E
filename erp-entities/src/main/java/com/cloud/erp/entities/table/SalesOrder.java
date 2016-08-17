@@ -68,7 +68,7 @@ public class SalesOrder implements Serializable {
 	private Date fetchDate;
 	private Integer fetchAddr;
 	private String fetchAddrName;
-	private Integer transitAheadTime;
+	private Date transitAheadTime;
 	private Integer salesWay;
 	private String salesWayName;
 	private Integer salesScope;
@@ -89,6 +89,7 @@ public class SalesOrder implements Serializable {
 	private String explanation;
 	private String sourceType;
 	private String sourceBillNo;
+	private String review;
 	private Integer result;
 	private Integer cancellation;
 	private Integer children;
@@ -223,12 +224,14 @@ public class SalesOrder implements Serializable {
 		this.fetchAddrName = fetchAddrName;
 	}
 
+	@JsonSerialize(using = DateSerializer.class)
+	@JSON(format="yyyy-MM-dd")
 	@Column(name = "TRANSIT_AHEAD_TIME")
-	public Integer getTransitAheadTime() {
+	public Date getTransitAheadTime() {
 		return transitAheadTime;
 	}
 
-	public void setTransitAheadTime(Integer transitAheadTime) {
+	public void setTransitAheadTime(Date transitAheadTime) {
 		this.transitAheadTime = transitAheadTime;
 	}
 
@@ -422,6 +425,15 @@ public class SalesOrder implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	@Column(name = "REVIEW", length = 200)
+	public String getReview() {
+		return review;
+	}
+	
+	public void setReview(String review) {
+		this.review = review;
 	}
 	
 	@Column(name = "RESULT", columnDefinition = "INT default 0")

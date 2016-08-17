@@ -15,15 +15,10 @@
 	<name>erp-security</name>
 
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
+	
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>erp-logging</artifactId>
+			<artifactId>erp-servicefacade</artifactId>
 		</dependency>
 
 		<dependency>

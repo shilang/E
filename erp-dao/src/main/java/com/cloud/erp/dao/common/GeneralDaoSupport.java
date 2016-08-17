@@ -127,17 +127,12 @@ public class GeneralDaoSupport<M> extends UpdateStatus{
 	}
 
 	@SuppressWarnings("unchecked")
-	public boolean persistence(M master, StatusFields statusFields) {
-		try {
-			//update master
+	public boolean persistence(M master, StatusFields statusFields) throws Exception {
 			if(null == Reflect.invokeGetMethod(master, statusFields.getInterId())){
 				baseDao.save(updateEntityInfo(master, statusFields, OperType.create));
 			}else {
 				baseDao.update(updateEntityInfo(master, statusFields, OperType.update));
 			}
-		} catch (Exception e) {
-			return false;
-		}
 		return true;
 	}
 

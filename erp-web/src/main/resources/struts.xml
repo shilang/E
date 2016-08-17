@@ -1,6 +1,6 @@
 <!DOCTYPE struts PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
-	"http://struts.apache.org/dtds/struts-2.3.dtd">
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
 	
 <struts>
     <!-- 指定由spring负责action对象的创建 -->
@@ -46,20 +46,30 @@
    		</result-types>
    		
    		<interceptors>
+   			<!-- json interceptor -->
    			<interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"></interceptor>
-   			
+   			<!-- exception interceptor -->
+   			<interceptor name="exception" class="com.cloud.erp.interceptor.ExceptionInterceptor"></interceptor>
    			<!-- charset interceptor -->
-   			<interceptor name="encodingInterceptor" class="com.cloud.erp.interceptor.EncodingInterceptor"></interceptor>
+   			<interceptor name="encoding" class="com.cloud.erp.interceptor.EncodingInterceptor"></interceptor>
    			
    			<interceptor-stack name="hiStack">
-   				<interceptor-ref name="defaultStack"></interceptor-ref>
-   				<interceptor-ref name="encodingInterceptor"></interceptor-ref>
+   			 	<interceptor-ref name="exception"></interceptor-ref>
+   				<interceptor-ref name="encoding"></interceptor-ref>
    				<interceptor-ref name="json"></interceptor-ref>
+   				<interceptor-ref name="defaultStack"></interceptor-ref>
    			</interceptor-stack>
    		</interceptors>
    		
    		<default-interceptor-ref name="hiStack"></default-interceptor-ref>
    		
+   		<global-results>
+   			<result name="error" type="chain">
+   				<param name="actionName">error</param>
+   				<param name="namespace">/error</param>
+   			</result>
+   		</global-results>
+ 
    	</package>
    	
 </struts>

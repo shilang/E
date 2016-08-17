@@ -4,39 +4,41 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
+
 import com.cloud.erp.utils.PageUtil;
 
 public interface BaseDao<T> {
 
-	public Serializable save(T object);
+	public Serializable save(T object) throws HibernateException;
 
-	public void delete(T object);
+	public void delete(T object) throws HibernateException;
 
-	public void update(T object);
+	public void update(T object) throws HibernateException;
 
-	public void saveOrUpdate(T object);
+	public void saveOrUpdate(T object) throws HibernateException;
 
-	public T get(Class<T> clazz, Serializable id);
+	public T get(Class<T> clazz, Serializable id) throws HibernateException;
 
-	public T get(String hql, Map<String, Object> params);
+	public T get(String hql, Map<String, Object> params) throws HibernateException;
 
-	public List<?> findBySQL(String sql);
+	public List<?> findBySQL(String sql) throws HibernateException;
 	
-	public List<?> findBySQL(String sql, Map<String, Object> params);
+	public List<?> findBySQL(String sql, Map<String, Object> params) throws HibernateException;
 
-	public void deleteToUpdate(T object);
+	public void deleteToUpdate(T object) throws HibernateException;
 
-	public List<T> find(String hql);
+	public List<T> find(String hql) throws HibernateException;
 
-	public List<T> find(String hql, Map<String, Object> params);
+	public List<T> find(String hql, Map<String, Object> params) throws HibernateException;
 	
-	public List<T> find(String hql, Map<String, Object> params, PageUtil pageUtil);
+	public List<T> find(String hql, Map<String, Object> params, PageUtil pageUtil) throws HibernateException;
 
 	public List<T> find(String hql, Map<String, Object> params, Integer page,
-			Integer rows);
+			Integer rows) throws HibernateException;
 
-	public Long count(String hql, Map<String, Object> params);
+	public Long count(String hql, Map<String, Object> params) throws HibernateException;
 	
-	public int executeUpdate(String hql);
+	public int executeUpdate(String hql) throws HibernateException;
 
 }

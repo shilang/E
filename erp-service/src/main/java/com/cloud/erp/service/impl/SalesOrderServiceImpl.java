@@ -23,11 +23,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.SalesOrderDao;
+import com.cloud.erp.dao.exception.NumberIncrementException;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesOrder;
 import com.cloud.erp.entities.table.SalesOrderEntry;
-import com.cloud.erp.exceptions.NumberIncrementException;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 import com.cloud.erp.service.SalesOrderService;
 import com.cloud.erp.service.common.AutoNumber;
 import com.cloud.erp.utils.Constants;
@@ -113,6 +113,12 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 		
 		return true;
 	}
+	
+	@Override
+	public boolean updateOrderReview(Integer interId, String review) {
+		// TODO Auto-generated method stub
+		return salesOrderDao.updateOrderReview(interId, review);
+	}
 
 	@Override
 	public boolean deleteToUpdate(Integer pid) {
@@ -188,5 +194,5 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 			updateReferenceFor(number, mode);
 		}
 	}
-
+	
 }

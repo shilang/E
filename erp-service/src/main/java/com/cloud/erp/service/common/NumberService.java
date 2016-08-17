@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cloud.erp.dao.common.NumberSetDao;
+import com.cloud.erp.dao.exception.NumberIncrementException;
 import com.cloud.erp.entities.table.NumberSet;
-import com.cloud.erp.exceptions.NumberIncrementException;
 import com.cloud.erp.utils.Reflect;
 
 /**

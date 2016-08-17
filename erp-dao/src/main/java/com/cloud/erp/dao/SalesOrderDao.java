@@ -19,9 +19,9 @@ import java.util.List;
 import com.cloud.erp.dao.common.GeneralDao;
 import com.cloud.erp.dao.common.ReferenceDao;
 import com.cloud.erp.dao.common.SingleEntryDao;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesOrder;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 
 
 /**
@@ -35,6 +35,8 @@ public interface SalesOrderDao extends
 			GeneralDao<SalesOrder>,
 			SingleEntryDao<SalesOrder>,
 			ReferenceDao<SalesOrder>{
+	
+	boolean updateOrderReview(Integer interId, String review);
 	
 	List<SalesShareEntry> findContractEntriesById(Integer contractId);
 	

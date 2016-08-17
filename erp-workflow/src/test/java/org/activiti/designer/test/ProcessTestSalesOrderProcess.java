@@ -18,7 +18,7 @@ import com.cloud.erp.utils.Constants;
 
 public class ProcessTestSalesOrderProcess {
 
-	private String filename = "F:\\workspace\\cloud-erp\\erp-workflow\\src\\main\\resources\\diagrams\\salesOrderProcess.bpmn";
+	private String filename = "E:\\Develop\\OBTCloud\\cloud-erp\\erp-workflow\\src\\main\\resources\\diagrams\\sales-order-process\\sales-order-process.bpmn";
 
 	@Rule
 	public ActivitiRule activitiRule = new ActivitiRule();
@@ -29,13 +29,13 @@ public class ProcessTestSalesOrderProcess {
 	@Test
 	public void startProcess() throws Exception {
 		RepositoryService repositoryService = activitiRule.getRepositoryService();
-		repositoryService.createDeployment().addInputStream("salesOrderProcess.bpmn20.xml",
+		repositoryService.createDeployment().addInputStream("sales-order-process.bpmn20.xml",
 				new FileInputStream(filename)).deploy();
 		
 		RuntimeService runtimeService = activitiRule.getRuntimeService();
 		Map<String, Object> variables = new HashMap<>();
 		variables.put(Constants.AUDIT_MODEL, new AuditModel());
-		runtimeService.startProcessInstanceByKey("salesOrderProcess", variables);
+		runtimeService.startProcessInstanceByKey("sales-order-process", variables);
 
 		TaskService taskService = activitiRule.getTaskService();
 		

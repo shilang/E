@@ -20,8 +20,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cloud.erp.dao.exception.NumberIncrementException;
 import com.cloud.erp.entities.table.NumberSet;
-import com.cloud.erp.exceptions.NumberIncrementException;
 
 /**
  * @ClassName  NumberSetDaoImpl

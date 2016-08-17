@@ -3,7 +3,7 @@ package com.cloud.erp.dao.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cloud.erp.exceptions.UpdateReferenceException;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 
 @Repository("referenceDao")
 public class ReferenceDaoSupport<T> implements ReferenceDao<T> {

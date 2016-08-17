@@ -23,10 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.dao.SalesContractDao;
+import com.cloud.erp.dao.exception.NumberIncrementException;
 import com.cloud.erp.entities.table.SalesContract;
 import com.cloud.erp.entities.table.SalesContractEntry;
 import com.cloud.erp.entities.table.SalesContractScheme;
-import com.cloud.erp.exceptions.NumberIncrementException;
 import com.cloud.erp.service.SalesContractService;
 import com.cloud.erp.service.common.AutoNumber;
 import com.cloud.erp.utils.PageUtil;

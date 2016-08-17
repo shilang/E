@@ -2,7 +2,7 @@ package com.cloud.erp.service.common;
 
 import java.util.List;
 
-import com.cloud.erp.exceptions.UpdateReferenceException;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 
 /**
  * share entry service

@@ -59,42 +59,46 @@
 					<td>
 						<input id="fullName" name="fullName" class="easyui-textbox"/>
 					</td>
-					<th>国别地区</th>
+					<th>前缀代码</th>
 					<td>
-						<input id="region" name="region" class="easyui-textbox"/>
+						<input id="prefixCode" name="prefixCode" class="easyui-textbox" data-options="required:true"/>
 					</td>
 				</tr>
 				<tr>
+					<th>国别地区</th>
+					<td>
+						<input id="region" name="region" class="easyui-textbox" data-options="required:true"/>
+					</td>
 					<th>地址</th>
 					<td>
 						<input id="address" name="address" class="easyui-textbox" />
 					</td>
+				</tr>
+				<tr>
 					<th>电话</th>
 					<td>
 						<input id="phone" name="phone" class="easyui-textbox" />
 					</td>
-				</tr>
-				<tr>
 					<th>传真</th>
 					<td>
 						<input id="fax" name="fax" class="easyui-textbox" />
 					</td>
+				</tr>
+				<tr>
 					<th>邮箱</th>
 					<td>
 						<input id="email" name="email" class="easyui-textbox" data-options="required: true"/>
 					</td>
-				</tr>
-				<tr>
 					<th>主页</th>
 					<td>
 						<input id="homePage" name="homePage" class="easyui-textbox" />
 					</td>
+				</tr>
+				<tr>
 					<th>客户分类</th>
 					<td>
 						<input id="typeId" name="typeId" class="easyui-textbox" />
 					</td>
-				</tr>
-				<tr>
 					<th>销售方式</th>
 					<td>
 						<input id="saleMode" name="saleMode" class="easyui-textbox" />

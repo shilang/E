@@ -5,6 +5,7 @@ bin/
 target/
 Servers/
 lib/
-#[Tt]est*
+*[Tt]est/
 tempdata/
 tools/
+*[Tt]est/

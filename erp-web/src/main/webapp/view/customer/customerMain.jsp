@@ -21,9 +21,10 @@
 			border: false,
 			idField: 'customerId',
 			columns: [[
-				{field: 'number', title: '代码', width: parseInt($(this).width()* 0.05)},
+				{field: 'number', title: '代码', width: parseInt($(this).width()* 0.1)},
 				{field: 'name', title: '名称', width: parseInt($(this).width()* 0.1)},
 				{field: 'fullName', title: '全名', width: parseInt($(this).width()* 0.1)},
+				{field: 'prefixCode', title: '前缀代码', width: parseInt($(this).width()*0.1)},
 				{field: 'regionName', title: '国家', width: parseInt($(this).width()* 0.1)},
 				{field: 'typeName', title: '客户分类', width: parseInt($(this).width()*0.1)},
 				{field: 'salesModeName', title: '销售方式', width: parseInt($(this).width()*0.1)},

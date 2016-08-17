@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -24,31 +25,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	// TODO sessionFactory configuration
-	private Session getSession() {
+	private Session getSession() throws HibernateException{
 		return sessionFactory.getCurrentSession();
 		//return sessionFactory.openSession();
-	}
-
-	@Override
-	public Serializable save(T object) {
-		
-		return getSession().save(object);
-	}
-
-	@Override
-	public void delete(T object) {
-		getSession().delete(object);
-	}
-
-	@Override
-	public void update(T object) {
-		getSession().update(object);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public T get(Class<T> clazz, Serializable id) {
-		return (T) getSession().get(clazz, id);
 	}
 	
 	private Query createHqlQuery(String hql, Map<String, Object> params){
@@ -59,19 +38,41 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		return query;
 	}
 
+	@Override
+	public Serializable save(T object) throws HibernateException{
+		
+		return getSession().save(object);
+	}
+
+	@Override
+	public void delete(T object) throws HibernateException{
+		getSession().delete(object);
+	}
+
+	@Override
+	public void update(T object) throws HibernateException{
+		getSession().update(object);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> find(String hql, Map<String, Object> params) {
+	public T get(Class<T> clazz, Serializable id) throws HibernateException{
+		return (T) getSession().get(clazz, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> find(String hql, Map<String, Object> params) throws HibernateException{
 		return createHqlQuery(hql, params).list();
 	}
 
 	@Override
-	public List<?> findBySQL(String sql) {
+	public List<?> findBySQL(String sql) throws HibernateException{
 		return getSession().createSQLQuery(sql).list();
 	}
 	
 	@Override
-	public List<?> findBySQL(String sql, Map<String, Object> params){
+	public List<?> findBySQL(String sql, Map<String, Object> params) throws HibernateException{
 		SQLQuery sqlQuery = getSession().createSQLQuery(sql);
 		if(null != params && !params.isEmpty()){
 			sqlQuery.setProperties(params);
@@ -80,12 +81,12 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public void saveOrUpdate(T object) {
+	public void saveOrUpdate(T object) throws HibernateException{
 		getSession().saveOrUpdate(object);
 	}
 
 	@Override
-	public T get(String hql, Map<String, Object> params) {
+	public T get(String hql, Map<String, Object> params) throws HibernateException{
 		
 		List<T> list = this.find(hql, params);
 		if (list != null && list.size() > 0) {
@@ -96,14 +97,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public void deleteToUpdate(T object) {
+	public void deleteToUpdate(T object) throws HibernateException{
 		getSession().update(object);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> find(String hql, Map<String, Object> params, Integer page,
-			Integer rows) {
+			Integer rows) throws HibernateException{
 		Query q = createHqlQuery(hql, params);
 		if(null != page && null != rows){
 			if(page < 1){page = 1;}
@@ -115,7 +116,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	
 	@Override
 	public List<T> find(String hql, Map<String, Object> params,
-			PageUtil pageUtil) {
+			PageUtil pageUtil) throws HibernateException{
 		if(null == pageUtil){
 			pageUtil = new PageUtil();
 		}
@@ -123,18 +124,18 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public Long count(String hql, Map<String, Object> params) {
+	public Long count(String hql, Map<String, Object> params) throws HibernateException{
 		return (Long) createHqlQuery(hql, params).uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> find(String hql) {
+	public List<T> find(String hql) throws HibernateException{
 		return this.getSession().createQuery(hql).list();
 	}
 
 	@Override
-	public int executeUpdate(String hql) {
+	public int executeUpdate(String hql) throws HibernateException{
 		return this.getSession().createQuery(hql).executeUpdate();
 	}
 

@@ -47,6 +47,7 @@ public class Customer implements Serializable {
 	private String number;
 	private String name;
 	private String fullName;
+	private String prefixCode;
 	private Integer region;
 	private String regionName;
 	private String helpCode;
@@ -85,7 +86,7 @@ public class Customer implements Serializable {
 		this.customerId = customerId;
 	}
 
-	@Column(name = "NUMBER", length = 20)
+	@Column(name = "NUMBER", length = 20, unique = true, nullable = false)
 	public String getNumber() {
 		return number;
 	}
@@ -94,7 +95,7 @@ public class Customer implements Serializable {
 		this.number = number;
 	}
 
-	@Column(name = "NAME", length = 50)
+	@Column(name = "NAME", length = 50, unique = true, nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -110,6 +111,15 @@ public class Customer implements Serializable {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+	
+	@Column(name = "PREFIX_CODE", length = 20, unique = true, nullable = false)
+	public String getPrefixCode() {
+		return prefixCode;
+	}
+
+	public void setPrefixCode(String prefixCode) {
+		this.prefixCode = prefixCode;
 	}
 
 	@Column(name = "REGION")

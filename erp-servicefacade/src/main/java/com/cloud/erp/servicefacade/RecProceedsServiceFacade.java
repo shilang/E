@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.cloud.erp.activiti.ProcessManager;
 import com.cloud.erp.activiti.model.AuditModel;
+import com.cloud.erp.dao.exception.NumberIncrementException;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.RecProceeds;
 import com.cloud.erp.entities.table.RecProceedsEntry;
-import com.cloud.erp.exceptions.NumberIncrementException;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 import com.cloud.erp.service.RecProceedsService;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;

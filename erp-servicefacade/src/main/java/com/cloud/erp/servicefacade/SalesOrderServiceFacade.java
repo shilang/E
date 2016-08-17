@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.cloud.erp.activiti.ProcessManager;
 import com.cloud.erp.activiti.model.AuditModel;
+import com.cloud.erp.dao.exception.NumberIncrementException;
+import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesOrder;
 import com.cloud.erp.entities.table.SalesOrderEntry;
-import com.cloud.erp.exceptions.NumberIncrementException;
-import com.cloud.erp.exceptions.UpdateReferenceException;
 import com.cloud.erp.service.SalesOrderService;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
@@ -52,6 +52,11 @@ public class SalesOrderServiceFacade implements SalesOrderService{
 	@Override
 	public boolean persistence(SalesOrder master) throws Exception {
 		return salesOrderServiceImpl.persistence(master);
+	}
+	
+	@Override
+	public boolean updateOrderReview(Integer interId, String review) {
+		return salesOrderServiceImpl.updateOrderReview(interId, review);
 	}
 
 	@Override
@@ -126,5 +131,5 @@ public class SalesOrderServiceFacade implements SalesOrderService{
 			throws Exception {
 		return salesOrderServiceImpl.deleteToUpdateAll(pid);
 	}
-	
+
 }

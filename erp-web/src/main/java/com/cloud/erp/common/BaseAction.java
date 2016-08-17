@@ -97,13 +97,19 @@ public class BaseAction extends RequestParams implements Request, ActionAware {
 	}
 	
 	public Json getMessage(boolean flag) {
-		Json json = new Json();
+		String msg = "";
 		if (flag) {
-			json.setStatus(true);
-			json.setMessage("数据更新成功!");
+			msg = Constants.POST_DATA_SUCCESS;
 		} else {
-			json.setMessage("数据更新失败!");
-		}
+			msg = Constants.POST_DATA_FAIL;
+		}	
+		return getMessage(flag, msg);
+	}
+	
+	public Json getMessage(boolean flag, String msg){
+		Json json = new Json();
+		json.setStatus(flag);
+		json.setMessage(msg);
 		return json;
 	}
 	
@@ -146,6 +152,14 @@ public class BaseAction extends RequestParams implements Request, ActionAware {
 	 */
     public void JSONWriter(Json json){
     	JSONWriterGeneral(json);
+    }
+    
+    public void JSONWriterError(String errMsg){
+    	JSONWriter(getMessage(false, errMsg));
+    }
+    
+    public void JSONWriterSuccess(String succMsg){
+    	JSONWriter(getMessage(true, succMsg));
     }
     
     /**

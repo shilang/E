@@ -16,11 +16,7 @@
 	<name>erp-service</name>
 
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-
+	
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>erp-dao</artifactId>
