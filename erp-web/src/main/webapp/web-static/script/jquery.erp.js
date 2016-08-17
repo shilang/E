@@ -203,16 +203,31 @@
 		});
 	};
 	
-	$.fn.erpCustomer = function(){
+	$.fn.erpCustomer = function(jq){
 		return this.each(function(){
 			$(this).erpGrid({
 				url: 'customer/find.action',
 				idField: 'customerId',
+				editable: true,
 				columns: [[
 				           {field:'number', title:'代码',width:80},
 				           {field:'name',title:'名称',width:80},
+				           {field:'prefixCode',title:'前缀代码',width:80},
 				           {field:'region',title:'国家',width:90}
-				]]
+				]],
+				onSelect: function(index, row){
+					if(jq){
+						var date = new Date();
+						var y = date.getFullYear();
+						var m = date.getMonth() + 1;
+						var d = date.getDate();
+						y = y.toString().substring(2);
+						m = m.toString().length < 2 ? '0'+m:m;
+						d = d.toString().length < 2 ? '0'+d:d;
+						var suffix = y + m + d;
+						jq.textbox('setValue', row.prefixCode + suffix);
+					}
+				}
 			});
 		});
 	}

@@ -4,8 +4,7 @@
 	var $dg;
 	var $form;
 	var entry;
-	$(function(){
-		
+	$(function(){		
 			$form = $("#form");
 			$form.form({
 				url: 'salesPriceList/persistence.action',
@@ -53,7 +52,7 @@
 	
 	function init(){
 		$("#date").erpCurrDate();
-		$("#customerId").erpCustomer();
+		$("#customerId").erpCustomer($('#billNo'));
 		$("#currencyId").erpCurrency($("#exchangeRate"));
 		$("#employeeId").erpEmployee();
 		$("#managerId").erpEmployee();
@@ -110,7 +109,7 @@
 			<tr>
 				<th>编号</th>
 				<td>
-					<input id="billNo" name="billNo" class="easyui-textbox" data-options="required:true, editable:false"/>
+					<input id="billNo" name="billNo" class="easyui-textbox" data-options="required:true"/>
 				</td>
 				
 				<th>货币</th>

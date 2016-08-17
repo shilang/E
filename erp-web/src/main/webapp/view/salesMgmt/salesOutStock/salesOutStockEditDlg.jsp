@@ -21,8 +21,8 @@
 		var currArr = [
 		              {field:'quantity',title:'应发数量',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{editable:false}}},
 		              {field:'actualQuantity',title:'实发数量',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{required:true}}},
-		              {field:'price',title:'单价',width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{required:true,precision:2}}},
-		              {field:'amount',title:'金额',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{required:true,precision:2}}},
+		              {field:'price',title:'单价',hidden:true, width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{required:true,precision:2}}},
+		              {field:'amount',title:'金额',hidden:true,sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{required:true,precision:2}}},
 		              {field:'remark',title:'备注',width:parseInt($(this).width()*0.1),editor:'textbox'},
 		              {field:'stockId',title:'发货仓库',width:parseInt($(this).width()*0.1),editor:{type:"textbox",options:{editable:false}}},
 		              {field:'stockPlaceId',title:'仓位',width:parseInt($(this).width()*0.1),editor:{type:"textbox",options:{editable:false}}},
@@ -38,7 +38,7 @@
 			striped: true,
 			border: true,
 			singleSelect: true,
-			showFooter: true,
+			/* showFooter: true, */
 			idField: 'entryId',
 			columns: entryArr,
 			toolbar: '#tb',
@@ -181,10 +181,10 @@
 				</td>
 			</tr>
 			<tr>
-				<th>购货单位</th>
+				<!-- <th>购货单位</th>
 				<td>
 					<input id="customerId" name="customerId" class="easyui-textbox" data-options="required:true"/>
-				</td>
+				</td> -->
 				<th>销售方式</th>
 				<td>
 					<input id="salesWay" name="salesWay" class="easyui-textbox" data-options="required:true"/>

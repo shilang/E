@@ -49,7 +49,7 @@
 			        {field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'marketingWayName',title:'销售业务类型',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'salesWayName',title:'销售方式',width:parseInt($(this).width()*0.1),sortable:true},
-			        {field:'customerName',title:'购货单位',width:parseInt($(this).width()*0.1),sortable:true},
+			        /* {field:'customerName',title:'购货单位',width:parseInt($(this).width()*0.1),sortable:true}, */
 			        {field:'fetchAddrName',title:'交货地点',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'stockName',title:'发货仓库',width:parseInt($(this).width()*0.1)},
 			        {field:'settlementDate',title:'收款日期',width:parseInt($(this).width()*0.1),sortable:true},

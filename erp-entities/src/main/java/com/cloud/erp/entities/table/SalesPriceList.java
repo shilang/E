@@ -122,7 +122,7 @@ public class SalesPriceList implements Serializable {
 		this.customerName = customerName;
 	}
 
-	@Column(name = "BILL_NO", length = 20)
+	@Column(name = "BILL_NO", length = 20, unique = true, nullable = false)
 	public String getBillNo() {
 		return billNo;
 	}

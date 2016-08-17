@@ -123,7 +123,7 @@
 	function showDlg(title,iconCls,type,row,status){
 		
 		var viewPath = 'view/salesMgmt/salesPriceList/salesPriceListEditDlg.jsp';
-		var numMethod = "getSalesPriceListNumber";
+		var numMethod = '';//"getSalesPriceListNumber";
 		var processDefKey = "sales-pricelist-process-apply";
 		var entityName = "SalesPriceList";
 		
