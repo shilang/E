@@ -40,6 +40,8 @@ public interface SalesOrderService extends
 	
 	boolean updateOrderReview(Integer interId, String review);
 	
+	boolean updateOrderStatus(Integer interId, String status);
+	
 	boolean persistence(SalesOrder salesOrder, Map<String, List<SalesOrderEntry>> entries) throws Exception;
 	
 	boolean deleteToUpdateAll(Integer pid) throws Exception;

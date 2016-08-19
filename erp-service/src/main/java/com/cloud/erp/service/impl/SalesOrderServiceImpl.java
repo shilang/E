@@ -30,6 +30,7 @@ import com.cloud.erp.entities.table.SalesOrder;
 import com.cloud.erp.entities.table.SalesOrderEntry;
 import com.cloud.erp.service.SalesOrderService;
 import com.cloud.erp.service.common.AutoNumber;
+import com.cloud.erp.service.exception.BusinessStatusLimitedException;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
@@ -116,8 +117,22 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 	
 	@Override
 	public boolean updateOrderReview(Integer interId, String review) {
-		// TODO Auto-generated method stub
-		return salesOrderDao.updateOrderReview(interId, review);
+		 SalesOrder salesOrder = get(interId);
+		 salesOrder.setReview(review);
+		 update(salesOrder);
+		return true;
+	}
+	
+	@Override
+	public boolean updateOrderStatus(Integer interId, String status){
+		SalesOrder salesOrder = get(interId);
+		if(salesOrder.getResult() == Constants.RESULT_CHECK_OK){
+			salesOrder.setOrderStatus(status);
+			update(salesOrder);
+		}else {
+			throw new BusinessStatusLimitedException("订单未审核，不能改订单状态！");
+		}
+		return true;
 	}
 
 	@Override

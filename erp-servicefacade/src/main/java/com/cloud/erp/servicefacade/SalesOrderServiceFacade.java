@@ -58,6 +58,12 @@ public class SalesOrderServiceFacade implements SalesOrderService{
 	public boolean updateOrderReview(Integer interId, String review) {
 		return salesOrderServiceImpl.updateOrderReview(interId, review);
 	}
+	
+	@Override
+	public boolean updateOrderStatus(Integer interId, String status) {
+		return salesOrderServiceImpl.updateOrderStatus(interId, status);
+	}
+
 
 	@Override
 	public boolean deleteToUpdate(Integer pid) {
@@ -131,5 +137,4 @@ public class SalesOrderServiceFacade implements SalesOrderService{
 			throws Exception {
 		return salesOrderServiceImpl.deleteToUpdateAll(pid);
 	}
-
 }

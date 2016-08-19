@@ -91,6 +91,7 @@ public class SalesOrder implements Serializable {
 	private String sourceBillNo;
 	private String review;
 	private Integer result;
+	private String orderStatus;
 	private Integer cancellation;
 	private Integer children;
 	private String status;
@@ -443,6 +444,15 @@ public class SalesOrder implements Serializable {
 
 	public void setResult(Integer result) {
 		this.result = result;
+	}
+	
+	@Column(name = "ORDER_STATUS", length = 20)
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+	
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 	@Column(name = "CANCELLATION", columnDefinition = "INT default 0")

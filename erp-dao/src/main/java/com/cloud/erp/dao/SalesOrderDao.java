@@ -36,8 +36,6 @@ public interface SalesOrderDao extends
 			SingleEntryDao<SalesOrder>,
 			ReferenceDao<SalesOrder>{
 	
-	boolean updateOrderReview(Integer interId, String review);
-	
 	List<SalesShareEntry> findContractEntriesById(Integer contractId);
 	
 	List<SalesShareEntry> findPriceListEntriesById(Integer priceListId);

@@ -39,7 +39,7 @@
 			queryParams: queryParams,
 			idField: 'interId',
 			columns:[[
-						{field: 'result', title: '状态', width: parseInt($(this).width() * 0.06),
+						{field: 'result', title: '审核状态', width: parseInt($(this).width() * 0.06),
 							formatter:function(value, row){
 								var status = $.erp.getResultStatus(value);
 								return '<span style="color:'+status.color+';">' + status.msg + '</span>';
@@ -64,6 +64,7 @@
 			        	{field:'checkDate',title:'审核日期',width:parseInt($(this).width()*0.14),sortable:true},
 			        	{field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'sourceType',title:'源单类型',width:parseInt($(this).width()*0.1)},
+			        	{field:'orderStatus',title:'订单状态',width:parseInt($(this).width()*0.1)},
 			        	{field:'explanation',title:'摘要',width:parseInt($(this).width()*0.1)}
 			        ]],
 			toolbar: '#tb',
@@ -219,6 +220,25 @@
 		}
 	}
 	
+	function modifyOrderStatus(){
+		var status = $('#orderStatus').combobox('getValue');
+		if(status == 'empty'){
+			return;
+		}
+		var row = $dg.datagrid('getSelected');
+		if(row){
+			$.erp.ajax('salesOrder/updateOrderStatus.action',{interId:row.interId,orderStatus:status},function(rsp){
+				if(rsp.status){
+					$dg.datagrid('reload');
+					$dg.datagrid('selectRow', $dg.datagrid('getRowIndex', row));
+				}
+				$.erp.submitSuccess(rsp.title, rsp.message);
+			});
+		}else{
+			$.erp.noSelectErr();
+		}
+	}
+	
 	function checkPending(){
 		$.erp.checkPending($dg);
 	}	
@@ -255,14 +275,41 @@
 							<shiro:hasPermission name="salOrderCommit">
 								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-datago" plain="true" onclick="commitSalesOrder();">提交</a>
 							</shiro:hasPermission>
+						</td>
+						<td>
 							<shiro:hasPermission name="salOrderReview">
+								<div style="float: left;" class="datagrid-btn-separator" ></div>
 								<a id="ReviewOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cstbase" plain="true" onclick="orderReview();">订单评审</a>
 							</shiro:hasPermission>
+						</td>
+						<td>	
+							 <div style="float: left; margin-right:5px;" class="datagrid-btn-separator" ></div>
+							 <select id="orderStatus" name="orderStatus" class="easyui-combobox" >
+							 	<option value="empty">请选择</option>
+							 	<shiro:hasPermission name="salOrderStatusProduction">
+									<option value="已备料">已备料</option>
+									<option value="已排单">已排单</option>
+									<option value="生产中">生产中</option>
+									<option value="待确认">待确认</option>
+								</shiro:hasPermission>
+								<shiro:hasPermission name="salOrderStatusOut">
+									<option value="已备货">已备货</option>
+									<option value="已出货">已出货</option>
+								</shiro:hasPermission>
+								<shiro:hasPermission name="salOrderStatusCancel">
+									<option value="取消订单">取消订单</option>
+								</shiro:hasPermission>
+							 </select>
+							<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="modifyOrderStatus();">修改状态</a>
+						</td>
+						<td>
 							<shiro:hasPermission name="salOrderExport">
+								 <div style="float: left;" class="datagrid-btn-separator" ></div>
 								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
 							</shiro:hasPermission>
 						</td>
 						<td>
+							<div style="float: left; margin-right:5px;" class="datagrid-btn-separator" ></div>
 							<input id="searchbox">
 						</td>
 						<td>

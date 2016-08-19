@@ -90,14 +90,6 @@ public class SalesOrderDaoImpl implements SalesOrderDao {
 	public boolean persistence(SalesOrder master) throws Exception {
 		return generalDao.persistence(master, new StatusFields());
 	}
-	
-	@Override
-	public boolean updateOrderReview(Integer interId, String review) {
-		SalesOrder salesOrder = get(interId);
-		salesOrder.setReview(review);
-		update(salesOrder);
-		return true;
-	}
 
 	@Override
 	public boolean deleteToUpdate(Integer pid) {
@@ -169,4 +161,5 @@ public class SalesOrderDaoImpl implements SalesOrderDao {
 	public boolean updateContractReference(String number, boolean mode) throws UpdateReferenceException {
 		return salesContractDao.updateReference(SalesContract.class, number, mode);
 	}
+
 }
