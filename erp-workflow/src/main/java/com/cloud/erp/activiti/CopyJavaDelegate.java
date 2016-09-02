@@ -8,9 +8,4 @@ public class CopyJavaDelegate extends CopyServiceJavaDelegate{
 	public void doExecute(DelegateExecution execution) {
 		save();
 	}
-	
-	public static void main(String[] args) {
-		
-	}
-
 }
