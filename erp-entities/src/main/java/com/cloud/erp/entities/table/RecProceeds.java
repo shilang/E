@@ -58,6 +58,12 @@ public class RecProceeds implements Serializable {
 	private String currencyName;
 	private Double exchangeRate;
 	private Double amount;
+	private Double freightAmount;
+	private Double totalAmount;
+	private Double settleAmount;
+	private Double bankCost;
+	private Integer settleCurrency;
+	private String settleCurrencyName;
 	private String recType;
 	private String sourceType;
 	private String sourceBillNo;
@@ -233,6 +239,42 @@ public class RecProceeds implements Serializable {
 	public void setExchangeRate(Double exchangeRate) {
 		this.exchangeRate = exchangeRate;
 	}
+	
+	@Column(name = "SETTLE_AMOUNT")
+	public Double getSettleAmount() {
+		return settleAmount;
+	}
+
+	public void setSettleAmount(Double settleAmount) {
+		this.settleAmount = settleAmount;
+	}
+	
+	@Column(name = "BANK_COST")
+	public Double getBankCost() {
+		return bankCost;
+	}
+	
+	public void setBankCost(Double bankCost) {
+		this.bankCost = bankCost;
+	}
+	
+	@Column(name = "SETTLE_CURRENCY")
+	public Integer getSettleCurrency() {
+		return settleCurrency;
+	}
+	
+	public void setSettleCurrency(Integer settleCurrency) {
+		this.settleCurrency = settleCurrency;
+	}
+	
+	@Formula("(SELECT t.NAME FROM CURRENCY t WHERE t.CURRENCY_ID=SETTLE_CURRENCY)")
+	public String getSettleCurrencyName() {
+		return settleCurrencyName;
+	}
+	
+    public void setSettleCurrencyName(String settleCurrencyName) {
+		this.settleCurrencyName = settleCurrencyName;
+	}
 
 	@Column(name = "AMOUNT")
 	public Double getAmount() {
@@ -241,6 +283,24 @@ public class RecProceeds implements Serializable {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+	
+	@Column(name = "FREIGHT_AMOUNT")
+	public Double getFreightAmount() {
+		return freightAmount;
+	}
+	
+	public void setFreightAmount(Double freightAmount) {
+		this.freightAmount = freightAmount;
+	}
+	
+	@Column(name = "TOTAL_AMOUNT")
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+	
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 	@Column(name = "REC_TYPE", length = 20)

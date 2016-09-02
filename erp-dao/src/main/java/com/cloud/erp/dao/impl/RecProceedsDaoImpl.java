@@ -175,4 +175,17 @@ public class RecProceedsDaoImpl implements RecProceedsDao {
 		return salesContractDao.updateReference(SalesContract.class, number, mode);
 	}
 
+	@Override
+	public boolean updateSalesOrderRelatedAmount(RecProceeds recProceeds, String sourceBillNo) {
+		if(null == sourceBillNo || "".equals(sourceBillNo)){
+			return true;
+		}
+		SalesOrder salesOrder = salesOrderDao.findByBillNo(sourceBillNo);
+		salesOrder.setSettleAmount(recProceeds.getSettleAmount());
+		salesOrder.setBankCost(recProceeds.getBankCost());
+		salesOrder.setSettleCurrency(recProceeds.getSettleCurrency());
+		salesOrderDao.update(salesOrder);
+		return true;
+	}
+
 }

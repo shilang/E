@@ -86,9 +86,18 @@ public class SalesOrder implements Serializable {
 	private Integer settlementId;
 	private String settlementName;
 	private Date settlementDate;
+	private Double amount;
+	private Double settleAmount;
+	private Double totalAmount;
+	private Double bankCost;
+	private Integer settleCurrency;
+	private String settleCurrencyName;
 	private String explanation;
 	private String sourceType;
 	private String sourceBillNo;
+	private Double freightAmount;
+	private Integer tradeWay;
+	private String tradeWayName;
 	private String review;
 	private Integer result;
 	private String orderStatus;
@@ -391,6 +400,60 @@ public class SalesOrder implements Serializable {
 	public void setSettlementDate(Date settlementDate) {
 		this.settlementDate = settlementDate;
 	}
+	
+	@Column(name = "AMOUNT")
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	@Column(name = "SETTLE_AMOUNT")
+	public Double getSettleAmount() {
+		return settleAmount;
+	}
+
+	public void setSettleAmount(Double settleAmount) {
+		this.settleAmount = settleAmount;
+	}
+	
+	@Column(name = "TOTAL_AMOUNT")
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+	
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	@Column(name = "BANK_COST")
+	public Double getBankCost() {
+		return bankCost;
+	}
+
+	public void setBankCost(Double bankCost) {
+		this.bankCost = bankCost;
+	}
+
+	@Column(name = "SETTLE_CURRENCY")
+	public Integer getSettleCurrency() {
+		return settleCurrency;
+	}
+
+	public void setSettleCurrency(Integer settleCurrency) {
+		this.settleCurrency = settleCurrency;
+	}
+
+	@Formula("(SELECT t.NAME FROM CURRENCY t WHERE t.CURRENCY_ID=SETTLE_CURRENCY)")
+	public String getSettleCurrencyName() {
+		return settleCurrencyName;
+	}
+
+	public void setSettleCurrencyName(String settleCurrencyName) {
+		this.settleCurrencyName = settleCurrencyName;
+	}
 
 	@Column(name ="SOURCE_TYPE", length = 30)
 	public String getSourceType() {
@@ -399,6 +462,33 @@ public class SalesOrder implements Serializable {
 
 	public void setSourceType(String sourceType) {
 		this.sourceType = sourceType;
+	}
+	
+	@Column(name = "FREIGHT_AMOUNT")
+	public Double getFreightAmount() {
+		return freightAmount;
+	}
+
+	public void setFreightAmount(Double freightAmount) {
+		this.freightAmount = freightAmount;
+	}
+
+	@Column(name = "TRADE_WAY")
+	public Integer getTradeWay() {
+		return tradeWay;
+	}
+
+	public void setTradeWay(Integer tradeWay) {
+		this.tradeWay = tradeWay;
+	}
+
+	@Formula("(SELECT t.NAME FROM AUXILIARY_RES_MESSAGES t WHERE t.MESSAGE_ID=TRADE_WAY)")
+	public String getTradeWayName() {
+		return tradeWayName;
+	}
+
+	public void setTradeWayName(String tradeWayName) {
+		this.tradeWayName = tradeWayName;
 	}
 
 	@Column(name = "SOURCE_BILL_NO", length = 20)

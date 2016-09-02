@@ -1,14 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+
 <script type="text/javascript">
 	var $dg;
 	var $form;
+	var $amount;
+	var $freightAmount;
 	var entry;
 	var date;
 	var transitAheadTime;
 	
+	var salOrderShowPrice = false;
+	
 	 $(function(){
+		 
+		 initOtherPerm();
+		 
 		 transitAheadTime = $('#transitAheadTime');
+		 
+		 $amount = $('#amount');
+		 $freightAmount = $('#freightAmount');
 		 
 		$form = $("#form");
 		$form.form({
@@ -22,8 +34,8 @@
 		
 		var entryArr = [[]];
 		var currArr = [{field:'quantity',title:'数量',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{required:true}}},
-		               {field:'price',title:'单价',width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{precision:2,required:true}}},
-		               {field:'amount',title:'金额',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{precision:2,required:true}}},
+		               {field:'price',title:'单价',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{precision:2,required:true}}},
+		               {field:'amount',title:'金额',hidden:!salOrderShowPrice,sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{precision:2,required:true}}},
 		               {field:'date',title:'交货日期',width:parseInt($(this).width()*0.1),
 		            	   editor:{type:'datebox',options:{
 		            		   required:true,
@@ -45,6 +57,7 @@
 			striped: true,
 			border: true,
 			singleSelect: true,
+			nowrap: false,
 			showFooter: true,
 			idField: 'entryId',
 			columns: entryArr,
@@ -60,13 +73,14 @@
 		$("#customerId").erpCustomer();
 		$("#settlementDate").erpCurrDate();
 		$("#currencyId").erpCurrency($("#exchangeRate"));
-		$("#salesScope").erpResGrid({}, 9);
+		/* $("#salesScope").erpResGrid({}, 9); */
 		$("#settlementId").erpResGrid({}, 6);
 		$("#salesWay").erpResGrid({}, 7);
 		transitAheadTime.erpCurrDate();
 		$("#fetchWay").erpResGrid({}, 8);
 		$("#fetchAddr").erpResGrid({},10);
 		date = $("#date").erpCurrDate();
+		$('#tradeWay').erpResGrid({}, 15);
 		$("#managerId").erpEmployee();
 		$("#checker").erpEmployee();
 		$("#employeeId").erpEmployee();
@@ -119,7 +133,7 @@
 					width: 800,    
 					height: 600,    
 					closed: false,    
-					cache: false,  
+					cache: false,
 					content: iframe,
 					modal: true
 					});	
@@ -129,6 +143,35 @@
 				parent.$.modalDialog.dg = $dg;
 			}
 		});
+		
+		$freightAmount.numberbox({
+			onChange: function(newValue,oldValue){
+				updateTotalAmount();
+			}
+		});
+	}
+	
+	function updateAmount(){
+		var rows = $dg.datagrid('getFooterRows');
+		if(rows){
+			$amount.numberbox('setValue', rows[0].amount);
+		}
+		updateTotalAmount();
+	}
+	
+	function updateTotalAmount(){
+		var fAmount = $freightAmount.numberbox('getValue');
+		if(!fAmount){
+			fAmount = 0;
+		}
+		var totalAmount = parseInt(fAmount) + parseInt($amount.numberbox('getValue'));
+		$('#totalAmount').numberbox('setValue', totalAmount);
+	}
+	
+	function initOtherPerm(){
+		if($('#salOrderShowPrice').length > 0){
+			salOrderShowPrice = true;
+		}
 	}
 	
 	function gridRowTotal(index){
@@ -149,13 +192,20 @@
 		entry.rejectRows();
 	}
 	
+	function endEditing(){
+		entry.endEditing();
+		updateAmount();
+	}
+	
 	function onClickRow(index){
 		entry.onClickRow(index);
 		gridRowTotal(index);
+		updateAmount();
 	}
 	
 	function submit(entryRows){
 		entry.saveRows();
+		updateAmount();
 		return entry.submit(entryRows, $form);
 	}
 	
@@ -185,6 +235,15 @@
 		transitAheadTime.datebox('setValue', dateStr);
 	}
 	
+	function endEditBtn(visible){
+		var $endEditOper = $('#endEditOper');
+		if(visible){
+			$endEditOper.show();
+		}else{
+			$endEditOper.hide();
+		}
+	}
+	
 </script>
 
 <div class="dlgcontent">
@@ -194,52 +253,58 @@
 		<input id="status" name="status" type="hidden"/>
 		<table class="simple">
 			<tr>
-				<th>购货单位</th>
-				<td>
-					<input id="customerId" name="customerId" class="easyui-textbox" data-options="required:true"/>
-				</td>
-				<th>结算日期</th>
-				<td>
-					<input id="settlementDate" name="settlementDate" class="easyui-datebox" data-options="required:true"/>
-				</td>
 				<th>编号</th>
 				<td>
 					<input id="billNo" name="billNo" class="easyui-textbox" data-options="required:true,editable:false"/>
 				</td>
-			</tr>
-			<tr>
-				<th>销售范围</th>
-				<td>
-					<input id="salesScope" name="salesScope" class="easyui-textbox" data-options="required:true"/>
-				</td>
-				<th>结算方式</th>
-				<td>
-					<input id="settlementId" name="settlementId" class="easyui-textbox" data-options="required:true"/>
-				</td>
-				<th>币别</th>
-				<td>
-					<input id="currencyId" name="currencyId" class="easyui-textbox" data-options="required:true"/>
-				</td>
-			</tr>
-			<tr>
+				<shiro:hasPermission name="salOrderShowCust">
+					<th>购货单位</th>
+					<td>
+						<input id="customerId" name="customerId" class="easyui-textbox" data-options="required:true"/>
+					</td>
+				</shiro:hasPermission>
 				<th>销售方式</th>
 				<td>
 					<input id="salesWay" name="salesWay" class="easyui-textbox" data-options="required:true"/>
-				</td>
+				</td>	
+			</tr>
+			<tr>
+				<!-- <th>销售范围</th>
+				<td>
+					<input id="salesScope" name="salesScope" class="easyui-textbox" data-options="required:true"/>
+				</td> -->
+				<shiro:hasPermission name="salOrderShowPrice">
+					<th>结算日期</th>
+					<td>
+						<input id="settlementDate" name="settlementDate" class="easyui-datebox" data-options="required:true"/>
+					</td>
+					<th>结算方式</th>
+					<td>
+						<input id="settlementId" name="settlementId" class="easyui-textbox" data-options="required:true"/>
+					</td>
+					<th>币别</th>
+					<td>
+						<input id="currencyId" name="currencyId" class="easyui-textbox" data-options="required:true"/>
+					</td>
+				</shiro:hasPermission>
+			</tr>
+			<tr>
 				<th>交货日期</th> <!-- 由运输提前期更改 -->
 				<td>
 					<input id="transitAheadTime" name="transitAheadTime" class="easyui-datebox" data-options="required:true"/>
 				</td>
-				<th>汇率</th>
-				<td>
-					<input id="exchangeRate" name="exchangeRate" class="easyui-numberbox" data-options="required:true,precision:2"/>
-				</td>
-			</tr>
-			<tr>
 				<th>交货方式</th>
 				<td>
 					<input id="fetchWay" name="fetchWay" class="easyui-textbox" data-options="required:true"/>
 				</td>
+				<shiro:hasPermission name="salOrderShowPrice">
+					<th>汇率</th>
+					<td>
+						<input id="exchangeRate" name="exchangeRate" class="easyui-numberbox" data-options="required:true,precision:2"/>
+					</td>
+				</shiro:hasPermission>
+			</tr>
+			<tr>
 				<th>交货地点</th>
 				<td>
 					<input id="fetchAddr" name="fetchAddr" class="easyui-textbox" data-options="required:true"/>
@@ -248,20 +313,42 @@
 				<td>
 					<input id="explanation" name="explanation" class="easyui-textbox"/>
 				</td>
-			</tr>
-			<tr>
-				<th>源单类型</th>
-				<td>
-					<input id="sourceType" name="sourceType" class="easyui-combobox"/>
-				</td>
-				<th>选单号</th>
-				<td>
-					<input id="sourceBillNo" name="sourceBillNo" class="easyui-textbox"/>
-				</td>
 				<th>日期</th>
 				<td>
 					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
 				</td>
+			</tr>
+			<tr>
+				<shiro:hasPermission name="salOrderShowPrice">
+					<th>金额</th>
+					<td>
+						<input id="amount" name="amount" class="easyui-numberbox" data-options="required:true,editable:false,precision:2,value:0"/>
+					</td>
+					<th>源单类型</th>
+					<td>
+						<input id="sourceType" name="sourceType" class="easyui-combobox"/>
+					</td>
+					<th>选单号</th>
+					<td>
+						<input id="sourceBillNo" name="sourceBillNo" class="easyui-textbox"/>
+					</td>
+				</shiro:hasPermission>
+			</tr>
+			<tr>
+				<shiro:hasPermission name="salOrderShowPrice">
+					<th>货运金额</th>
+					<td>
+						<input id="freightAmount" name="freightAmount" class="easyui-numberbox" data-options="required:true,precision:2,value:0"/>
+					</td>
+					<th>贸易方式</th>
+					<td>
+						<input id="tradeWay" name="tradeWay" class="easyui-textbox" data-options="required:true"/>
+					</td>
+					<th>总金额</th>
+					<td>
+						<input id="totalAmount" name="totalAmount" class="easyui-numberbox" data-options="required:true,editable:false,precision:2,value:0"/>
+					</td>
+				</shiro:hasPermission>
 			</tr>
 			<tr>
 				<th>主管</th>
@@ -298,9 +385,12 @@
 					<table>
 						<tr>
 							<td>
-								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendRow();">添加</a>
-								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeRow();">删除</a>
-								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="rejectRows();">撤销</a>
+								<shiro:hasPermission name="salOrderShowPrice">
+									<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendRow();">添加</a>
+									<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeRow();">删除</a>
+									<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="rejectRows();">撤销</a>
+									<a id="endEditOper" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="endEditing();">结束编辑</a>
+								</shiro:hasPermission>
 							</td>
 						</tr>
 					</table>
@@ -308,4 +398,7 @@
 				<table id="dg" title="项目内容"></table>
 		</div>
 	</form>
+		<shiro:hasPermission name="salOrderShowPrice">
+			<label id="salOrderShowPrice"></label>
+		</shiro:hasPermission>
 </div>

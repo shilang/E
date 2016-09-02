@@ -9,9 +9,13 @@
 	var selSta = <%=request.getParameter("selSta")%>;
 	var $dg;
 	var $grid;
+	var salOrderShowCust = false;
+	var salOrderShowPrice = false;
+	
 	//var $entry;
 	var queryParams = {sort:'interId',order:'desc'};
 	$(function(){
+		
 		if(selSta){
 			$("#addOper").hide();
 			$("#updOper").hide();
@@ -24,6 +28,8 @@
 			$("#pendingOper").hide();
 			$.extend(queryParams, $.erp.searcher('result', $.erp.resultCheckOk, 'int'));
 		}
+		
+		initOtherPerm();
 		
 		$dg = $("#dg");
 		$grid = $dg.datagrid({
@@ -46,16 +52,23 @@
 						},sortable:true},
 			        	{field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},
-			        	{field:'customerName',title:'购货单位',width:parseInt($(this).width()*0.1),sortable:true},
-			        	{field:'salesScopeName',title:'销售范围',width:parseInt($(this).width()*0.1),sortable:true},
+			        	{field:'customerName',title:'购货单位', hidden:!salOrderShowCust,width:parseInt($(this).width()*0.1),sortable:true},
+			        /* 	{field:'salesScopeName',title:'销售范围',width:parseInt($(this).width()*0.1),sortable:true}, */
 			        	{field:'salesWayName',title:'销售方式',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'fetchWayName',title:'交货方式',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'fetchAddrName',title:'交货地点',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'transitAheadTime',title:'交货日期',width:parseInt($(this).width()*0.1)},
-			        	{field:'settlementName',title:'结算方式',width:parseInt($(this).width()*0.1),sortable:true},
-			        	{field:'settlementDate',title:'结算日期',width:parseInt($(this).width()*0.1),sortable:true},
-			        	{field:'currencyName',title:'币别',width:parseInt($(this).width()*0.1)},
-			        	{field:'exchangeRate',title:'汇率',width:parseInt($(this).width()*0.1)},
+			        	{field:'settlementName',title:'结算方式',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1),sortable:true},
+			        	{field:'settlementDate',title:'结算日期',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1),sortable:true},
+			        	{field:'currencyName',title:'币别',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
+			        	{field:'exchangeRate',title:'汇率',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
+			        	{field:'amount',title:'金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
+			        	{field:'freightAmount',title:'货运金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
+			        	{field:'tradeWayName',title:'贸易方式',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
+			        	{field:'totalAmount',title:'总金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
+			        	{field:'settleAmount',title:'结算金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
+			        	{field:'bankCost',title:'银行费用',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
+			        	{field:'settleCurrencyName',title:'结算币别',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
 			        	{field:'managerName',title:'主管',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'departmentName',title:'部门',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'employeeName',title:'业务员',width:parseInt($(this).width()*0.1),sortable:true},
@@ -120,6 +133,15 @@
 			parent.$.modalDialog.selDlg.dialog("destroy");
 		}else{
 			updateSalesOrderDlg();
+		}
+	}
+	
+	function initOtherPerm(){
+		if($('#salOrderShowCust').length > 0){
+			salOrderShowCust = true;
+		}
+		if($('#salOrderShowPrice').length > 0){
+			salOrderShowPrice = true;
 		}
 	}
 	
@@ -317,6 +339,14 @@
 								<a id="pendingOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
 							</shiro:hasPermission>
 							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="">高级查询</a>
+						</td>
+						<td>
+							<shiro:hasPermission name="salOrderShowCust">
+								<label id="salOrderShowCust"></label>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="salOrderShowPrice">
+								<label id="salOrderShowPrice"></label>
+							</shiro:hasPermission>
 						</td>
 					</tr>
 				</table>

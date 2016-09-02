@@ -16,6 +16,7 @@ package com.cloud.erp.dao.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Repository;
 import com.cloud.erp.dao.SalesContractDao;
 import com.cloud.erp.dao.SalesOrderDao;
 import com.cloud.erp.dao.SalesPriceListDao;
+import com.cloud.erp.dao.common.BaseDao;
 import com.cloud.erp.dao.common.GeneralDaoSupport;
 import com.cloud.erp.dao.common.ReferenceDao;
 import com.cloud.erp.dao.common.SingleEntryDaoSupport;
@@ -52,6 +54,9 @@ import com.cloud.erp.utils.PageUtil;
 public class SalesOrderDaoImpl implements SalesOrderDao {
 	
 	@Resource
+	private BaseDao<SalesOrder> baseDao;
+	
+	@Resource
 	private GeneralDaoSupport<SalesOrder> generalDao;
 	
 	@Resource
@@ -69,6 +74,14 @@ public class SalesOrderDaoImpl implements SalesOrderDao {
 	@Override
 	public List<SalesOrder> findAll(Map<String, Object> params, PageUtil pageUtil) {
 		return generalDao.findAll(this.getClass(), params, pageUtil);
+	}
+	
+	@Override
+	public SalesOrder findByBillNo(String billNo) {
+		String hql = "from SalesOrder t where t.billNo=:billNo";
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("billNo", billNo);
+		return baseDao.get(hql, param);
 	}
 
 	@Override

@@ -4,8 +4,13 @@
 	var $dg;
 	var $form;
 	var entry;
+	var $amount;
+	var $settleAmount;
 	$(function(){
-
+		
+		$amount = $('#amount');
+		$settleAmount = $('#settleAmount');
+		
 		$form = $('#form');
 		$form.form({
 			url: 'proceeds/persist',
@@ -37,6 +42,7 @@
 			triped: true,
 			border:true,
 			singleSelect: true,
+			nowrap: false,
 			showFooter: true,
 			idField: 'entryId',
 			columns: entryArr,
@@ -52,6 +58,7 @@
 		$("#customerId").erpCustomer();
 		$("#settleDate").erpCurrDate();
 		$("#currencyId").erpCurrency($("#exchangeRate"));
+		$('#settleCurrency').erpCurrency();
 		$("#settleId").erpResGrid({}, 6);
 		$("#salesWay").erpResGrid({}, 7);
 		$("#fetchAddr").erpResGrid({},10);
@@ -131,6 +138,14 @@
 		$.erp.gridRowTotal($dg,index,['settleQty','price'],'settleAmount','*');
 	}
 	
+	function updateAmount(){
+		var rows = $dg.datagrid('getFooterRows');
+		if(rows){
+			$amount.numberbox('setValue', rows[0].amount);
+			$settleAmount.numberbox('setValue', rows[0].settleAmount);
+		}
+	}
+	
 	function appendRow(){
 		entry.appendRow();
 		var index = $dg.datagrid('getRows').length - 1;
@@ -148,10 +163,12 @@
 	function onClickRow(index){
 		entry.onClickRow(index);
 		gridRowTotal(index);
+		updateAmount();
 	}
 	
 	function submit(entryRows){
 		entry.saveRows();
+		updateAmount();
 		return entry.submit(entryRows, $form);
 	}
 	
@@ -194,41 +211,23 @@
 				<td>
 					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
 				</td>
-	
 				<th>结算方式</th>
 				<td>
 					<input id="settleId" name="settleId" class="easyui-textbox" data-options="required:true"/>
 				</td>
-				<th>项目开户行</th>
-				<td>
-					<input id="custBank" name="custBank" class="easyui-textbox" data-options="required:false"/>
-				</td>
-			</tr>
-			<tr>
-				
 				<th>财务日期</th>
 				<td>
 					<input id="settleDate" name="settleDate" class="easyui-datebox" data-options="required:false"/>
 				</td>
-				
-				<th>结算号</th>
+			</tr>
+			<tr>	
+				<th>项目开户行</th>
 				<td>
-					<input id="settleNum" name="settleNum" class="easyui-textbox" data-options="required:false"/>
+					<input id="custBank" name="custBank" class="easyui-textbox" data-options="required:false"/>
 				</td>
-
 				<th>项目账号</th>
 				<td>
 					<input id="custBankNum" name="custBankNum" class="easyui-textbox" data-options="required:false"/>
-				</td>
-			</tr>
-			<tr>
-				<th>现金类科目</th>
-					<td>
-						<input id="cashSubject" name="cashSubject" class="easyui-textbox" data-options="required:false"/>
-			    </td>
-				<th>收款银行</th>
-				<td>
-					<input id="bank" name="bank" class="easyui-textbox" data-options="required:false"/>
 				</td>
 				<th>币别</th>
 				<td>
@@ -236,13 +235,17 @@
 				</td>
 			</tr>
 			<tr>
+				<!-- <th>现金类科目</th>
+					<td>
+						<input id="cashSubject" name="cashSubject" class="easyui-textbox" data-options="required:false"/>
+			    </td> -->
+				<th>收款银行</th>
+				<td>
+					<input id="bank" name="bank" class="easyui-textbox" data-options="required:false"/>
+				</td>
 				<th>账号</th>
 				<td>
 					<input id="bankNum" name="bankNum" class="easyui-textbox" data-options="required:false"/>
-				</td>
-				<th>单据金额</th>
-				<td>
-					<input id="amount" name="amount" class="easyui-numberbox" data-options="required:true,precision:2"/>
 				</td>
 				<th>汇率</th>
 				<td>
@@ -250,14 +253,42 @@
 				</td>
 			</tr>
 			<tr>
-				<th>收款类型</th>
+				<th>单据金额</th>
 				<td>
-					<!-- <input id="recType" name="recType" class="easyui-textbox" data-options="editable:false"/> -->
+					<input id="amount" name="amount" class="easyui-numberbox" data-options="required:true,editable:false,precision:2,value:0"/>
+				</td>
+				<th>货运金额</th>
+				<td>
+					<input id="freightAmount" name="freightAmount" class="easyui-numberbox" data-options="required:true,editable:false,precision:2,value:0"/>
+				</td>
+				<th>总金额</th>
+				<td>
+					<input id="totalAmount" name="totalAmount" class="easyui-numberbox" data-options="required:true,editable:false,precision:2,value:0"/>
+				</td>
+			</tr>
+			<tr>
+				<!-- <th>收款类型</th>
+				<td>
+					<input id="recType" name="recType" class="easyui-textbox" data-options="editable:false"/>
 					<select id="recType" name="recType" class="easyui-combobox" data-options="width:176,required:true">
 						<option selected="selected">转账</option>
 						<option>销售回款</option>
 					</select>
+				</td> -->
+				<th>实收金额</th>
+				<td>
+					<input id="settleAmount" name="settleAmount" class="easyui-numberbox" data-options="required:true,precision:2,value:0"/>
 				</td>
+				<th>银行费用</th>
+				<td>
+					<input id="bankCost" name="bankCost" class="easyui-numberbox" data-options="required:true,precision:2,value:0"/>
+				</td>
+				<th>实收币别</th>
+				<td>
+					<input id="settleCurrency" name="settleCurrency" class="easyui-textbox" data-options="required:true"/>
+				</td>
+			</tr>
+			<tr>
 				<th>源单类型</th>
 				<td>
 					<input id="sourceType" name="sourceType" class="easyui-combobox" />
@@ -266,13 +297,12 @@
 				<td>
 					<input id="sourceBillNo" name="sourceBillNo" class="easyui-textbox" />
 				</td>
-			</tr>
-			<tr>
 				<th>摘要</th>
 				<td>
 					<input id="explanation" name="explanation" class="easyui-textbox" data-options="required:false"/>
 				</td>
-				
+			</tr>
+			<tr>
 				<th>部门</th>
 				<td>
 					<input id=departmentId name="departmentId" class="easyui-combotree" data-options="required:true"/>
@@ -281,13 +311,12 @@
 				<td>
 					<input id="employeeId" name="employeeId" class="easyui-textbox" data-options="required:true"/>
 				</td>
-			</tr>
-			<tr>
 				<th>审核人</th>
 				<td>
 					<input id="checker" name="checker" class="easyui-textbox" data-options="editable:false"/>
 				</td>
-				
+			</tr>
+			<tr>
 				<th>审核日期</th>
 				<td>
 					<input id="checkDate" name="checkDate" class="easyui-textbox" data-options="editable:false"/>
@@ -296,8 +325,6 @@
 				<td>
 					<input id="creater" name="creater" class="easyui-combogrid" data-options="required:true"/>
 				</td>
-			</tr>
-			<tr>
 				<th>备注</th>
 				<td>
 					<input id="remark" name="remark" class="easyui-textbox"/>

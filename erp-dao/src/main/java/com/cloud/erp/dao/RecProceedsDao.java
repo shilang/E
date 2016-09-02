@@ -27,4 +27,6 @@ public interface RecProceedsDao
 	
 	boolean updateSalesConstractReference(String number, boolean mode) throws UpdateReferenceException;
 	
+	boolean updateSalesOrderRelatedAmount(RecProceeds recProceeds, String sourceBillNo);
+	
 }

@@ -37,6 +37,7 @@
 			striped: true,
 			border: true,
 			singleSelect: true,
+			nowrap: false,
 			idField: 'entryId',
 			columns: entryArr,
 		});

@@ -38,6 +38,7 @@
 			border: true,
 			striped: true,
 			singleSelect: true,
+			nowrap: false,
 			showFooter: true,
 			idField: 'entryId',
 			columns: entryArr,

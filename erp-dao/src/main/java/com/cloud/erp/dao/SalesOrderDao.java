@@ -36,6 +36,8 @@ public interface SalesOrderDao extends
 			SingleEntryDao<SalesOrder>,
 			ReferenceDao<SalesOrder>{
 	
+	SalesOrder findByBillNo(String billNo);
+	
 	List<SalesShareEntry> findContractEntriesById(Integer contractId);
 	
 	List<SalesShareEntry> findPriceListEntriesById(Integer priceListId);
