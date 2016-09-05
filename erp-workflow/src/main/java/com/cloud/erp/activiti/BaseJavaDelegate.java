@@ -53,5 +53,5 @@ public abstract class BaseJavaDelegate implements JavaDelegate{
 		doExecute(execution);
 	}
 	
-	public abstract void doExecute(DelegateExecution execution);
+	public abstract void doExecute(DelegateExecution execution) throws Exception;
 }
