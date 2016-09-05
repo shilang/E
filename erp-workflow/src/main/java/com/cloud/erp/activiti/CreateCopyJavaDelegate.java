@@ -2,7 +2,7 @@ package com.cloud.erp.activiti;
 
 import org.activiti.engine.delegate.DelegateExecution;
 
-public class CopyJavaDelegate extends CopyServiceJavaDelegate{
+public class CreateCopyJavaDelegate extends CreateCopyServiceJavaDelegate{
 
 	@Override
 	public void doExecute(DelegateExecution execution) {

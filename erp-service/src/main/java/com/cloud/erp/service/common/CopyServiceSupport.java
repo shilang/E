@@ -7,7 +7,7 @@ import com.cloud.erp.dao.common.BaseDao;
 
 @Service("copyService")
 public class CopyServiceSupport implements CopyService {
-
+	
 	@SuppressWarnings("rawtypes")
 	@Autowired
 	private BaseDao baseDao;
