@@ -2,27 +2,28 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	$(function(){
-		$("#form").form({
+		$("#resMessageForm").form({
 			url: 'auxiliaryResMessage/persist.action',
 			onSubmit: function(){
-				parent.$.messager.progress({
+				/* parent.$.messager.progress({
 					title: '提示',
 					msg: '数据处理中,请稍后...'
-				});
+				}); */
 				var isValid = $(this).form('validate');
-				if(!isValid){
+				/* if(!isValid){
 					parent.$.messager.progress('close');
-				}
+				} */
 				return isValid;
 			},
 			success: function(result){
-				parent.$.messager.progress('close');
+				//parent.$.messager.progress('close');
 				result = $.parseJSON(result);
 				if(result.status){
-					parent.$.modalDialog.openner.datagrid('reload');
-					parent.$.modalDialog.handler.dialog('close');
+					parent.$resWindow.openner.datagrid('reload');
+					parent.$resWindow.dialog('destroy');
+					parent.$resWindow = undefined;
 				}
-				parent.$.messager.show({
+				 parent.$.messager.show({
 					title: result.title,
 					msg: result.message,
 					timeout: 1000 * 2
@@ -33,7 +34,7 @@
 </script>
 
 <div style="padding: 30px;">
-	<form id="form" method="post">
+	<form id="resMessageForm" method="post">
 		<input id="messageId" name="messageId" type="hidden"/>
 		<input id="resId" name="resId" type="hidden" />
 		<input id="created" name="created" type="hidden" />

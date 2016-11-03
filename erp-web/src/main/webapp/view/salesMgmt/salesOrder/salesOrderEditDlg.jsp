@@ -10,6 +10,7 @@
 	var entry;
 	var date;
 	var transitAheadTime;
+	var fetchAddr = $("#fetchAddr");
 	
 	var salOrderShowPrice = false;
 	
@@ -78,7 +79,40 @@
 		$("#salesWay").erpResGrid({}, 7);
 		transitAheadTime.erpCurrDate();
 		$("#fetchWay").erpResGrid({}, 8);
-		$("#fetchAddr").erpResGrid({},10);
+		fetchAddr.erpResGrid({},10);
+		fetchAddr.combogrid({
+			buttonText:'+',
+			onClickButton: function(){
+				var $resWindow = $('<div/>').dialog({
+					title: '交货地点维护',
+					iconCls: 'icon-edit',
+					width: 500,
+					height: 500,
+					modal: true,
+					href:'view/auxiliaryRes/auxiliaryResMessage.jsp',
+					onLoad: function(){
+						var resId = 10;
+						$resWindow.find('#tempResId').val(resId);
+						setTimeout(function(){
+							$resWindow.find('#resdg').datagrid('load',{id:resId});
+						},100);
+					},
+					buttons:[{
+						text: '关闭',
+						iconCls: 'icon-cancel',
+						width: 80,
+						handler: function(){
+							$resWindow.dialog('destroy');
+						}
+					}]
+				});
+			},
+			onShowPanel: function(){
+				var g = fetchAddr.combogrid('grid');
+				g.datagrid('load',{resId:10});
+			}
+		});
+		
 		date = $("#date").erpCurrDate();
 		$('#tradeWay').erpResGrid({}, 15);
 		$("#managerId").erpEmployee();

@@ -135,11 +135,12 @@
 	$.fn.erpResGrid = function(options, resId){
 		  var _url = '';
 		  if(resId){
-			  _url = 'auxiliaryResAssign/findByTypeId.action?resId=' + resId;
+			  _url = 'auxiliaryResAssign/findByTypeId.action';
 		  }
 		   var opts = $.extend({
 				panelWidth: 280,
 				url: _url,
+				queryParams: {resId:resId},
 				idField: 'messageId',
 				textField: 'name',
 				editable: false,

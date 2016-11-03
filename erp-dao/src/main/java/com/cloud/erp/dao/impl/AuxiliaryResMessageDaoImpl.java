@@ -14,6 +14,7 @@
  */
 package com.cloud.erp.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,10 @@ public class AuxiliaryResMessageDaoImpl implements AuxiliaryResMessageDao {
 
 	@Override
 	public List<AuxiliaryResMessage> findAuxiliaryResMessages(Integer resId) {
+		if(resId == null){
+			return new ArrayList<AuxiliaryResMessage>();
+		}
+		
 		String hql = " from AuxiliaryResMessage t where t.status='A' and t.resId="
 				+ resId;
 		return baseDao.find(hql);
@@ -60,6 +65,10 @@ public class AuxiliaryResMessageDaoImpl implements AuxiliaryResMessageDao {
 
 	@Override
 	public Long getCount(Integer resId) {
+		if(resId == null){
+			return 0L;
+		}
+		
 		String hql = " select count(*) from AuxiliaryResMessage t where t.status='A' and t.resId="
 				+ resId;
 		return baseDao.count(hql, null);
