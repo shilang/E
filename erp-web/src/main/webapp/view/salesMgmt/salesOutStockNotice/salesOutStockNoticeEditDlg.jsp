@@ -50,7 +50,7 @@
 	});
 	
 	function init(){
-		$("#fetchAddr").erpResGrid({},10);
+		$("#fetchAddr").erpResGrid({},10,true);
 		$("#salesScope").erpResGrid({}, 9);
 		$("#salesWay").erpResGrid({}, 7);
 		$("#settlementId").erpResGrid({}, 6);

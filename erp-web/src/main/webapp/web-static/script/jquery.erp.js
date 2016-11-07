@@ -132,8 +132,9 @@
 		return status;
 	};
 	
-	$.fn.erpResGrid = function(options, resId){
+	$.fn.erpResGrid = function(options, resId, editable){
 		  var _url = '';
+		  var $this = $(this);
 		  if(resId){
 			  _url = 'auxiliaryResAssign/findByTypeId.action';
 		  }
@@ -149,7 +150,43 @@
 					{field: 'name', title: '名称', width: 150}
 				]]
 		   }, options);
-		
+		   
+		   if(editable){
+			   $.extend(opts, {
+					buttonText:'+',
+					onClickButton: function(){
+						var $resWindow = $('<div/>').dialog({
+							title: '交货地点维护',
+							iconCls: 'icon-edit',
+							width: 500,
+							height: 500,
+							modal: true,
+							href:'view/auxiliaryRes/auxiliaryResMessage.jsp',
+							onLoad: function(){
+								$resWindow.find('#tempResId').val(resId);
+								setTimeout(function(){
+									$resWindow.find('#resdg').datagrid('load',{id:resId});
+								},100);
+							},
+							buttons:[{
+								text: '关闭',
+								iconCls: 'icon-cancel',
+								width: 80,
+								handler: function(){
+									$resWindow.dialog('destroy');
+								}
+							}]
+						});
+					},
+					onShowPanel: function(){
+						setTimeout(function(){
+							var g = $this.combogrid('grid');
+							g.datagrid('load',{resId:resId});
+						},100);
+					}
+				});
+		   }
+		   	
 		return this.combogrid(opts);
 	};
 	
