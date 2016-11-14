@@ -25,7 +25,7 @@
 		var resId = $('#tempResId').val();
 		if(resId){
 			    parent.$resWindow = parent.$('<div/>').dialog({
-				title: '添加资源代码',
+				title: '添加',
 				width: 280,
 				height: 200,
 				modal: true,
@@ -68,7 +68,7 @@
 		var row = $grid.datagrid('getSelected');
 		if(row){
 			 parent.$resWindow = parent.$('<div/>').dialog({
-				title: '修改资源代码',
+				title: '修改',
 				width: 280,
 				height: 200,
 				modal: true,
@@ -106,7 +106,7 @@
 	function delResMessage(){
 		var row = $grid.datagrid('getSelected');
 		if(row){
-			parent.$.messager.confirm("提示","确定删除资源代码?",function(r){
+			parent.$.messager.confirm("提示","确定删除资源?",function(r){
 			if(r){
 				$.post("auxiliaryResMessage/delete.action",
 						{id: row.messageId},function(rsp){
@@ -132,9 +132,9 @@
 <input id="tempResId" type="hidden"/>
 
 <div id="restb">
-	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addResMessageDlg();">添加资源代码</a>
-	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateResMessageDlg();">编辑资源代码</a>
-	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="delResMessage();">删除资源代码</a>
+	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addResMessageDlg();">添加</a>
+	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateResMessageDlg();">编辑</a>
+	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="delResMessage();">删除</a>
 </div>
 				
 <table id="resdg" title=""></table>

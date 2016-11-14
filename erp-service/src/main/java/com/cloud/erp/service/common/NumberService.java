@@ -49,7 +49,10 @@ public abstract class NumberService<T> {
 	private int getClassIdFromNumber(String number) {
 		String prefix = number.substring(0, number.length() - 6);
 		NumberSet numberSet = numberSetDao.getNumberSet(prefix);
-		return numberSet.getClassId().intValue();
+		if(numberSet != null){
+			return numberSet.getClassId().intValue();
+		}
+		return -1;
 	}
 
 	public String getNumber(List<T> list){

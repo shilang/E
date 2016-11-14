@@ -164,7 +164,7 @@
 				<td>
 					<input id="fetchAddr" name="fetchAddr" class="easyui-textbox" data-options="required:true"/>
 				</td>
-				<th>销售范围</th>
+				<th>运输方式</th>
 				<td>
 					<input id="salesScope" name="salesScope" class="easyui-textbox" data-options="required:true"/>
 				</td>

@@ -78,7 +78,7 @@
 		$("#salesWay").erpResGrid({}, 7);
 		transitAheadTime.erpCurrDate();
 		$("#fetchWay").erpResGrid({}, 8);
-		$("#fetchAddr").erpResGrid({},10, true);
+		$("#fetchAddr").erpResGrid({},10, true,"交货地点");
 		date = $("#date").erpCurrDate();
 		$('#tradeWay').erpResGrid({},15);
 		$("#managerId").erpEmployee();
@@ -147,6 +147,23 @@
 		$freightAmount.numberbox({
 			onChange: function(newValue,oldValue){
 				updateTotalAmount();
+			}
+		});
+		
+		var attachMenu = $('#attachOper').menubutton({
+			menu:'#attachMM'
+		});
+		
+		$(attachMenu.menubutton('options').menu).menu({
+			onClick:function(item){
+				var id = item.id;
+				if(id == 'upload'){
+					$('#attachFile').trigger('click');
+				}else if(id == 'delete'){
+					
+				}else if(id == 'download'){
+					
+				}
 			}
 		});
 	}
@@ -378,8 +395,23 @@
 					<input id="creater" name="creater" class="easyui-combogrid" data-options="required:true" />
 				</td>
 			</tr>
+			<tr>
+				<th>附件</th>
+				<td>
+					<input id="attachName" name="attachName" class="easyui-textbox" data-options="editable:false" />
+					<input id="attachFile" name="attachFile" type="file" style="display:none;"/>
+				</td>
+				<td>
+					<a href="javascript:void(0)" id="attachOper">操作</a>
+					<div id="attachMM">
+						<div id="upload" data-options="iconCls:'icon-undo'">上传</div>    
+						<div id="delete" data-options="iconCls:'icon-undo'">删除</div>
+						<div class="menu-sep"></div>    
+						<div id="download" data-options="iconCls:'icon-redo'">下载</div>    
+					</div>
+				</td>
+			</tr>
 		</table>
-		
 		<div class="" style="margin-top: 12px;">
 				<div id="tb">
 					<table>

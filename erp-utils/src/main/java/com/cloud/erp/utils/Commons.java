@@ -182,7 +182,7 @@ public class Commons {
 			if("int".equals(searchType)){
 				newParams.put(searchName, Integer.valueOf(searchValue));
 			}else {
-				newParams.put(searchName, searchValue);
+				newParams.put(searchName, "%" + searchValue + "%");
 			}
 		}
 		return newParams;

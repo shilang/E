@@ -191,12 +191,11 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 	@Override
 	public void updateReferenceFor(String number, boolean mode)
 			throws UpdateReferenceException {
-		
-		if(isThisType(number, Constants.NUMBER_SALES_PRICE_LIST))
-		{
-			salesOrderDao.updatePriceListReference(number, mode);
-		}else if(isThisType(number, Constants.NUMBER_SALES_CONTRACT)){
+		//if(isThisType(number, Constants.NUMBER_SALES_PRICE_LIST))
+		if(isThisType(number, Constants.NUMBER_SALES_CONTRACT)){
 			salesOrderDao.updateContractReference(number, mode);
+		}else {
+			salesOrderDao.updatePriceListReference(number, mode);
 		}
 	}
 

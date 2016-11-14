@@ -132,7 +132,7 @@
 		return status;
 	};
 	
-	$.fn.erpResGrid = function(options, resId, editable){
+	$.fn.erpResGrid = function(options, resId, editable,title){
 		  var _url = '';
 		  var $this = $(this);
 		  if(resId){
@@ -156,7 +156,7 @@
 					buttonText:'+',
 					onClickButton: function(){
 						var $resWindow = $('<div/>').dialog({
-							title: '交货地点维护',
+							title: (title?title:'')+'维护',
 							iconCls: 'icon-edit',
 							width: 500,
 							height: 500,
@@ -781,6 +781,7 @@
 			iconCls: iconCls,
 			width: dlgWidth||800,
 			height: dlgHeight||600,
+			maximizable: true,
 			href: viewPath,
 			onLoad:function(){
 				if(parent.init){
