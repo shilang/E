@@ -178,7 +178,12 @@
 .icon-stop{
 	background:url('icons/stop.png') no-repeat center center;
 }
-
+.icon-upload{
+	background:url('icons/upload.png') no-repeat center center;
+}
+.icon-download{
+	background:url('icons/download.png') no-repeat center center;
+}
 .icon-mini-add{
 	background:url('icons/mini_add.png') no-repeat center center;
 }

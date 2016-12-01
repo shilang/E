@@ -204,6 +204,12 @@
 	function orderReview(){
 		var row = $dg.datagrid('getSelected');
 		if(row){
+			
+			function closeWindow(){
+				parent.$.modalDialog.handler.dialog('destroy');
+				parent.$.modalDialog.handler = undefined;
+			}
+			
 			parent.$.modalDialog({
 				title: '订单评审',
 				width: 800,
@@ -216,8 +222,18 @@
 					$form.form('load', row);
 					
 					//load entry data
-					var $entry = $parentWindow.find('#dg');
-					$entry.datagrid('reload', {interId: row.interId});
+					setTimeout(function(){
+						var $entry = $parentWindow.find('#reviewdg');
+						$entry.datagrid('reload', {interId: row.interId});
+					},100);
+					
+					// test getReviewNodeName ajax request.
+					setTimeout(function(){
+						var reviewFun = parent.review;
+						if(reviewFun){
+							reviewFun("${sessionScope.shiroUser.account}",row.procInstId);
+						}
+					}, 100);
 				},
 				buttons: [{
 					text: '保存',
@@ -226,14 +242,16 @@
 					handler: function(){
 						var f = parent.$.modalDialog.handler.find('#form');
 						f.submit();
+						setTimeout(function(){
+							closeWindow();
+						},100);
 					}
 				},{
 					text: '取消',
 					iconCls: 'icon-cancel',
 					width: 80,
 					handler: function(){
-						parent.$.modalDialog.handler.dialog('destroy');
-						parent.$.modalDialog.handler = undefined;
+						closeWindow();
 					}
 				}]
 			});

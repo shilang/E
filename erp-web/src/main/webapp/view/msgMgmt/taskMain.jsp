@@ -12,6 +12,7 @@
 	var _fystatus = '基本费用';
 	var _qstatus = '签收';
 	var _sstatus = '审核';
+	var _psstatus = '评审';
 	$(function(){
 		$dg = $('#dg');
 		$dg.datagrid({
@@ -52,6 +53,8 @@
 								}else{
 									status = _qstatus;
 								}
+							}else if(businessType == 'review'){
+								status = _psstatus;
 							}
 							return '<a class="operbtn" href="javascript:void(0);" >' + status + '</a>';
 						}else{
@@ -94,7 +97,74 @@
 			});
 		}else if(status == _fystatus){
 			amendTask(taskId, row.auditModel);
+		}else if(status == _psstatus){
+			reviewTask(row.auditModel);
 		}
+	}
+	
+	function reviewTask(auditModel){
+		var row = undefined;
+		var url = 'task/getEntity';
+		var params = {businessClass:auditModel.businessClass, businessKey:auditModel.businessKey};
+		$.when($.ajax({url:url,data:params})).done(function(data){		
+			row = data;
+		}).done(function(){
+			function closeWindow(){
+				parent.$.modalDialog.handler.dialog('destroy');
+				parent.$.modalDialog.handler = undefined;
+			}
+			parent.$.modalDialog({
+				title: '订单评审',
+				width: 800,
+				height: 600,
+				href: auditModel.path,
+				onLoad: function(){
+					var $parentWindow = parent.$.modalDialog.handler;
+					if(row){
+						//load form data
+						var $form = $parentWindow.find('#form');
+						$form.form('load', row);
+						
+						//load entry data
+						setTimeout(function(){
+							var $entry = $parentWindow.find('#reviewdg');
+							$entry.datagrid('reload', {interId: row.interId});
+						},100);
+						
+						// test getReviewNodeName ajax request.
+						setTimeout(function(){
+							var reviewFun = parent.review;
+							if(reviewFun){
+								reviewFun("${sessionScope.shiroUser.account}",row.procInstId);
+							}
+						}, 100);
+					}
+				},
+				buttons: [{
+					text: '保存',
+					iconCls: 'icon-save',
+					width: 80,
+					handler: function(){
+						var f = parent.$.modalDialog.handler.find('#form');
+						f.submit();
+						setTimeout(function(){
+							closeWindow();
+						},100);
+						setTimeout(function(){
+							$dg.datagrid('reload');
+						},500);
+					}
+				},{
+					text: '取消',
+					iconCls: 'icon-cancel',
+					width: 80,
+					handler: function(){
+						closeWindow();
+					}
+				}]
+			});
+			
+		});
 	}
 	
 	function amendTask(taskId, auditModel){

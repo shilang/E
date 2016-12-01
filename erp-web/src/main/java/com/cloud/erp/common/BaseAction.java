@@ -14,15 +14,8 @@
  */
 package com.cloud.erp.common;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +30,6 @@ import com.alibaba.fastjson.JSON;
 import com.cloud.erp.entities.viewmodel.GridModel;
 import com.cloud.erp.entities.viewmodel.Json;
 import com.cloud.erp.entities.viewmodel.RequestParams;
-import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 import com.opensymphony.xwork2.ActionSupport;
@@ -51,23 +43,16 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 
 @ParentPackage("default-package")
-@Results({@Result(name = "json", type = "json", params = {"root","jsonData"}),
-		  @Result(name = "download", type = "stream")})
+@Results({@Result(name = "json", type = "json", params = {"root","jsonData"})})
 public class BaseAction extends RequestParams implements Request, ActionAware {
 	
 	private static final long serialVersionUID = 1L;
-	
-	private static final String TMP = "/tmp";
 	
 	private final ActionSupport actionAware = new ActionSupport();
 	
 	private final RequestImpl request = new RequestImpl(); 
 	
     private Object jsonData;
-    
-    private String fileName;
-    
-    private String filePath;
     
     public BaseAction() {
 	}
@@ -78,22 +63,6 @@ public class BaseAction extends RequestParams implements Request, ActionAware {
 
 	public void setJsonData(Object jsonData) {
 		this.jsonData = jsonData;
-	}
-	
-	public void setFileName(String fileName) throws UnsupportedEncodingException {
-		this.fileName = new String(fileName.getBytes(), "utf-8");
-	}
-	
-	public String getFileName() {
-        return fileName;
-    } 
-	
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
-	
-	public String getFilePath(){
-		return filePath;
 	}
 	
 	public Json getMessage(boolean flag) {
@@ -241,18 +210,6 @@ public class BaseAction extends RequestParams implements Request, ActionAware {
 		out.close();
 	}
 	
-	public OutputStream getOutputStream() throws FileNotFoundException{
-		
-		String filePath = ServletActionContext.getServletContext().getRealPath(TMP) 
-				+ "/" + Commons.getRandomFileName();
-		setFilePath(filePath);
-		return new FileOutputStream(new File(getFilePath()));
-	}
-	
-	public InputStream getInputStream() throws IOException{
-		return new FileInputStream(new File(getFilePath())); 	
-    } 
-
 	@Override
 	public String execute() throws Exception {
 		return actionAware.execute();

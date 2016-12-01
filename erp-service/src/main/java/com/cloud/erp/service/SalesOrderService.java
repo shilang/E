@@ -38,7 +38,10 @@ public interface SalesOrderService extends
 	SingleEntryService<SalesOrder>,
 	ShareEntryService<SalesShareEntry, SalesOrderEntry>{
 	
-	boolean updateOrderReview(Integer interId, String review);
+	String getCurrTaskDefKey(String userId, String processInstanceId);
+	
+	boolean updateOrderReview(String segment, Integer interId, String review,
+			String ckreview, String cgreview, String processInstanceId, String taskDefKey);
 	
 	boolean updateOrderStatus(Integer interId, String status);
 	

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cloud.erp.activiti.ProcessManager;
+import com.cloud.erp.activiti.TaskManager;
 import com.cloud.erp.activiti.model.AuditModel;
 import com.cloud.erp.dao.exception.NumberIncrementException;
 import com.cloud.erp.dao.exception.UpdateReferenceException;
@@ -27,6 +28,9 @@ public class SalesOrderServiceFacade implements SalesOrderService{
 	
 	@Autowired
 	private ProcessManager processManager;
+	
+	@Autowired
+	private TaskManager taskManager;
 
 	@Override
 	public List<SalesOrder> findAll(Map<String, Object> params,
@@ -55,8 +59,15 @@ public class SalesOrderServiceFacade implements SalesOrderService{
 	}
 	
 	@Override
-	public boolean updateOrderReview(Integer interId, String review) {
-		return salesOrderServiceImpl.updateOrderReview(interId, review);
+	public boolean updateOrderReview(String segment, Integer interId, String review,
+			String ckreview, String cgreview, String processInstanceId, String taskDefKey) {
+		 if(null != segment && !"".equals(segment)){
+			 salesOrderServiceImpl.updateOrderReview(segment, interId, review,
+						ckreview, cgreview, null, null);
+			 String taskId = taskManager.getTaskIdByProcInstIdAndDefKey(processInstanceId, taskDefKey);
+			 taskManager.submitTask(taskId);
+		 }
+		 return true;
 	}
 	
 	@Override
@@ -136,5 +147,10 @@ public class SalesOrderServiceFacade implements SalesOrderService{
 	public boolean deleteToUpdateAll(Integer pid)
 			throws Exception {
 		return salesOrderServiceImpl.deleteToUpdateAll(pid);
+	}
+
+	@Override
+	public String getCurrTaskDefKey(String userId, String processInstanceId) {
+		return taskManager.getTaskDefKeyByCandidateOrAssigned(userId, processInstanceId);
 	}
 }

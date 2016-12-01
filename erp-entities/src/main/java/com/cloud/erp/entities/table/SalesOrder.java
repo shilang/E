@@ -99,6 +99,14 @@ public class SalesOrder implements Serializable {
 	private Integer tradeWay;
 	private String tradeWayName;
 	private String review;
+	private Date reviewDate;
+	private String ckreview;
+	private Date ckReviewDate;
+	private String cgreview;
+	private Date cgreviewDate;
+	private String attach;
+	private String attachSaveAs;
+	private String attachExt;
 	private Integer result;
 	private String orderStatus;
 	private Integer cancellation;
@@ -527,6 +535,60 @@ public class SalesOrder implements Serializable {
 		this.review = review;
 	}
 	
+	@Column(name = "CKREVIEW", length = 200)
+	public String getCkreview() {
+		return ckreview;
+	}
+
+	public void setCkreview(String ckreview) {
+		this.ckreview = ckreview;
+	}
+
+	@Column(name = "CGREVIEW", length = 200)
+	public String getCgreview() {
+		return cgreview;
+	}
+
+	public void setCgreview(String cgreview) {
+		this.cgreview = cgreview;
+	}
+	
+	@JsonSerialize(using = DateTimeSerializer.class)
+	@JSON(format="yyyy-MM-dd HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "REVIEW_DATE")
+	public Date getReviewDate() {
+		return reviewDate;
+	}
+
+	public void setReviewDate(Date reviewDate) {
+		this.reviewDate = reviewDate;
+	}
+
+	@JsonSerialize(using = DateTimeSerializer.class)
+	@JSON(format="yyyy-MM-dd HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CKREVIEW_DATE")
+	public Date getCkReviewDate() {
+		return ckReviewDate;
+	}
+
+	public void setCkReviewDate(Date ckReviewDate) {
+		this.ckReviewDate = ckReviewDate;
+	}
+
+	@JsonSerialize(using = DateTimeSerializer.class)
+	@JSON(format="yyyy-MM-dd HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CGREVIEW_DATE")
+	public Date getCgreviewDate() {
+		return cgreviewDate;
+	}
+
+	public void setCgreviewDate(Date cgreviewDate) {
+		this.cgreviewDate = cgreviewDate;
+	}
+
 	@Column(name = "RESULT", columnDefinition = "INT default 0")
 	public Integer getResult() {
 		return result;
@@ -536,6 +598,33 @@ public class SalesOrder implements Serializable {
 		this.result = result;
 	}
 	
+	@Column(name = "ATTACH", length = 100)
+	public String getAttach() {
+		return attach;
+	}
+
+	public void setAttach(String attach) {
+		this.attach = attach;
+	}
+
+	@Column(name = "ATTACH_SAVE_AS", length = 100)
+	public String getAttachSaveAs() {
+		return attachSaveAs;
+	}
+
+	public void setAttachSaveAs(String attachSaveAs) {
+		this.attachSaveAs = attachSaveAs;
+	}
+
+	@Column(name = "ATTACH_EXT", length = 3)
+	public String getAttachExt() {
+		return attachExt;
+	}
+
+	public void setAttachExt(String attachExt) {
+		this.attachExt = attachExt;
+	}
+
 	@Column(name = "ORDER_STATUS", length = 20)
 	public String getOrderStatus() {
 		return orderStatus;

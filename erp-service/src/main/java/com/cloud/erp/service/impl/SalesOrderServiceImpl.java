@@ -14,6 +14,7 @@
  */
 package com.cloud.erp.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -116,10 +117,23 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 	}
 	
 	@Override
-	public boolean updateOrderReview(Integer interId, String review) {
-		 SalesOrder salesOrder = get(interId);
-		 salesOrder.setReview(review);
-		 update(salesOrder);
+	public boolean updateOrderReview(String segment, Integer interId, String review,
+			String ckreview, String cgreview, String processInstanceId, String taskDefKey) {
+		 if(null != segment && !"".equals(segment)){
+			 Date currTime = new Date();
+			 SalesOrder salesOrder = get(interId);
+			 if("review".equals(segment)){
+				 salesOrder.setReview(review);
+				 salesOrder.setReviewDate(currTime);
+			 }else if("ckreview".equals(segment)){
+				 salesOrder.setCkreview(ckreview);
+				 salesOrder.setCkReviewDate(currTime);
+			 }else if("cgreview".equals(segment)){
+				 salesOrder.setCgreview(cgreview);
+				 salesOrder.setCgreviewDate(currTime); 
+			 } 
+			 update(salesOrder);
+		 }
 		return true;
 	}
 	
@@ -208,5 +222,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 			updateReferenceFor(number, mode);
 		}
 	}
-	
+
+	@Override
+	public String getCurrTaskDefKey(String userId, String processInstanceId) {
+		return null;
+	}
 }

@@ -103,8 +103,21 @@ public class TaskManager {
 		return taskCandidateOrAssignedQuery(userId).count();
 	}
 	
+	public String getTaskDefKeyByCandidateOrAssigned(String userId, String processInstanceId){
+		Task task = taskCandidateOrAssignedQuery(userId).processInstanceId(processInstanceId).singleResult();
+		String taskDefKey = "";
+		if(task != null){
+			taskDefKey = task.getTaskDefinitionKey();
+		}
+		return taskDefKey;
+	}
+	
 	public void signedTask(String taskId, String userId){
 		taskService.claim(taskId, userId);
+	}
+	
+	public void submitTask(String taskId){
+		taskService.complete(taskId);
 	}
 	
 	public void submitTask(String taskId, AuditModel auditModel){

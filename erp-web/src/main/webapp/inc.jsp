@@ -10,6 +10,7 @@
 <meta http-equiv="Expires" content="0">
 
 <script type="text/javascript" src="web-static/script/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="web-static/script/common.js" ></script>
 <link href="web-static/style/common.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />

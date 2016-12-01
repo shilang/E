@@ -37,10 +37,10 @@
 	
 	//show message
 	$.extend($.erp,{
-		submitErr: function(){
+		submitErr: function(vTitle, vMsg){
 			parent.$.messager.show({
-				title: $.erp.hint,
-				msg: $.erp.submitErrMsg,
+				title: vTitle==undefined ? $.erp.hint:vTitle,
+				msg: vMsg==undefined?$.erp.submitErrMsg:vMsg,
 				timeout: $.erp.showTimeout
 			});
 		},

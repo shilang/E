@@ -47,12 +47,49 @@ public class SalesOrderAction extends BaseAction implements ModelDriven<SalesOrd
 	private SalesOrder salesOrder;
 	private String entryType;
 	
+	private String segment;
+	private String userId;
+	private String processInstanceId;
+	private String taskDefKey;
+	
 	public String getEntryType() {
 		return entryType;
 	}
 
 	public void setEntryType(String entryType) {
 		this.entryType = entryType;
+	}
+
+	public String getSegment() {
+		return segment;
+	}
+	
+	public void setSegment(String segment) {
+		this.segment = segment;
+	}
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
+
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+	
+	public void setTaskDefKey(String taskDefKey) {
+		this.taskDefKey = taskDefKey;
+	}
+	
+	public String getTaskDefKey() {
+		return taskDefKey;
 	}
 
 	@Override
@@ -70,6 +107,13 @@ public class SalesOrderAction extends BaseAction implements ModelDriven<SalesOrd
 		PageUtil pageUtil = getPageUtil();
 		JSONWriter(salesOrderService.findAll(params, pageUtil), 
 				salesOrderService.getCount(params));
+		return RJSON;
+	}
+	
+	@Action("findById")
+	public String findById() throws Exception{
+		SalesOrder salesOrder = salesOrderService.get(getId());
+		JSONWriterGeneral(salesOrder);
 		return RJSON;
 	}
 	
@@ -93,9 +137,18 @@ public class SalesOrderAction extends BaseAction implements ModelDriven<SalesOrd
 		return RJSON;
 	}
 	
+	@Action("getReviewSegment")
+	public String getReviewSegment() throws Exception{
+		String taskDefKey = salesOrderService.getCurrTaskDefKey(getUserId(), getProcessInstanceId());
+		JSONWriterSuccess(taskDefKey);
+		return RJSON;
+	}
+	
 	@Action("updateOrderReview")
 	public String updateOrderReview() throws Exception{
-		boolean result = salesOrderService.updateOrderReview(salesOrder.getInterId(), salesOrder.getReview());
+		boolean result = salesOrderService.updateOrderReview(getSegment(),  salesOrder.getInterId(), 
+				salesOrder.getReview(), salesOrder.getCkreview(),salesOrder.getCgreview(), 
+				getProcessInstanceId(), getTaskDefKey() );
 		JSONWriter(result);
 		return RJSON;
 	}

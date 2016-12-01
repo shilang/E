@@ -158,7 +158,14 @@
 			onClick:function(item){
 				var id = item.id;
 				if(id == 'upload'){
-					$('#attachFile').trigger('click');
+					var vFileEleId = $('input[name="attach"]').attr('id');
+					var vAttachSaveAs = $('#billNo').textbox('getValue');
+					var vAttachName = $('#attach').filebox('getText');
+					if(vAttachSaveAs && vAttachName){
+						var vAttachExt = getFileExt(vAttachName);
+						initAttachParams(vAttachSaveAs,vAttachExt);
+						ajaxFileUpload(vFileEleId, vAttachSaveAs, vAttachExt);
+					}
 				}else if(id == 'delete'){
 					
 				}else if(id == 'download'){
@@ -166,6 +173,36 @@
 				}
 			}
 		});
+	}
+	
+	function initAttachParams(saveAs, ext){
+		$('#attachSaveAs').val(saveAs);
+		$('#attachExt').val(ext);
+	}
+	
+	function ajaxFileUpload(vFileEleId, vAttachSaveAs, vAttachExt) {
+		
+		$.messager.progress({
+			title: '提示',
+			msg: '正在上传...'
+		});
+		
+	    $.ajaxFileUpload({
+	            url: 'file/upload.action', //用于文件上传的服务器端请求地址
+	            data: {attachSaveAs:vAttachSaveAs,attachExt:vAttachExt},
+	            secureuri: false, //是否需要安全协议，一般设置为false
+	            fileElementId: vFileEleId, //文件上传域的ID
+	            dataType: 'json', //返回值类型 一般设置为json
+	            success: function (data, status){   //服务器成功响应处理函数
+	            	$.messager.progress('close');
+	            	$.erp.submitSuccess(data.title,data.message);
+	            },
+	            error: function (data, status, e){ //服务器响应失败处理函数
+	                $.erp.submitErr('错误',e);
+	            }
+	        }
+	    )
+	    return false;
 	}
 	
 	function updateAmount(){
@@ -268,6 +305,8 @@
 		<input id="interId" name="interId" type="hidden"/>
 		<input id="created" name="created" type="hidden"/>
 		<input id="status" name="status" type="hidden"/>
+		<input id="attachSaveAs" name="attachSaveAs" type="hidden" />
+		<input id="attachExt" name="attachExt" type="hidden" />
 		<table class="simple">
 			<tr>
 				<th>编号</th>
@@ -398,16 +437,15 @@
 			<tr>
 				<th>附件</th>
 				<td>
-					<input id="attachName" name="attachName" class="easyui-textbox" data-options="editable:false" />
-					<input id="attachFile" name="attachFile" type="file" style="display:none;"/>
+					<input id="attach" name="attach" class="easyui-filebox" data-options="buttonText:'添加'" style="width:176px;" />
 				</td>
 				<td>
 					<a href="javascript:void(0)" id="attachOper">操作</a>
 					<div id="attachMM">
-						<div id="upload" data-options="iconCls:'icon-undo'">上传</div>    
-						<div id="delete" data-options="iconCls:'icon-undo'">删除</div>
+						<div id="upload" data-options="iconCls:'icon-upload'">上传</div>    
+						<div id="delete" data-options="iconCls:'icon-remove'">删除</div>
 						<div class="menu-sep"></div>    
-						<div id="download" data-options="iconCls:'icon-redo'">下载</div>    
+						<div id="download" data-options="iconCls:'icon-download'">下载</div>    
 					</div>
 				</td>
 			</tr>

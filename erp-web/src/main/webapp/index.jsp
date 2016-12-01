@@ -6,6 +6,7 @@
 <title>欧比特云ERP</title>
 <jsp:include page="euinc.jsp"></jsp:include>
 <script type="text/javascript" src="web-static/script/menu.js"></script>
+<script type="text/javascript" src="web-static/script/ajaxfileupload.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$('body').load('layout/main.jsp',null, function(){

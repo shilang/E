@@ -84,13 +84,13 @@ public class SalesPriceListAction extends BaseAction implements
 		return RJSON;
 	}
 	
-	@Action("exportExcel")
+	/*@Action("exportExcel")
 	public String exportExcel() throws Exception{
 		String fileName = salesPriceListService.exportExcel(salesPriceListService.findAll(null, null), 
 				getOutputStream());
 		setFileName(fileName);
 		return DOWNLOAD;
-	}
+	}*/
 	
 	@Override
 	public SalesPriceList getModel() {
