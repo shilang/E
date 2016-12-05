@@ -58,7 +58,7 @@
 		date = $("#date").erpCurrDate();
 		$("#managerId").erpEmployee();
 		$("#employeeId").erpEmployee();
-		$("#checker").erpEmployee();
+		$("#checker").erpUsers(true);
 		$("#creater").erpUsers(true);
 		
 		var selUrl = "";

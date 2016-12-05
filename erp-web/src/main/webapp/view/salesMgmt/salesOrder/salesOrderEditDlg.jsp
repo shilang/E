@@ -10,6 +10,7 @@
 	var entry;
 	var date;
 	var transitAheadTime;
+	var fileMenu;
 	
 	var salOrderShowPrice = false;
 	
@@ -67,6 +68,7 @@
 		$dg.success = true;
 		
 		entry = new $.erp.entry($dg);
+		
 	}); 
 	 
 	function init(){
@@ -82,7 +84,7 @@
 		date = $("#date").erpCurrDate();
 		$('#tradeWay').erpResGrid({},15);
 		$("#managerId").erpEmployee();
-		$("#checker").erpEmployee();
+		$("#checker").erpUsers(true);
 		$("#employeeId").erpEmployee();
 		$('#creater').erpUsers(true);
 		
@@ -150,37 +152,39 @@
 			}
 		});
 		
-		var attachMenu = $('#attachOper').menubutton({
+		var fileBoxMenuButton = $('#attachOper').menubutton({
 			menu:'#attachMM'
 		});
 		
-		$(attachMenu.menubutton('options').menu).menu({
+		fileMenu = $(fileBoxMenuButton.menubutton('options').menu);
+		
+		fileMenu.menu({
 			onClick:function(item){
 				var id = item.id;
+				var vFileName = $('#fileNm').val();
+				var vFileSaveAs = $('#billNo').textbox('getValue');
+				if(!vFileSaveAs || !vFileName) return;
 				if(id == 'upload'){
-					var vFileEleId = $('input[name="attach"]').attr('id');
-					var vAttachSaveAs = $('#billNo').textbox('getValue');
-					var vAttachName = $('#attach').filebox('getText');
-					if(vAttachSaveAs && vAttachName){
-						var vAttachExt = getFileExt(vAttachName);
-						initAttachParams(vAttachSaveAs,vAttachExt);
-						ajaxFileUpload(vFileEleId, vAttachSaveAs, vAttachExt);
-					}
+					var vFileExt = getFileExt(vFileName);
+					initFileParams(vFileSaveAs,vFileExt);
+					ajaxFileUpload('filebox', vFileSaveAs);
 				}else if(id == 'delete'){
 					
 				}else if(id == 'download'){
-					
+					//ajaxFileDownload(vFileName,vFileSaveAs);
+					var vSrc = "file/download.action?fileNm="+vFileName+"&fileSaveAs="+vFileSaveAs;
+					$('#fileDownload').attr('src',vSrc);
 				}
 			}
 		});
 	}
 	
-	function initAttachParams(saveAs, ext){
-		$('#attachSaveAs').val(saveAs);
-		$('#attachExt').val(ext);
+	function initFileParams(saveAs, ext){
+		$('#fileSaveAs').val(saveAs);
+		$('#fileExt').val(ext);
 	}
 	
-	function ajaxFileUpload(vFileEleId, vAttachSaveAs, vAttachExt) {
+	function ajaxFileUpload(vFileEleId, vFileSaveAs) {
 		
 		$.messager.progress({
 			title: '提示',
@@ -189,7 +193,7 @@
 		
 	    $.ajaxFileUpload({
 	            url: 'file/upload.action', //用于文件上传的服务器端请求地址
-	            data: {attachSaveAs:vAttachSaveAs,attachExt:vAttachExt},
+	            data: {fileSaveAs:vFileSaveAs},
 	            secureuri: false, //是否需要安全协议，一般设置为false
 	            fileElementId: vFileEleId, //文件上传域的ID
 	            dataType: 'json', //返回值类型 一般设置为json
@@ -203,6 +207,16 @@
 	        }
 	    )
 	    return false;
+	}
+	
+	function ajaxFileDownload(vFilename, vFileSaveAs){
+		var vUrl = 'file/download.action';
+		var vParams = {fileNm:vFilename,fileSaveAs:vFileSaveAs};
+		$.ajax({
+			url: vUrl,
+			data: vParams
+		});
+		return false;
 	}
 	
 	function updateAmount(){
@@ -298,6 +312,12 @@
 		}
 	}
 	
+	function setFileName(obj){
+		$('#fileNm').textbox('setValue',$(obj).val());
+		var itemEl = $('#upload')[0];
+		fileMenu.menu('enableItem',itemEl);
+	}
+	
 </script>
 
 <div class="dlgcontent">
@@ -305,8 +325,8 @@
 		<input id="interId" name="interId" type="hidden"/>
 		<input id="created" name="created" type="hidden"/>
 		<input id="status" name="status" type="hidden"/>
-		<input id="attachSaveAs" name="attachSaveAs" type="hidden" />
-		<input id="attachExt" name="attachExt" type="hidden" />
+		<input id="fileSaveAs" name="fileSaveAs" type="hidden" />
+		<input id="fileExt" name="fileExt" type="hidden" />
 		<table class="simple">
 			<tr>
 				<th>编号</th>
@@ -436,16 +456,20 @@
 			</tr>
 			<tr>
 				<th>附件</th>
-				<td>
-					<input id="attach" name="attach" class="easyui-filebox" data-options="buttonText:'添加'" style="width:176px;" />
-				</td>
-				<td>
+				<td colspan="4">
+					<div class="fileboxContainer">
+						<input id="filebox" name="filebox" class="filebox" type="file" onchange="setFileName(this)" />
+					</div>
+					<div style="display:none;">
+						<iframe id="fileDownload" src="" ></iframe>
+					</div>
+					<input id="fileNm" name="fileNm" class="easyui-textbox" style="width:300px;" data-options="editable:false" />
 					<a href="javascript:void(0)" id="attachOper">操作</a>
 					<div id="attachMM">
-						<div id="upload" data-options="iconCls:'icon-upload'">上传</div>    
-						<div id="delete" data-options="iconCls:'icon-remove'">删除</div>
+						<div id="upload" data-options="iconCls:'icon-upload',disabled:true">上传</div>    
+						<!-- <div id="delete" data-options="iconCls:'icon-remove'">删除</div> -->
 						<div class="menu-sep"></div>    
-						<div id="download" data-options="iconCls:'icon-download'">下载</div>    
+						<div id="download" data-options="iconCls:'icon-download',disabled:false">下载</div>    
 					</div>
 				</td>
 			</tr>

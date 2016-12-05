@@ -64,7 +64,7 @@
 		$("#fetchAddr").erpResGrid({},10);
 		$("#date").erpCurrDate();
 		$("#managerId").erpEmployee();
-		$("#checker").erpEmployee();
+		$("#checker").erpUsers(true);
 		$("#employeeId").erpEmployee();
 		$("#creater").erpUsers(true);
 		

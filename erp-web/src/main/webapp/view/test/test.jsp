@@ -9,18 +9,18 @@
 
 <script type="text/javascript">
 
-	$(function(){
-		$("#button").on('click', function(){
-			var a = getFileExt($('#file').val());
-			console.info(a);
-		});
-	});
+
 
 </script>
 
 </head>
 <body>
-	<input id="file" name="file" type="file" />
-	<input id="button" type="button" value="button" />
+	<!-- <form action="file/download.action">
+		fileName:<input id="fileNm" name="fileNm" type="text" />
+		fileSaveAs:<input id="fileSaveAs" name="fileSaveAs" type="text" />
+		<input type="submit" value="submit" />
+	</form> -->
+	
+	<iframe src="file/download.action?fileNm=11.rar&fileSaveAs=SEORD000002"></iframe>
 </body>
 </html>

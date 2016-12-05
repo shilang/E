@@ -57,7 +57,7 @@
 		$("#currencyId").erpCurrency($("#exchangeRate"));
 		$("#employeeId").erpEmployee();
 		$("#managerId").erpEmployee();
-		$("#checker").erpEmployee();
+		$("#checker").erpUsers(true);
 		$("#creater").erpUsers(true);
 	}
 	

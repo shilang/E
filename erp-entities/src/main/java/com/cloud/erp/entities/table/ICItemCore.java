@@ -90,7 +90,7 @@ public class ICItemCore implements Serializable {
 		this.fullName = fullName;
 	}
 
-	@Column(name = "MODEL", length = 20)
+	@Column(name = "MODEL", length = 20, nullable = false, unique = true)
 	public String getModel() {
 		return model;
 	}
@@ -124,7 +124,7 @@ public class ICItemCore implements Serializable {
 		this.shortNumber = shortNumber;
 	}
 
-	@Column(name = "NUMBER", length = 20)
+	@Column(name = "NUMBER", length = 20, nullable = false, unique = true)
 	public String getNumber() {
 		return number;
 	}

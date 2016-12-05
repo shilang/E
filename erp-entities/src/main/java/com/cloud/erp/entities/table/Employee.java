@@ -86,7 +86,7 @@ public class Employee implements Serializable {
 		this.employeeId = employeeId;
 	}
 
-	@Column(name = "NUMBER", length = 25)
+	@Column(name = "NUMBER", length = 25, nullable = false, unique = true)
 	public String getNumber() {
 		return number;
 	}
@@ -95,7 +95,7 @@ public class Employee implements Serializable {
 		this.number = number;
 	}
 
-	@Column(name = "NAME", length = 50)
+	@Column(name = "NAME", length = 50, nullable = false, unique = true)
 	public String getName() {
 		return name;
 	}

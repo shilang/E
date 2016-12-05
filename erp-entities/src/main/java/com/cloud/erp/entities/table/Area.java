@@ -65,7 +65,7 @@ public class Area implements Serializable {
 		this.areaId = areaId;
 	}
 
-	@Column(name = "NUMBER", length = 255)
+	@Column(name = "NUMBER", length = 255, nullable = false, unique = true)
 	public String getNumber() {
 		return number;
 	}
@@ -74,7 +74,7 @@ public class Area implements Serializable {
 		this.number = number;
 	}
 
-	@Column(name = "NAME", length = 255)
+	@Column(name = "NAME", length = 255, nullable = false, unique = true)
 	public String getName() {
 		return name;
 	}
@@ -83,7 +83,7 @@ public class Area implements Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "NAME_EN", length = 255)
+	@Column(name = "NAME_EN", length = 255, nullable = false, unique = true)
 	public String getNameEn() {
 		return nameEn;
 	}

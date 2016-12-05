@@ -187,3 +187,23 @@
 #tb table td, .tb table td{
 	padding-left: 2px;
 }
+
+.fileboxContainer{
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+	background: url(../images/file_upload.png);
+	position: relative;
+}
+
+.filebox{
+	height: 16px;
+	overflow: hidden;
+	font-size: 12px;
+	position: absolute;
+	left: 1px;
+	top: 1px;
+	opacity: 0;
+	filter:alpha(opacity=0);
+	cursor: pointer;
+}

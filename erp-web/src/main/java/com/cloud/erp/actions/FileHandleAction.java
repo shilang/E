@@ -6,15 +6,13 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 
-import com.cloud.erp.common.FileAction;
-import com.cloud.erp.utils.Constants;
+import com.cloud.erp.common.FileBaseAction;
 
 @Namespace("/file")
-public class FileHandleAction extends FileAction {
+public class FileHandleAction extends FileBaseAction {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -22,52 +20,56 @@ public class FileHandleAction extends FileAction {
 	private static final String DELETE_STATUS = "删除文件成功!";
 	private static final String DOWNLOAD_STATUS = "下载文件成功!";
 
-	private File attach;
-	private String attachFileName;
-	private String attachContentType;
-	private String attachSaveAs;
+	private File filebox;
+	private String fileboxFileName;
+	private String fileboxContentType;
+	private String fileSaveAs;
+	private String fileNm;
 
-	public File getAttach() {
-		return attach;
+	public File getFilebox() {
+		return filebox;
 	}
 
-	public void setAttach(File attach) {
-		this.attach = attach;
+	public void setFilebox(File filebox) {
+		this.filebox = filebox;
 	}
 
-	public String getAttachFileName() {
-		return attachFileName;
+	public String getFileboxFileName() {
+		return fileboxFileName;
 	}
 
-	public void setAttachFileName(String attachFileName) {
-		this.attachFileName = attachFileName;
+	public void setFileboxFileName(String fileboxFileName) {
+		this.fileboxFileName = fileboxFileName;
 	}
 
-	public String getAttachContentType() {
-		return attachContentType;
+	public String getFileboxContentType() {
+		return fileboxContentType;
 	}
 
-	public void setAttachContentType(String attachContentType) {
-		this.attachContentType = attachContentType;
+	public void setFileboxContentType(String fileboxContentType) {
+		this.fileboxContentType = fileboxContentType;
+	}
+
+	public String getFileSaveAs() {
+		return fileSaveAs;
+	}
+
+	public void setFileSaveAs(String fileSaveAs) {
+		this.fileSaveAs = fileSaveAs;
 	}
 	
-	public String getAttachSaveAs() {
-		return attachSaveAs;
+	public String getFileNm() {
+		return fileNm;
 	}
 
-	public void setAttachSaveAs(String attachSaveAs) {
-		this.attachSaveAs = attachSaveAs;
-	}
-	
-	private String getRealPath(){
-		return ServletActionContext.getServletContext()
-				.getRealPath(Constants.UPLOAD_PATH);
+	public void setFileNm(String fileNm) {
+		this.fileNm = fileNm;
 	}
 
 	@Action(value = "upload")
 	public String upload() throws Exception {
-		InputStream is = new FileInputStream(getAttach()); 
-		File toFile = new File(getRealPath(), getAttachSaveAs());
+		InputStream is = new FileInputStream(getFilebox()); 
+		File toFile = new File(getUploadRealPath(), getFileSaveAs());
 		OutputStream os = new FileOutputStream(toFile);
 		byte[] buff = new byte[4096];
 		int len = 0;
@@ -82,18 +84,15 @@ public class FileHandleAction extends FileAction {
 	
 	@Action("download")
 	public String download() throws Exception{
-		
-		setFilePath(getRealPath()+"/temp.txt");
-		
-		setFileName("测试文件");
-		
-		//JSONWriterSuccess(DOWNLOAD_STATUS);
+		setfSaveAs(getFileSaveAs());
+		setFileName(getFileNm());
+		JSONWriterSuccess(DOWNLOAD_STATUS);
 		return DOWNLOAD;
 	}
 	
 	@Action("delete")
 	public String delete() throws Exception{
-		File file = new File(getRealPath(), getAttachSaveAs());
+		File file = new File(getUploadRealPath(), getFileSaveAs());
 		if(file.exists()){
 			file.delete();
 		}

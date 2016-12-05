@@ -104,9 +104,9 @@ public class SalesOrder implements Serializable {
 	private Date ckReviewDate;
 	private String cgreview;
 	private Date cgreviewDate;
-	private String attach;
-	private String attachSaveAs;
-	private String attachExt;
+	private String fileNm;
+	private String fileSaveAs;
+	private String fileExt;
 	private Integer result;
 	private String orderStatus;
 	private Integer cancellation;
@@ -526,7 +526,7 @@ public class SalesOrder implements Serializable {
 		this.status = status;
 	}
 	
-	@Column(name = "REVIEW", length = 200)
+	@Column(name = "REVIEW", length = 1000)
 	public String getReview() {
 		return review;
 	}
@@ -598,31 +598,31 @@ public class SalesOrder implements Serializable {
 		this.result = result;
 	}
 	
-	@Column(name = "ATTACH", length = 100)
-	public String getAttach() {
-		return attach;
+	@Column(name = "FILE_NAME", length = 100)
+	public String getFileNm() {
+		return fileNm;
 	}
 
-	public void setAttach(String attach) {
-		this.attach = attach;
+	public void setFileNm(String fileNm) {
+		this.fileNm = fileNm;
 	}
 
-	@Column(name = "ATTACH_SAVE_AS", length = 100)
-	public String getAttachSaveAs() {
-		return attachSaveAs;
+	@Column(name = "FILE_SAVE_AS", length = 100)
+	public String getFileSaveAs() {
+		return fileSaveAs;
 	}
 
-	public void setAttachSaveAs(String attachSaveAs) {
-		this.attachSaveAs = attachSaveAs;
+	public void setFileSaveAs(String fileSaveAs) {
+		this.fileSaveAs = fileSaveAs;
 	}
 
-	@Column(name = "ATTACH_EXT", length = 3)
-	public String getAttachExt() {
-		return attachExt;
+	@Column(name = "FILE_EXT", length = 3)
+	public String getFileExt() {
+		return fileExt;
 	}
 
-	public void setAttachExt(String attachExt) {
-		this.attachExt = attachExt;
+	public void setFileExt(String fileExt) {
+		this.fileExt = fileExt;
 	}
 
 	@Column(name = "ORDER_STATUS", length = 20)

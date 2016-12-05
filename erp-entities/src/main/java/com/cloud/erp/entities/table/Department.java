@@ -85,7 +85,7 @@ public class Department implements Serializable {
 		this.departmentId = departmentId;
 	}
 
-	@Column(name = "NUMBER", length = 25)
+	@Column(name = "NUMBER", length = 25, unique = true, nullable = false)
 	public String getNumber() {
 		return number;
 	}
@@ -204,7 +204,7 @@ public class Department implements Serializable {
 		this.lastmod = lastmod;
 	}
 
-	@Column(name = "NAME", length = 50)
+	@Column(name = "NAME", length = 50, nullable = false, unique = true)
 	public String getName() {
 		return name;
 	}
