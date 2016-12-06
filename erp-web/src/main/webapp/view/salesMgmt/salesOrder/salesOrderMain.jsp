@@ -50,6 +50,7 @@
 								var status = $.erp.getResultStatus(value);
 								return '<span style="color:'+status.color+';">' + status.msg + '</span>';
 						},sortable:true},
+			        	{field:'orderStatus',title:'订单状态',width:parseInt($(this).width()*0.06)},
 			        	{field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'customerName',title:'购货单位', hidden:!salOrderShowCust,width:parseInt($(this).width()*0.1),sortable:true},
@@ -77,7 +78,6 @@
 			        	{field:'checkDate',title:'审核日期',width:parseInt($(this).width()*0.14),sortable:true},
 			        	{field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'sourceType',title:'源单类型',width:parseInt($(this).width()*0.1)},
-			        	{field:'orderStatus',title:'订单状态',width:parseInt($(this).width()*0.1)},
 			        	{field:'explanation',title:'摘要',width:parseInt($(this).width()*0.1)}
 			        ]],
 			toolbar: '#tb',
@@ -371,6 +371,7 @@
 			</div>
 			<div id="mm">
 				<div name="billNo">单据编号</div>
+				<div name="sourceBillNo">源单单号</div>
 			</div>
 			<table id="dg" title=""></table>
 		</div>

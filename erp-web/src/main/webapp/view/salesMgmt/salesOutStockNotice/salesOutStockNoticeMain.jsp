@@ -47,7 +47,7 @@
 			        {field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'customerName',title:'购货单位',width:parseInt($(this).width()*0.1),sortable:true},
-			        {field:'salesScopeName',title:'销售范围',width:parseInt($(this).width()*0.1),sortable:true},
+			        {field:'salesScopeName',title:'运输方式',width:parseInt($(this).width()*0.15),sortable:true},
 			        {field:'salesWayName',title:'销售方式',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'fetchAddrName',title:'交货地点',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'stockName',title:'仓库',width:parseInt($(this).width()*0.1)},

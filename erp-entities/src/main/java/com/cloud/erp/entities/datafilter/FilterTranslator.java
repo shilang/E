@@ -123,23 +123,18 @@ public class FilterTranslator {
 			String[] values = orgValue.toString().split(",");
 			boolean appended = false;
 
+			builder.append("(");
 			for (String value : values) {
 				if (appended)
 					builder.append(" or ");
-
 				builder.append("(");
-
 				builder.append(value);
-
 				builder.append(GetOperatorQueryText(op));
-
 				builder.append(pCurrField);
-
 				builder.append(")");
-
 				appended = true;
-
 			}
+			builder.append(")");
 
 		} else if ("isnull".equals(op) || "isnotnull".equals(op)) {
 

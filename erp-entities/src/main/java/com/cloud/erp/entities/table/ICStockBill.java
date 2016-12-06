@@ -119,7 +119,7 @@ public class ICStockBill implements Serializable {
 		this.procInstId = procInstId;
 	}
 
-	@Column(name = "BILL_NO", length = 20)
+	@Column(name = "BILL_NO", length = 20, nullable = false, unique = true)
 	public String getBillNo() {
 		return billNo;
 	}

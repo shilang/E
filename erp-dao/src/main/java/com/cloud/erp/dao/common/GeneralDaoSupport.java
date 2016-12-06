@@ -1,7 +1,10 @@
 package com.cloud.erp.dao.common;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -9,11 +12,14 @@ import com.cloud.erp.dao.RelationDao;
 import com.cloud.erp.entities.table.Relation;
 import com.cloud.erp.entities.type.OperType;
 import com.cloud.erp.utils.Commons;
+import com.cloud.erp.utils.ObjectUtil;
 import com.cloud.erp.utils.PageUtil;
 import com.cloud.erp.utils.Reflect;
 
 @Repository("generalDao")
 public class GeneralDaoSupport<M> extends UpdateStatus{
+	
+	private static final Logger log = LoggerFactory.getLogger(GeneralDaoSupport.class);
 	
 	private static final String HQL_ALIAS = "t";
 	private static final String HQL_PREFIX_FIND = "";
@@ -87,6 +93,10 @@ public class GeneralDaoSupport<M> extends UpdateStatus{
 	
 		String hql = " from " + entityName  + " " + HQL_ALIAS + " where " + HQL_ALIAS + ".status = 'A' " + dataRule;
 		
+		if(log.isDebugEnabled()){
+			log.debug("analyseSelectHql: {}", hql);
+		}
+		
 		//extend sql
 		hql = hql + analyseExtHql(HQL_ALIAS, extHql);
 		
@@ -128,10 +138,15 @@ public class GeneralDaoSupport<M> extends UpdateStatus{
 
 	@SuppressWarnings("unchecked")
 	public boolean persistence(M master, StatusFields statusFields) throws Exception {
-			if(null == Reflect.invokeGetMethod(master, statusFields.getInterId())){
+			Object id = Reflect.invokeGetMethod(master, statusFields.getInterId());
+		    //new creation
+			if(null == id){
 				baseDao.save(updateEntityInfo(master, statusFields, OperType.create));
 			}else {
-				baseDao.update(updateEntityInfo(master, statusFields, OperType.update));
+				//get old object from database
+				Object dest = baseDao.get(master.getClass(), (Serializable)id);
+				ObjectUtil.copyNonNullOrEmptyProperties(dest, master);
+				baseDao.update(updateEntityInfo(dest, statusFields, OperType.update));
 			}
 		return true;
 	}
