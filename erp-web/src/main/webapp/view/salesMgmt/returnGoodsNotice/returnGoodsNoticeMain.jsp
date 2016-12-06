@@ -16,6 +16,7 @@
 			width: $(this).width(),
 			height: $(this).height(),
 			collapsible: true,
+			pageSize: 20,
 			pagination: true,
 			rownumbers: true,
 			striped: true,

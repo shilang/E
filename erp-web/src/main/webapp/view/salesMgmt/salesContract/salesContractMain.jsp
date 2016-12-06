@@ -33,6 +33,7 @@
 			height: $(this).height(),
 			pagination: true,
 			collapsible: true,
+			pageSize: 20,
 			rownumbers: true,
 			border: false,
 			striped: true,
