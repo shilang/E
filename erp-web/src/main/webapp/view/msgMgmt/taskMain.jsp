@@ -20,6 +20,7 @@
 			width: $(this).width(),
 			height: $(this).height(),
 			collapsible: true,
+			pageSize: 20,
 			pagination: true,
 			rownumbers: true,
 			fitColumns: false,
@@ -28,17 +29,30 @@
 			singleSelect: true,
 			idField: 'id',
 			columns: [[
-				{field:'id', title:'任务ID',width:_width*0.05},           
-				{field:'taskDefinitionKey', title:'任务Key',width:_width*0.1},           
-				{field:'name', title:'任务名称',width:_width*0.1},           
-				{field:'processDefinitionId', title:'流程定义ID',width:_width*0.15},           
-				{field:'processInstanceId', title:'流程实例ID',width:_width*0.05},           
-				{field:'priority', title:'优先级',width:_width*0.05},           
-				{field:'createTime', title:'创建日期',width:_width*0.1},           
-				{field:'dueDate', title:'任务逾期',width:_width*0.1},           
-				{field:'description', title:'任务描述',width:_width*0.1},           
-				{field:'owner', title:'任务所属人',width:_width*0.08},
-				{field:'assignee',title:'操作',width:_width*0.08,
+				{field:'id', title:'任务ID',width:_width*0.08},           
+				{field:'taskDefinitionKey', title:'任务Key',width:_width*0.1,hidden:true},           
+				{field:'name', title:'任务名称',width:_width*0.15},           
+				{field:'number', title:'单据编号',width:_width*0.15,
+					formatter:function(value,row,index){
+						if(row&&row.auditModel){
+							return row.auditModel.number;
+						}
+					}	
+				},           
+				{field:'processDefinitionId', title:'流程定义ID',width:_width*0.15,hidden:true},           
+				{field:'processInstanceId', title:'流程实例ID',width:_width*0.05,hidden:true},           
+				{field:'priority', title:'优先级',width:_width*0.05,hidden:true},           
+				{field:'owner', title:'任务创建人',width:_width*0.12,
+					formatter:function(value,row,index){
+						if(row&&row.auditModel){
+							return row.auditModel.creater;
+						}
+					}	
+				},
+				{field:'createTime', title:'创建日期',width:_width*0.15},           
+				{field:'dueDate', title:'任务逾期',width:_width*0.1,hidden:true},           
+				{field:'description', title:'任务描述',width:_width*0.15},           
+				{field:'assignee',title:'操作',width:_width*0.084,
 					formatter:function(value,row,index){
 						if(row&&row.auditModel){
 							var businessType = row.auditModel.taskBusinessType;
@@ -47,7 +61,7 @@
 								status = _tstatus;
 							}else if(businessType == 'amend'){
 							    status = _fystatus;
-							}else if(businessType == 'check'){
+							}else if(businessType == 'check' || businessType == 'change'){
 								if(row.assignee){
 									status = _sstatus;
 								}else{

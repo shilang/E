@@ -5,9 +5,11 @@ import java.io.Serializable;
 public class AuditModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private String processInstanceId;
 
 	/**
-	 * commit, amend, check, review
+	 * commit, amend, check, review, change
 	 */
 	private String taskBusinessType;
 
@@ -17,6 +19,8 @@ public class AuditModel implements Serializable {
 	private String path;
 	private Integer businessKey;
 	private String businessClass;
+	private String number;
+	private String creater;
 	private String result;
 	private String remark;
 
@@ -45,6 +49,14 @@ public class AuditModel implements Serializable {
 		this.result = result;
 		this.remark = remark;
 	}
+	
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
+
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
 
 	public String getTaskBusinessType() {
 		return taskBusinessType;
@@ -68,6 +80,22 @@ public class AuditModel implements Serializable {
 
 	public void setBusinessClass(String businessClass) {
 		this.businessClass = businessClass;
+	}
+	
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getCreater() {
+		return creater;
+	}
+
+	public void setCreater(String creater) {
+		this.creater = creater;
 	}
 
 	public String getResult() {

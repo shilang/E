@@ -55,7 +55,7 @@
 		$("#fetchAddr").erpResGrid({}, 10);
 		$("#customerId").erpCustomer();
 		$("#currencyId").erpCurrency($("#exchangeRate"));
-		date = $("#date").erpCurrDate();
+		date = $("#date").erpCurrDate(true);
 		$("#managerId").erpEmployee();
 		$("#employeeId").erpEmployee();
 		$("#checker").erpUsers(true);
@@ -165,10 +165,12 @@
 				<td>
 					<input id="billNo" name="billNo" class="easyui-textbox" data-options="required:true,editable:false"/>
 				</td>
-				<th>运输方式</th>
-				<td >
-					<input id="salesScope" name="salesScope" class="easyui-textbox" data-options="required:true" />
+				
+				<th>购货单位</th>
+				<td>
+					<input id="customerId" name="customerId" class="easyui-textbox" data-options="required:true"/>
 				</td>
+				
 				<th>退料原因</th>
 				<td rowspan="3">
 					<!-- 
@@ -182,16 +184,18 @@
 				<td>
 					<input id="salesWay" name="salesWay" class="easyui-textbox" data-options="required:true"/>
 				</td>
-				<th>购货单位</th>
-				<td>
-					<input id="customerId" name="customerId" class="easyui-textbox" data-options="required:true"/>
-				</td>
-			</tr>
-			<tr>
+				
 				<th>交货地点</th>
 				<td>
 					<input id="fetchAddr" name="fetchAddr" class="easyui-textbox" data-options="required:true"/>
 				</td>
+			</tr>
+			<tr>
+				<th>运输方式</th>
+				<td >
+					<input id="salesScope" name="salesScope" class="easyui-textbox" data-options="required:true" />
+				</td>
+				
 				<th>收货仓库</th>
 				<td>
 					<input id="" name="" class="easyui-textbox" data-options="editable:false"/>
@@ -217,20 +221,24 @@
 				<td>
 					<input id="explanation" name="explanation" class="easyui-textbox" />
 				</td>
-				<th>主管</th>
+				
+				<th>部门</th>
 				<td>
-					<input id="managerId" name="managerId" class="easyui-textbox" data-options="required:true"/>
+					<input id="departmentId" name="departmentId" class="easyui-combotree" data-options="required:true"/>
 				</td>
+				
 				<th>汇率</th>
 				<td>
 					<input id="exchangeRate" name="exchangeRate" class="easyui-numberbox" data-options="required:true,precision:2"/>
 				</td>
 			</tr>
 			<tr>
-				<th>部门</th>
+			
+				<th>主管</th>
 				<td>
-					<input id="departmentId" name="departmentId" class="easyui-combotree" data-options="required:true"/>
+					<input id="managerId" name="managerId" class="easyui-textbox" data-options="required:true"/>
 				</td>
+				
 				
 				<th>业务员</th>
 				<td>

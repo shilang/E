@@ -52,7 +52,7 @@
 	});
 	
 	function init(){
-		$("#date").erpCurrDate();
+		$("#date").erpCurrDate(true);
 		$("#customerId").erpCustomer($('#billNo'));
 		$("#currencyId").erpCurrency($("#exchangeRate"));
 		$("#employeeId").erpEmployee();
@@ -113,6 +113,17 @@
 					<input id="billNo" name="billNo" class="easyui-textbox" data-options="required:true"/>
 				</td>
 				
+				<th>购货单位</th>
+				<td>
+					<input id="customerId" name="customerId" class="easyui-textbox" data-options="required:true"/>
+				</td>
+				
+				<th>日期</th>
+				<td>
+					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
+				</td>
+			</tr>
+			<tr>
 				<th>货币</th>
 				<td>
 					<input id="currencyId" name="currencyId" class="easyui-textbox" data-options="required:true, editable:false" />
@@ -123,32 +134,20 @@
 					<input id="exchangeRate" name="exchangeRate" type="text" class="easyui-numberbox" data-options="required:true,precision:2" />
 				</td>
 				
+				<th>部门</th>
+				<td>
+					<input id="departmentId" name="departmentId" class="easyui-combotree" data-options="required:true"/>
+				</td>
 			</tr>
 			<tr>
-				<th>购货单位</th>
+				<th>主管</th>
 				<td>
-					<input id="customerId" name="customerId" class="easyui-textbox" data-options="required:true"/>
-				</td>
-			
-				<th>日期</th>
-				<td>
-					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
+					<input id="managerId" name="managerId" class="easyui-textbox" data-options="required:true"/>
 				</td>
 				
 				<th>业务员</th>
 				<td>
 					<input id="employeeId" name="employeeId" class="easyui-textbox" data-options="required:true"/>
-				</td>
-			</tr>
-			<tr>
-				<th>部门</th>
-				<td>
-					<input id="departmentId" name="departmentId" class="easyui-combotree" data-options="required:true"/>
-				</td>
-			
-				<th>主管</th>
-				<td>
-					<input id="managerId" name="managerId" class="easyui-textbox" data-options="required:true"/>
 				</td>
 				
 				<th>制单</th>

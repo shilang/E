@@ -28,7 +28,7 @@
 		resultNoneMsg: '',
 		resultCheckPendingMsg: '待审核',
 		resultCheckOkMsg: '已审核',
-		resultCheckChangeMsg: '修改审核',
+		resultCheckChangeMsg: '改待审核',
 		
 		rowEditErrMsg: '编辑行数据未完成',
 		//dialog duraction time
@@ -319,11 +319,12 @@
 		});
 	};
 	
-	$.fn.erpCurrDate = function(){
+	$.fn.erpCurrDate = function(readonly){
 		return this.each(function(){
 		    $(this).datebox({
 				width: 176,
-				required: true
+				required: true,
+				readonly: readonly?true:false,
 			}).datebox("setValue", new Date().toString());
 		});
 	}
@@ -865,8 +866,9 @@
 									if(reason){
 										var params = {processDefinitionKey: processDefKey};
 									    var auditModel = {};
-									    auditModel.taskBusinessType = 'check';
-									    auditModel.path = '';
+									    auditModel.processInstanceId = row.procInstId;
+									    auditModel.taskBusinessType = 'change';
+									    auditModel.path = viewPath;
 									    auditModel.businessKey = row.interId;
 									    auditModel.businessClass = 'com.cloud.erp.entities.table.' + entityName;
 									    auditModel.result = '';

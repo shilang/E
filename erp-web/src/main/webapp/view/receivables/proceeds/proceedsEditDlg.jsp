@@ -62,7 +62,7 @@
 		$("#settleId").erpResGrid({}, 6);
 		$("#salesWay").erpResGrid({}, 7);
 		$("#fetchAddr").erpResGrid({},10);
-		$("#date").erpCurrDate();
+		$("#date").erpCurrDate(true);
 		$("#managerId").erpEmployee();
 		$("#checker").erpUsers(true);
 		$("#employeeId").erpEmployee();
@@ -195,22 +195,26 @@
 				<td>
 					<input id="billNo" name="billNo" class="easyui-textbox" data-options="required:true"/>
 				</td>
+				
+				<th>日期</th>
+				<td>
+					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
+				</td>
+				
 				<th>项目类别</th>
 				<td>
 					<select id="subject" name="subject" class="easyui-combobox" data-options="width:176,required:true,editable:false">
 						<option value="客户" selected="selected">客户</option>
 					</select>
 				</td>
+				
+			</tr>
+			<tr>
 				<th>核算项目</th>
 				<td>
 					<input id="customerId" name="customerId" class="easyui-textbox" data-options="required:true"/>
 				</td>
-			</tr>
-			<tr>
-				<th>单据日期</th>
-				<td>
-					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
-				</td>
+			
 				<th>结算方式</th>
 				<td>
 					<input id="settleId" name="settleId" class="easyui-textbox" data-options="required:true"/>

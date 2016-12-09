@@ -17,6 +17,7 @@ import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesOrder;
 import com.cloud.erp.entities.table.SalesOrderEntry;
 import com.cloud.erp.service.SalesOrderService;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
@@ -137,7 +138,12 @@ public class SalesOrderServiceFacade implements SalesOrderService{
 		salesOrderServiceImpl.persistence(salesOrder, entries);
 		Integer businessKey = salesOrder.getInterId();
 		if(null == orignalId){
-			AuditModel auditModel = new AuditModel(Constants.BUSINESS_TYPE_COMMIT, businessKey, SalesOrder.class.getName());
+			AuditModel auditModel = new AuditModel();
+			auditModel.setTaskBusinessType(Constants.BUSINESS_TYPE_COMMIT);
+			auditModel.setBusinessKey(businessKey);
+			auditModel.setBusinessClass(SalesOrder.class.getName());
+			auditModel.setNumber(salesOrder.getBillNo());
+			auditModel.setCreater(Commons.getCurrentUser().getAccount());
 			processManager.startProcess(Constants.PROCESS_DEF_KEY_SALES_ORDER_PROCESS, auditModel);
 		}
 		return true;

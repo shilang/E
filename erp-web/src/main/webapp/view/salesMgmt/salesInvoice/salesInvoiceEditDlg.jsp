@@ -54,7 +54,7 @@
 		$("#settleId").erpResGrid({}, 6);
 		$("#salesWay").erpResGrid({}, 7);
 		$("#fetchAddr").erpResGrid({},10);
-		$("#date").erpCurrDate();
+		$("#date").erpCurrDate(true);
 		$("#managerId").erpEmployee();
 		$("#checker").erpUsers(true);
 		$("#employeeId").erpEmployee();
@@ -172,17 +172,19 @@
 		<input id="status" name="status" type="hidden"/>
 		<table class="simple">
 			<tr>
-				<th>销售方式</th>
-				<td>
-					<input id="salesWay" name="salesWay" class="easyui-textbox" data-options="required:true"/>
-				</td>
-				<th>收款日期</th>
-				<td>
-					<input id="settleDate" name="settleDate" class="easyui-datebox" data-options="required:true"/>
-				</td>
 				<th>发票号码</th>
 				<td>
 					<input id="billNo" name="billNo" class="easyui-textbox" data-options="required:true,editable:false"/>
+				</td>
+				
+				<th>日期</th>
+				<td>
+					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
+				</td>
+				
+				<th>销售方式</th>
+				<td>
+					<input id="salesWay" name="salesWay" class="easyui-textbox" data-options="required:true"/>
 				</td>
 			</tr>
 			<tr>
@@ -234,6 +236,10 @@
 				</td>
 			</tr>
 			<tr>
+				<th>收款日期</th>
+				<td>
+					<input id="settleDate" name="settleDate" class="easyui-datebox" data-options="required:true"/>
+				</td>
 				<th>源单类型</th>
 				<td>
 					<input id="sourceType" name="sourceType" class="easyui-combobox" />
@@ -242,19 +248,16 @@
 				<td>
 					<input id="sourceBillNo" name="sourceBillNo" class="easyui-textbox" />
 				</td>
-				<th>日期</th>
-				<td>
-					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
-				</td>
+			
 			</tr>
 			<tr>
-				<th>主管</th>
-				<td>
-					<input id="managerId" name="managerId" class="easyui-textbox" data-options="required:true"/>
-				</td>
 				<th>部门</th>
 				<td>
 					<input id="departmentId" name="departmentId" class="easyui-combotree" data-options="requried:true" />
+				</td>
+				<th>主管</th>
+				<td>
+					<input id="managerId" name="managerId" class="easyui-textbox" data-options="required:true"/>
 				</td>
 				<th>业务员</th>
 				<td>

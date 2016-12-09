@@ -107,6 +107,7 @@ public class SalesOrder implements Serializable {
 	private String fileNm;
 	private String fileSaveAs;
 	private String fileExt;
+	private String changeReason;
 	private Integer result;
 	private String orderStatus;
 	private Integer cancellation;
@@ -598,6 +599,15 @@ public class SalesOrder implements Serializable {
 		this.result = result;
 	}
 	
+	@Column(name = "CHANGE_REASON", length = 1000)
+	public String getChangeReason() {
+		return changeReason;
+	}
+
+	public void setChangeReason(String changeReason) {
+		this.changeReason = changeReason;
+	}
+
 	@Column(name = "FILE_NAME", length = 100)
 	public String getFileNm() {
 		return fileNm;

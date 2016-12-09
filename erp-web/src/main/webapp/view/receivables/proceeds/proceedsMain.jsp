@@ -89,13 +89,13 @@
 	}
 	
 	function addProceedsDlg(){
-		showDlg('添加收款单','icon-add','add');
+		showDlg('添加应收单','icon-add','add');
 	}
 	
 	function updateProceedsDlg(){
 		var row = $dg.datagrid('getSelected');
 		if(row){
-			showDlg('修改收款单','icon-edit','update',row);
+			showDlg('修改应收单','icon-edit','update',row);
 		}else{
 			$.erp.noSelectErr();
 		}
@@ -104,7 +104,7 @@
 	function showProceedsDlg(){
 		var row = $dg.datagrid('getSelected');
 		if(row){
-			showDlg('查看收款单','icon-show','show',row);
+			showDlg('查看应收单','icon-show','show',row);
 		}else{
 			$.erp.noSelectErr();
 		}

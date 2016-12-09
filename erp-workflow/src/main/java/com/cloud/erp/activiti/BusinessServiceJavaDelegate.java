@@ -3,7 +3,7 @@ package com.cloud.erp.activiti;
 import com.cloud.erp.service.common.CheckService;
 import com.cloud.erp.utils.SpringUtil;
 
-public abstract class CheckServiceJavaDelegate extends BaseJavaDelegate{
+public abstract class BusinessServiceJavaDelegate extends BaseJavaDelegate{
 	
 	public boolean commit(){
 		return getCheckService().commit(getBusinessClass(), getBusinessKey());

@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.ActivitiException;
+import org.activiti.engine.ActivitiObjectNotFoundException;
 import org.activiti.engine.FormService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,10 @@ import com.cloud.erp.utils.Constants;
 
 @Service("processManager")
 public class ProcessManager {
+	
+	private static final Logger log = LoggerFactory.getLogger(ProcessManager.class);
+	
+	private static final String DELETE_REASON = "记录被删除";
 
 	@Autowired
 	private RuntimeService runtimeService;
@@ -49,7 +57,17 @@ public class ProcessManager {
 	}
 	
 	public void deleteProcessInstance(String processInstanceId){
-		runtimeService.deleteProcessInstance(processInstanceId, "");
+		deleteProcessInstance(processInstanceId, DELETE_REASON);
+	}
+	
+	public void deleteProcessInstance(String processInstanceId, String deleteReason){
+		try {
+			runtimeService.deleteProcessInstance(processInstanceId, deleteReason);
+		} catch (ActivitiObjectNotFoundException e) {
+			if(log.isInfoEnabled()){
+				log.info("Process instance id[{}] isn't exists.");
+			}
+		}
 	}
 	
 	public void deleteProcessDeployment(){
@@ -62,6 +80,17 @@ public class ProcessManager {
 	public void updateBusinessKey(String processInstanceId, String businessKey){
 		runtimeService.updateBusinessKey(processInstanceId, businessKey);
 	}
+	
+	public void signalEventReceived(String signalName/*, String executionId*/){
+		try {
+			runtimeService.signalEventReceived(signalName/*, executionId*/);
+		} catch (ActivitiException e) {
+			if(log.isInfoEnabled()){
+				log.info("signalEventReceived:{}", e.getMessage());
+			}
+		}
+	}
+
 	
 	private String getUserId(){
 		return Commons.getCurrentUser().getAccount();

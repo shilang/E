@@ -3,7 +3,7 @@
   <process id="proceeds-process" name="proceeds process" isExecutable="true">
     <startEvent id="theStart" name="Start" activiti:initiator="initiator"></startEvent>
     <endEvent id="theEnd" name="End"></endEvent>
-    <userTask id="proceedsCheck" name="应收审核" activiti:candidateGroups="销售经理">
+    <userTask id="proceedsCheck" name="应收审核" activiti:candidateGroups="财务经理">
       <extensionElements>
         <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
       </extensionElements>

@@ -55,7 +55,7 @@
 		$("#salesWay").erpResGrid({}, 7);
 		$("#customerId").erpCustomer();
 		$("#fetchAddr").erpResGrid({}, 10);
-		date = $("#date").erpCurrDate();
+		date = $("#date").erpCurrDate(true);
 		$("#settlementDate").erpCurrDate();
 		$("#sender").erpEmployee();
 		$("#defender").erpEmployee();
@@ -172,24 +172,32 @@
 				<td>
 					<input id="billNo" name="billNo" class="easyui-textbox" data-options="required:true,editable:false"/>
 				</td>
+				<th>日期</th>
+				<td>
+					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
+				</td>
 				<th>业务类型</th>
 				<td>
 					<input id="marketingWay" name="marketingWay" class="easyui-textbox" data-options="required:true"/>
 				</td>
-				<th>收款日期</th>
-				<td>
-					<input id="settlementDate" name="settlementDate" class="easyui-datebox" data-options="required:true" />
-				</td>
+			
 			</tr>
 			<tr>
 				<!-- <th>购货单位</th>
 				<td>
 					<input id="customerId" name="customerId" class="easyui-textbox" data-options="required:true"/>
 				</td> -->
+				
 				<th>销售方式</th>
 				<td>
 					<input id="salesWay" name="salesWay" class="easyui-textbox" data-options="required:true"/>
 				</td>
+				
+				<th>收款日期</th>
+				<td>
+					<input id="settlementDate" name="settlementDate" class="easyui-datebox" data-options="required:true" />
+				</td>
+				
 				<th>摘要</th>
 				<td>
 					<input id="explanation" name="explanation" class="easyui-textbox" />
@@ -204,19 +212,15 @@
 				<td>
 					<input id="sourceBillNo" name="sourceBillNo" class="easyui-textbox"/>
 				</td>
-				<th>日期</th>
-				<td>
-					<input id="date" name="date" class="easyui-datebox" data-options="required:true"/>
-				</td>
 			</tr>	
 			<tr>
-				<th>发货仓库</th>
-				<td>
-					<input id="stockId" name="stockId" class="easyui-textbox" data-options="editable:false"/>
-				</td>
 				<th>交货地点</th>
 				<td>
 					<input id="fetchAddr" name="fetchAddr" class="easyui-textbox" data-options="required:true"/>
+				</td>
+				<th>发货仓库</th>
+				<td>
+					<input id="stockId" name="stockId" class="easyui-textbox" data-options="editable:false"/>
 				</td>
 				<th>发货</th>
 				<td>
@@ -224,13 +228,13 @@
 				</td>
 			</tr>
 			<tr>
-				<th>主管</th>
-				<td>
-					<input id="managerId" name="managerId" class="easyui-textbox" data-options="required:true"/>
-				</td>
 				<th>部门</th>
 				<td>
 					<input id="departmentId" name="departmentId" class="easyui-combotree" data-options="required:true"/>
+				</td>
+				<th>主管</th>
+				<td>
+					<input id="managerId" name="managerId" class="easyui-textbox" data-options="required:true"/>
 				</td>
 				<th>业务员</th>
 				<td>

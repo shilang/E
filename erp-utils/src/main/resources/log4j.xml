@@ -21,7 +21,7 @@
      而INFO、DEBUG、TRACE、 ALL级别的log则会被忽略。从我们实验的结果可以看出，log4j默认的优先级为ERROR或者WARN（实际上是ERROR）。 -->
     
     <root>
-        <level value="info"></level>
+        <level value="debug"></level>
         <appender-ref ref="console"/>
     </root>
     

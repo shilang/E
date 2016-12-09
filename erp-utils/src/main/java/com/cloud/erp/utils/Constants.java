@@ -79,6 +79,7 @@ public class Constants {
 	public static final String FILE_SUFFIX_SQL = ".sql";
 	public static final String FILE_SUFFIX_ZIP = ".zip";
 	public static final String NUMBER_TITLE = "BillNo";
+	
 	public static final int NUMBER_SALES_PRICE_LIST = 10;
 	public static final int NUMBER_SALES_CONTRACT = 11;
 	public static final int NUMBER_SALES_ORDER = 12;
@@ -87,31 +88,37 @@ public class Constants {
 	public static final int NUMBER_SALES_OUT_STOCK = 15;
 	public static final int NUMBER_SALES_INVOICE = 16;
 	public static final int NUMBER_REC_PROCEEDS = 17;
+	
 	public static final int RESULT_NONE = 0;   //单据状态， 与jquery.erp.js 中配置的状态保持一致.
 	public static final int RESULT_CHECK_PENDING = 1; //待审核
 	public static final int RESULT_CHECK_OK = 2;  //已审核
-	public static final int RESULT_CHECK_CHANGE = 3; //修改审核
+	public static final int RESULT_CHECK_CHANGE = 3; //改待审核
 	public static final String RESULT_NONE_DESC = "";   //单据状态， 与jquery.erp.js 中配置的状态保持一致.
 	public static final String RESULT_CHECK_PENDING_DESC = "待审核"; //待审核
 	public static final String RESULT_CHECK_OK_DESC = "已审核";  //已审核
-	public static final String RESULT_CHECK_CHANGE_DESC = "修改审核"; //修改审核
+	public static final String RESULT_CHECK_CHANGE_DESC = "改待审核"; //改待审核
 	public static final String MESSAGE_CHECK_SUCCESS = "审核成功!";
 	public static final String MESSAGE_CHECK_FAIL = "审核失败，可能已审核!";
+	
 	public static final int SALES_OUT_STOCK_TYPE_OUT = 1; //发货通知单
 	public static final int SALES_OUT_STOCK_TYPE_IN = 2; //退货通知单
+	
 	public static final String ENTRY_LIST_TYPE_ADD = "addList";
 	public static final String ENTRY_LIST_TYPE_UPD = "updList";
 	public static final String ENTRY_LIST_TYPE_DEL = "delList";
+	
 	public static final String SHARE_ENTRY_TYPE_SALES_CONTRACT = "contract";
 	public static final String SHARE_ENTRY_TYPE_SALES_PRICELIST = "pricelist";
 	public static final String SHARE_ENTRY_TYPE_SALES_ORDER = "order";
 	public static final String SHARE_ENTRY_TYPE_SALES_OUTNOTICE = "outnotice";
 	public static final String SHARE_ENTRY_TYPE_SALES_OUTSTOCK = "outstock";
 	public static final String SHARE_ENTRY_TYPE_SALES_INVOICE = "invoice";
+	
 	public static final String AUDIT_MODEL = "auditModel";
 	public static final String AUDIT_MODEL_SUBPROCESS = "auditModelSubprocess";
 	public static final String BUSINESS_TYPE_COMMIT = "commit";
 	public static final String BUSINESS_TYPE_CHECK = "check";
+	
 	public static final String PROCESS_DEF_KEY_SALES_PRICELIST_PROCESS = "sales-pricelist-process";
 	public static final String PROCESS_DEF_KEY_SALES_PRICELIST_PROCESS_APPLY = "sales-pricelist-process-apply";
 	public static final String PROCESS_DEF_KEY_SALES_CONTRACT_PROCESS = "sales-contract-process";

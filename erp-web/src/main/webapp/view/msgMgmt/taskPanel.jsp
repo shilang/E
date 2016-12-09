@@ -103,14 +103,24 @@
 					initForm(row);			
 				}
 			}
+						
+			if(auditModel.taskBusinessType == 'change'){
+				$('#changeReasonPanel').show();
+				$('#changeReason').val(auditModel.remark);
+			}
 		});
 	}
 </script>
 
 <div id="contentPanel"></div>
 <div id="auditPanel"></div>
-<div id="chkcnt" style="padding: 10px 0 10px 20px; background: #F5F5F5;">
+<div id="chkcnt" style="padding: 10px 20px 10px 20px; background: #F5F5F5;">
 	<form id="auditForm">
+		<div id="changeReasonPanel" style="display:none;">
+			<span style="display:block;">改单原因：</span>
+			<textarea id="changeReason" name="changeReason" style="width:100%;" readonly="readonly"></textarea>
+		</div>
+	
 		<input id="taskId" name="taskId" type="hidden">
 <!-- 		<input id="taskBusinessType" name="taskBusinessType" type="hidden">
 		<input id="path" name="path" type="hidden"> -->
