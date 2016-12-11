@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.FormService;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -24,12 +22,6 @@ public class TaskManager {
 
 	@Autowired
 	private TaskService taskService;
-	
-	@Autowired
-	private RuntimeService runtimeService;
-	
-	@Autowired
-	private RepositoryService repositoryService;
 	
 	@Autowired
 	private FormService formService;

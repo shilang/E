@@ -871,8 +871,10 @@
 									    auditModel.path = viewPath;
 									    auditModel.businessKey = row.interId;
 									    auditModel.businessClass = 'com.cloud.erp.entities.table.' + entityName;
+									    auditModel.number = row.billNo;
+									    auditModel.creater = row.createrName;
 									    auditModel.result = '';
-									    auditModel.remark = reason;
+									    auditModel.extra = reason;
 									    var url = "task/submitChangeApply"
 									    $.extend(params, auditModel);
 									    $.erp.ajax(url, params, function(rsp){

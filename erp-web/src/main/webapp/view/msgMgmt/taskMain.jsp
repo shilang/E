@@ -8,6 +8,7 @@
 <script type="text/javascript">
 	var $dg;
 	var _width = $(this).width();
+	var _btnWidth = _width*0.084;
 	var _tstatus = '提交';
 	var _fystatus = '基本费用';
 	var _qstatus = '签收';
@@ -52,7 +53,7 @@
 				{field:'createTime', title:'创建日期',width:_width*0.15},           
 				{field:'dueDate', title:'任务逾期',width:_width*0.1,hidden:true},           
 				{field:'description', title:'任务描述',width:_width*0.15},           
-				{field:'assignee',title:'操作',width:_width*0.084,
+				{field:'assignee',title:'操作',width:_btnWidth*1.09,
 					formatter:function(value,row,index){
 						if(row&&row.auditModel){
 							var businessType = row.auditModel.taskBusinessType;
@@ -82,7 +83,7 @@
 				$operbtn.each(function(index){
 					var status = this.innerText;
 					$(this).linkbutton({
-						width: 70,
+						width: _btnWidth,
 						plain:false,
 						onClick: function(){
 							processTask(status, data.rows[index]);

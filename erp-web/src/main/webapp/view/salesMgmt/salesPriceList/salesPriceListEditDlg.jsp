@@ -168,7 +168,7 @@
 			</tr>
 		</table>
 		
-		<div class="" style="margin-top: 12px;">
+		<div style="margin-top: 5px; margin-bottom:5px;">
 			<div id="tb">
 				<table>
 					<tr>
@@ -181,6 +181,9 @@
 				</table>
 			</div>
 			<table id="dg" title="项目内容"></table>
+		</div>
+		<div class="easyui-panel" data-options="title:'改单记录',collapsible:true,collapsed:true">
+			<textarea id="changeReason" name="changeReason" readonly="readonly" style="margin:0;padding:0;border:0;width:100%;height:150px;"></textarea>
 		</div>
 	</form>
 </div>

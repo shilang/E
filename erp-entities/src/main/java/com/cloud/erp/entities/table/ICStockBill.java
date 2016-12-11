@@ -88,6 +88,7 @@ public class ICStockBill implements Serializable {
 	private Date checkDate;
 	private Integer defender;
 	private String defenderName;
+	private String changeReason;
 	private Integer result;
 	private Integer cancellation;
 	private Integer children;
@@ -409,6 +410,15 @@ public class ICStockBill implements Serializable {
 		this.status = status;
 	}
 	
+	@Column(name = "CHANGE_REASON", length = 1000)
+	public String getChangeReason() {
+		return changeReason;
+	}
+
+	public void setChangeReason(String changeReason) {
+		this.changeReason = changeReason;
+	}
+
 	@Column(name = "RESULT", columnDefinition = "INT default 0")
 	public Integer getResult() {
 		return result;

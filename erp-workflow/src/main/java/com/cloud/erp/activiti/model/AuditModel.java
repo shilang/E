@@ -14,41 +14,34 @@ public class AuditModel implements Serializable {
 	private String taskBusinessType;
 
 	/**
-	 * none, approve, reject
+	 * view path
 	 */
 	private String path;
 	private Integer businessKey;
 	private String businessClass;
+	
+	/**
+	 * business number
+	 */
 	private String number;
+	
+	/**
+	 * task creater
+	 */
 	private String creater;
+	
+	/**
+	 * check result
+	 * none, approve, reject
+	 */
 	private String result;
+	
+	/**
+	 * check remark
+	 */
 	private String remark;
-
-	public AuditModel() {
-	}
 	
-	public AuditModel(String taskBusinessType) {
-		this(taskBusinessType, "", null, "", "", "");
-	}
-	
-	public AuditModel(String taskBusinessType, Integer businessKey, String businessClass) {
-		this(taskBusinessType, "", businessKey, businessClass);
-	}
-	
-	public AuditModel(String taskBusinessType, String path,
-			Integer businessKey, String businessClass) {
-		this(taskBusinessType, path, businessKey, businessClass, "", "");
-	}
-	
-	public AuditModel(String taskBusinessType, String path,
-			Integer businessKey, String businessClass, String result, String remark) {
-		this.taskBusinessType = taskBusinessType;
-		this.path = path;
-		this.businessKey = businessKey;
-		this.businessClass = businessClass;
-		this.result = result;
-		this.remark = remark;
-	}
+	private String extra;
 	
 	public String getProcessInstanceId() {
 		return processInstanceId;
@@ -120,6 +113,14 @@ public class AuditModel implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	public String getExtra() {
+		return extra;
+	}
+	
+	public void setExtra(String extra) {
+		this.extra = extra;
 	}
 
 }

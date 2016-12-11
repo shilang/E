@@ -8,6 +8,6 @@ public interface CheckService {
 	
 	boolean changeCommit(Class<?> clazz, Integer id);
 	
-	boolean cancelCheck(Class<?> clazz, Integer id);
+	boolean cancelCheck(Class<?> clazz, Integer id, String cancelReason);
 	
 }

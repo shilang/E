@@ -1,5 +1,6 @@
 package com.cloud.erp.service.common;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,13 @@ public class CheckServiceSupport implements CheckService {
 	private static final String METHOD_CHECKER = "checker";
 	private static final String METHOD_CHECK_DATE = "checkDate";
 	private static final String METHOD_CHILDREN = "children";
+	private static final String METHOD_CHANGE_REASON="changeReason";
 	
 	private String result = METHOD_RESULT;
 	private String checker = METHOD_CHECKER;
 	private String checkDate = METHOD_CHECK_DATE;
 	private String children = METHOD_CHILDREN;
+	private String changeReason = METHOD_CHANGE_REASON;
 	
 	@SuppressWarnings("rawtypes")
 	@Autowired
@@ -57,6 +60,14 @@ public class CheckServiceSupport implements CheckService {
 
 	public void setChildren(String children) {
 		this.children = children;
+	}
+	
+	public String getChangeReason() {
+		return changeReason;
+	}
+	
+	public void setChangeReason(String changeReason) {
+		this.changeReason = changeReason;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,17 +108,43 @@ public class CheckServiceSupport implements CheckService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean cancelCheck(Class<?> clazz, Integer id) {
+	public boolean cancelCheck(Class<?> clazz, Integer id, String cancelReason) {
+		//get persistance object
 		Object master = baseDao.get(clazz, id);
+		
+		//get refference flag
 		//int result = (int) Reflect.invokeGetMethod(master, getResult());
 		int children = (int) Reflect.invokeGetMethod(master, getChildren());
 		if(/*result != Constants.RESULT_CHECK_OK ||*/ children != 0){
 			return false;
 		}
 		
+		//cancel result flag
 		Reflect.invokeSetMethod(master, getResult(), Constants.RESULT_NONE);
+		
+		//cancel check content
 		Reflect.invokeSetMethodAllowNull(master, getChecker(), Integer.class, (Integer)null);
 		Reflect.invokeSetMethodAllowNull(master, getCheckDate(), Date.class, (Date)null);
+		
+		//update cancel reason
+		SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String separator = simpleDateFormat.format(new Date()) + "----------";
+		
+		String reason = (String) Reflect.invokeGetMethod(master, getChangeReason());
+		if(reason == null){
+			reason = "";
+		}
+		
+		StringBuffer sBuffer = new StringBuffer();
+		sBuffer.append(separator);
+		sBuffer.append("\n");
+		sBuffer.append(cancelReason);
+		sBuffer.append("\n\n");
+		sBuffer.append(reason);
+		
+		Reflect.invokeSetMethod(master, getChangeReason(), sBuffer.toString());
+		
+		//update object
 		baseDao.update(master);
 		return true;
 	}

@@ -65,6 +65,7 @@ public class ICSales implements Serializable {
 	private String sourceType;
 	private String sourceBillNo;
 	private Integer subject;
+	private String changeReason;
 	private Integer result;
 	private Integer cancellation;
 	private Integer children;
@@ -298,6 +299,15 @@ public class ICSales implements Serializable {
 
 	public void setSubject(Integer subject) {
 		this.subject = subject;
+	}
+	
+	@Column(name = "CHANGE_REASON", length = 1000)
+	public String getChangeReason() {
+		return changeReason;
+	}
+
+	public void setChangeReason(String changeReason) {
+		this.changeReason = changeReason;
 	}
 
 	@Column(name = "RESULT", columnDefinition = "INT default 0")

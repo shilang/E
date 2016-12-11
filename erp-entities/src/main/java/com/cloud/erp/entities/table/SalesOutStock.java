@@ -88,6 +88,7 @@ public class SalesOutStock implements Serializable {
 	private String explanation;
 	private String sourceType;
 	private String sourceBillNo;
+	private String changeReason;
 	private Integer result;
 	private Integer cancellation;
 	private Integer children;
@@ -401,6 +402,15 @@ public class SalesOutStock implements Serializable {
 
 	public void setSourceBillNo(String sourceBillNo) {
 		this.sourceBillNo = sourceBillNo;
+	}
+	
+	@Column(name = "CHANGE_REASON", length = 1000)
+	public String getChangeReason() {
+		return changeReason;
+	}
+
+	public void setChangeReason(String changeReason) {
+		this.changeReason = changeReason;
 	}
 
 	@Column(name = "RESULT", columnDefinition = "INT default 0")

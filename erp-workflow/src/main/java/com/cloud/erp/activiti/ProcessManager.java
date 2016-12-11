@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.ActivitiObjectNotFoundException;
-import org.activiti.engine.FormService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -36,9 +35,6 @@ public class ProcessManager {
 	
 	@Autowired
 	private RepositoryService repositoryService;
-	
-	@Autowired
-	private FormService formService;
 	
 	public String startProcess(String processDefinitionKey, AuditModel auditModel){
 		try {

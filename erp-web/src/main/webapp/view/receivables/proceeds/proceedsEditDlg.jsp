@@ -335,19 +335,22 @@
 				</td>
 			</tr>
 		</table>
-	</form>
-	<div style="margin-top: 12px;">
-		<div id="tb">
-			<table>
-				<tr>
-					<td>
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendRow();">添加</a>
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeRow();">删除</a>
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="rejectRows();">撤销</a>
-					</td>
-				</tr>
-			</table>
+		<div style="margin-top: 5px; margin-bottom:5px;">
+			<div id="tb">
+				<table>
+					<tr>
+						<td>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendRow();">添加</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeRow();">删除</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="rejectRows();">撤销</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<table id="dg" title="项目内容"></table>
 		</div>
-	</div>
-	<table id="dg" title="项目内容"></table>
+		<div class="easyui-panel" data-options="title:'改单记录',collapsible:true,collapsed:true">
+			<textarea id="changeReason" name="changeReason" readonly="readonly" style="margin:0;padding:0;border:0;width:100%;height:150px;"></textarea>
+		</div>
+	</form>	
 </div>

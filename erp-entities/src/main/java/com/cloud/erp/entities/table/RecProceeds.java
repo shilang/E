@@ -71,6 +71,7 @@ public class RecProceeds implements Serializable {
 	private String checkerName;
 	private Date checkDate;
 	private String remark;
+	private String changeReason;
 	private Integer result;
 	private Integer cancellation;
 	private Integer children;
@@ -339,6 +340,15 @@ public class RecProceeds implements Serializable {
 		this.remark = remark;
 	}
 	
+	@Column(name = "CHANGE_REASON", length = 1000)
+	public String getChangeReason() {
+		return changeReason;
+	}
+
+	public void setChangeReason(String changeReason) {
+		this.changeReason = changeReason;
+	}
+
 	@Column(name = "RESULT", columnDefinition = "INT default 0")
 	public Integer getResult() {
 		return result;

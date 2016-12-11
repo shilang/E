@@ -4,11 +4,22 @@
     window['jqueryUtil'] = {};
 	//修改ajax默认设置
 		$.ajaxSetup({
-			type : 'POST',
+			type : 'POST'
+			,
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				$.messager.progress('close');
-				$.messager.alert('错误', XMLHttpRequest.responseText);
+				//$.messager.progress('close');
+				//$.messager.alert('错误', XMLHttpRequest.responseText);
 			}
+		/*,
+		    complete:function(XMLHttpRequest,textStatus){
+		          if(textStatus=="parsererror"){
+		               $.messager.alert('提示', "登陆超时！请重新登陆！", 'info',function(){
+		                   window.location.href = '/login.action';
+		               });
+		          } else if(textStatus=="error"){
+		              $.messager.alert('提示', "请求超时！请稍后再试！", 'info');
+		          }
+		     }*/
 		});
 		
 		var easyuiErrorFunction = function(XMLHttpRequest) {

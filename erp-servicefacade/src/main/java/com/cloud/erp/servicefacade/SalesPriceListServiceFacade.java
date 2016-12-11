@@ -17,6 +17,7 @@ import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesPriceList;
 import com.cloud.erp.entities.table.SalesPriceListEntry;
 import com.cloud.erp.service.SalesPriceListService;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
@@ -113,7 +114,12 @@ public class SalesPriceListServiceFacade implements SalesPriceListService{
 		salesPriceListServiceImpl.persistence(salesPriceList, entries);
 		Integer businessKey = salesPriceList.getInterId();
 		if(null == orignalId){
-			AuditModel auditModel = new AuditModel(Constants.BUSINESS_TYPE_COMMIT, businessKey, SalesPriceList.class.getName());
+			AuditModel auditModel = new AuditModel();
+			auditModel.setTaskBusinessType(Constants.BUSINESS_TYPE_COMMIT);
+			auditModel.setBusinessKey(businessKey);
+			auditModel.setBusinessClass(SalesPriceList.class.getName());
+			auditModel.setNumber(salesPriceList.getBillNo());
+			auditModel.setCreater(Commons.getCurrentUser().getAccount());
 			processManager.startProcess(Constants.PROCESS_DEF_KEY_SALES_PRICELIST_PROCESS, auditModel);
 		}
 		return true;
@@ -121,7 +127,9 @@ public class SalesPriceListServiceFacade implements SalesPriceListService{
 
 	@Override
 	public boolean deleteToUpdateAll(Integer pid) throws Exception {
-		return salesPriceListServiceImpl.deleteToUpdateAll(pid);
+		processManager.deleteProcessInstance(get(pid).getProcInstId());
+		salesPriceListServiceImpl.deleteToUpdateAll(pid);
+		return true;
 	}
 
 	@SuppressWarnings("rawtypes")

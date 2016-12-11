@@ -141,7 +141,7 @@
 			</div>
 			
 			<div id="mm">
-				<div name="test">测试</div>
+				<div name="name">名称</div>
 			</div>
 			
 			<table id="dg" title=""></table>

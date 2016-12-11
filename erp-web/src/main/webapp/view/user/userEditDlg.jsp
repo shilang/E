@@ -70,8 +70,11 @@
 	}
 	
 	function process(){
-		$form.form('reset');
-		parent.$.modalDialog.openner.datagrid('reload');
+		var dg = parent.$.modalDialog.openner;
+		if(dg){
+			$form.form('reset');
+			dg.datagrid('reload');
+		}	
 	}
 	
 	function verifyPassword(){

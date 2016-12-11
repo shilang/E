@@ -15,6 +15,7 @@ import com.cloud.erp.entities.table.SalesContract;
 import com.cloud.erp.entities.table.SalesContractEntry;
 import com.cloud.erp.entities.table.SalesContractScheme;
 import com.cloud.erp.service.SalesContractService;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
@@ -98,7 +99,12 @@ public class SalesContractServiceFacade implements SalesContractService {
 		salesContractServiceImpl.persistence(salesContract, entries,schemes);
 		Integer businessKey = salesContract.getInterId();
 		if(null == orignalId){
-			AuditModel auditModel = new AuditModel(Constants.BUSINESS_TYPE_COMMIT, businessKey, SalesContract.class.getName());
+			AuditModel auditModel = new AuditModel();
+			auditModel.setTaskBusinessType(Constants.BUSINESS_TYPE_COMMIT);
+			auditModel.setBusinessKey(businessKey);
+			auditModel.setBusinessClass(SalesContract.class.getName());
+			auditModel.setNumber(salesContract.getBillNo());
+			auditModel.setCreater(Commons.getCurrentUser().getAccount());
 			processManager.startProcess(Constants.PROCESS_DEF_KEY_SALES_CONTRACT_PROCESS, auditModel);
 		}
 		return true;

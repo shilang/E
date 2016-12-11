@@ -17,8 +17,8 @@ public abstract class BusinessServiceJavaDelegate extends BaseJavaDelegate{
 		return getCheckService().changeCommit(getBusinessClass(), getBusinessKey());
 	}
 	
-	public boolean cancelCheck(){
-		return getCheckService().cancelCheck(getBusinessClass(), getBusinessKey());
+	public boolean cancelCheck(String cancelReason){
+		return getCheckService().cancelCheck(getBusinessClass(), getBusinessKey(), cancelReason);
 	}
 	
 	private CheckService getCheckService(){

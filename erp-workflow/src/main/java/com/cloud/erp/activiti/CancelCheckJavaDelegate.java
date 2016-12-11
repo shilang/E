@@ -13,7 +13,7 @@ public class CancelCheckJavaDelegate extends BusinessServiceJavaDelegate{
 		AuditModel auditModel = getAuditModel();
 		auditModel.setTaskBusinessType(Constants.BUSINESS_TYPE_COMMIT);
 		setAuditModelVariable(execution, auditModel);
-		cancelCheck();
+		cancelCheck(auditModel.getExtra());
 	}
 
 }

@@ -16,6 +16,7 @@ import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.ICStockBill;
 import com.cloud.erp.entities.table.ICStockBillEntry;
 import com.cloud.erp.service.SalesOutStockService;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
@@ -116,7 +117,12 @@ public class SalesOutStockServiceFacade implements SalesOutStockService{
 		salesOutStockServiceImpl.persistence(icStockBill, entries);
 		Integer businessKey = icStockBill.getInterId();
 		if(null == orignalId){
-			AuditModel auditModel = new AuditModel(Constants.BUSINESS_TYPE_COMMIT, businessKey, ICStockBill.class.getName());
+			AuditModel auditModel = new AuditModel();
+			auditModel.setTaskBusinessType(Constants.BUSINESS_TYPE_COMMIT);
+			auditModel.setBusinessKey(businessKey);
+			auditModel.setBusinessClass(ICStockBill.class.getName());
+			auditModel.setNumber(icStockBill.getBillNo());
+			auditModel.setCreater(Commons.getCurrentUser().getAccount());
 			processManager.startProcess(Constants.PROCESS_DEF_KEY_SALES_OUTSTOCK_PROCESS, auditModel);
 		}
 		return true;
@@ -125,7 +131,9 @@ public class SalesOutStockServiceFacade implements SalesOutStockService{
 	@Override
 	public boolean deleteToUpdateAll(Integer pid)
 			throws Exception {
-		return salesOutStockServiceImpl.deleteToUpdateAll(pid);
+		processManager.deleteProcessInstance(get(pid).getProcInstId());
+		salesOutStockServiceImpl.deleteToUpdateAll(pid);
+		return true;
 	}
 	
 }

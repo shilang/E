@@ -73,6 +73,7 @@ public class SalesPriceList implements Serializable {
 	private String deptName;
 	private Integer managerId;
 	private String managerName;
+	private String changeReason;
 	private Integer result;
 	private Integer cancellation;
 	private Integer children;
@@ -254,6 +255,15 @@ public class SalesPriceList implements Serializable {
 		this.managerName = managerName;
 	}
 	
+	@Column(name = "CHANGE_REASON", length = 1000)
+	public String getChangeReason() {
+		return changeReason;
+	}
+
+	public void setChangeReason(String changeReason) {
+		this.changeReason = changeReason;
+	}
+
 	@Column(name = "RESULT", columnDefinition = "INT default 0")
 	public Integer getResult() {
 		return result;

@@ -16,6 +16,7 @@ import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.ICSales;
 import com.cloud.erp.entities.table.ICSalesEntry;
 import com.cloud.erp.service.SalesInvoiceService;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
@@ -112,7 +113,12 @@ public class SalesInvoiceServiceFacade implements SalesInvoiceService {
 		salesInoviceServiceImpl.persistence(master, entries);
 		Integer businessKey = master.getInterId();
 		if(null == orignalId){
-			AuditModel auditModel = new AuditModel(Constants.BUSINESS_TYPE_COMMIT, businessKey, ICSales.class.getName());
+			AuditModel auditModel = new AuditModel();
+			auditModel.setTaskBusinessType(Constants.BUSINESS_TYPE_COMMIT);
+			auditModel.setBusinessKey(businessKey);
+			auditModel.setBusinessClass(ICSales.class.getName());
+			auditModel.setNumber(master.getBillNo());
+			auditModel.setCreater(Commons.getCurrentUser().getAccount());
 			processManager.startProcess(Constants.PROCESS_DEF_KEY_SALES_INVOICE_PROCESS, auditModel);
 		}
 		return true;
@@ -121,7 +127,9 @@ public class SalesInvoiceServiceFacade implements SalesInvoiceService {
 	@Override
 	public boolean deleteToUpdateAll(Integer pid)
 			throws Exception {
-		return salesInoviceServiceImpl.deleteToUpdateAll(pid);
+		processManager.deleteProcessInstance(get(pid).getProcInstId());
+		salesInoviceServiceImpl.deleteToUpdateAll(pid);
+		return true;
 	}
 
 }

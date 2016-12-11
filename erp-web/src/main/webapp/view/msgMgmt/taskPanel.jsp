@@ -106,7 +106,7 @@
 						
 			if(auditModel.taskBusinessType == 'change'){
 				$('#changeReasonPanel').show();
-				$('#changeReason').val(auditModel.remark);
+				$('#changeReason').val(auditModel.extra);
 			}
 		});
 	}

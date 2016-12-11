@@ -16,6 +16,7 @@ import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.RecProceeds;
 import com.cloud.erp.entities.table.RecProceedsEntry;
 import com.cloud.erp.service.RecProceedsService;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
@@ -113,7 +114,12 @@ public class RecProceedsServiceFacade implements RecProceedsService{
 		recProceedsServiceImpl.persistence(recProceeds, entries);
 		Integer businessKey = recProceeds.getInterId();
 		if(null == orignalId){
-			AuditModel auditModel = new AuditModel(Constants.BUSINESS_TYPE_COMMIT, businessKey, RecProceeds.class.getName());
+			AuditModel auditModel = new AuditModel();
+			auditModel.setTaskBusinessType(Constants.BUSINESS_TYPE_COMMIT);
+			auditModel.setBusinessKey(businessKey);
+			auditModel.setBusinessClass(RecProceeds.class.getName());
+			auditModel.setNumber(recProceeds.getBillNo());
+			auditModel.setCreater(Commons.getCurrentUser().getAccount());
 			processManager.startProcess(Constants.PROCESS_DEF_KEY_PROCEEDS_PROCESS, auditModel);
 		}
 		return true;
@@ -122,7 +128,9 @@ public class RecProceedsServiceFacade implements RecProceedsService{
 	@Override
 	public boolean deleteToUpdateAll(Integer pid)
 			throws Exception {
-		return recProceedsServiceImpl.deleteToUpdateAll(pid);
+		processManager.deleteProcessInstance(get(pid).getProcInstId());
+		recProceedsServiceImpl.deleteToUpdateAll(pid);
+		return true;
 	}
 
 }

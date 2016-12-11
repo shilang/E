@@ -152,7 +152,9 @@ public class SalesOrderServiceFacade implements SalesOrderService{
 	@Override
 	public boolean deleteToUpdateAll(Integer pid)
 			throws Exception {
-		return salesOrderServiceImpl.deleteToUpdateAll(pid);
+		processManager.deleteProcessInstance(get(pid).getProcInstId());
+		salesOrderServiceImpl.deleteToUpdateAll(pid);
+		return true;
 	}
 
 	@Override

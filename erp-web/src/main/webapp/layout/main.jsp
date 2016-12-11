@@ -68,6 +68,7 @@
 		
 		centerTabs = $('#centerTabs').tabs({
 			tools : [{
+				width: 50,
 				iconCls : 'icon-reload',
 				handler : function() {
 					var href = $('#centerTabs').tabs('getSelected').panel('options').href;
@@ -93,6 +94,7 @@
 					}
 				}
 			}, {
+				width: 50,
 				iconCls : 'icon-cancel',
 				handler : function() {
 					var index = $('#centerTabs').tabs('getTabIndex', $('#centerTabs').tabs('getSelected'));
@@ -100,10 +102,11 @@
 					if (tab.panel('options').closable) {
 						$('#centerTabs').tabs('close', index);
 					} else {
-						$.messager.alert('提示', '[' + tab.panel('options').title + ']不可以被关闭', 'error');
+						//$.messager.alert('提示', '[' + tab.panel('options').title + ']不可以被关闭', 'error');
 					}
      			}
     		},{
+    			width: 50,
 				iconCls : 'icon-home',
 				handler : function(){
 					/*
@@ -217,6 +220,12 @@
 	}
 
 	function modifyPasswddDlg() {
+		
+		function closeWindow(){
+			parent.$.modalDialog.handler.dialog("destroy");
+			parent.$.modalDialog.handler = undefined;
+		}
+		
 		parent.$.modalDialog({
 			title : '修改密码',
 			iconCls : 'icon-edit',
@@ -232,16 +241,20 @@
 			buttons : [ {
 				text : '修改',
 				iconCls : 'icon-save',
+				width: 80,
 				handler : function() {
 					var f = parent.$.modalDialog.handler.find("#form");
 					f.submit();
+					/* setTimeout(function(){
+						closeWindow();
+					},100); */
 				}
 			}, {
 				text : '取消',
 				iconCls : 'icon-cancel',
+				width: 80,
 				handler : function() {
-					parent.$.modalDialog.handler.dialog("destroy");
-					parent.$.modalDialog.handler = undefined;
+					closeWindow();
 				}
 			} ]
 		});

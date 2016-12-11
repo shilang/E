@@ -16,6 +16,7 @@ import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.SalesOutStock;
 import com.cloud.erp.entities.table.SalesOutStockEntry;
 import com.cloud.erp.service.SalesReturnGoodsNoticeService;
+import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
@@ -115,7 +116,12 @@ public class SalesReturnGoodsNoticeServiceFacade implements
 		salesReturnGoodsNoticeServiceImpl.persistence(salesOutStock, entries);
 		Integer businessKey = salesOutStock.getInterId();
 		if(null == orignalId){
-			AuditModel auditModel = new AuditModel(Constants.BUSINESS_TYPE_COMMIT, businessKey, SalesOutStock.class.getName());
+			AuditModel auditModel = new AuditModel();
+			auditModel.setTaskBusinessType(Constants.BUSINESS_TYPE_COMMIT);
+			auditModel.setBusinessKey(businessKey);
+			auditModel.setBusinessClass(SalesOutStock.class.getName());
+			auditModel.setNumber(salesOutStock.getBillNo());
+			auditModel.setCreater(Commons.getCurrentUser().getAccount());
 			processManager.startProcess(Constants.PROCESS_DEF_KEY_SALES_RETURNGOODS_NOTICE_PROCESS, auditModel);
 		}
 		return true;
@@ -124,7 +130,9 @@ public class SalesReturnGoodsNoticeServiceFacade implements
 	@Override
 	public boolean deleteToUpdateAll(Integer pid)
 			throws Exception {
-		return salesReturnGoodsNoticeServiceImpl.deleteToUpdateAll(pid);
+		processManager.deleteProcessInstance(get(pid).getProcInstId());
+		salesReturnGoodsNoticeServiceImpl.deleteToUpdateAll(pid);
+		return true;
 	}
 
 }
