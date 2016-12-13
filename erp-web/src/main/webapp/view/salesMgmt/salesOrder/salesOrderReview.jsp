@@ -169,8 +169,11 @@
 				</td>
 			</tr>
 		</table>
-		<div>
+		<div style="margin-bottom:5px;">
 			<table id="reviewdg" title="项目内容"></table>
+		</div>
+		<div class="easyui-panel" data-options="title:'改单记录',collapsible:true,collapsed:true">
+			<textarea id="changeReason" name="changeReason" readonly="readonly" style="margin:0;padding:0;border:0;width:100%;height:150px;"></textarea>
 		</div>
 		<div id="reviewDiv">
 			<ul>

@@ -51,7 +51,7 @@
 								var status = $.erp.getResultStatus(value);
 								return '<span style="color:'+status.color+';">' + status.msg + '</span>';
 						},sortable:true},
-			        	{field:'orderStatus',title:'订单状态',width:parseInt($(this).width()*0.06)},
+			        	{field:'orderStatus',title:'订单状态',width:parseInt($(this).width()*0.08)},
 			        	{field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'customerName',title:'购货单位', hidden:!salOrderShowCust,width:parseInt($(this).width()*0.1),sortable:true},
@@ -268,12 +268,16 @@
 		}
 		var row = $dg.datagrid('getSelected');
 		if(row){
-			$.erp.ajax('salesOrder/updateOrderStatus.action',{interId:row.interId,orderStatus:status},function(rsp){
-				if(rsp.status){
-					$dg.datagrid('reload');
-					$dg.datagrid('selectRow', $dg.datagrid('getRowIndex', row));
+			parent.$.messager.confirm($.erp.hint,'单据['+row.billNo+']状态改为['+status+']?',function(r){
+				if(r){
+					$.erp.ajax('salesOrder/updateOrderStatus.action',{interId:row.interId,orderStatus:status},function(rsp){
+						if(rsp.status){
+							$dg.datagrid('reload');
+							$dg.datagrid('selectRow', $dg.datagrid('getRowIndex', row));
+						}
+						$.erp.submitSuccess(rsp.title, rsp.message);
+					});
 				}
-				$.erp.submitSuccess(rsp.title, rsp.message);
 			});
 		}else{
 			$.erp.noSelectErr();
@@ -325,6 +329,7 @@
 						</td>
 						<td>	
 							 <div style="float: left; margin-right:5px;" class="datagrid-btn-separator" ></div>
+							 
 							 <select id="orderStatus" name="orderStatus" class="easyui-combobox" >
 							 	<option value="empty">请选择</option>
 							 	<shiro:hasPermission name="salOrderStatusProduction">
@@ -334,13 +339,16 @@
 									<option value="待确认">待确认</option>
 								</shiro:hasPermission>
 								<shiro:hasPermission name="salOrderStatusOut">
+									<option value="已备货(部分)">已备货(部分)</option>
 									<option value="已备货">已备货</option>
+									<option value="已出货(部分)">已出货(部分)</option>
 									<option value="已出货">已出货</option>
 								</shiro:hasPermission>
 								<shiro:hasPermission name="salOrderStatusCancel">
 									<option value="取消订单">取消订单</option>
 								</shiro:hasPermission>
 							 </select>
+							 
 							<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="modifyOrderStatus();">修改状态</a>
 						</td>
 						<td>

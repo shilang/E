@@ -53,7 +53,8 @@ public class MultiEntryDaoSupport<T> extends UpdateStatus {
 	private <E> void delEntries(List<E> entries){
 		if(null != entries && !entries.isEmpty()){
 			for(E entry : entries){
-				baseDao.deleteToUpdate(entry);
+				//baseDao.deleteToUpdate(entry);
+				baseDao.delete(entry);
 			}
 		}
 	}
@@ -61,7 +62,8 @@ public class MultiEntryDaoSupport<T> extends UpdateStatus {
 	private <E> void persistenceEntry(Object master, Map<String, List<E>> entries, StatusFields statusFields){
 		this.addEntries(updateEntityInfo(master,entries.get(Constants.ENTRY_LIST_TYPE_ADD), statusFields, OperType.create));
 	    this.updEntries(updateEntityInfo(master,entries.get(Constants.ENTRY_LIST_TYPE_UPD), statusFields, OperType.update));
-		this.delEntries(updateEntityInfo(master,entries.get(Constants.ENTRY_LIST_TYPE_DEL), statusFields, OperType.delete));
+		//this.delEntries(updateEntityInfo(master,entries.get(Constants.ENTRY_LIST_TYPE_DEL), statusFields, OperType.delete));
+		this.delEntries(entries.get(Constants.ENTRY_LIST_TYPE_DEL));
 	}
 
 	public <E> boolean persistenceEntries(T master, Map<String, List<E>> entries, StatusFields statusFields) {

@@ -56,7 +56,23 @@ public class ProcessManager {
 		deleteProcessInstance(processInstanceId, DELETE_REASON);
 	}
 	
+	public boolean hasProcessInstance(String processInstanceId){
+		long count = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).count();
+		if(count == 0){
+			return false;
+		}
+		return true;
+	}
+	
 	public void deleteProcessInstance(String processInstanceId, String deleteReason){
+		
+		if(!hasProcessInstance(processInstanceId)){
+			if(log.isInfoEnabled()){
+				log.info("no process instance [{}] exists", processInstanceId);
+			}
+			return;
+		}
+		
 		try {
 			runtimeService.deleteProcessInstance(processInstanceId, deleteReason);
 		} catch (ActivitiObjectNotFoundException e) {
