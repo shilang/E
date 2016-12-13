@@ -23,6 +23,10 @@ public class UpdateStatus {
 	
 	public Object updateEntityInfo(Object master, StatusFields statusFields, OperType operType) {
 
+		if(statusFields == null){
+			return master;
+		}
+		
 		try {
 			if (OperType.create.equals(operType)) {
 				Reflect.invokeSetMethod(master, statusFields.getCreater(), getCurrUserId());
@@ -46,6 +50,10 @@ public class UpdateStatus {
 
 	public <E> List<E> updateEntityInfo(Object master, List<E> entries, StatusFields statusFields, 
 			OperType operType){
+		
+		if(statusFields == null){
+			return entries;
+		}
 
 		try {
 			
