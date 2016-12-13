@@ -114,10 +114,10 @@ public class CheckServiceSupport implements CheckService {
 		
 		//get refference flag
 		//int result = (int) Reflect.invokeGetMethod(master, getResult());
-		int children = (int) Reflect.invokeGetMethod(master, getChildren());
-		if(/*result != Constants.RESULT_CHECK_OK ||*/ children != 0){
-			return false;
-		}
+//		int children = (int) Reflect.invokeGetMethod(master, getChildren());
+//		if(/*result != Constants.RESULT_CHECK_OK ||*/ children != 0){
+//			return false;
+//		}
 		
 		//cancel result flag
 		Reflect.invokeSetMethod(master, getResult(), Constants.RESULT_NONE);
