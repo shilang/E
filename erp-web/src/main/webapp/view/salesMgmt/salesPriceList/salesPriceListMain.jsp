@@ -40,22 +40,22 @@
 			fitColumns: false,
 			queryParams: queryParams,
 			columns:[[
-				{field: 'result', title: '状态', width: parseInt($(this).width() * 0.06),
+				{field: 'result', title: '状态', width: parseInt($(this).width() * 0.08),
 							formatter:function(value, row){
 								var status = $.erp.getResultStatus(value);
 								return '<span style="color:'+status.color+';">' + status.msg + '</span>';
 				},sortable:true},
-				{field: 'billNo', title: '单据编号', width: parseInt($(this).width() * 0.1),sortable:true},
+				{field: 'billNo', title: '单据编号', width: parseInt($(this).width() * 0.12),sortable:true},
 				{field: 'date', title: '日期', width: parseInt($(this).width() * 0.1),sortable:true},
-				{field: 'customerName', title: '购货单位', width: parseInt($(this).width() * 0.1),sortable:true},
-				{field: 'currencyName', title: '货币', width: parseInt($(this).width() * 0.1),sortable:true},
-				{field: 'managerName', title: '主管', width: parseInt($(this).width() * 0.1),sortable:true},
-				{field: 'deptName', title: '部门', width: parseInt($(this).width() * 0.1),sortable:true},
-				{field: 'employeeName', title: '业务员', width: parseInt($(this).width() * 0.1),sortable:true},
-				{field: 'createrName', title: '制单', width: parseInt($(this).width() * 0.1),sortable:true},
-				{field: 'exchangeRate', title: '汇率', width: parseInt($(this).width() * 0.1)},
-				{field: 'checkerName', title: '审核人', width: parseInt($(this).width() * 0.1),sortable:true},
-				{field: 'checkDate', title: '审核日期', width: parseInt($(this).width() * 0.14),sortable:true},
+				{field: 'customerName', title: '购货单位', width: parseInt($(this).width() * 0.15),sortable:true},
+				{field: 'currencyName', title: '货币', width: parseInt($(this).width() * 0.08),sortable:true},
+				{field: 'managerName', title: '主管', width: parseInt($(this).width() * 0.08),sortable:true},
+				{field: 'deptName', title: '部门', width: parseInt($(this).width() * 0.08),sortable:true},
+				{field: 'employeeName', title: '业务员', width: parseInt($(this).width() * 0.08),sortable:true},
+				{field: 'createrName', title: '制单', width: parseInt($(this).width() * 0.08),sortable:true},
+				{field: 'exchangeRate', title: '汇率', width: parseInt($(this).width() * 0.08)},
+				{field: 'checkerName', title: '审核人', width: parseInt($(this).width() * 0.08),sortable:true},
+				{field: 'checkDate', title: '审核日期', width: parseInt($(this).width() * 0.16),sortable:true},
 				{field: 'removeFlag', title: '作废标志', width: parseInt($(this).width() * 0.1)}
 			]],toolbar: '#tb',
 			//onClickRow: onClickRow,

@@ -41,12 +41,12 @@
 			queryParams: queryParams,
 			idField: 'interId',
 			columns:[[
-					{field: 'result', title: '状态', width: parseInt($(this).width() * 0.06),
+					{field: 'result', title: '状态', width: parseInt($(this).width() * 0.08),
 						formatter:function(value, row){
 							var status = $.erp.getResultStatus(value);
 							return '<span style="color:'+status.color+';">' + status.msg + '</span>';
 					},sortable:true},
-			        {field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.1),sortable:true},
+			        {field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.12),sortable:true},
 			        {field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'marketingWayName',title:'销售业务类型',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'salesWayName',title:'销售方式',width:parseInt($(this).width()*0.1),sortable:true},
@@ -54,17 +54,17 @@
 			        {field:'fetchAddrName',title:'交货地点',width:parseInt($(this).width()*0.1),sortable:true},
 			        {field:'stockName',title:'发货仓库',width:parseInt($(this).width()*0.1)},
 			        {field:'settlementDate',title:'收款日期',width:parseInt($(this).width()*0.1),sortable:true},
-			        {field:'senderName',title:'发货',width:parseInt($(this).width()*0.1),sortable:true},
-			        {field:'defenderName',title:'保管',width:parseInt($(this).width()*0.1),sortable:true},
-			        {field:'departmentName',title:'部门',width:parseInt($(this).width()*0.1),sortable:true},
-			        {field:'employeeName',title:'业务员',width:parseInt($(this).width()*0.1),sortable:true},
-			        {field:'managerName',title:'主管',width:parseInt($(this).width()*0.1),sortable:true},
-			        {field:'explanation',title:'摘要',width:parseInt($(this).width()*0.1)},
-			        {field:'checkerName',title:'审核人',width:parseInt($(this).width()*0.1),sortable:true},
-			        {field:'checkDate',title:'审核日期',width:parseInt($(this).width()*0.14),sortable:true},
-			        {field:'createrName',title:'制单',width:parseInt($(this).width()*0.1)},
+			        {field:'senderName',title:'发货',width:parseInt($(this).width()*0.08),sortable:true},
+			        {field:'defenderName',title:'保管',width:parseInt($(this).width()*0.08),sortable:true},
+			        {field:'departmentName',title:'部门',width:parseInt($(this).width()*0.08),sortable:true},
+			        {field:'employeeName',title:'业务员',width:parseInt($(this).width()*0.08),sortable:true},
+			        {field:'managerName',title:'主管',width:parseInt($(this).width()*0.08),sortable:true},
+			        {field:'checkerName',title:'审核人',width:parseInt($(this).width()*0.08),sortable:true},
+			        {field:'checkDate',title:'审核日期',width:parseInt($(this).width()*0.16),sortable:true},
+			        {field:'createrName',title:'制单',width:parseInt($(this).width()*0.08)},
 			        {field:'sourceType',title:'源单类型',width:parseInt($(this).width()*0.1)},
-			        {field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.1)}
+			        {field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.12)},
+			        {field:'explanation',title:'摘要',width:parseInt($(this).width()*0.4)}
 			        ]],
 			toolbar: '#tb',
 			//onClickRow: onClickRow,

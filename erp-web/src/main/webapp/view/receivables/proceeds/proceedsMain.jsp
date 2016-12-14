@@ -25,39 +25,36 @@
 			queryParams: {sort: 'interId', order: 'desc'},
 			idField: 'interId',
 			columns: [[
-			               {field: 'result', title: '状态', width: parseInt($(this).width() * 0.06),
+			               {field: 'result', title: '状态', width: parseInt($(this).width() * 0.08),
 							formatter:function(value, row){
 								var status = $.erp.getResultStatus(value);
 								return '<span style="color:'+status.color+';">' + status.msg + '</span>';
 						   },sortable:true},
-			        	   {field:'billNo',title:'单据号',width:parseInt($(this).width()*0.1),sortable:true},
+			        	   {field:'billNo',title:'单据号',width:parseInt($(this).width()*0.12),sortable:true},
 				        	{field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'subject',title:'核算项目类别',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'customerName',title:'核算项目',width:parseInt($(this).width()*0.1),sortable:true},
+				        	{field:'subject',title:'核算项目类别',width:parseInt($(this).width()*0.08),sortable:true},
+				        	{field:'customerName',title:'核算项目',width:parseInt($(this).width()*0.15),sortable:true},
 				        	{field:'custBank',title:'核算项目开户银行',width:parseInt($(this).width()*0.1),sortable:true},
 				        	{field:'custBankNum',title:'核算项目银行账号',width:parseInt($(this).width()*0.1),sortable:true},
 				        	{field:'settleDate',title:'财务日期',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'settleName',title:'结算方式',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'currencyName',title:'币别',width:parseInt($(this).width()*0.1)},
-				        	{field:'exchangeRate',title:'汇率',width:parseInt($(this).width()*0.1)},
-				        	{field:'amount',title:'单据金额',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'settleAmount',title:'实收金额',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'bankCost',title:'银行费用',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'settleCurrencyName',title:'实收币别',width:parseInt($(this).width()*0.1),sortable:true},
+				        	{field:'settleName',title:'结算方式',width:parseInt($(this).width()*0.06),sortable:true},
+				        	{field:'currencyName',title:'币别',width:parseInt($(this).width()*0.06)},
+				        	{field:'exchangeRate',title:'汇率',width:parseInt($(this).width()*0.06)},
+				        	{field:'amount',title:'单据金额',width:parseInt($(this).width()*0.06),sortable:true},
+				        	{field:'settleAmount',title:'实收金额',width:parseInt($(this).width()*0.06),sortable:true},
+				        	{field:'bankCost',title:'银行费用',width:parseInt($(this).width()*0.06),sortable:true},
+				        	{field:'settleCurrencyName',title:'实收币别',width:parseInt($(this).width()*0.06),sortable:true},
 				        	{field:'bank',title:'收款银行',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'bankNum',title:'账号',width:parseInt($(this).width()*0.1),sortable:true},
+				        	{field:'bankNum',title:'账号',width:parseInt($(this).width()*0.16),sortable:true},
 				        	{field:'explanation',title:'摘要',width:parseInt($(this).width()*0.1)},
-				        	{field:'departmentName',title:'部门',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'employeeName',title:'业务员',width:parseInt($(this).width()*0.1),sortable:true},
-				        	/* {field:'recType',title:'收款类型',width:parseInt($(this).width()*0.1),sortable:true}, */
-				        	{field:'remark',title:'备注',width:parseInt($(this).width()*0.1),sortable:true},
-				        	/* {field:'cashSubject',title:'现金类科目',width:parseInt($(this).width()*0.1),sortable:true}, */
-				        /* 	{field:'settleNum',title:'结算号',width:parseInt($(this).width()*0.1),sortable:true}, */
-				        	{field:'createrName',title:'制单人',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'checkerName',title:'审核人',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'checkDate',title:'审核日期',width:parseInt($(this).width()*0.16),sortable:true}
-				        	/* {field:'',title:'收款币别',width:parseInt($(this).width()*0.1),sortable:true},
-				        	{field:'',title:'收款金额',width:parseInt($(this).width()*0.1),sortable:true} */
+				        	{field:'departmentName',title:'部门',width:parseInt($(this).width()*0.08),sortable:true},
+				        	{field:'employeeName',title:'业务员',width:parseInt($(this).width()*0.08),sortable:true},
+				        	{field:'createrName',title:'制单人',width:parseInt($(this).width()*0.08),sortable:true},
+				        	{field:'checkerName',title:'审核人',width:parseInt($(this).width()*0.08),sortable:true},
+				        	{field:'checkDate',title:'审核日期',width:parseInt($(this).width()*0.16),sortable:true},
+				        	{field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.12),sortable:true},
+				        	{field:'sourceType',title:'源单类型',width:parseInt($(this).width()*0.1),sortable:true},
+				        	{field:'remark',title:'备注',width:parseInt($(this).width()*0.4),sortable:true}
 			         ]],
 			toolbar: '#tb',
 			onDblClickRow: onDblClickRow
@@ -184,6 +181,7 @@
 			</div> 
 			<div id="mm">
 				<div name="billNo">单据号</div>
+				<div name="sourceBillNo">源单单号</div>
 			</div>
 			<table id="dg" title=""></table>
 		</div>

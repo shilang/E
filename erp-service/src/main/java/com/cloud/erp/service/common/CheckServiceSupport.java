@@ -73,9 +73,6 @@ public class CheckServiceSupport implements CheckService {
 	@SuppressWarnings("unchecked")
 	private boolean updateStatus(Object master, int expect) {
 		
-	/*	if ((int)Reflect.invokeGetMethod(master, getResult()) != expect - 1) {
-			return false;
-		}*/
 		Reflect.invokeSetMethod(master, getResult(), expect);
 		if (Constants.RESULT_CHECK_OK == expect) {
 			Reflect.invokeSetMethod(master, getChecker(), Commons.getCurrentUser().getUserId());
@@ -111,13 +108,6 @@ public class CheckServiceSupport implements CheckService {
 	public boolean cancelCheck(Class<?> clazz, Integer id, String cancelReason) {
 		//get persistance object
 		Object master = baseDao.get(clazz, id);
-		
-		//get refference flag
-		//int result = (int) Reflect.invokeGetMethod(master, getResult());
-//		int children = (int) Reflect.invokeGetMethod(master, getChildren());
-//		if(/*result != Constants.RESULT_CHECK_OK ||*/ children != 0){
-//			return false;
-//		}
 		
 		//cancel result flag
 		Reflect.invokeSetMethod(master, getResult(), Constants.RESULT_NONE);

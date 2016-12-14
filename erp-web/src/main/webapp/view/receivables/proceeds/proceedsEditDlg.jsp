@@ -23,13 +23,13 @@
 
 		var entryArr = [[]];
 		var currArr = [
-		               {field:'quantity',title:'数量',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{required:true}}},
-		               {field:'price',title:'单价',width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{precision:2,required:true}}},
-		               {field:'amount',title:'金额',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{precision:2,required:true}}},
-		               {field:'settleQty',title:'结算数量',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{required:true}}},
-		               {field:'settleAmount',title:'结算实收金额',sum:true,width:parseInt($(this).width()*0.1),editor:{type:'numberbox',options:{precision:2,required:true}}},
-		               {field:'remark',title:'备注',width:parseInt($(this).width()*0.1),editor:'textbox'},
-		               {field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.1),editor:{type:'textbox',options:{editable:false}}}
+		               {field:'quantity',title:'数量',sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true}}},
+		               {field:'price',title:'单价',width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:2,required:true}}},
+		               {field:'amount',title:'金额',sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:2,required:true}}},
+		               {field:'settleQty',title:'结算数量',sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true}}},
+		               {field:'settleAmount',title:'结算实收金额',sum:true,width:parseInt($(this).width()*0.08),editor:{type:'numberbox',options:{precision:2,required:true}}},
+		               {field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.12),editor:{type:'textbox',options:{editable:false}}},
+		               {field:'remark',title:'备注',width:parseInt($(this).width()*0.4),editor:'textbox'}
 		               ];
 		entryArr[0] = new $.erp.materialCol($dg).mergeCol(currArr);
 
