@@ -77,7 +77,7 @@ public class RecProceedsServiceImpl implements RecProceedsService {
 		}
 		
 		//update settleAmount bankcost settleCurrency
-		recProceedsDao.updateSalesOrderRelatedAmount(recProceeds, recProceeds.getSourceBillNo());
+		recProceedsDao.updateSalesOrderRelatedAmount(recProceeds);
 		
 		return true;
 	}

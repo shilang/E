@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import com.cloud.erp.entities.common.MessageType;
+import com.cloud.erp.entities.MessageType;
 
 @Entity
 @Table(name = "MESSAGE")

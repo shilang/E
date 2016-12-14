@@ -2,6 +2,7 @@ package com.cloud.erp.dao.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,11 +16,13 @@ import com.cloud.erp.dao.RecProceedsDao;
 import com.cloud.erp.dao.SalesContractDao;
 import com.cloud.erp.dao.SalesInvoiceDao;
 import com.cloud.erp.dao.SalesOrderDao;
+import com.cloud.erp.dao.common.BaseDao;
 import com.cloud.erp.dao.common.GeneralDaoSupport;
 import com.cloud.erp.dao.common.ReferenceDao;
 import com.cloud.erp.dao.common.SingleEntryDaoSupport;
 import com.cloud.erp.dao.common.StatusFields;
 import com.cloud.erp.dao.exception.UpdateReferenceException;
+import com.cloud.erp.entities.SettleItem;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.ICSales;
 import com.cloud.erp.entities.table.ICSalesEntry;
@@ -35,6 +38,9 @@ public class RecProceedsDaoImpl implements RecProceedsDao {
 	
 	private final StatusFields statusFields = new StatusFields();
 
+	@Resource
+	private BaseDao<?> baseDao;
+	
 	@Resource
 	private GeneralDaoSupport<RecProceeds> generalDao;
 	
@@ -176,7 +182,8 @@ public class RecProceedsDaoImpl implements RecProceedsDao {
 	}
 
 	@Override
-	public boolean updateSalesOrderRelatedAmount(RecProceeds recProceeds, String sourceBillNo) {
+	public boolean updateSalesOrderRelatedAmount(RecProceeds recProceeds) {
+		String sourceBillNo = recProceeds.getSourceBillNo();
 		if(null == sourceBillNo || "".equals(sourceBillNo)){
 			return true;
 		}
@@ -186,6 +193,24 @@ public class RecProceedsDaoImpl implements RecProceedsDao {
 		salesOrder.setSettleCurrency(recProceeds.getSettleCurrency());
 		salesOrderDao.update(salesOrder);
 		return true;
+	}
+
+	@Override
+	public SettleItem mergeSettleAmount(String sourceBillNo) {
+		SettleItem settleItem = new SettleItem();
+		
+		String sql = "SELECT AMOUNT AS 'amount', FREIGHT_AMOUNT as 'freightAmount',"+
+				" TOTAL_AMOUNT as 'totalAmount', SUM(SETTLE_AMOUNT) AS 'settleAmount',"+
+				" SUM(BANK_COST) as 'bankCost' FROM REC_PROCEEDS"+
+				" WHERE SOURCE_BILL_NO=:SOURCE_BILL_NO GROUP BY SOURCE_BILL_NO";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("SOURCE_BILL_NO", sourceBillNo);
+		List<?> list = baseDao.findBySQL(sql, params);
+		if(null != list && list.size() > 0){
+			Object[] o = (Object[])list.get(0);
+			
+		}
+		return null;
 	}
 
 }

@@ -3,7 +3,7 @@ package com.cloud.erp.activiti;
 import java.util.Date;
 
 import com.cloud.erp.activiti.model.AuditModel;
-import com.cloud.erp.entities.common.MessageType;
+import com.cloud.erp.entities.MessageType;
 import com.cloud.erp.entities.table.Message;
 import com.cloud.erp.service.MessageService;
 import com.cloud.erp.service.common.CheckService;

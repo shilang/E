@@ -6,6 +6,7 @@ import com.cloud.erp.dao.common.GeneralDao;
 import com.cloud.erp.dao.common.ReferenceDao;
 import com.cloud.erp.dao.common.SingleEntryDao;
 import com.cloud.erp.dao.exception.UpdateReferenceException;
+import com.cloud.erp.entities.SettleItem;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.RecProceeds;
 
@@ -27,6 +28,8 @@ public interface RecProceedsDao
 	
 	boolean updateSalesConstractReference(String number, boolean mode) throws UpdateReferenceException;
 	
-	boolean updateSalesOrderRelatedAmount(RecProceeds recProceeds, String sourceBillNo);
+	boolean updateSalesOrderRelatedAmount(RecProceeds recProceeds);
+	
+	SettleItem mergeSettleAmount(String sourceBillNo);
 	
 }
