@@ -75,10 +75,7 @@ public class RecProceedsServiceImpl implements RecProceedsService {
 			
 			updateReference(entries.get(Constants.ENTRY_LIST_TYPE_ADD), true);
 		}
-		
-		//update settleAmount bankcost settleCurrency
-		recProceedsDao.updateSalesOrderRelatedAmount(recProceeds);
-		
+			
 		return true;
 	}
 

@@ -17,15 +17,7 @@
 	$(function(){
 		
 		if(selSta){
-			$("#addOper").hide();
-			$("#updOper").hide();
-			$("#delOper").hide();
-			$("#showOper").hide();
-			$("#checkOper").hide();
-			$("#exportOper").hide();
-			$("#commitOper").hide();
-			$("#unCheckOper").hide();
-			$("#pendingOper").hide();
+			$(".submain").hide();
 			$.extend(queryParams, $.erp.searcher('result', $.erp.resultCheckOk, 'int'));
 		}
 		
@@ -48,8 +40,7 @@
 			columns:[[
 						{field: 'result', title: '审核状态', width: parseInt($(this).width() * 0.08),
 							formatter:function(value, row){
-								var status = $.erp.getResultStatus(value);
-								return '<span style="color:'+status.color+';">' + status.msg + '</span>';
+								return $.erp.getResultStatus(value);
 						},sortable:true},
 			        	{field:'orderStatus',title:'订单状态',width:parseInt($(this).width()*0.08)},
 			        	{field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.12),sortable:true},
@@ -71,6 +62,11 @@
 			        	{field:'settleAmount',title:'结算金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
 			        	{field:'bankCost',title:'银行费用',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
 			        	{field:'settleCurrencyName',title:'结算币别',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
+			        	{field:'settleStatus',title:'结算状态',width:parseInt($(this).width()*0.06),
+			        		formatter:function(value,row){
+			        			return $.erp.getSettleStatus(value);
+			        		}	
+			        	},
 			        	{field:'managerName',title:'主管',width:parseInt($(this).width()*0.08),sortable:true},
 			        	{field:'departmentName',title:'部门',width:parseInt($(this).width()*0.08),sortable:true},
 			        	{field:'employeeName',title:'业务员',width:parseInt($(this).width()*0.08),sortable:true},
@@ -112,7 +108,9 @@
 			}else if(type == "XSFP"){
 				url = "salesInvoice/shareEntries";
 			}else if(type == "YSK"){
-				url = "proceeds/shareEntries";	
+				url = "proceeds/shareEntries";
+				if('settleAmount' in row){delete row.settleAmount}
+				if('bankCost' in row){delete row.bankCost;}
 			}else{
 				return;
 			}
@@ -306,64 +304,64 @@
 					<tr>
 						<td>
 							<shiro:hasPermission name="salOrderAdd">
-								<a id="addOper" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addSalesOrderDlg();">添加</a>
+								<a id="addOper" href="javascript:void(0);" class="easyui-linkbutton submain" data-options="iconCls:'icon-add',plain:true" onclick="addSalesOrderDlg();">添加</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOrderMod">
-								<a id="updOper" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="updateSalesOrderDlg();">修改</a>
+								<a id="updOper" href="javascript:void(0);" class="easyui-linkbutton submain" data-options="iconCls:'icon-edit',plain:true" onclick="updateSalesOrderDlg();">修改</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOrderDel">
-								<a id="delOper" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="delSalesOrder();">删除</a>
+								<a id="delOper" href="javascript:void(0);" class="easyui-linkbutton submain" data-options="iconCls:'icon-remove',plain:true" onclick="delSalesOrder();">删除</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOrderShow">
-								<a id="showOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-show" plain="true" onclick="showSalesOrderDlg();">查看</a>
+								<a id="showOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-show" plain="true" onclick="showSalesOrderDlg();">查看</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOrderCommit">
-								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-datago" plain="true" onclick="commitSalesOrder();">提交</a>
+								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-datago" plain="true" onclick="commitSalesOrder();">提交</a>
 							</shiro:hasPermission>
+							<div style="float: right;margin-left:5px;" class="datagrid-btn-separator submain" ></div>
 						</td>
 						<td>
 							<shiro:hasPermission name="salOrderReview">
-								<div style="float: left;" class="datagrid-btn-separator" ></div>
-								<a id="ReviewOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cstbase" plain="true" onclick="orderReview();">订单评审</a>
+								<a id="ReviewOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-cstbase" plain="true" onclick="orderReview();">订单评审</a>
+							 	<div style="float: right;margin-left:5px;" class="datagrid-btn-separator submain" ></div>
 							</shiro:hasPermission>
 						</td>
 						<td>	
-							 <div style="float: left; margin-right:5px;" class="datagrid-btn-separator" ></div>
-							 
-							 <select id="orderStatus" name="orderStatus" class="easyui-combobox" >
-							 	<option value="empty">请选择</option>
-							 	<shiro:hasPermission name="salOrderStatusProduction">
-									<option value="已备料">已备料</option>
-									<option value="已排单">已排单</option>
-									<option value="生产中">生产中</option>
-									<option value="待确认">待确认</option>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="salOrderStatusOut">
-									<option value="已备货(部分)">已备货(部分)</option>
-									<option value="已备货">已备货</option>
-									<option value="已出货(部分)">已出货(部分)</option>
-									<option value="已出货">已出货</option>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="salOrderStatusCancel">
-									<option value="取消订单">取消订单</option>
-								</shiro:hasPermission>
-							 </select>
-							 
-							<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="modifyOrderStatus();">修改状态</a>
+							 <div id="orderStatusOper" class="submain" style="display:inline-block;">
+								 <select id="orderStatus" name="orderStatus" class="easyui-combobox" >
+								 	<option value="empty">请选择</option>
+								 	<shiro:hasPermission name="salOrderStatusProduction">
+										<option value="已备料">已备料</option>
+										<option value="已排单">已排单</option>
+										<option value="生产中">生产中</option>
+										<option value="待确认">待确认</option>
+									</shiro:hasPermission>
+									<shiro:hasPermission name="salOrderStatusOut">
+										<option value="已备货(部分)">已备货(部分)</option>
+										<option value="已备货">已备货</option>
+										<option value="已出货(部分)">已出货(部分)</option>
+										<option value="已出货">已出货</option>
+									</shiro:hasPermission>
+									<shiro:hasPermission name="salOrderStatusCancel">
+										<option value="取消订单">取消订单</option>
+									</shiro:hasPermission>
+								 </select>
+								<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="modifyOrderStatus();">修改状态</a>
+								<div style="float: right;" class="datagrid-btn-separator" ></div>
+							</div>
 						</td>
 						<td>
 							<shiro:hasPermission name="salOrderExport">
-								 <div style="float: left;" class="datagrid-btn-separator" ></div>
-								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
+								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
+								<div style="float: right; margin-left:5px;" class="datagrid-btn-separator submain" ></div>
 							</shiro:hasPermission>
 						</td>
 						<td>
-							<div style="float: left; margin-right:5px;" class="datagrid-btn-separator" ></div>
 							<input id="searchbox">
 						</td>
 						<td>
 							<shiro:hasPermission name="salOrderCheck">
-								<a id="pendingOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
+								<a id="pendingOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
 							</shiro:hasPermission>
 							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="">高级查询</a>
 						</td>

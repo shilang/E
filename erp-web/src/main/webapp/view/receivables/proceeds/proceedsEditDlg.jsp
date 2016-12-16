@@ -281,11 +281,11 @@
 				</td> -->
 				<th>实收金额</th>
 				<td>
-					<input id="settleAmount" name="settleAmount" class="easyui-numberbox" data-options="required:true,precision:2,value:0"/>
+					<input id="settleAmount" name="settleAmount" class="easyui-numberbox" data-options="required:true,precision:2"/>
 				</td>
 				<th>银行费用</th>
 				<td>
-					<input id="bankCost" name="bankCost" class="easyui-numberbox" data-options="required:true,precision:2,value:0"/>
+					<input id="bankCost" name="bankCost" class="easyui-numberbox" data-options="required:true,precision:2"/>
 				</td>
 				<th>实收币别</th>
 				<td>

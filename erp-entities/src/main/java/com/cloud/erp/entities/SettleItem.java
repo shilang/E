@@ -1,12 +1,13 @@
 package com.cloud.erp.entities;
 
+
 public class SettleItem {
 
-	private Double amount = 0;
-	private Double freightAmount;
-	private Double totalAmount;
-	private Double settleAmount;
-	private Double bankCost;
+	private double amount = 0.00;
+	private double freightAmount = 0.00;
+	private double totalAmount = 0.00;
+	private double settleAmount = 0.00;
+	private double bankCost = 0.00;
 
 	public Double getAmount() {
 		return amount;

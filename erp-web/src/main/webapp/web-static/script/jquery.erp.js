@@ -30,6 +30,15 @@
 		resultCheckOkMsg: '已审核',
 		resultCheckChangeMsg: '改待审核',
 		
+		//settle status value
+		settleStatusNone: 0,
+		settleStatusPart: 1,
+		settleStatusFull: 2,
+		//settle status message
+		settleStatusNoneMsg: '',
+		settleStatusPartMsg: '欠款',
+		settleStatusFullMsg: '已结款',
+		
 		rowEditErrMsg: '编辑行数据未完成',
 		//dialog duraction time
 		showTimeout: 1000 * 2,	
@@ -99,7 +108,7 @@
 		switch(value){
 		case $.erp.resultNone:
 			status.msg = $.erp.resultNoneMsg;
-			status.color = "";
+			status.color = "black";
 			break;
 		case $.erp.resultCheckPending:
 			status.msg = $.erp.resultCheckPendingMsg;
@@ -114,9 +123,31 @@
 			status.color = "blue";
 			break;
 		default:
+			break;
 		}
-		return status;
+		return '<span style="color:'+status.color+';">' + status.msg + '</span>';
 	};
+	
+	$.erp.getSettleStatus = function(value){
+		var status = {msg:'',color:''};
+		switch(value){
+		case $.erp.settleStatusNone:
+			status.msg = $.erp.settleStatusNoneMsg;
+			status.color = "black";
+			break;
+		case $.erp.settleStatusPart:
+			status.msg = $.erp.settleStatusPartMsg;
+			status.color = "red";
+			break;
+		case $.erp.settleStatusFull:
+			status.msg = $.erp.settleStatusFullMsg;
+			status.color = "green";
+			break;
+		default:
+			break;
+		}
+		return '<span style="color:'+status.color+';">' + status.msg + '</span>';
+	}
 	
 	$.erp.checkResultStatus = function(row){
 		var status = false;
@@ -131,6 +162,7 @@
 		}
 		return status;
 	};
+	
 	
 	$.fn.erpResGrid = function(options, resId, editable,title){
 		  var _url = '';
@@ -454,27 +486,29 @@
 	        					editor: {
 	        						type:'combogrid', 
 	        						options:{
-	        							panelWidth:350, 
+	        							panelWidth:530,
+	        							panelHeight:230,
 	        							singleSelect: true,
 	        							idField:'number',
 	        							textField:'number', 
 	        							url:'material/find.action', 
 	        							required: true,
+	        							pageSize: 20,
 	        							pagination: true,
 	        							columns:[[        
 	        							        {field:'number',title:'代码',width:80},        
 	        							        {field:'name',title:'名称',width:150},        
-	        							        {field:'model',title:'规格型号',width:110},        
+	        							        {field:'model',title:'规格型号',width:250},        
 	        							]],
 	        							//toolbar:searcher,
 	        							onSelect: $.erp.materialCol.prototype.onSelect
 	        				}}},
 	        				{field: 'itemId', editor: 'text', hidden: true},
-	        				{field: 'itemName', title: '产品名称', width: 120, editor: {type: 'textbox', options:{editable:false}}},
-	        				{field: 'itemModel', title: '规格型号', width: 100, editor: {type: 'textbox', options:{editable:false}}},
-	        				{field: 'itemUnit', title: '单位', width: 80, editor: {type: 'textbox', options:{editable: false}}},
+	        				{field: 'itemName', title: '产品名称', width: 100, editor: {type: 'textbox', options:{editable:false}}},
+	        				{field: 'itemModel', title: '规格型号', width: 150, editor: {type: 'textbox', options:{editable:false}}},
+	        				{field: 'itemUnit', title: '单位', width: 50, editor: {type: 'textbox', options:{editable: false}}},
 	        				{field: 'itemAttr', title: '产品属性', hidden: true, width: 80, editor: {type: 'textbox', options:{editable: false}}},
-	        				{field: 'attrContent', title: '辅助属性', width: 150, 
+	        				{field: 'attrContent', title: '辅助属性', width: 200, 
 	        					editor:{
 	        						type:'combotree_material',
 	        						options:{

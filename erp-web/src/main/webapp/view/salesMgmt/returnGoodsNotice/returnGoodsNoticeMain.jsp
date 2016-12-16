@@ -27,8 +27,7 @@
 			columns:[[
 					{field: 'result', title: '状态', width: parseInt($(this).width() * 0.08),
 						formatter:function(value, row){
-							var status = $.erp.getResultStatus(value);
-							return '<span style="color:'+status.color+';">' + status.msg + '</span>';
+							return $.erp.getResultStatus(value);
 					},sortable:true},
 			        {field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.12),sortable:true},
 			        {field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},

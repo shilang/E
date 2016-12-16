@@ -100,6 +100,10 @@ public class Constants {
 	public static final String MESSAGE_CHECK_SUCCESS = "审核成功!";
 	public static final String MESSAGE_CHECK_FAIL = "审核失败，可能已审核!";
 	
+	public static final int SETTLE_STATUS_NONE = 0; //"";
+	public static final int SETTLE_STATUS_PART = 1; //"欠款";
+	public static final int SETTLE_STATUS_FULL = 2; //"已结款";
+	
 	public static final int SALES_OUT_STOCK_TYPE_OUT = 1; //发货通知单
 	public static final int SALES_OUT_STOCK_TYPE_IN = 2; //退货通知单
 	

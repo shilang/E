@@ -113,7 +113,8 @@ public class RecProceedsDaoImpl implements RecProceedsDao {
 
 	@Override
 	public List<SalesShareEntry> findSalesOrderEntriesById(Integer id) {
-		List<SalesOrderEntry> salesOrderEntries = salesOrderDao.findEntriesById(id, SalesOrderEntry.class);
+		List<SalesOrderEntry> salesOrderEntries = salesOrderDao.findEntriesById(id, 
+				SalesOrderEntry.class);
 		List<SalesShareEntry> salesShareEntries = new ArrayList<SalesShareEntry>();
 		for(SalesOrderEntry salesOrderEntry : salesOrderEntries){
 			SalesShareEntry salesShareEntry = new SalesShareEntry();
@@ -130,7 +131,8 @@ public class RecProceedsDaoImpl implements RecProceedsDao {
 
 	@Override
 	public List<SalesShareEntry> findSalesInvoiceEntriesById(Integer id) {
-		List<ICSalesEntry> salesInvoiceEntries = salesInvoiceDao.findEntriesById(id, ICSalesEntry.class);
+		List<ICSalesEntry> salesInvoiceEntries = salesInvoiceDao.findEntriesById(id, 
+				ICSalesEntry.class);
 		List<SalesShareEntry> salesShareEntries = new ArrayList<SalesShareEntry>();
 		for(ICSalesEntry entry : salesInvoiceEntries){
 			SalesShareEntry salesShareEntry = new SalesShareEntry();
@@ -148,7 +150,8 @@ public class RecProceedsDaoImpl implements RecProceedsDao {
 
 	@Override
 	public List<SalesShareEntry> findSalesContractEntriesByid(Integer id) {
-		List<SalesContractEntry> salesContractEntries = salesContractDao.findEntriesById(id, SalesContractEntry.class);
+		List<SalesContractEntry> salesContractEntries = salesContractDao.findEntriesById(id, 
+				SalesContractEntry.class);
 		List<SalesShareEntry> salesShareEntries = new ArrayList<SalesShareEntry>();
 		for(SalesContractEntry salesContractEntry : salesContractEntries){
 			SalesShareEntry salesShareEntry = new SalesShareEntry();
@@ -180,37 +183,30 @@ public class RecProceedsDaoImpl implements RecProceedsDao {
 			throws UpdateReferenceException {
 		return salesContractDao.updateReference(SalesContract.class, number, mode);
 	}
-
+	
 	@Override
-	public boolean updateSalesOrderRelatedAmount(RecProceeds recProceeds) {
-		String sourceBillNo = recProceeds.getSourceBillNo();
-		if(null == sourceBillNo || "".equals(sourceBillNo)){
-			return true;
-		}
-		SalesOrder salesOrder = salesOrderDao.findByBillNo(sourceBillNo);
-		salesOrder.setSettleAmount(recProceeds.getSettleAmount());
-		salesOrder.setBankCost(recProceeds.getBankCost());
-		salesOrder.setSettleCurrency(recProceeds.getSettleCurrency());
-		salesOrderDao.update(salesOrder);
-		return true;
-	}
-
-	@Override
-	public SettleItem mergeSettleAmount(String sourceBillNo) {
+	public SettleItem mergeSettleAmount(String sourceBillNo, Integer excludeId) {
 		SettleItem settleItem = new SettleItem();
 		
-		String sql = "SELECT AMOUNT AS 'amount', FREIGHT_AMOUNT as 'freightAmount',"+
-				" TOTAL_AMOUNT as 'totalAmount', SUM(SETTLE_AMOUNT) AS 'settleAmount',"+
-				" SUM(BANK_COST) as 'bankCost' FROM REC_PROCEEDS"+
-				" WHERE SOURCE_BILL_NO=:SOURCE_BILL_NO GROUP BY SOURCE_BILL_NO";
+		String sql = "SELECT r.AMOUNT AS 'amount', r.FREIGHT_AMOUNT as 'freightAmount',"+
+				" r.TOTAL_AMOUNT as 'totalAmount', SUM(ABS(r.SETTLE_AMOUNT)) AS 'settleAmount',"+
+				" SUM(r.BANK_COST) as 'bankCost' FROM REC_PROCEEDS r"+
+				" WHERE r.SOURCE_BILL_NO=:SOURCE_BILL_NO AND r.STATUS=:STATUS AND r.INTER_ID<>:INTER_ID"+
+				" GROUP BY r.SOURCE_BILL_NO";
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("SOURCE_BILL_NO", sourceBillNo);
+		params.put("STATUS", "A");
+		params.put("INTER_ID", excludeId);
 		List<?> list = baseDao.findBySQL(sql, params);
 		if(null != list && list.size() > 0){
 			Object[] o = (Object[])list.get(0);
-			
+			settleItem.setAmount((double)o[0]);
+			settleItem.setFreightAmount((double)o[1]);
+			settleItem.setTotalAmount((double)o[2]);
+			settleItem.setSettleAmount((double)o[3]);
+			settleItem.setBankCost((double)o[4]);
 		}
-		return null;
+		return settleItem;
 	}
-
+	
 }

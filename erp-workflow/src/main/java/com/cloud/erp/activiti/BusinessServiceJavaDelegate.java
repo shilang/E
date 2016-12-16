@@ -35,6 +35,12 @@ public abstract class BusinessServiceJavaDelegate extends BaseJavaDelegate{
 		return true;
 	}
 	
+	public boolean updateSettleInfo(boolean isDelete){
+		getCheckService().updateSettleInfo(getBusinessClass(), getBusinessKey(), isDelete);
+		
+		return true;
+	}
+	
 	private Message MessageWrapper(Integer flag, String action){
 		AuditModel auditModel = getAuditModel();
 		

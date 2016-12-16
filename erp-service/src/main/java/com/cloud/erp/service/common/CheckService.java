@@ -10,4 +10,6 @@ public interface CheckService {
 	
 	boolean cancelCheck(Class<?> clazz, Integer id, String cancelReason);
 	
+	boolean updateSettleInfo(Class<?> clazz, Integer id, boolean isDelete);
+	
 }

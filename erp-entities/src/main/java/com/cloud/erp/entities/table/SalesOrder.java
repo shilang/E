@@ -92,7 +92,7 @@ public class SalesOrder implements Serializable {
 	private Double bankCost;
 	private Integer settleCurrency;
 	private String settleCurrencyName;
-	private String settleStatus;
+	private Integer settleStatus;
 	private String explanation;
 	private String sourceType;
 	private String sourceBillNo;
@@ -510,12 +510,12 @@ public class SalesOrder implements Serializable {
 		this.sourceBillNo = sourceBillNo;
 	}
 
-	@Column(name = "SETTLE_STATUS", length = 10)
-	public String getSettleStatus() {
+	@Column(name = "SETTLE_STATUS")
+	public Integer getSettleStatus() {
 		return settleStatus;
 	}
 	
-	public void setSettleStatus(String settleStatus) {
+	public void setSettleStatus(Integer settleStatus) {
 		this.settleStatus = settleStatus;
 	}
 	

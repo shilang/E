@@ -13,15 +13,7 @@
 	var queryParams = {sort:'interId',order:'desc'};
 	$(function(){
 		if(selSta){
-			$("#addOper").hide();
-			$("#updOper").hide();
-			$("#delOper").hide();
-			$("#showOper").hide();
-			$("#checkOper").hide();
-			$("#exportOper").hide();
-			$("#commitOper").hide();
-			$("#unCheckOper").hide();
-			$("#pendingOper").hide();
+			$(".submain").hide();
 			$.extend(queryParams, $.erp.searcher('result', $.erp.resultCheckOk,'int'));
 		}
 		
@@ -42,8 +34,7 @@
 			columns:[[
 					{field: 'result', title: '状态', width: parseInt($(this).width() * 0.08),
 						formatter:function(value, row){
-							var status = $.erp.getResultStatus(value);
-							return '<span style="color:'+status.color+';">' + status.msg + '</span>';
+							return $.erp.getResultStatus(value);
 					},sortable:true},
 			        {field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.12),sortable:true},
 			        {field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},
@@ -251,23 +242,23 @@
 					<tr>
 						<td>
 							<shiro:hasPermission name="salOutNoticeAdd">
-								<a id="addOper" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addSalesOutStockNoticeDlg();">添加</a>
+								<a id="addOper" href="javascript:void(0);" class="easyui-linkbutton submain" data-options="iconCls:'icon-add',plain:true" onclick="addSalesOutStockNoticeDlg();">添加</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOutNoticeMod">
-								<a id="updOper" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="updateSalesOutStockNoticeDlg();">修改</a>
+								<a id="updOper" href="javascript:void(0);" class="easyui-linkbutton submain" data-options="iconCls:'icon-edit',plain:true" onclick="updateSalesOutStockNoticeDlg();">修改</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOutNoticeDel">
-								<a id="delOper" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="delSalesOutStockNotice();">删除</a>
+								<a id="delOper" href="javascript:void(0);" class="easyui-linkbutton submain" data-options="iconCls:'icon-remove',plain:true" onclick="delSalesOutStockNotice();">删除</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOutNoticeShow">
-								<a id="showOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-show" plain="true" onclick="showSalesOutStockNoticeDlg();">查看</a>
+								<a id="showOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-show" plain="true" onclick="showSalesOutStockNoticeDlg();">查看</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salOutNoticeCommit">
-								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-datago" plain="true" onclick="commitSalesOutStockNotice();">提交</a>
+								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-datago" plain="true" onclick="commitSalesOutStockNotice();">提交</a>
 							</shiro:hasPermission>
-								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-datago" plain="true" onclick="baseCost();">基本费用</a>
+								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-datago" plain="true" onclick="baseCost();">基本费用</a>
 							<shiro:hasPermission name="salOutNoticeExport">
-								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
+								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
 							</shiro:hasPermission>
 						</td>
 						<td>
@@ -275,7 +266,7 @@
 						</td>
 						<td>
 							<shiro:hasPermission name="salOutNoticeCheck">
-								<a id="pendingOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
+								<a id="pendingOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
 							</shiro:hasPermission>
 							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="">高级查询</a>
 							<shiro:hasPermission name="chuanwu">
