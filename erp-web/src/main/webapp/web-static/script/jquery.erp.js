@@ -482,27 +482,31 @@
 			searcher: function(value, name){
 			}
 		});*/
-		return  [{field: 'number', title: '产品代码', width: 80, 
-	        					editor: {
-	        						type:'combogrid', 
-	        						options:{
-	        							panelWidth:530,
-	        							panelHeight:230,
-	        							singleSelect: true,
-	        							idField:'number',
-	        							textField:'number', 
-	        							url:'material/find.action', 
-	        							required: true,
-	        							pageSize: 20,
-	        							pagination: true,
-	        							columns:[[        
-	        							        {field:'number',title:'代码',width:80},        
-	        							        {field:'name',title:'名称',width:150},        
-	        							        {field:'model',title:'规格型号',width:250},        
-	        							]],
-	        							//toolbar:searcher,
-	        							onSelect: $.erp.materialCol.prototype.onSelect
-	        				}}},
+		
+		var materialEditor = {
+				type:'combogrid', 
+				options:{
+					panelWidth:530,
+					panelHeight:230,
+					delay: 500,
+					mode: 'remote',
+					url:'material/find.action', 
+					idField:'number',
+					textField:'number', 
+					singleSelect: true,
+					required: true,
+					pageSize: 20,
+					pagination: true,
+					columns:[[        
+					        {field:'number',title:'代码',width:80},        
+					        {field:'name',title:'名称',width:150},        
+					        {field:'model',title:'规格型号',width:250},        
+					]],
+					//toolbar:'<input />',
+					onSelect: $.erp.materialCol.prototype.onSelect
+			}};
+		
+		return  [{field: 'number', title: '产品代码', width: 80, editor: materialEditor},
 	        				{field: 'itemId', editor: 'text', hidden: true},
 	        				{field: 'itemName', title: '产品名称', width: 100, editor: {type: 'textbox', options:{editable:false}}},
 	        				{field: 'itemModel', title: '规格型号', width: 150, editor: {type: 'textbox', options:{editable:false}}},
@@ -532,7 +536,8 @@
 	        					}
 	        				}
 	             ];
-	};                     
+	};
+	
 	$.erp.materialCol.prototype.mergeCol = function(fieldArr){
 		return $.merge(this.partCol(), fieldArr);
 	};
