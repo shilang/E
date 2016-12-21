@@ -2,6 +2,8 @@ package com.cloud.erp.dao.common;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +57,7 @@ public class GeneralDaoSupport<M> extends UpdateStatus{
 	private RelationDao relationDao;
 	
 	private String analyseExtHql(String alias, String[] extHql){
-		String extHqlString = " ";
+	/*	String extHqlString = " ";
 		if(null != extHql && extHql.length > 0){
 			for(String e : extHql){
 				String[] tokens = e.split(" ");
@@ -75,7 +77,26 @@ public class GeneralDaoSupport<M> extends UpdateStatus{
 				}
 			}
 		}
-		return extHqlString;
+		return extHqlString;*/
+		
+		StringBuffer extHqlBuffer = new StringBuffer();
+		
+		String regex = "\\[(\\w+)\\]";
+		Pattern pattern = Pattern.compile(regex);
+		
+		for(String e : extHql){
+			StringBuffer sb = new StringBuffer();
+			
+			Matcher matcher = pattern.matcher(e);
+			while(matcher.find()){
+				matcher.appendReplacement(sb, alias + "." + matcher.group(1));
+			}
+			matcher.appendTail(sb);
+			
+			extHqlBuffer.append(" ");
+			extHqlBuffer.append(sb.toString());
+		}
+		return extHqlBuffer.toString();
 	}
 	
 	private String analyseSelectHql(Class<?> clazz, String hqlPrefix, Map<String, Object> params, String[] extHql){

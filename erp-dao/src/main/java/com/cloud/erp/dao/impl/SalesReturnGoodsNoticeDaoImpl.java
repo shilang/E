@@ -48,7 +48,7 @@ import com.cloud.erp.utils.PageUtil;
 @Repository("salesReturnGoodsNoticeDao")
 public class SalesReturnGoodsNoticeDaoImpl implements SalesReturnGoodsNoticeDao {
 	
-	private static final String BILL_TYPE = "and billType=" + Constants.SALES_OUT_STOCK_TYPE_IN;
+	private static final String BILL_TYPE = "and [billType]=" + Constants.SALES_OUT_STOCK_TYPE_IN;
 
 	@Resource
 	private GeneralDaoSupport<SalesOutStock> generalDao;

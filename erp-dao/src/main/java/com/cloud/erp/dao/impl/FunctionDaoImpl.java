@@ -67,7 +67,7 @@ public class FunctionDaoImpl implements FunctionDao {
 	
 	@Override
 	public List<Permission> findAllWithExtHql() {
-		return generalDao.findAll(Permission.class, null, null, "and type='F'");
+		return generalDao.findAll(Permission.class, null, null, "and [type]='F'");
 	}
 
 	@Override

@@ -42,7 +42,12 @@
 							formatter:function(value, row){
 								return $.erp.getResultStatus(value);
 						},sortable:true},
-			        	{field:'orderStatus',title:'订单状态',width:parseInt($(this).width()*0.08)},
+			        	{field:'orderStatus',title:'订单状态',width:parseInt($(this).width()*0.08),
+							formatter:function(value, row){
+								return getOrderStatusColor(value);
+							},
+							sortable:true
+			        	},
 			        	{field:'billNo',title:'单据编号',width:parseInt($(this).width()*0.12),sortable:true},
 			        	{field:'date',title:'日期',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'customerName',title:'购货单位', hidden:!salOrderShowCust,width:parseInt($(this).width()*0.15),sortable:true},
@@ -50,22 +55,23 @@
 			        	{field:'salesWayName',title:'销售方式',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'fetchWayName',title:'交货方式',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'fetchAddrName',title:'交货地点',width:parseInt($(this).width()*0.1),sortable:true},
-			        	{field:'transitAheadTime',title:'交货日期',width:parseInt($(this).width()*0.1)},
+			        	{field:'transitAheadTime',title:'交货日期',width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'settlementName',title:'结算方式',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1),sortable:true},
 			        	{field:'settlementDate',title:'结算日期',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1),sortable:true},
-			        	{field:'currencyName',title:'币别',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
-			        	{field:'exchangeRate',title:'汇率',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
-			        	{field:'amount',title:'金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
-			        	{field:'freightAmount',title:'货运金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
+			        	{field:'currencyName',title:'币别',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),sortable:true},
+			        	{field:'exchangeRate',title:'汇率',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),sortable:true},
+			        	{field:'amount',title:'金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),sortable:true},
+			        	{field:'freightAmount',title:'货运金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),sortable:true},
 			        	{field:'tradeWayName',title:'贸易方式',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.1)},
-			        	{field:'totalAmount',title:'总金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
-			        	{field:'settleAmount',title:'结算金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
-			        	{field:'bankCost',title:'银行费用',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
-			        	{field:'settleCurrencyName',title:'结算币别',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06)},
+			        	{field:'totalAmount',title:'总金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),sortable:true},
+			        	{field:'settleAmount',title:'结算金额',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),sortable:true},
+			        	{field:'bankCost',title:'银行费用',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),sortable:true},
+			        	{field:'settleCurrencyName',title:'结算币别',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),sortable:true},
 			        	{field:'settleStatus',title:'结算状态',width:parseInt($(this).width()*0.06),
 			        		formatter:function(value,row){
 			        			return $.erp.getSettleStatus(value);
-			        		}	
+			        		},
+			        		sortable:true
 			        	},
 			        	{field:'managerName',title:'主管',width:parseInt($(this).width()*0.08),sortable:true},
 			        	{field:'departmentName',title:'部门',width:parseInt($(this).width()*0.08),sortable:true},
@@ -93,6 +99,35 @@
 		
 	});
 	
+	function getOrderStatusColor(value){
+		var status = {msg:'',color:'black'};
+		if(value == '已备料'){
+			status.msg = value;
+			status.color = "black";
+		}else if(value == '已排单'){
+			status.msg = value;
+			status.color = "green";
+		}else if(value == '生产中'){
+			status.msg = value;
+			status.color = "maroon";		
+		}else if(value == '待确认'){
+			status.msg = value;
+			status.color = "goldenrod";		
+		}else if(value == '已备货(部分)'){
+			status.msg = value;
+			status.color = "blue";		
+		}else if(value == '已备货'){
+			status.msg = value;
+			status.color = "blue";		
+		}else if(value == '已出货(部分)'){
+			status.msg = value;
+			status.color = "red";		
+		}else if(value == '已出货'){
+			status.msg = value;
+			status.color = "red";
+		}
+		return '<span style="color:'+status.color+';">' + status.msg + '</span>';
+	}
 	
 	function onDblClickRow(index, row){
 		if(selSta){

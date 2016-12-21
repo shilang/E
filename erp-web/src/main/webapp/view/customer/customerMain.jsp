@@ -13,6 +13,7 @@
 			url: 'customer/find.action',
 			width: $(this).width(),
 			height: $(this).height(),
+			pageSize: 20,
 			pagination: true,
 			collapsible: true,
 			rownumbers: true,

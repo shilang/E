@@ -13,6 +13,7 @@
 			url: 'material/find.action',
 			width: $(this).width(),
 			height: $(this).height(),
+			pageSize: 20,
 			pagination: true,
 			collapsible: true,
 			rownumbers: true,
@@ -107,6 +108,7 @@
 				</table>
 			</div>
 			<div id="mm">
+				<div name="name">名称</div>
 				<div name="model">规格型号</div>
 			</div>
 			<table id="dg" title=""></table>

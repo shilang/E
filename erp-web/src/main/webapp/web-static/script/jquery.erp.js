@@ -104,7 +104,7 @@
 	};
 	
 	$.erp.getResultStatus = function(value){
-		var status = {msg:'',color:''};
+		var status = {msg:'',color:'black'};
 		switch(value){
 		case $.erp.resultNone:
 			status.msg = $.erp.resultNoneMsg;
@@ -129,7 +129,7 @@
 	};
 	
 	$.erp.getSettleStatus = function(value){
-		var status = {msg:'',color:''};
+		var status = {msg:'',color:'black'};
 		switch(value){
 		case $.erp.settleStatusNone:
 			status.msg = $.erp.settleStatusNoneMsg;
@@ -365,34 +365,48 @@
 		$.erp.materialCol.prototype.target = target;
 	};
 	$.erp.materialCol.prototype.target="";
-	$.erp.materialCol.prototype.onSelect = function(index,row){
+	$.erp.materialCol.prototype.select = function(row){
 		var $dg = $.erp.materialCol.prototype.target;
+		
 		var _row = $dg.datagrid('getSelected');
 		var _idx = $dg.datagrid('getRowIndex', _row);
+		
+		var edtNumber = $dg.datagrid('getEditor',{
+			index: _idx,
+			field: 'number'
+		});
+		
 		var edtItemId = $dg.datagrid('getEditor',{
 			index: _idx,
 			field: 'itemId'
 		});
+		
 		var edtName = $dg.datagrid('getEditor',{
 			index: _idx,
 			field: 'itemName'
 		});
+		
 		var edtModel = $dg.datagrid('getEditor',{
 			index: _idx,
 			field: 'itemModel'
 		});
+		
 		var edtUnit = $dg.datagrid('getEditor',{
 			index: _idx,
 			field: 'itemUnit'
 		});
+		
 		var edtAttr = $dg.datagrid('getEditor',{
 			index: _idx,
 			field: 'itemAttr'
 		});
+		
 		var edtContent = $dg.datagrid('getEditor',{
 			index: _idx,
 			field: 'attrContent'
 		});
+		
+		$(edtNumber.target).textbox('setValue', row.number);
 		$(edtItemId.target).val(row.itemId);
 		$(edtName.target).textbox('setText', row.name);
 		$(edtModel.target).textbox('setText', row.model);
@@ -475,38 +489,57 @@
 	
 	
 	$.erp.materialCol.prototype.partCol = function(){
-	/*	var searcher = $('<input id="test"/>').searchbox({
-			width: 250,
-			menu: '<div><div name="billNo">单据编号</div></div>',
-			prompt: '模糊查询',
-			searcher: function(value, name){
-			}
-		});*/
 		
 		var materialEditor = {
-				type:'combogrid', 
+				type: 'textbox',
 				options:{
-					panelWidth:530,
-					panelHeight:230,
-					delay: 500,
-					mode: 'remote',
-					url:'material/find.action', 
-					idField:'number',
-					textField:'number', 
-					singleSelect: true,
 					required: true,
-					pageSize: 20,
-					pagination: true,
-					columns:[[        
-					        {field:'number',title:'代码',width:80},        
-					        {field:'name',title:'名称',width:150},        
-					        {field:'model',title:'规格型号',width:250},        
-					]],
-					//toolbar:'<input />',
-					onSelect: $.erp.materialCol.prototype.onSelect
+					editable: false,
+					buttonIcon: 'icon-search',
+					onClickButton: function(){
+						
+						function closeWindow(){
+							setTimeout(function(){
+								msDlg.dialog('destroy');
+							},100);
+						}
+						
+						msDlg = $('<div/>').dialog({
+							title: '查找产品',
+							width: 650,
+							height: 500,
+							href: 'view/material/materialSearchDlg.jsp',
+							modal: true,
+							buttons:[{
+								text: '选择',
+								iconCls: 'icon-ok',
+								width: 80,
+								handler: function(){
+									var dg = msDlg.find('#materialSearchDg');
+									var row = dg.datagrid('getSelected');
+									if(row){
+										select(row);
+										closeWindow();
+									}else{
+										$.erp.noSelectErr();
+									}
+								}
+							},{
+								text: '取消',
+								iconCls: 'icon-cancel',
+								width: 80,
+								handler: function(){
+									closeWindow();
+								}
+							}],
+							onClose: function(){
+								closeWindow();
+							}
+						});
+					}
 			}};
 		
-		return  [{field: 'number', title: '产品代码', width: 80, editor: materialEditor},
+		return  [{field: 'number', title: '产品代码', width: 90, editor: materialEditor},
 	        				{field: 'itemId', editor: 'text', hidden: true},
 	        				{field: 'itemName', title: '产品名称', width: 100, editor: {type: 'textbox', options:{editable:false}}},
 	        				{field: 'itemModel', title: '规格型号', width: 150, editor: {type: 'textbox', options:{editable:false}}},
