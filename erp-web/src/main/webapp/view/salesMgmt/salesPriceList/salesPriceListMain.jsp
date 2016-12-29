@@ -155,6 +155,12 @@
 		return $.erp.commitBusinessList($dg);
 	}
 	
+	function exportExcel(){	
+		var beanName = 'salesPriceListServiceImpl';
+		var reportSchemaName = 'salesPriceListReport.xml';
+		$.erp.exportExcel(beanName,reportSchemaName,$dg.datagrid('options'));
+	}
+	
 	function hold(){
 		$.erp.hold();
 	}
@@ -184,7 +190,7 @@
 								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-datago" plain="true" onclick="commitSalesPriceList();">提交</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="salPriceExport">
-								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
+								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-excel" plain="true" onclick="exportExcel();">导出Excel</a>
 							</shiro:hasPermission>
 						</td>
 						<td>
@@ -199,14 +205,11 @@
 					</tr>
 				</table>
 			</div>
-			
 			<div id="mm">
 				<div name="billNo">单据编号</div>
 			</div>
-		
 			<table id="dg" title=""></table>
 		</div>
-		
 	</div>
 </body>
 </html>

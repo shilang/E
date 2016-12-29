@@ -33,7 +33,7 @@ public class ExportExcelTest {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		poi.export(salesPriceListServiceImpl.findAll(null, null), os);
+		poi.exportExcel(salesPriceListServiceImpl.findAll(null, null), os);
 	}
 
 }

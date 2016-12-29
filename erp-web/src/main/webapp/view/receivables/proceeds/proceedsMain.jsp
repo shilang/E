@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>收款单</title>
+<title>应款单</title>
 <jsp:include page="/euinc.jsp"></jsp:include>
 <script type="text/javascript">
 	var $dg;
@@ -138,6 +138,12 @@
 		$.erp.checkPending($dg);
 	}
 	
+	function exportExcel(){	
+		var beanName = 'recProceedsServiceImpl';
+		var reportSchemaName = 'proceedsReport.xml';
+		$.erp.exportExcel(beanName,reportSchemaName,$dg.datagrid('options'));
+	}
+	
 </script>
 </head>
 <body>
@@ -163,7 +169,7 @@
 								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-datago" plain="true" onclick="commitProceeds();">提交</a>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="recProceedsExport">
-								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
+								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-excel" plain="true" onclick="exportExcel();">导出Excel</a>
 							</shiro:hasPermission>
 						</td>
 						<td>

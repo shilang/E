@@ -228,6 +228,11 @@
 		}
 	}
 	
+	function exportExcel(){	
+		var beanName = 'salesOutStockNoticeServiceImpl';
+		var reportSchemaName = 'salesOutStockNoticeReport.xml';
+		$.erp.exportExcel(beanName,reportSchemaName,$dg.datagrid('options'));
+	}
 	
 	function hold(){
 		$.erp.hold();
@@ -258,7 +263,7 @@
 							</shiro:hasPermission>
 								<a id="commitOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-datago" plain="true" onclick="baseCost();">基本费用</a>
 							<shiro:hasPermission name="salOutNoticeExport">
-								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
+								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-excel" plain="true" onclick="exportExcel();">导出Excel</a>
 							</shiro:hasPermission>
 						</td>
 						<td>
@@ -278,6 +283,7 @@
 			</div>
 			<div id="mm">
 				<div name="billNo">单据编号</div>
+				<div name="sourceBillNo">源单单号</div>
 			</div>
 			<table id="dg" title=""></table>
 		</div>

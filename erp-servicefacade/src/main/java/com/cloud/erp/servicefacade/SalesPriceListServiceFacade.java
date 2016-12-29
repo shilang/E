@@ -132,10 +132,4 @@ public class SalesPriceListServiceFacade implements SalesPriceListService{
 		return true;
 	}
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public String exportExcel(List list, OutputStream os) {
-		return salesPriceListServiceImpl.exportExcel(list, os);
-	}
-
 }

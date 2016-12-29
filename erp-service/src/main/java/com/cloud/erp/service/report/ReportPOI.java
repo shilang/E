@@ -3,10 +3,15 @@ package com.cloud.erp.service.report;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -17,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import com.cloud.erp.entities.viewmodel.ReportField;
 import com.cloud.erp.utils.Commons;
-import com.cloud.erp.utils.POIUtil;
 import com.cloud.erp.utils.Reflect;
 
 public class ReportPOI {
@@ -34,9 +38,10 @@ public class ReportPOI {
 	private String sheetName;
 	private Document doc;
 	private Workbook wb;
+	private Sheet sheet;
 	private int rowNum = ROWNUM;
 	private int colNum = COLNUM;
-	private Sheet sheet;
+	private CellStyle dateCellStyle;
 	
 	public int getRowNum() {
 		return rowNum;
@@ -56,19 +61,34 @@ public class ReportPOI {
 
 	public ReportPOI(String fileName) {
 		doc = ReportXmlParser.readXml(fileName);
-		wb = POIUtil.createWorkbook();
+		wb = new HSSFWorkbook();
 		sheetName = ReportXmlParser.getModuleName(doc);
-		sheet = POIUtil.createSheet(wb, sheetName);
+		sheet = wb.createSheet(sheetName);
+		createDateCellStyle();
 	}
 	
-	private void close(){
-		try {
-			wb.close();
-		} catch (IOException e) {
-			if(logger.isDebugEnabled()){
-				logger.debug("Report POI close failure.");
-			}
+	private void createDateCellStyle(){
+		dateCellStyle = wb.createCellStyle();
+		DataFormat format = wb.createDataFormat();
+		dateCellStyle.setDataFormat(format.getFormat("yyyy-MM-dd HH:mm:ss"));
+	}
+	
+	public Row createRow(int rownum){
+		return sheet.createRow(rownum);
+	}
+
+	public Cell createCell(Row row, int column, Object value) {
+		Cell cell = row.createCell(column);
+		if (value instanceof Date) {
+			cell.setCellValue(value.toString());
+			cell.setCellStyle(dateCellStyle);	
+		} else if(value instanceof Number){
+			cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+			cell.setCellValue(Double.parseDouble(value.toString()));
+		} else if(value instanceof String){
+			cell.setCellValue(value.toString());
 		}
+		return cell;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -79,7 +99,7 @@ public class ReportPOI {
 		//create row
 		int rownum = getRowNum();
 		int colnum = getColNum();
-		Row row = POIUtil.createRow(sheet, rownum);
+		Row row = createRow(rownum);
 		//master node
 		Node masterNode = ReportXmlParser.getMasterNode(doc);
 		String masterClass = ReportXmlParser.getMasterClass(masterNode);
@@ -89,7 +109,7 @@ public class ReportPOI {
 			fieldNode = (Node) masterFields.get(i);
 			fieldName = ReportXmlParser.getFieldText(fieldNode);
 			fieldTitle = ReportXmlParser.getFieldTitle(fieldNode);
-			POIUtil.createCell(wb, row, colnum, fieldTitle);
+			createCell(row, colnum, fieldTitle);
 			ReportField reportField = new ReportField();
 			reportField.setName(fieldName);
 			reportField.setTitle(fieldTitle);
@@ -111,7 +131,7 @@ public class ReportPOI {
 				fieldNode = (Node) entryFields.get(j);
 				fieldName = ReportXmlParser.getFieldText(fieldNode);
 				fieldTitle = ReportXmlParser.getFieldTitle(fieldNode);
-				POIUtil.createCell(wb, row, colnum, fieldTitle);
+				createCell(row, colnum, fieldTitle);
 				ReportField reportField = new ReportField();
 				reportField.setName(fieldName);
 				reportField.setTitle(fieldTitle);
@@ -130,7 +150,7 @@ public class ReportPOI {
 		int rownum = getRowNum() + 1;
 		for (Object businessObj : dataList){
 			//create row
-			Row row = POIUtil.createRow(sheet,rownum);
+			Row row = createRow(rownum);
 			
 			// master field
 			List<ReportField> masterReportFields = reportFieldsMap.get(businessObj.getClass().getName());
@@ -140,7 +160,7 @@ public class ReportPOI {
 				if (STATUSFIELD.equals(field)) {
 					value = Commons.convertResult((int)value);
 				}
-				POIUtil.createCell(wb, row,  rf.getColumn(), value);
+				createCell(row,  rf.getColumn(), value);
 			}
 			
 			// entry field
@@ -154,13 +174,13 @@ public class ReportPOI {
 				boolean append = false;
 				for (int i = 0; i < entries.size(); i++) {
 					if (append) {
-						entryRow = POIUtil.createRow(sheet, entryRowNum);
+						entryRow = createRow(entryRowNum);
 					}
 					Object entry = entries.get(i);
 					for (ReportField rf : entryReportFields) {
 						String field = rf.getName();
 						Object value = Reflect.invokeGetMethod(entry, field);
-						POIUtil.createCell(wb, entryRow, rf.getColumn(), value);
+						createCell(entryRow, rf.getColumn(), value);
 					}
 					entryRowNum++;
 					append = true;
@@ -171,18 +191,25 @@ public class ReportPOI {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public String export(List list, OutputStream os){
+	public String exportExcel(List list, OutputStream os){
 		try {
 			createCellTitle();
 			fillData(list);
 			wb.write(os);
 		} catch (Exception e) {
-			if(logger.isDebugEnabled()){
-				logger.debug("Report POI export failure!");
+			if(logger.isInfoEnabled()){
+				logger.info("Report POI: export failure!");
 			}
 		}finally{
-			close();
+			try {
+				os.close();
+				wb.close();
+			} catch (IOException e) {
+				if(logger.isInfoEnabled()){
+					logger.info("Report POI: close outputStream failure!");
+				}
+			}
 		}
-		return sheetName;
+		return sheetName + ".xls";
 	}
 }

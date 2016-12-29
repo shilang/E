@@ -22,14 +22,14 @@
 			border: false,
 			idField: 'itemId',
 			columns: [[
-				{field: 'number', title: '代码', width: parseInt($(this).width() * 0.08)},
-				{field: 'name', title: '名称', width: parseInt($(this).width() * 0.1)},
-				{field: 'fullName', title: '全名', width: parseInt($(this).width() * 0.1)},
-				{field: 'model', title: '规格型号', width: parseInt($(this).width() * 0.1)},
+				{field: 'number', title: '代码', width: parseInt($(this).width() * 0.08), sortable:true},
+				{field: 'name', title: '名称', width: parseInt($(this).width() * 0.1), sortable:true},
+				{field: 'fullName', title: '全名', width: parseInt($(this).width() * 0.1), sortable:true},
+				{field: 'model', title: '规格型号', width: parseInt($(this).width() * 0.1), sortable:true},
 				{field: 'unitName', title: '计量单位', width: parseInt($(this).width() * 0.1)},
-				{field: 'topName', title: '物料分类', width: parseInt($(this).width() * 0.1)},
-				{field: 'useStateName', title: '使用状态', width: parseInt($(this).width() * 0.1)},
-				{field: 'materialAttrName', title: '物料属性', width: parseInt($(this).width() * 0.2)},
+				{field: 'topName', title: '物料分类', width: parseInt($(this).width() * 0.1), sortable:true},
+				{field: 'useStateName', title: '使用状态', width: parseInt($(this).width() * 0.1), sortable:true},
+				{field: 'materialAttrName', title: '物料属性', width: parseInt($(this).width() * 0.2), sortable:true},
 				{field: 'remark', title: '备注', width: parseInt($(this).width() * 0.2)}
 			]],
 			toolbar: '#tb'
@@ -108,6 +108,7 @@
 				</table>
 			</div>
 			<div id="mm">
+				<div name="number">代码</div>
 				<div name="name">名称</div>
 				<div name="model">规格型号</div>
 			</div>

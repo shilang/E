@@ -161,7 +161,7 @@
 		fileMenu.menu({
 			onClick:function(item){
 				var id = item.id;
-				var vFileName = $('#fileNm').val();
+				var vFileName = $('#fileName').val();
 				var vFileSaveAs = $('#billNo').textbox('getValue');
 				if(!vFileSaveAs || !vFileName) return;
 				if(id == 'upload'){
@@ -172,7 +172,7 @@
 					
 				}else if(id == 'download'){
 					//ajaxFileDownload(vFileName,vFileSaveAs);
-					var vSrc = "file/download.action?fileNm="+vFileName+"&fileSaveAs="+vFileSaveAs;
+					var vSrc = "file/download.action?fileName="+vFileName+"&fileSaveAs="+vFileSaveAs;
 					$('#fileDownload').attr('src',vSrc);
 				}
 			}
@@ -211,7 +211,7 @@
 	
 	function ajaxFileDownload(vFilename, vFileSaveAs){
 		var vUrl = 'file/download.action';
-		var vParams = {fileNm:vFilename,fileSaveAs:vFileSaveAs};
+		var vParams = {fileName:vFilename,fileSaveAs:vFileSaveAs};
 		$.ajax({
 			url: vUrl,
 			data: vParams
@@ -313,7 +313,7 @@
 	}
 	
 	function setFileName(obj){
-		$('#fileNm').textbox('setValue',$(obj).val());
+		$('#fileName').textbox('setValue',$(obj).val());
 		var itemEl = $('#upload')[0];
 		fileMenu.menu('enableItem',itemEl);
 	}
@@ -465,7 +465,7 @@
 					<div style="display:none;">
 						<iframe id="fileDownload" src="" ></iframe>
 					</div>
-					<input id="fileNm" name="fileNm" class="easyui-textbox" style="width:300px;" data-options="editable:false" />
+					<input id="fileName" name="fileName" class="easyui-textbox" style="width:300px;" data-options="editable:false" />
 					<a href="javascript:void(0)" id="attachOper">操作</a>
 					<div id="attachMM">
 						<div id="upload" data-options="iconCls:'icon-upload',disabled:true">上传</div>    

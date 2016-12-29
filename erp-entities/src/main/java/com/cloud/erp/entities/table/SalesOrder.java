@@ -105,7 +105,7 @@ public class SalesOrder implements Serializable {
 	private Date ckReviewDate;
 	private String cgreview;
 	private Date cgreviewDate;
-	private String fileNm;
+	private String fileName;
 	private String fileSaveAs;
 	private String fileExt;
 	private String changeReason;
@@ -619,12 +619,12 @@ public class SalesOrder implements Serializable {
 	}
 
 	@Column(name = "FILE_NAME", length = 100)
-	public String getFileNm() {
-		return fileNm;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setFileNm(String fileNm) {
-		this.fileNm = fileNm;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	@Column(name = "FILE_SAVE_AS", length = 100)

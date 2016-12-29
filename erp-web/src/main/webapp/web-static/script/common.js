@@ -13,7 +13,7 @@ function getFileExt(file){
 }
 
 $(document).ajaxComplete(function(event, xhr, settings) {  
-    if(xhr.getResponseHeader("sessionstatus")=="timeOut"){  
+    if(xhr.getResponseHeader && xhr.getResponseHeader("sessionstatus")=="timeOut"){  
         if(xhr.getResponseHeader("loginPath")){
             alert("会话过期,请重新登录!");
             window.top.location.replace(xhr.getResponseHeader("loginPath"));  

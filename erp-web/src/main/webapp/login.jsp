@@ -9,9 +9,6 @@
 </head>
 <body class="background">
 	<div class="box">
-	    <div class="top">
-			<img alt="ORBITA" src="web-static/images/orbita-2.png">
-		</div>
 		<div class="login-box">
 			<form class="form" role="form" action="login.action" method="post">
 					<div class="form-group">

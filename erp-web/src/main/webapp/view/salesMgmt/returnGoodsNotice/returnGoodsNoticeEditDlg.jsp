@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <script type="text/javascript">
 	var $dg;
 	var $form;
 	var entry;
 	var date;
+	var salReturnGoodsNoticeShowPrice = false;
 	$(function(){
-
+		initOtherPerm();
 		$form = $("#form");
 		$form.form({
 			url: 'salesReturnGoodsNotice/persistence.action',
@@ -20,8 +22,8 @@
 		var entryArr = [[]];
 		var currArr = [
 		              {field:'quantity',title:'数量',sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true}}},
-		              {field:'price',title:'单价',width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:2,required:true}}},
-		              {field:'amount',title:'金额',sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:2,required:true}}},
+		              {field:'price',title:'单价',hidden:!salReturnGoodsNoticeShowPrice,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:2,required:true}}},
+		              {field:'amount',title:'金额',hidden:!salReturnGoodsNoticeShowPrice,sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:2,required:true}}},
 		              {field:'fetchDate',title:'交货日期',width:parseInt($(this).width()*0.1),editor:{type:'datebox',options:{required:true}}},
 		              {field:'stockId',title:'收货仓库',width:parseInt($(this).width()*0.1),editor:{type:'textbox',options:{editable:false}}},
 		              {field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.12),editor:{type:'textbox',options:{editable:false}}},
@@ -112,6 +114,12 @@
 				parent.$.modalDialog.dg = $dg;
 			}
 		});
+	}
+	
+	function initOtherPerm(){
+		if($('#salReturnGoodsNoticeShowPrice').length > 0){
+			salReturnGoodsNoticeShowPrice = true;
+		}
 	}
 	
 	function gridRowTotal(index){
@@ -282,4 +290,7 @@
 			<textarea id="changeReason" name="changeReason" readonly="readonly" style="margin:0;padding:0;border:0;width:100%;height:150px;"></textarea>
 		</div>
 	</form>
+	<shiro:hasPermission name="salReturnGoodsNoticeShowPrice">
+		<label id="salReturnGoodsNoticeShowPrice"></label>
+	</shiro:hasPermission>
 </div>

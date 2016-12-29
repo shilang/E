@@ -14,7 +14,6 @@
  */
 package com.cloud.erp.service.impl;
 
-import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,6 @@ import com.cloud.erp.entities.table.SalesPriceList;
 import com.cloud.erp.entities.table.SalesPriceListEntry;
 import com.cloud.erp.service.SalesPriceListService;
 import com.cloud.erp.service.common.AutoNumber;
-import com.cloud.erp.service.report.ReportPOI;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
@@ -44,8 +42,6 @@ import com.cloud.erp.utils.PageUtil;
  */
 @Service("salesPriceListServiceImpl")
 public class SalesPriceListServiceImpl implements SalesPriceListService {
-	
-	private static final String SALES_PRICE_LIST_REPORT = "salesPriceListReport.xml";
 
 	@Autowired
 	private SalesPriceListDao salesPriceListDao;
@@ -165,13 +161,6 @@ public class SalesPriceListServiceImpl implements SalesPriceListService {
 	@Override
 	public void updateReference(List<SalesPriceListEntry> entries, boolean mode)
 			throws UpdateReferenceException {
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public String exportExcel(List list, OutputStream os) {
-		ReportPOI poi = new ReportPOI(SALES_PRICE_LIST_REPORT);
-		return poi.export(list, os);
 	}
 
 }

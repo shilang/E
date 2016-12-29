@@ -988,7 +988,7 @@
 			}]
 		});
 	
-	}
+	};
 	
 	$.erp.commitBusinessList = function(grid){
 		var row = grid.datagrid('getSelected');
@@ -1010,11 +1010,37 @@
 			return false;
 		}
 		return true;
-	}
+	};
 	
 	$.erp.checkPending = function(grid){
 		grid.datagrid('reload', $.erp.searcher("result", $.erp.resultCheckPending, 'int'));
-	}
+	};
+	
+	$.erp.fileDownload = function(src, params){
+		var getParams = '';
+		var append = false;
+		for(var field in params){
+			getParams = getParams + (append?'&':'') + (append?'':'?') + field + "=" + params[field];
+			append = true;
+		}
+		src = src + getParams;
+		$('#_file_download_abc04r5gewg').remove();
+		$('body').append('<div id="_file_download_abc04r5gewg" style="display:none;"><iframe src="'
+				+src+'" ></iframe></div>');
+	};
+	
+	$.erp.exportExcel = function(beanName,reportSchemaName,options){
+		var src = 'file/exportExcel.action';
+		var params = {bean:beanName, reportSchema:reportSchemaName};
+		if(options && options.queryParams.searchName){
+			$.extend(params,{searchName:options.queryParams.searchName,
+				searchValue:options.queryParams.searchValue});
+		}
+		if(options && options.sortName){
+			$.extend(params,{sort:options.sortName,order:options.sortOrder});
+		}
+		$.erp.fileDownload(src, params);
+	};
 	
 	
 })(jQuery);

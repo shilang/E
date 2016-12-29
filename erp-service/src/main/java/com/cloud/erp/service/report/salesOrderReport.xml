@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="http://www.orbitatech.com/schema/module"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.orbitatech.com/schema/module module.xsd">
+	<name>销售订单</name>
+	<master name="master" class="com.cloud.erp.entities.table.SalesOrder">
+		<fields>
+			<field title="审核状态">result</field>
+			<field title="订单状态">orderStatus</field>
+			<field title="单据编号">billNo</field>
+			<field title="日期">date</field>
+			<field title="购货单位">customerName</field>
+			<field title="销售方式">salesWayName</field>
+			<field title="交货方式">fetchWayName</field>
+			<field title="交货地点">fetchAddrName</field>
+			<field title="交货日期">transitAheadTime</field>
+			<field title="结算方式">settlementName</field>
+			<field title="结算日期">settlementDate</field>
+			<field title="币别">currencyName</field>
+			<field title="汇率">exchangeRate</field>
+			<field title="金额">amount</field>
+			<field title="货运金额">freightAmount</field>
+			<field title="贸易方式">tradeWayName</field>
+			<field title="总金额">totalAmount</field>
+			<field title="结算金额">settleAmount</field>
+			<field title="银行费用">bankCost</field>
+			<field title="结算币别">settleCurrencyName</field>
+			<field title="结算状态">settleStatus</field>
+			<field title="主管">managerName</field>
+			<field title="部门">departmentName</field>
+			<field title="业务员">employeeName</field>
+			<field title="制单">createrName</field>
+			<field title="审核人">checkerName</field>
+			<field title="审核日期">checkDate</field>
+			<field title="源单单号">sourceBillNo</field>
+			<field title="源单类型">sourceType</field>
+			<field title="摘要">explanation</field>
+		</fields>
+	</master>
+	<entries>
+		<entry name="entries" class="com.cloud.erp.entities.table.SalesOrderEntry">
+			<fields>
+				<field title="产品代码">number</field>
+				<field title="产品名称">itemName</field>
+				<field title="规格型号">itemModel</field>
+				<field title="单位">itemUnit</field>
+				<field title="辅助属性">attrContent</field>
+				<field title="数量">quantity</field>
+				<field title="单价">price</field>
+				<field title="金额">amount</field>
+				<field title="交货日期">date</field>
+				<field title="建议交货日期">adviceDate</field>
+				<field title="源单单号">sourceBillNo</field>
+				<field title="备注">remark</field>			
+			</fields>	
+		</entry>
+	</entries>
+</module>

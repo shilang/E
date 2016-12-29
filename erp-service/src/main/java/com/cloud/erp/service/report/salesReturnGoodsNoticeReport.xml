@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="http://www.orbitatech.com/schema/module"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.orbitatech.com/schema/module module.xsd">
+	<name>退货通知</name>
+	<master name="master" class="com.cloud.erp.entities.table.SalesOutStock">
+		<fields>
+			<field title="状态">result</field>
+			<field title="单据编号">billNo</field>
+			<field title="日期">date</field>
+			<field title="购货单位">customerName</field>
+			<field title="收货仓库">stockName</field>
+			<field title="交货地点">fetchAddrName</field>
+			<field title="运输方式">salesScopeName</field>
+			<field title="销售方式">salesWayName</field>
+			<field title="主管">managerName</field>
+			<field title="部门">deptName</field>
+			<field title="业务员">employeeName</field>
+			<field title="制单">createrName</field>
+			<field title="审核人">checkerName</field>
+			<field title="审核日期">checkDate</field>
+			<field title="源单类型">sourceType</field>
+			<field title="源单单号">sourceBillNo</field>
+			<field title="退料原因">note</field>
+			<field title="摘要">explanation</field>
+		</fields>
+	</master>
+	<entries>
+		<entry name="entries" class="com.cloud.erp.entities.table.SalesOutStockEntry">
+			<fields>
+				<field title="产品代码">number</field>
+				<field title="产品名称">itemName</field>
+				<field title="规格型号">itemModel</field>
+				<field title="单位">itemUnit</field>
+				<field title="辅助属性">attrContent</field>
+				<field title="数量">quantity</field>
+				<field title="交货日期">fetchDate</field>
+				<field title="收货仓库">stockId</field>
+				<field title="源单单号">sourceBillNo</field>
+				<field title="备注">remark</field>			
+			</fields>	
+		</entry>
+	</entries>
+</module>

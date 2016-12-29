@@ -17,6 +17,7 @@ $(function() {
 		height :  $(this).height(),
 		collapsible: true,
 		pagination:true,
+		pageSize: 20,
 		rownumbers:true,
 		border:false,
 		singleSelect:true,

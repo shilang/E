@@ -14,7 +14,6 @@
  */
 package com.cloud.erp.service;
 
-import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -43,8 +42,5 @@ public interface SalesPriceListService extends
 	boolean persistence(SalesPriceList salesPriceList, Map<String, List<SalesPriceListEntry>> entries) throws Exception;
 	
 	boolean deleteToUpdateAll(Integer pid) throws Exception;
-	
-	@SuppressWarnings("rawtypes")
-	String exportExcel(List list, OutputStream os);
 
 }

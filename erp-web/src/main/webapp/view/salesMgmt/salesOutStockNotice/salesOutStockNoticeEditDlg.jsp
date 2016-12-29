@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <script type="text/javascript">
 	var $dg;
 	var $form;
 	var entry;
 	var date;
-	
+	var salOutStockNoticeShowPrice = false;
 	$(function(){
+		initOtherPerm();
 		$form = $("#form");
 		$form.form({
 			url: 'salesOutStockNotice/persistence.action',
@@ -20,8 +22,8 @@
 		var entryArr = [[]];
 		var currArr = [
 		              {field:'quantity',title:'数量',sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true}}},
-		              {field:'price',title:'单价',width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true,precision:2}}},
-		              {field:'amount',title:'金额',sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true,precision:2}}},
+		              {field:'price',title:'单价',hidden:!salOutStockNoticeShowPrice,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true,precision:2}}},
+		              {field:'amount',title:'金额',hidden:!salOutStockNoticeShowPrice,sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true,precision:2}}},
 		              {field:'fetchDate',title:'交货日期',width:parseInt($(this).width()*0.1),editor:{type:'datebox',options:{required:true}}},
 		              {field:'stockId',title:'仓库',width:parseInt($(this).width()*0.1),editor:{type:'textbox',options:{editable:false}}},
 		              {field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.1),editor:{type:'textbox',options:{editable:false}}},
@@ -112,6 +114,12 @@
 				parent.$.modalDialog.dg = $dg; 
 			}
 		});
+	}
+	
+	function initOtherPerm(){
+		if($('#salOutStockNoticeShowPrice').length > 0){
+			salOutStockNoticeShowPrice = true;
+		}
 	}
 	
 	function gridRowTotal(index){
@@ -270,4 +278,7 @@
 			<textarea id="changeReason" name="changeReason" readonly="readonly" style="margin:0;padding:0;border:0;width:100%;height:150px;"></textarea>
 		</div>
 	</form>
+	<shiro:hasPermission name="salOutStockNoticeShowPrice">
+		<label id="salOutStockNoticeShowPrice"></label>
+	</shiro:hasPermission>
 </div>

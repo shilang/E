@@ -103,13 +103,13 @@
 		var status = {msg:'',color:'black'};
 		if(value == '已备料'){
 			status.msg = value;
-			status.color = "black";
+			status.color = "maroon";
 		}else if(value == '已排单'){
 			status.msg = value;
 			status.color = "green";
 		}else if(value == '生产中'){
 			status.msg = value;
-			status.color = "maroon";		
+			status.color = "black";		
 		}else if(value == '待确认'){
 			status.msg = value;
 			status.color = "goldenrod";		
@@ -325,6 +325,12 @@
 		return $.erp.commitBusinessList($dg);
 	}
 	
+	function exportExcel(){	
+		var beanName = 'salesOrderServiceImpl';
+		var reportSchemaName = 'salesOrderReport.xml';
+		$.erp.exportExcel(beanName,reportSchemaName,$dg.datagrid('options'));
+	}
+	
 	function hold(){
 		$.erp.hold();
 	}
@@ -387,7 +393,7 @@
 						</td>
 						<td>
 							<shiro:hasPermission name="salOrderExport">
-								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-excel" plain="true" onclick="hold();">导出Excel</a>
+								<a id="exportOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-excel" plain="true" onclick="exportExcel();">导出Excel</a>
 								<div style="float: right; margin-left:5px;" class="datagrid-btn-separator submain" ></div>
 							</shiro:hasPermission>
 						</td>
@@ -417,7 +423,6 @@
 			</div>
 			<table id="dg" title=""></table>
 		</div>
-
 	</div>
 </body>
 </html>

@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 
-import com.cloud.erp.common.BaseAction;
+import com.cloud.erp.common.FileBaseAction;
 import com.cloud.erp.entities.table.SalesPriceList;
 import com.cloud.erp.entities.table.SalesPriceListEntry;
 import com.cloud.erp.service.SalesPriceListService;
@@ -37,7 +37,7 @@ import com.opensymphony.xwork2.ModelDriven;
  *
  */
 @Namespace("/salesPriceList")
-public class SalesPriceListAction extends BaseAction implements
+public class SalesPriceListAction extends FileBaseAction implements
 		ModelDriven<SalesPriceList> {
 
 	private static final long serialVersionUID = 1L;
@@ -83,14 +83,6 @@ public class SalesPriceListAction extends BaseAction implements
 		JSONWriter(result);
 		return RJSON;
 	}
-	
-	/*@Action("exportExcel")
-	public String exportExcel() throws Exception{
-		String fileName = salesPriceListService.exportExcel(salesPriceListService.findAll(null, null), 
-				getOutputStream());
-		setFileName(fileName);
-		return DOWNLOAD;
-	}*/
 	
 	@Override
 	public SalesPriceList getModel() {

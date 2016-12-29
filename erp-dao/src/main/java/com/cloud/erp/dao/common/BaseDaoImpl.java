@@ -108,7 +108,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		Query q = createHqlQuery(hql, params);
 		if(null != page && null != rows){
 			if(page < 1){page = 1;}
-			if(rows < 1){rows = 10;}
+			if(rows < 1){rows = 20;}
 			q.setFirstResult((page - 1) * rows).setMaxResults(rows);
 		}
 		return q.list();
