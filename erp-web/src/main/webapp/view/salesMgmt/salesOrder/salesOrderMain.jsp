@@ -144,8 +144,8 @@
 				url = "salesInvoice/shareEntries";
 			}else if(type == "YSK"){
 				url = "proceeds/shareEntries";
-				if('settleAmount' in row){delete row.settleAmount}
-				if('bankCost' in row){delete row.bankCost;}
+				//if('settleAmount' in row){delete row.settleAmount}
+				//if('bankCost' in row){delete row.bankCost;}
 			}else{
 				return;
 			}
