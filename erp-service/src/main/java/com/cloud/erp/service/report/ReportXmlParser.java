@@ -5,16 +5,13 @@ import java.util.List;
 import org.dom4j.Document;
 import org.dom4j.Node;
 
-import com.cloud.erp.utils.XmlUtil;
-
 
 public class ReportXmlParser {
 	
 	private static final String NAMESPACE = "http://www.orbitatech.com/schema/module";
 
 	public static Document readXml(String fileName){
-		return XmlUtil.readXml(XmlUtil.getReader(), 
-				ReportXmlParser.class.getResourceAsStream(fileName), NAMESPACE);
+		return ReportXmlUtil.readXml(ReportXmlUtil.getReader(), fileName, NAMESPACE);
 	}
 	
 	private static String getXpathForModuleName(){
