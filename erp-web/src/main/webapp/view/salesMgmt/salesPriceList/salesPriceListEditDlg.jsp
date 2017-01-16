@@ -23,8 +23,8 @@
 							  options:{
 								  required: true
 								  }}},
-							{field: 'price', title: '单价', width: parseInt($(this).width() * 0.06), editor: {type: 'numberbox', options:{required: true, precision: 2}}},
-							{field: 'amount', title: '金额', sum:true, width: parseInt($(this).width() * 0.06), editor: {type: 'numberbox', options:{required: true, precision: 2}}},
+							{field: 'price', title: '单价', width: parseInt($(this).width() * 0.06), editor: {type: 'numberbox', options:{required: true, precision: 4}}},
+							{field: 'amount', title: '金额', sum:true, width: parseInt($(this).width() * 0.06), editor: {type: 'numberbox', options:{required: true, precision: 4}}},
 							{field: 'remark', title: '备注', width: parseInt($(this).width() * 0.4), editor: 'textbox'}
 						  ];
 			entryArr[0] = new $.erp.materialCol($dg).mergeCol(currArr);

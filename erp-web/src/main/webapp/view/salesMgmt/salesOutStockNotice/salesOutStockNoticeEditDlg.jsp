@@ -22,8 +22,8 @@
 		var entryArr = [[]];
 		var currArr = [
 		              {field:'quantity',title:'数量',sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true}}},
-		              {field:'price',title:'单价',hidden:!salOutStockNoticeShowPrice,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true,precision:2}}},
-		              {field:'amount',title:'金额',hidden:!salOutStockNoticeShowPrice,sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true,precision:2}}},
+		              {field:'price',title:'单价',hidden:!salOutStockNoticeShowPrice,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true,precision:4}}},
+		              {field:'amount',title:'金额',hidden:!salOutStockNoticeShowPrice,sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true,precision:4}}},
 		              {field:'fetchDate',title:'交货日期',width:parseInt($(this).width()*0.1),editor:{type:'datebox',options:{required:true}}},
 		              {field:'stockId',title:'仓库',width:parseInt($(this).width()*0.1),editor:{type:'textbox',options:{editable:false}}},
 		              {field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.1),editor:{type:'textbox',options:{editable:false}}},

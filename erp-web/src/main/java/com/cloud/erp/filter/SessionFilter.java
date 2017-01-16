@@ -67,7 +67,7 @@ public class SessionFilter implements Filter {
 					//chain.doFilter(httpServletRequest, httpServletResponse);
 					str = "{msg:'timeOut'}";
 				}else {
-					str = "<script language='javascript'>alert('会话过期,请重新登录!');"
+					str = "<script language='javascript'>" //alert('会话过期,请重新登录!');
 	                        + "window.top.location.href='"
 	                        + loginUrl
 	                        + "';</script>";

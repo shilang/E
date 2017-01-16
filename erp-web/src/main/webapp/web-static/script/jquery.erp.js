@@ -77,6 +77,14 @@
     	}
 	});
 	
+	$.erp.isAdmin = function(){
+		var user = $('#user').val();
+		if(user==='admin'){
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * $.erp.ajax(url,param,fun,sync)
 	 */
@@ -151,15 +159,21 @@
 	
 	$.erp.checkResultStatus = function(row){
 		var status = false;
-		if(row){
-			var result = row.result;
-			if(result == $.erp.resultCheckPending || result == $.erp.resultCheckOk 
-					|| result == $.erp.resultCheckChange){
-				status = true;
-			}
-		}else{
+		
+		if(!row){
+			return false;
+		}
+		
+		if($.erp.isAdmin()){
+			return false;
+		}
+		
+		var result = row.result;
+		if(result == $.erp.resultCheckPending || result == $.erp.resultCheckOk 
+				|| result == $.erp.resultCheckChange){
 			status = true;
 		}
+		
 		return status;
 	};
 	
@@ -837,15 +851,17 @@
 		var result = 0;
 		var isChangeApply = false;
 		
-		if(row && row.result){
-			result = row.result;
-			if(result == 1 || result == 3){
-			   btnDisabled = true;
-			}
-			if(result == 2){
-				isChangeApply = true;
-				btnText = '申请修改';
-				btnIcon = 'icon-audit';
+		if(!$.erp.isAdmin()){
+			if(row && row.result){
+				result = row.result;
+				if(result == 1 || result == 3){
+				   btnDisabled = true;
+				}
+				if(result == 2){
+					isChangeApply = true;
+					btnText = '申请修改';
+					btnIcon = 'icon-audit';
+				}
 			}
 		}
 		

@@ -213,26 +213,29 @@
 	
 	function delSalesOrder(){
 		var row = $dg.datagrid('getSelected');
-		if(row){
-			if($.erp.checkResultStatus(row)){
-				return;
-			}
-			parent.$.messager.confirm($.erp.hint, $.erp.deleteQueryMsg, function(r){
-				if(r){
-					$.post("salesOrder/delete.action",{interId:row.interId},function(rsp){
-						if(rsp.status){
-							var idx = $dg.datagrid('getRowIndex', row);
-							$dg.datagrid('deleteRow', idx);
-						}
-						$.erp.submitSuccess(rsp.title, rsp.message);
-					},"JSON").error(function(){
-						$.erp.submitErr();
-					});
-				}
-			});
-		}else{
+		
+		if(!row){
 			$.erp.noSelectErr();
+			return;
 		}
+		
+		if($.erp.checkResultStatus(row)){
+			return;
+		}
+		
+		parent.$.messager.confirm($.erp.hint, $.erp.deleteQueryMsg, function(r){
+			if(r){
+				$.post("salesOrder/delete.action",{interId:row.interId},function(rsp){
+					if(rsp.status){
+						var idx = $dg.datagrid('getRowIndex', row);
+						$dg.datagrid('deleteRow', idx);
+					}
+					$.erp.submitSuccess(rsp.title, rsp.message);
+				},"JSON").error(function(){
+					$.erp.submitErr();
+				});
+			}
+		});
 	}
 	
 	function orderReview(){
@@ -338,6 +341,7 @@
 </script>
 </head>
 <body>
+	<input id="user" type="hidden" value="${sessionScope.shiroUser.account}" />
 	<div class="easyui-layout" data-options="fit:true,border:false">
 		<div data-options="region:'center',border:false" >
 			<div id="tb">

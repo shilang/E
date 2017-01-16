@@ -237,7 +237,7 @@ public class ICStockBillEntry implements Serializable {
 		this.stockPlaceId = stockPlaceId;
 	}
 
-	@Column(name = "REMARK", length = 200)
+	@Column(name = "REMARK", length = 2000)
 	public String getRemark() {
 		return remark;
 	}

@@ -35,8 +35,8 @@
 		
 		var entryArr = [[]];
 		var currArr = [{field:'quantity',title:'数量',sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{required:true}}},
-		               {field:'price',title:'单价',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:2,required:true}}},
-		               {field:'amount',title:'金额',hidden:!salOrderShowPrice,sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:2,required:true}}},
+		               {field:'price',title:'单价',hidden:!salOrderShowPrice,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:4,required:true}}},
+		               {field:'amount',title:'金额',hidden:!salOrderShowPrice,sum:true,width:parseInt($(this).width()*0.06),editor:{type:'numberbox',options:{precision:4,required:true}}},
 		               {field:'date',title:'交货日期',width:parseInt($(this).width()*0.1),
 		            	   editor:{type:'datebox',options:{
 		            		   required:true,
