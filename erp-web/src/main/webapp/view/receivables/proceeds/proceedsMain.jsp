@@ -18,6 +18,7 @@
 			collapsible: true,
 			pageSize: 20,
 			pagination: true,
+			pagePosition: 'top',
 			rownumbers: true,
 			striped: true,
 			border: false,
@@ -55,8 +56,10 @@
 				        	{field:'sourceType',title:'源单类型',width:parseInt($(this).width()*0.1),sortable:true},
 				        	{field:'remark',title:'备注',width:parseInt($(this).width()*0.4),sortable:true}
 			         ]],
-			toolbar: '#tb',
+			//toolbar: '#tb',
 			onDblClickRow: onDblClickRow
+		}).datagrid('getPager').pagination({
+			buttons:'#tb'
 		});
 		
 		$('#searchbox').searchbox({
@@ -175,12 +178,12 @@
 						<td>
 							<input id="searchbox">
 						</td>
-						<td>
+						<%-- <td>
 							<shiro:hasPermission name="recProceedsCheck">
 								<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
 							</shiro:hasPermission>
 							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="">高级查询</a> 
-						</td>
+						</td> --%>
 					</tr>
 				</table>
 			</div> 

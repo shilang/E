@@ -32,6 +32,7 @@
 			width: $(this).width(),
 			height: $(this).height(),
 			pagination: true,
+			pagePosition: 'top',
 			collapsible: true,
 			pageSize: 20,
 			rownumbers: true,
@@ -63,9 +64,11 @@
 				{field: 'checkerName', title: '审核人',width:parseInt($(this).width()*0.1),sortable:true},
 				{field: 'checkDate', title: '审核日期',width:parseInt($(this).width()*0.14),sortable:true}
 			]],
-			toolbar: '#tb',
+			//toolbar: '#tb',
 			//onClickRow: onClickRow,
 			onDblClickRow: onDblClickRow
+		}).datagrid('getPager').pagination({
+			buttons:'#tb'
 		});
 		
 		$("#searchbox").searchbox({
@@ -215,12 +218,12 @@
 						<td>
 							<input id="searchbox"/>
 						</td>
-						<td>
+						<%-- <td>
 							<shiro:hasPermission name="salContractCheck">
 								<a id="pendingOper" href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
 							</shiro:hasPermission>
 							<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="">高级查询</a>
-						</td>
+						</td> --%>
 					</tr>
 				</table>
 			</div>

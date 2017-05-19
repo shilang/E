@@ -33,6 +33,8 @@
 			url: 'salesPriceList/findEntriesById.action',
 			width: 'auto',
 			height: 350,
+			//maximizable: true,
+			//maximized: true,
 			rownumbers: true,
 			collapsible: true,
 			border: true,
@@ -180,7 +182,7 @@
 					</tr>
 				</table>
 			</div>
-			<table id="dg" title="项目内容"></table>
+			<table id="dg" title="项目内容" ></table>
 		</div>
 		<div class="easyui-panel" data-options="title:'改单记录',collapsible:true,collapsed:true">
 			<textarea id="changeReason" name="changeReason" readonly="readonly" style="margin:0;padding:0;border:0;width:100%;height:150px;"></textarea>

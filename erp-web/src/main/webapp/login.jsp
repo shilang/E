@@ -66,7 +66,8 @@
 					 
 					<div class="form-group">
 						<div class="col-xs-12">
-							请使用Firefox浏览器登录系统.<a href="http://download.firefox.com.cn/releases/stub/official/zh-CN/Firefox-latest.exe">下载Firefox</a>
+							<div style="color: silver;">请使用Firefox浏览器登录系统.<a href="http://download.firefox.com.cn/releases/stub/official/zh-CN/Firefox-latest.exe">下载Firefox</a></div>
+							<div style="margin:25px 0 0 70px;"><a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备17005416号</a></div>
 						</div>
 					</div>
 				

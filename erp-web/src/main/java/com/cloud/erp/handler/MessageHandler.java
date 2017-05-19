@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cloud.erp.common.BaseHandler;
 import com.cloud.erp.entities.viewmodel.GridModel;
 import com.cloud.erp.entities.viewmodel.RequestParams;
+import com.cloud.erp.entities.viewmodel.Result;
 import com.cloud.erp.service.MessageService;
 import com.cloud.erp.utils.PageUtil;
 
@@ -30,6 +31,16 @@ public class MessageHandler extends BaseHandler{
 		gridModel.setRows(messageService.findAll(params, pageUtil));
 		gridModel.setTotal(messageService.getCount(params));
 		return gridModel;
+	}
+	
+	@ResponseBody
+	@RequestMapping("updateReadStatus")
+	public Result updateReadStatus(String ids, int read){
+		String[] idss = ids.split(",");
+		for (String id : idss) {
+			messageService.updateReadStatus(Integer.valueOf(id), read);
+		}
+		return getDefaultResult(true);
 	}
 
 }

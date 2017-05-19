@@ -18,6 +18,7 @@
 			collapsible: true,
 			pageSize: 20,
 			pagination: true,
+			pagePosition: 'top',
 			rownumbers: true,
 			striped: true,
 			border: false,
@@ -50,9 +51,11 @@
 			        {field:'note',title:'退料原因',width:parseInt($(this).width()*0.4)},
 			        {field:'explanation',title:'摘要',width:parseInt($(this).width()*0.4)}
 			        ]],
-			toolbar: '#tb',
+			//toolbar: '#tb',
 			//onClickRow: onClickRow
 			onDblClickRow: onDblClickRow
+		}).datagrid('getPager').pagination({
+			buttons:'#tb'
 		});
 		
 		$("#searchbox").searchbox({
@@ -175,12 +178,12 @@
 						<td>
 							<input id="searchbox">
 						</td>
-						<td>
+						<%-- <td>
 							<shiro:hasPermission name="salReturnNoticeCheck">
 								<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
 							</shiro:hasPermission>
 							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="">高级查询</a> 
-						</td>
+						</td> --%>
 					</tr>
 				</table>
 			</div>

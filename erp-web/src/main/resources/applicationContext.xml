@@ -16,6 +16,7 @@
 	<!-- <import resource="classpath*:mybatis-context.xml"/> -->
 	<import resource="classpath*:shiro-context.xml"/>
 	<import resource="classpath*:activiti-context.xml"/>
+	<import resource="classpath*:message-context.xml"/>
 	
 	
 	<!-- 配置自动扫描的包 -->

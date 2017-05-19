@@ -865,7 +865,11 @@
 			}
 		}
 		
-		parent.$.modalDialog({
+		var $dg = null;
+		var dgOrgHeight = 0;
+		var mainTbHeight = 0;
+		
+		var $parentWindow = parent.$.modalDialog({
 			title: title,
 			iconCls: iconCls,
 			width: dlgWidth||800,
@@ -873,10 +877,11 @@
 			maximizable: true,
 			href: viewPath,
 			onLoad:function(){
+				
 				if(parent.init){
 					parent.init();
 				}
-				var $parentWindow = parent.$.modalDialog.handler;
+				
 				var $form = $parentWindow.find('#form');
 				
 				var deptIdDefer = null;
@@ -884,7 +889,19 @@
 				if($deptId.length > 0){
 					deptIdDefer = $deptId.erpDept();
 				}
-							
+				
+				var $mainTb = $parentWindow.find("table.simple");
+				if($mainTb.length > 0){
+					mainTbHeight = $mainTb.height();
+				}
+				
+				$dg = $parentWindow.find("table[id^=dg]");
+				if($dg.length <= 0){
+					$dg = null;
+				}else{
+					dgOrgHeight = $dg.datagrid('options').height;
+				}
+					
 				if(operType == 'add'){
 					//fill auto number
 					var $billNo = $parentWindow.find("#billNo");
@@ -921,15 +938,25 @@
 							$form.form('load', row);
 						}
 						//load entry data
-						var $entry = $parentWindow.find("table[id^=dg]");
-						if($entry.length > 0){
-							$entry.datagrid('reload',{interId:row.interId});
+						if($dg){
+							$dg.datagrid('reload',{interId:row.interId});
 						}
 					}
 				}
 			},
 			onBeforeLoad: function(param){
 				//parent.$.messager.progress(); 
+			},
+			onMaximize: function(){
+				if($dg){
+					var newHeight = $(window.top).height() - mainTbHeight - 100;
+					$dg.datagrid('resize',{width:'auto',height:newHeight});
+				}
+			},
+			onRestore: function(){
+				if($dg){
+					$dg.datagrid('resize',{width:'auto',height:dgOrgHeight});
+				}
 			},
 			buttons:[{
 				text: btnText,

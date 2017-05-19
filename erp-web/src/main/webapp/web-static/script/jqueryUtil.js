@@ -32,6 +32,15 @@
 		$.fn.combogrid.defaults.onLoadError = easyuiErrorFunction;
 		$.fn.combobox.defaults.onLoadError = easyuiErrorFunction;
 		$.fn.form.defaults.onLoadError = easyuiErrorFunction;
+		
+		if ($.fn.pagination){
+			//$.fn.pagination.defaults.beforePageText = '第';
+			//$.fn.pagination.defaults.afterPageText = '共{pages}页';
+			$.fn.pagination.defaults.showPageList = false;
+			$.fn.pagination.defaults.showRefresh = true;
+			$.fn.pagination.defaults.displayMsg = '';
+		}  
+		    
 		/**
 		 * 取消easyui默认开启的parser
 		 * 在页面加载之前，先开启一个进度条

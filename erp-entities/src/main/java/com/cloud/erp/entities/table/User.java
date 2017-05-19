@@ -55,6 +55,7 @@ public class User implements Serializable {
 	private String password;
 	private String email;
 	private String salt;
+	private String messageId;
 	private Integer primaryGroup;
 	private String description;
 	private Integer forbidden;
@@ -162,6 +163,15 @@ public class User implements Serializable {
 
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+	
+	@Column(name = "MESSAGEID", length = 128)
+	public String getMessageId() {
+		return messageId;
+	}
+	
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
 	}
 
 	@Column(name = "LANG", length = 50)

@@ -6,7 +6,6 @@ public class CheckJavaDelegate extends BusinessServiceJavaDelegate{
 
 	@Override
 	public void doExecute(DelegateExecution execution) {
-		
 		check();
 	}
 }

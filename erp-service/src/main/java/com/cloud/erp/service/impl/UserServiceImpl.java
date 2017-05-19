@@ -123,6 +123,7 @@ public class UserServiceImpl implements UserService {
 		String salt = UUID.randomUUID().toString();
 		user.setSalt(salt);
 		user.setPassword(md5Hash(user.getPassword(), salt));
+		
 		return userDao.persistence(user);
 	}
 

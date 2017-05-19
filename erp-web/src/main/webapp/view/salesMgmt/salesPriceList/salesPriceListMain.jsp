@@ -25,6 +25,7 @@
 			collapsible: true,
 			pageSize: 20,
 			pagination: true,
+			pagePosition: 'top',
 			rownumbers: true,
 			border: false,
 			striped: true,
@@ -48,9 +49,13 @@
 				{field: 'checkerName', title: '审核人', width: parseInt($(this).width() * 0.08),sortable:true},
 				{field: 'checkDate', title: '审核日期', width: parseInt($(this).width() * 0.16),sortable:true},
 				{field: 'removeFlag', title: '作废标志', width: parseInt($(this).width() * 0.1)}
-			]],toolbar: '#tb',
+			]],
+			//toolbar: '#tb',
 			//onClickRow: onClickRow,
 			onDblClickRow: onDblClickRow
+		}).datagrid('getPager').pagination({
+		    //showPageList:false,
+		    buttons:'#tb'
 		});
 		
 		$("#searchbox").searchbox({
@@ -196,12 +201,12 @@
 						<td>
 							<input id="searchbox"/>
 						</td>
-						<td>
+						<%-- <td>
 							<shiro:hasPermission name="salPriceCheck">
 								<a id="pendingOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
 							</shiro:hasPermission>
 							<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="">高级查询</a>
-						</td>
+						</td> --%>
 					</tr>
 				</table>
 			</div>

@@ -194,6 +194,18 @@
 	background:url('icons/mini_refresh.png') no-repeat center center;
 }
 
+.icon-mail-mark-read{
+	background:url('icons/mail_mark_read.png') no-repeat center center;
+}
+
+.icon-mail-mark-unread{
+	background:url('icons/mail_mark_unread.png') no-repeat center center;
+}
+
+.icon-all-select{
+	background:url('icons/all_select.png') no-repeat center center;
+}
+
 .icon-large-picture{
 	background:url('icons/large_picture.png') no-repeat center center;
 }

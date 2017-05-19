@@ -9,7 +9,7 @@
 	<configs>
 		<config>src/main/resources/applicationContext.xml</config>
 		<config>src/main/resources/springmvc.xml</config>
-		<config>src/main/resources/datasource-context.xml</config>
+		<config>src/main/resources/message-context.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
