@@ -5,6 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import com.cloud.erp.dao.exception.UpdateReferenceException;
 
+/**
+ * 
+ * @author Bollen
+ *
+ * @param <T>
+ */
 @Repository("referenceDao")
 public class ReferenceDaoSupport<T> implements ReferenceDao<T> {
 	

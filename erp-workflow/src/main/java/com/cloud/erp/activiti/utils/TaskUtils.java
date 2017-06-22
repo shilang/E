@@ -7,6 +7,11 @@ import org.activiti.engine.task.Task;
 
 import com.cloud.erp.activiti.model.TaskInfoModel;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class TaskUtils {
 	
 	public static TaskInfoModel Task2TaskModel(Task task){

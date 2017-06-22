@@ -9,6 +9,11 @@ import com.cloud.erp.entities.viewmodel.RequestParams;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.PageUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class RequestImpl implements Request {
 
 	@Override

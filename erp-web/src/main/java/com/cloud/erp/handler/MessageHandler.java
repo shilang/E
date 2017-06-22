@@ -15,6 +15,11 @@ import com.cloud.erp.entities.viewmodel.Result;
 import com.cloud.erp.service.MessageService;
 import com.cloud.erp.utils.PageUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 @Controller
 @RequestMapping("/msg")
 public class MessageHandler extends BaseHandler{

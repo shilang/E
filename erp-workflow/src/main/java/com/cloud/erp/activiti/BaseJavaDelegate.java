@@ -8,6 +8,11 @@ import org.slf4j.LoggerFactory;
 import com.cloud.erp.activiti.model.AuditModel;
 import com.cloud.erp.utils.Constants;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public abstract class BaseJavaDelegate implements JavaDelegate{
 	
 	private static final Logger log = LoggerFactory.getLogger(BaseJavaDelegate.class);

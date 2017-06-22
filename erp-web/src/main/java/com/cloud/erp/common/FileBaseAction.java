@@ -15,6 +15,11 @@ import org.apache.struts2.convention.annotation.Result;
 import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 @Result(name = "download", type = "stream")
 public class FileBaseAction extends BaseAction {
 

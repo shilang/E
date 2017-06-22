@@ -87,7 +87,9 @@
 			//toolbar: '#tb',
 			//onClickRow: onClickRow,
 			onDblClickRow: onDblClickRow
-		}).datagrid('getPager').pagination({
+		});
+		
+		$grid.datagrid('getPager').pagination({
 			buttons:'#tb'
 		});
 		
@@ -344,7 +346,7 @@
 </script>
 </head>
 <body>
-	<input id="user" type="hidden" value="${sessionScope.shiroUser.account}" />
+	<%-- <input id="user" type="hidden" value="${sessionScope.shiroUser.account}" /> --%>
 	<div class="easyui-layout" data-options="fit:true,border:false">
 		<div data-options="region:'center',border:false" >
 			<div id="tb">

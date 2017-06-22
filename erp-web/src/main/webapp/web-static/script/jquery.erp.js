@@ -869,7 +869,7 @@
 		var dgOrgHeight = 0;
 		var mainTbHeight = 0;
 		
-		var $parentWindow = parent.$.modalDialog({
+		parent.$.modalDialog({
 			title: title,
 			iconCls: iconCls,
 			width: dlgWidth||800,
@@ -882,20 +882,20 @@
 					parent.init();
 				}
 				
-				var $form = $parentWindow.find('#form');
+				var $form = parent.$.modalDialog.handler.find('#form');
 				
 				var deptIdDefer = null;
-				var $deptId = $parentWindow.find("#departmentId");
+				var $deptId = parent.$.modalDialog.handler.find("#departmentId");
 				if($deptId.length > 0){
 					deptIdDefer = $deptId.erpDept();
 				}
 				
-				var $mainTb = $parentWindow.find("table.simple");
+				var $mainTb = parent.$.modalDialog.handler.find("table.simple");
 				if($mainTb.length > 0){
 					mainTbHeight = $mainTb.height();
 				}
 				
-				$dg = $parentWindow.find("table[id^=dg]");
+				$dg = parent.$.modalDialog.handler.find("table[id^=dg]");
 				if($dg.length <= 0){
 					$dg = null;
 				}else{
@@ -904,13 +904,13 @@
 					
 				if(operType == 'add'){
 					//fill auto number
-					var $billNo = $parentWindow.find("#billNo");
+					var $billNo = parent.$.modalDialog.handler.find("#billNo");
 					if(numMethod && $billNo.length > 0){
 						$billNo.erpNumber(numMethod);
 					}
 					//fill base info (employee et.)
 					var createrDefer = null;
-					var $creater = $parentWindow.find('#creater');
+					var $creater = parent.$.modalDialog.handler.find('#creater');
 					if($creater.length > 0){
 						createrDefer = $creater.erpAccount();
 					}
@@ -1001,8 +1001,7 @@
 									    //close subwindow
 									    $applyWindow.dialog('destroy');
 									    //close parent window
-									    parent.$.modalDialog.handler.dialog('destroy');
-										parent.$.modalDialog.handler = undefined;
+									    parent.$.modalDialog.handler.dialog('close');
 									}
 								}
 							},{
@@ -1025,8 +1024,7 @@
 				iconCls: 'icon-cancel',
 				width: 80,
 				handler: function(){
-					parent.$.modalDialog.handler.dialog('destroy');
-					parent.$.modalDialog.handler = undefined;
+					parent.$.modalDialog.handler.dialog('close');
 				}
 			}]
 		});

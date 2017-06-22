@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.cloud.erp.entities.table.Relation;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public interface RelationDao {
 
 	List<Relation> findAll();

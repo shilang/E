@@ -18,6 +18,11 @@ import org.slf4j.LoggerFactory;
 
 import com.cloud.erp.utils.Constants;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class SessionFilter implements Filter {
 
 	private static final Logger log = LoggerFactory.getLogger(SessionFilter.class);

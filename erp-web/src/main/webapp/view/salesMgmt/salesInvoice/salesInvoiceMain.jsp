@@ -57,7 +57,9 @@
 			         ]],
 			//toolbar: '#tb',
 			onDblClickRow: onDblClickRow
-		}).datagrid('getPager').pagination({
+		});
+		
+		$grid.datagrid('getPager').pagination({
 			buttons:'#tb'
 		});
 		

@@ -16,19 +16,43 @@
     </userTask>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow6" sourceRef="salesOrderCheck" targetRef="exclusivegateway1"></sequenceFlow>
-    <sequenceFlow id="flow7" name="驳回" sourceRef="exclusivegateway1" targetRef="servicetask3">
+    <sequenceFlow id="flow7" name="驳回" sourceRef="exclusivegateway1" targetRef="CancelCheckServiceTask">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='reject'}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow10" sourceRef="salesOrderCommit" targetRef="servicetask1"></sequenceFlow>
-    <sequenceFlow id="flow11" sourceRef="servicetask1" targetRef="salesOrderCheck"></sequenceFlow>
-    <sequenceFlow id="flow13" sourceRef="servicetask3" targetRef="salesOrderCommit"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="salesOrderCommit" targetRef="CommitServiceTask"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="CommitServiceTask" targetRef="salesOrderCheck"></sequenceFlow>
+    <sequenceFlow id="flow13" sourceRef="CancelCheckServiceTask" targetRef="salesOrderCommit"></sequenceFlow>
     <sequenceFlow id="flow15" sourceRef="theStart" targetRef="servicetask4"></sequenceFlow>
-    <serviceTask id="servicetask1" name="Commit Service Task" activiti:class="com.cloud.erp.activiti.CommitJavaDelegate"></serviceTask>
-    <serviceTask id="servicetask2" name="Check Service Task" activiti:class="com.cloud.erp.activiti.CheckJavaDelegate"></serviceTask>
-    <serviceTask id="servicetask3" name="Cancel Check Service Task" activiti:class="com.cloud.erp.activiti.CancelCheckJavaDelegate"></serviceTask>
+    <serviceTask id="CommitServiceTask" name="Commit Service Task" activiti:class="com.cloud.erp.activiti.CommitJavaDelegate">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
+          <activiti:field name="msg">
+            <activiti:string><![CDATA[已提交]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="CheckServiceTask" name="Check Service Task" activiti:class="com.cloud.erp.activiti.CheckJavaDelegate">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
+          <activiti:field name="msg">
+            <activiti:string><![CDATA[已审核]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="CancelCheckServiceTask" name="Cancel Check Service Task" activiti:class="com.cloud.erp.activiti.CancelCheckJavaDelegate">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
+          <activiti:field name="msg">
+            <activiti:string><![CDATA[已驳回]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </serviceTask>
     <serviceTask id="servicetask4" name="Update Relation Service Task" activiti:class="com.cloud.erp.activiti.UpdateRelationJavaDelegate"></serviceTask>
     <sequenceFlow id="flow16" sourceRef="servicetask4" targetRef="salesOrderCommit"></sequenceFlow>
-    <sequenceFlow id="flow19" name="通过" sourceRef="exclusivegateway1" targetRef="servicetask2">
+    <sequenceFlow id="flow19" name="通过" sourceRef="exclusivegateway1" targetRef="CheckServiceTask">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='approve'}]]></conditionExpression>
     </sequenceFlow>
     <subProcess id="subprocess1" name="Sub Process">
@@ -54,7 +78,7 @@
       <sequenceFlow id="flow27" sourceRef="CaiGouReview" targetRef="endevent1"></sequenceFlow>
     </subProcess>
     <sequenceFlow id="flow23" sourceRef="subprocess1" targetRef="theEnd"></sequenceFlow>
-    <sequenceFlow id="flow28" sourceRef="servicetask2" targetRef="subprocess1"></sequenceFlow>
+    <sequenceFlow id="flow28" sourceRef="CheckServiceTask" targetRef="subprocess1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_sales-order-process">
     <bpmndi:BPMNPlane bpmnElement="sales-order-process" id="BPMNPlane_sales-order-process">
@@ -73,13 +97,13 @@
       <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
         <omgdc:Bounds height="40.0" width="40.0" x="617.0" y="191.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+      <bpmndi:BPMNShape bpmnElement="CommitServiceTask" id="BPMNShape_CommitServiceTask">
         <omgdc:Bounds height="55.0" width="105.0" x="409.0" y="70.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
+      <bpmndi:BPMNShape bpmnElement="CheckServiceTask" id="BPMNShape_CheckServiceTask">
         <omgdc:Bounds height="55.0" width="105.0" x="685.0" y="234.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="servicetask3" id="BPMNShape_servicetask3">
+      <bpmndi:BPMNShape bpmnElement="CancelCheckServiceTask" id="BPMNShape_CancelCheckServiceTask">
         <omgdc:Bounds height="63.0" width="105.0" x="409.0" y="180.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="servicetask4" id="BPMNShape_servicetask4">

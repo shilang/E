@@ -17,6 +17,11 @@ import com.cloud.erp.entities.table.User;
 import com.cloud.erp.entities.table.UserRole;
 import com.cloud.erp.utils.Commons;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 @Repository("dataPermissionAssign")
 public class DataPermissionAssignImpl extends DataPermissionAssign {
 	

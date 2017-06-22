@@ -11,6 +11,12 @@ import com.cloud.erp.entities.type.OperType;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.Reflect;
 
+/**
+ * 
+ * @author Bollen
+ *
+ * @param <T>
+ */
 @Repository("multiEntryDao")
 public class MultiEntryDaoSupport<T> extends UpdateStatus {
 

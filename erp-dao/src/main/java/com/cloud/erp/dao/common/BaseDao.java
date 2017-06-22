@@ -8,6 +8,12 @@ import org.hibernate.HibernateException;
 
 import com.cloud.erp.utils.PageUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ * @param <T>
+ */
 public interface BaseDao<T> {
 
 	public Serializable save(T object) throws HibernateException;

@@ -6,6 +6,11 @@ import java.util.Map;
 import com.cloud.erp.entities.viewmodel.RequestParams;
 import com.cloud.erp.utils.PageUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public interface Request {
 
 	Map<String, Object> getQueryParams(String searchName, String searchValue, String searchType, 

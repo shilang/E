@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.cloud.erp.entities.table.Permission;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public interface PermissionAssignmentDao {
 
 	List<Permission> findAllFunctionsList(Integer pid);

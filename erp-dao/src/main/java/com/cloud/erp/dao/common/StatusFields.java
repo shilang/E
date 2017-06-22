@@ -1,5 +1,10 @@
 package com.cloud.erp.dao.common;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class StatusFields {
 
 	private static final String METHOD_MASTER = "master";

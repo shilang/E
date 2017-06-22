@@ -4,6 +4,11 @@ import org.activiti.engine.delegate.DelegateExecution;
 
 import com.cloud.erp.utils.SpringUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class CancelTaskServiceJavaDelegate extends BaseJavaDelegate{
 	
 	private static final String DELETE_REASON = "改单取消";

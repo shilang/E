@@ -12,7 +12,7 @@
     <sequenceFlow id="flow2" sourceRef="servicetask1" targetRef="proceedsCheck-modify"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow3" sourceRef="proceedsCheck-modify" targetRef="exclusivegateway1"></sequenceFlow>
-    <sequenceFlow id="flow4" name="驳回" sourceRef="exclusivegateway1" targetRef="servicetask2">
+    <sequenceFlow id="flow4" name="驳回" sourceRef="exclusivegateway1" targetRef="RecoverCheckServiceTask">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='reject'}]]></conditionExpression>
     </sequenceFlow>
     <callActivity id="MainCallActivity" name="Main Call Activity" calledElement="proceeds-process">
@@ -22,15 +22,31 @@
       </extensionElements>
     </callActivity>
     <endEvent id="endevent2" name="End"></endEvent>
-    <sequenceFlow id="flow5" name="通过" sourceRef="exclusivegateway1" targetRef="servicetask3">
+    <sequenceFlow id="flow5" name="通过" sourceRef="exclusivegateway1" targetRef="CancelCheckServiceTask">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditModel.result=='approve'}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow6" sourceRef="servicetask3" targetRef="servicetask4"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="CancelCheckServiceTask" targetRef="servicetask4"></sequenceFlow>
     <sequenceFlow id="flow7" sourceRef="MainCallActivity" targetRef="endevent2"></sequenceFlow>
-    <sequenceFlow id="flow8" sourceRef="servicetask2" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="RecoverCheckServiceTask" targetRef="endevent1"></sequenceFlow>
     <serviceTask id="servicetask1" name="Change Commit Service Task" activiti:class="com.cloud.erp.activiti.ChangeCommitJavaDelegate"></serviceTask>
-    <serviceTask id="servicetask2" name="Recover Check Service Task" activiti:class="com.cloud.erp.activiti.CheckJavaDelegate"></serviceTask>
-    <serviceTask id="servicetask3" name="Cancel Check Service Task" activiti:class="com.cloud.erp.activiti.CancelCheckJavaDelegate"></serviceTask>
+    <serviceTask id="RecoverCheckServiceTask" name="Recover Check Service Task" activiti:class="com.cloud.erp.activiti.CheckJavaDelegate">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
+          <activiti:field name="msg">
+            <activiti:string><![CDATA[已驳回修改]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="CancelCheckServiceTask" name="Cancel Check Service Task" activiti:class="com.cloud.erp.activiti.CancelCheckJavaDelegate">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
+          <activiti:field name="msg">
+            <activiti:string><![CDATA[已审核修改]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </serviceTask>
     <serviceTask id="servicetask4" name="Update Settle Info" activiti:class="com.cloud.erp.activiti.UpdateSettleInfoForCancel"></serviceTask>
     <sequenceFlow id="flow9" sourceRef="servicetask4" targetRef="MainCallActivity"></sequenceFlow>
   </process>
@@ -57,10 +73,10 @@
       <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
         <omgdc:Bounds height="55.0" width="105.0" x="200.0" y="120.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
+      <bpmndi:BPMNShape bpmnElement="RecoverCheckServiceTask" id="BPMNShape_RecoverCheckServiceTask">
         <omgdc:Bounds height="55.0" width="105.0" x="690.0" y="120.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="servicetask3" id="BPMNShape_servicetask3">
+      <bpmndi:BPMNShape bpmnElement="CancelCheckServiceTask" id="BPMNShape_CancelCheckServiceTask">
         <omgdc:Bounds height="55.0" width="105.0" x="538.0" y="207.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="servicetask4" id="BPMNShape_servicetask4">

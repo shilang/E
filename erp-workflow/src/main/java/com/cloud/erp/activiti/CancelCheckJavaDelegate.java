@@ -5,6 +5,11 @@ import org.activiti.engine.delegate.DelegateExecution;
 import com.cloud.erp.activiti.model.AuditModel;
 import com.cloud.erp.utils.Constants;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class CancelCheckJavaDelegate extends BusinessServiceJavaDelegate{
 
 	@Override

@@ -33,7 +33,7 @@
 			    		if(value == 0){
 			    			return '<img width="24px" height="24px" border="0" src="web-static/images/new24.png" />';
 			    		}else{
-			    			return '2';
+			    			return '';
 			    		}
 			    	}
 			    },
@@ -62,16 +62,21 @@
 		return ids;
 	}
 	
-	function flagUnread(){
+	function updateReadStatus(read){
 		var ids = getSelectedIds();
-		$.ajax({url:'msg/updateReadStatus',data:{ids:ids,read:0}})
+		$.ajax({url:'msg/updateReadStatus',data:{ids:ids,read:read}})
 		.done(function(data){
+			$dg.datagrid('clearChecked');
 			$dg.datagrid('reload');
 		});
 	}
 	
+	function flagUnread(){
+		updateReadStatus(0);
+	}
+	
 	function flagRead(){
-		
+		updateReadStatus(1);
 	}
 </script>
 </head>

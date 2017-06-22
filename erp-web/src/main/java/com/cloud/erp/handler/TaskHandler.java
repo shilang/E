@@ -17,6 +17,11 @@ import com.cloud.erp.entities.viewmodel.Result;
 import com.cloud.erp.servicefacade.TaskServiceFacade;
 import com.cloud.erp.utils.PageUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 @Controller
 @RequestMapping("/task")
 public class TaskHandler extends BaseHandler{

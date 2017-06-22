@@ -79,7 +79,7 @@ public class MessageDaoImpl implements MessageDao{
 			}
 		}else if("self".equals(type) && initiator != null){
 			users.add(initiator);
-		}else {
+		}else if("user".equals(type)){
 			users.add(destination.getContent());
 		}
 		return users;

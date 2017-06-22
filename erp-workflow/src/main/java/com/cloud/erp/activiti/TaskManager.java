@@ -17,6 +17,11 @@ import com.cloud.erp.activiti.utils.TaskUtils;
 import com.cloud.erp.activiti.utils.VariableUtils;
 import com.cloud.erp.utils.Constants;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 @Service("taskManager")
 public class TaskManager {
 

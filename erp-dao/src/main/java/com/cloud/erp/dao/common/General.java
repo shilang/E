@@ -5,6 +5,12 @@ import java.util.Map;
 
 import com.cloud.erp.utils.PageUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ * @param <M>
+ */
 public interface General<M> {
 
 	List<M> findAll(Map<String, Object> params, PageUtil pageUtil);

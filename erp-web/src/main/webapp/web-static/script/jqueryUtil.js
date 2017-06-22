@@ -116,7 +116,6 @@
 		$.fn.panel.defaults.onMove = easyuiPanelOnMove;
 		
 		/**
-		 * @author 孙宇
 		 * 
 		 * @requires jQuery,EasyUI
 		 * 
@@ -184,8 +183,6 @@
 			}
 		};
 		/**
-		 * @author 孙宇
-		 * 
 		 * @requires jQuery,EasyUI
 		 * 
 		 * 扩展treegrid，使其支持平滑数据格式
@@ -218,8 +215,6 @@
 		};
 		
 		/**
-		 * @author 夏悸
-		 * 
 		 * @requires jQuery,EasyUI
 		 * 
 		 * 扩展tree，使其支持平滑数据格式
@@ -252,8 +247,6 @@
 			return data;
 		};
 		/**
-		 * @author sy
-		 * 
 		 * @requires jQuery,EasyUI
 		 * 
 		 * 扩展combotree，使其支持平滑数据格式
@@ -768,8 +761,6 @@
 		};
 		
 		/**
-		 * @author 孙宇
-		 * 
 		 * @requires jQuery,EasyUI
 		 * 
 		 * 创建一个模式化的dialog

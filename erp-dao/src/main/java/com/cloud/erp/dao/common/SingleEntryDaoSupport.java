@@ -4,6 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+/**
+ * 
+ * @author Bollen
+ *
+ * @param <T>
+ */
 @Repository("singleEntryDao")
 public class SingleEntryDaoSupport<T> extends MultiEntryDaoSupport<T>{
 	

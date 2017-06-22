@@ -17,7 +17,12 @@ import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.ObjectUtil;
 import com.cloud.erp.utils.PageUtil;
 import com.cloud.erp.utils.Reflect;
-
+/**
+ *
+ * @author Bollen
+ *
+ * @param <M>
+ */
 @Repository("generalDao")
 public class GeneralDaoSupport<M> extends UpdateStatus{
 	

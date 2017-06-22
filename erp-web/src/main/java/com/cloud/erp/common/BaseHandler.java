@@ -13,6 +13,11 @@ import com.cloud.erp.entities.viewmodel.RequestParams;
 import com.cloud.erp.entities.viewmodel.Result;
 import com.cloud.erp.utils.PageUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class BaseHandler implements Request {
 
 	private static final String TITLE = "提示";

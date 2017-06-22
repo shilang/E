@@ -14,6 +14,11 @@ import com.cloud.erp.entities.datafilter.FilterParam;
 import com.cloud.erp.entities.datafilter.FilterTranslator;
 import com.cloud.erp.entities.sys.RObject;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public abstract class DataPermissionAssign{
 	
 	private static final Logger logger = LoggerFactory.getLogger(DataPermissionAssign.class);

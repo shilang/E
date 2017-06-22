@@ -5,7 +5,6 @@ import java.util.Enumeration;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
 /**
  * Application Lifecycle Listener implementation class JDBCListener
  *

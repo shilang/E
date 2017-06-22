@@ -9,6 +9,11 @@ import com.cloud.erp.dao.exception.UpdateReferenceException;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.ICSales;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public interface SalesInvoiceDao extends GeneralDao<ICSales>, SingleEntryDao<ICSales>, ReferenceDao<ICSales>{
 	
 	List<SalesShareEntry> findSalesOrderEntriesById(Integer id);

@@ -7,7 +7,11 @@ import java.util.Date;
 import java.util.Map;
 
 import ognl.DefaultTypeConverter;
-
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class DateConverter extends DefaultTypeConverter{
 
 	private static final DateFormat[] ACCEPT_DATE_FORMATS = {

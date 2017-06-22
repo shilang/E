@@ -1,6 +1,11 @@
 package com.cloud.erp.dao.common;
 
-
+/**
+ * 
+ * @author Bollen
+ *
+ * @param <T>
+ */
 public interface MultiEntryDao<T> extends MultiEntry<T>{
 
 /*	<E> List<E> findEntriesById(Class<T>clazz, Integer pid, Class<E> eclazz, String entry);

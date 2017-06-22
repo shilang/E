@@ -16,6 +16,11 @@ import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.Reflect;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 @Service("checkService")
 public class CheckServiceSupport implements CheckService {
 	

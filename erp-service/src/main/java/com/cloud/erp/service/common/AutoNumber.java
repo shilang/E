@@ -5,10 +5,9 @@ import java.util.List;
 import com.cloud.erp.dao.exception.NumberIncrementException;
 
 /**
- * Auto number interface
- * @author Administrator
+ * 
+ * @author Bollen
  *
- * @param <T> entry type
  */
 public interface AutoNumber<T> {
 

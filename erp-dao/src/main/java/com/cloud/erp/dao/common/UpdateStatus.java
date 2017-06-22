@@ -8,6 +8,11 @@ import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 import com.cloud.erp.utils.Reflect;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class UpdateStatus {
 	
 	private static final String DELETE_STATUS = Constants.PERSISTENCE_DELETE_STATUS;

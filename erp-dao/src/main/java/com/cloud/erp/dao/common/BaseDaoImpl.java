@@ -14,6 +14,12 @@ import org.springframework.stereotype.Repository;
 
 import com.cloud.erp.utils.PageUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ * @param <T>
+ */
 @Repository("baseDao")
 public class BaseDaoImpl<T> implements BaseDao<T> {
 

@@ -15,6 +15,11 @@ import com.cloud.erp.activiti.exception.FoundMoreUserException;
 import com.cloud.erp.entities.table.Role;
 import com.cloud.erp.entities.table.User;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 @Service("identityManager")
 public class IdentityManager {
 

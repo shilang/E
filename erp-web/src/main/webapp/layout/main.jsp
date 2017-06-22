@@ -26,7 +26,11 @@
 	}
 </style>
 
+<script src="web-static/script/sockjs.js"></script>
+<script src="web-static/script/stomp.js"></script>
+
 <script type="text/javascript" charset="utf-8">
+	var stompClient = null;
 	var centerTabs;
 	var tabsMenu;
 	$(function(){
@@ -212,9 +216,11 @@
 	function logout() {
 		$.messager.confirm("提示", "确定退出吗？", function(r) {
 			if (r) {
-				$.erp.ajax("loginAction!logout.action", {}, function() {
-					location.reload(true);
-				}, true);
+				$.ajax({url:'logout.action'});
+				setTimeout(function(){
+					disconnect();
+					parent.location.reload();
+				},100);
 			}
 		});
 	}
@@ -259,6 +265,41 @@
 			} ]
 		});
 	}
+	
+	function connect(){
+		var socket = new SockJS('/erp-web/stomp');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({},function(frame){
+			stompClient.subscribe('/topic/${sessionScope.shiroUser.account}',function(message){
+				var msgobj = $.parseJSON(message.body);	
+				var msgbody = '名称: ' + msgobj.name 
+				    msgbody	= msgbody + '<br/>内容: ' + msgobj.content 
+					msgbody = msgbody + '<br/>发送者: ' + msgobj.sender;
+				
+				var title = '';
+				if(msgobj.type == 'process'){
+					title = '流程消息';
+				}
+				
+				$.messager.show({
+					title: title,
+					msg: msgbody,
+					width: 300,
+					height: 150,
+					timeout: 0
+				});
+			});
+		});
+	}
+	
+	function disconnect(){
+		if(stompClient != null){
+			stompClient.disconnect();
+		}
+	}
+	
+	connect();
+	
 </script>
 
 <div class="easyui-layout" data-options="fit:true">
@@ -279,9 +320,7 @@
 			<div id="layout_north_kzmbMenu" style="width: 100px; display: none;">
 				<div onclick="modifyPasswddDlg();">修改密码</div>
 				<div class="menu-sep"></div>
-				<div>
-					<a href="logout.action">退出系统</a>
-				</div>
+				<div onclick="logout();">退出系统</div>
 			</div>
 		</div>
 	</div>

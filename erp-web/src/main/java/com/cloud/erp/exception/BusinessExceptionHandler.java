@@ -9,6 +9,11 @@ import com.cloud.erp.service.exception.BusinessStatusLimitedException;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public class BusinessExceptionHandler {
 
 	private static final String RESULT = "error";

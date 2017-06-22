@@ -12,6 +12,11 @@ import com.cloud.erp.entities.table.Message;
 import com.cloud.erp.service.MessageService;
 import com.cloud.erp.utils.SpringUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 //process message 
 public class MessageJavaDelegate extends BaseJavaDelegate {
 	
@@ -23,11 +28,6 @@ public class MessageJavaDelegate extends BaseJavaDelegate {
 		
 		AuditModel auditModel = getAuditModel();
 		
-		String flag = execution.getProcessDefinitionId().split(":")[0] + ":" + execution.getCurrentActivityId();
-	    String creater = auditModel.getCreater();
-	    String msgstr = msg.getValue(execution).toString();
-	    String content = "<"+ creater + ">" + msgstr + " 单据: " + auditModel.getNumber();
-	    
 	     HistoricTaskInstance historicTaskInstance = execution.getEngineServices()
 	    .getHistoryService()
 	    .createHistoricTaskInstanceQuery()
@@ -37,6 +37,11 @@ public class MessageJavaDelegate extends BaseJavaDelegate {
 	    .list().get(0);
 	    
 	    String assignee = historicTaskInstance.getAssignee();
+	    
+	    String flag = execution.getProcessDefinitionId().split(":")[0] + ":" + execution.getCurrentActivityId();
+	    String creater = auditModel.getCreater();
+	    String msgstr = msg.getValue(execution).toString();
+	    String content = /*"<"+ assignee + ">" + msgstr + */"单据: " + auditModel.getNumber();
 		
 		Message message = new Message();
 		message.setType(MessageType.process);

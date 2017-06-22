@@ -10,7 +10,11 @@ import com.cloud.erp.entities.SettleItem;
 import com.cloud.erp.entities.shareentry.SalesShareEntry;
 import com.cloud.erp.entities.table.RecProceeds;
 
-
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public interface RecProceedsDao
 	extends GeneralDao<RecProceeds>,
 	SingleEntryDao<RecProceeds>,

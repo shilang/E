@@ -20,6 +20,11 @@ import com.cloud.erp.activiti.model.AuditModel;
 import com.cloud.erp.utils.Commons;
 import com.cloud.erp.utils.Constants;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 @Service("processManager")
 public class ProcessManager {
 	

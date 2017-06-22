@@ -3,6 +3,11 @@ package com.cloud.erp.activiti;
 import com.cloud.erp.service.common.CheckService;
 import com.cloud.erp.utils.SpringUtil;
 
+/**
+ * 
+ * @author Bollen
+ *
+ */
 public abstract class BusinessServiceJavaDelegate extends BaseJavaDelegate{
 	
 	public boolean commit(){
