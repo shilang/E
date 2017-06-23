@@ -26,7 +26,7 @@
 		margin-left: 4px;
 	}
 	
-	.dlgcontent #form #fix .easyui-textbox{
+	.dlgcontent #form #fixDiv .easyui-textbox{
 		width: 625px;
 	}
 
@@ -35,27 +35,53 @@
 <script type="text/javascript">
 
 	function billNoPart(editable){
-		$('#billNo').removeAttr('readonly');
+		if(editable){
+			$('#billNo').removeAttr('readonly');
+		}
 	}
 	
 	function contentPart(editable){
-		
+		if(editable){
+			$('#content').removeAttr('readonly');
+			$("input[name='suggestion']").removeAttr('disabled');
+			$('#attachment').removeAttr('readonly');
+		}
 	} 
 	
 	function reasonPart(editable){
-		
+		if(editable){
+			$('#reason').removeAttr('readonly');
+			$('#SCBchk').removeAttr('disabled');
+			$('#PZBchk').removeAttr('disabled');
+			$('#CGBchk').removeAttr('disabled');
+			$('#GCBchk').removeAttr('disabled');
+			$('#GMBchk').removeAttr('disabled');
+			$('#WJBchk').removeAttr('disabled');
+		}
 	}
 	
 	function fixPart(editable){
-		
+		if(editable){
+			$('#SCB').removeAttr('readonly');
+			$('#PZB').removeAttr('readonly');
+			$('#CGB').removeAttr('readonly');
+			$('#GCB').removeAttr('readonly');
+			$('#GMB').removeAttr('readonly');
+			$('#WJB').removeAttr('readonly');
+		}
 	}
 	
 	function handlePart(editable){
-		
+		if(editable){
+			$('#solveWay').removeAttr('readonly');
+			$('#solveWayMark').removeAttr('readonly');
+		}
 	}
 	
 	function resultPart(editable){
-		
+		if(editable){
+			$('#result').removeAttr('readonly');
+		}
 	}
 	
 	function initSegment(level,id){
@@ -109,11 +135,11 @@
 				 <table>
 					<tr>
 						<th>客户意见:</th>
-						<td><label><input name="suggestion" type="radio" readonly="readonly" value="" />退换 </label></td>
-						<td><label><input name="suggestion" type="radio" readonly="readonly" value="" />返修 </label></td>
-						<td><label><input name="suggestion" type="radio" readonly="readonly" value="" />补发配件 </label></td>
-						<td><label><input name="suggestion" type="radio" readonly="readonly" value="" />退货 </label></td>
-						<td><label><input name="suggestion" type="radio" readonly="readonly" value="" />其它 </label></td>
+						<td><label><input name="suggestion" type="radio" disabled="disabled" value="" />退换 </label></td>
+						<td><label><input name="suggestion" type="radio" disabled="disabled" value="" />返修 </label></td>
+						<td><label><input name="suggestion" type="radio" disabled="disabled" value="" />补发配件 </label></td>
+						<td><label><input name="suggestion" type="radio" disabled="disabled" value="" />退货 </label></td>
+						<td><label><input name="suggestion" type="radio" disabled="disabled" value="" />其它 </label></td>
 					</tr>
 				  </table>
 				</div>
@@ -129,16 +155,16 @@
 		<fieldset>
 			<legend>不良品原因分析</legend>
 			<span>原因分析:</span>
-			<textarea id="reason" name="reason"></textarea>
+			<textarea id="reason" name="reason" readonly="readonly" ></textarea>
 			<table>
 				<tr>
 					<th>纠正与预防部门:</th>
-					<td><label><input id="SCBchk" name="SCBchk" type="checkbox" />生产部 </label></td>
-					<td><label><input id="PZBchk" name="PZBchk" type="checkbox" />品质部 </label></td>
-					<td><label><input id="CGBchk" name="CGBchk" type="checkbox" />采购部 </label></td>
-					<td><label><input id="GCBchk" name="GCBchk" type="checkbox" />工程部 </label></td>
-					<td><label><input id="GMBchk" name="GMBchk" type="checkbox" />工模部 </label></td>
-					<td><label><input id="WJBchk" name="WJBchk" type="checkbox" />五金部 </label></td>
+					<td><label><input id="SCBchk" name="SCBchk" type="checkbox" disabled="disabled" />生产部 </label></td>
+					<td><label><input id="PZBchk" name="PZBchk" type="checkbox" disabled="disabled" />品质部 </label></td>
+					<td><label><input id="CGBchk" name="CGBchk" type="checkbox" disabled="disabled" />采购部 </label></td>
+					<td><label><input id="GCBchk" name="GCBchk" type="checkbox" disabled="disabled" />工程部 </label></td>
+					<td><label><input id="GMBchk" name="GMBchk" type="checkbox" disabled="disabled" />工模部 </label></td>
+					<td><label><input id="WJBchk" name="WJBchk" type="checkbox" disabled="disabled" />五金部 </label></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -150,27 +176,27 @@
 			<table>
 				<tr>
 					<th>生产部措施:</th>
-					<td><input id="SCB" name="SCB" class="easyui-textbox" /></td>
+					<td><input id="SCB" name="SCB" readonly="readonly" class="easyui-textbox" /></td>
 				</tr>
 				<tr>
 					<th>品质部措施:</th>
-					<td><input id="PZB" name="PZB" class="easyui-textbox" /></td>
+					<td><input id="PZB" name="PZB" readonly="readonly" class="easyui-textbox" /></td>
 				</tr>
 				<tr>
 					<th>采购部措施:</th>
-					<td><input id="CGB" name="CGB" class="easyui-textbox" /></td>
+					<td><input id="CGB" name="CGB" readonly="readonly" class="easyui-textbox" /></td>
 				</tr>
 				<tr>
 					<th>工程部措施:</th>
-					<td><input id="GCB" name="GCB" class="easyui-textbox" /></td>
+					<td><input id="GCB" name="GCB" readonly="readonly" class="easyui-textbox" /></td>
 				</tr>
 				<tr>
 					<th>工模部措施:</th>
-					<td><input id="GMB" name="GMB" class="easyui-textbox" /></td>
+					<td><input id="GMB" name="GMB" readonly="readonly" class="easyui-textbox" /></td>
 				</tr>
 				<tr>
 					<th>五金部措施</th>
-					<td><input id="WJB" name="WJB" class="easyui-textbox" /></td>
+					<td><input id="WJB" name="WJB" readonly="readonly" class="easyui-textbox" /></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -183,9 +209,9 @@
 			<table>
 				<tr>
 					<th>处理结果:</th>
-					<td><input id="solveWay" name="solveWay"  class="easyui-combobox"/></td>
+					<td><input id="solveWay" name="solveWay" readonly="readonly" class="easyui-combobox"/></td>
 					<th>备注:</th>
-					<td><input id="solveWayMark" name="solveWayMark" class="easyui-textbox" style="width: 427px;"/></td>
+					<td><input id="solveWayMark" name="solveWayMark" readonly="readonly" class="easyui-textbox" style="width: 427px;"/></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -198,7 +224,7 @@
 			<table>
 				<tr>
 					<th>客户满意度:</th>
-					<td><input id="result" name="result" class="easyui-combobox" /></td>
+					<td><input id="result" name="result" readonly="readonly" class="easyui-combobox" /></td>
 				</tr>
 			</table>
 		</fieldset>
