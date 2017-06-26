@@ -24,9 +24,9 @@
 			width: $(this).width(),
 			height: $(this).height(),
 			collapsible: true,
-			pageSize: 20,
+			pageSize: 25,
 			pagination: true,
-			pagePosition: 'top',
+			//pagePosition: 'top',
 			rownumbers: true,
 			striped: true,
 			border: false,
@@ -58,14 +58,14 @@
 			        {field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.12)},
 			        {field:'explanation',title:'摘要',width:parseInt($(this).width()*0.4)}
 			        ]],
-			//toolbar: '#tb',
+			toolbar: '#tb',
 			//onClickRow: onClickRow,
 			onDblClickRow: onDblClickRow
 		});
 		
-		$grid.datagrid('getPager').pagination({
+		/* $grid.datagrid('getPager').pagination({
 			buttons:'#tb'
-		});
+		}); */
 		
 		$("#searchbox").searchbox({
 			width: 250,

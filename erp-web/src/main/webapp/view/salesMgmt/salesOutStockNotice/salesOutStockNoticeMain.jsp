@@ -23,9 +23,9 @@
 			width: $(this).width(),
 			height: $(this).height(),
 			collapsible: true,
-			pageSize: 20,
+			pageSize: 25,
 			pagination: true,
-			pagePosition: 'top',
+			//pagePosition: 'top',
 			rownumbers: true,
 			striped: true,
 			border: false,
@@ -57,14 +57,14 @@
 			        {field:'sourceBillNo',title:'源单单号',width:parseInt($(this).width()*0.12)},
 			        {field:'explanation',title:'摘要',width:parseInt($(this).width()*0.4)}
 			        ]],
-			//toolbar: '#tb',
+			toolbar: '#tb',
 			//onClickRow: onClickRow,
 			onDblClickRow: onDblClickRow
 		});
 		
-		$grid.datagrid('getPager').pagination({
+		/* $grid.datagrid('getPager').pagination({
 			buttons:'#tb'
-		});
+		}); */
 		
 		$("#searchbox").searchbox({
 			width: 250,
@@ -274,15 +274,17 @@
 						<td>
 							<input id="searchbox">
 						</td>
-						<%-- <td>
+						 <td>
+							<%--	
 							<shiro:hasPermission name="salOutNoticeCheck">
 								<a id="pendingOper" href="javascript:void(0);" class="easyui-linkbutton submain" iconCls="icon-search" plain="true" onclick="checkPending();">待审核</a>
 							</shiro:hasPermission>
 							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="">高级查询</a>
+							--%>	
 							<shiro:hasPermission name="chuanwu">
 								<input id="chuanwu" type="hidden" value="chuanwu">
 							</shiro:hasPermission>
-						</td> --%>
+						</td>
 					</tr>
 				</table>
 			</div>

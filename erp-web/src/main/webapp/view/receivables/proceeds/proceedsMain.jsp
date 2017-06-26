@@ -16,9 +16,9 @@
 			width: $(this).width(),
 			height: $(this).height(),
 			collapsible: true,
-			pageSize: 20,
+			pageSize: 25,
 			pagination: true,
-			pagePosition: 'top',
+			//pagePosition: 'top',
 			rownumbers: true,
 			striped: true,
 			border: false,
@@ -56,13 +56,13 @@
 				        	{field:'sourceType',title:'源单类型',width:parseInt($(this).width()*0.1),sortable:true},
 				        	{field:'remark',title:'备注',width:parseInt($(this).width()*0.4),sortable:true}
 			         ]],
-			//toolbar: '#tb',
+			toolbar: '#tb',
 			onDblClickRow: onDblClickRow
 		});
 		
-		$grid.datagrid('getPager').pagination({
+		/* $grid.datagrid('getPager').pagination({
 			buttons:'#tb'
-		});
+		}); */
 		
 		$('#searchbox').searchbox({
 			width: 250,

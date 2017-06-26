@@ -3,7 +3,7 @@
   <process id="sales-pricelist-process-apply" name="sales pricelist process apply" isExecutable="true">
     <startEvent id="startevent1" name="Start" activiti:initiator="initiator"></startEvent>
     <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="salesPriceListCheck-modify" name="销售报价单审核-修改" activiti:candidateGroups="销售经理">
+    <userTask id="salesPriceListCheck-modify" name="销售报价单审核-改单" activiti:candidateGroups="销售经理">
       <extensionElements>
         <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
       </extensionElements>
@@ -29,7 +29,7 @@
       <extensionElements>
         <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
           <activiti:field name="msg">
-            <activiti:string><![CDATA[已驳回修改]]></activiti:string>
+            <activiti:string><![CDATA[已驳回改单]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
       </extensionElements>
@@ -38,7 +38,7 @@
       <extensionElements>
         <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
           <activiti:field name="msg">
-            <activiti:string><![CDATA[已审核修改]]></activiti:string>
+            <activiti:string><![CDATA[已审核改单]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
       </extensionElements>

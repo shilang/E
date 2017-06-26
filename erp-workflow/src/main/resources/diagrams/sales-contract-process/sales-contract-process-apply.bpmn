@@ -3,7 +3,7 @@
   <process id="sales-contract-process-apply" name="sales contract process apply" isExecutable="true">
     <startEvent id="startevent1" name="Start" activiti:initiator="initiator"></startEvent>
     <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="salesContractCheck-modify" name="销售合同审核-修改" activiti:candidateGroups="销售经理">
+    <userTask id="salesContractCheck-modify" name="销售合同审核-改单" activiti:candidateGroups="销售经理">
       <extensionElements>
         <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
       </extensionElements>

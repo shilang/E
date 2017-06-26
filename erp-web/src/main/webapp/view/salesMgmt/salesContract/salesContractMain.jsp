@@ -32,9 +32,9 @@
 			width: $(this).width(),
 			height: $(this).height(),
 			pagination: true,
-			pagePosition: 'top',
+			//pagePosition: 'top',
 			collapsible: true,
-			pageSize: 20,
+			pageSize: 25,
 			rownumbers: true,
 			border: false,
 			striped: true,
@@ -64,14 +64,14 @@
 				{field: 'checkerName', title: '审核人',width:parseInt($(this).width()*0.1),sortable:true},
 				{field: 'checkDate', title: '审核日期',width:parseInt($(this).width()*0.14),sortable:true}
 			]],
-			//toolbar: '#tb',
+			toolbar: '#tb',
 			//onClickRow: onClickRow,
 			onDblClickRow: onDblClickRow
 		});
 		
-		$grid.datagrid('getPager').pagination({
+		/* $grid.datagrid('getPager').pagination({
 			buttons:'#tb'
-		});
+		}); */
 		
 		$("#searchbox").searchbox({
 			width: 250,

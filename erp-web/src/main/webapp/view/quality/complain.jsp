@@ -17,7 +17,7 @@
 			collapsible: true,
 			pageSize: 20,
 			pagination: true,
-			pagePosition: 'top',
+			//pagePosition: 'top',
 			rownumbers: true,
 			fitColumns: true,
 			striped: true,
@@ -30,9 +30,8 @@
 				{field:'interId',title:'',width:_width*0.05}, 
 				{field:'interId',title:'',width:_width*0.05}, 
 				{field:'interId',title:'',width:_width*0.05}
-			]]
-		}).datagrid('getPager').pagination({
-			buttons: '#tb'
+			]],
+			toolbar: '#tb'
 		});
 	});
 	

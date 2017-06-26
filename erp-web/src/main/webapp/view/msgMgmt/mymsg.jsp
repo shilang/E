@@ -10,15 +10,18 @@
 	var _width = $(this).width();
 	var queryParams = {sort:'interId',order:'desc'};
 	$(function(){
+		
+		$.extend(queryParams,$.erp.searcher('owner','${sessionScope.shiroUser.account}'));
+		
 		$dg = $('#dg');
 		$dg.datagrid({
 			url:'msg/list',
 			width: $(this).width(),
 			height: $(this).height(),
 			collapsible: true,
-			pageSize: 20,
+			pageSize: 25,
 			pagination: true,
-			pagePosition: 'top',
+			//pagePosition: 'top',
 			rownumbers: true,
 			fitColumns: true,
 			striped: true,
@@ -31,7 +34,7 @@
 			    {field:'read',width:20,
 			    	formatter:function(value,row,index){
 			    		if(value == 0){
-			    			return '<img width="24px" height="24px" border="0" src="web-static/images/new24.png" />';
+			    			return '<img width="20px" height="20px" border="0" src="web-static/images/new24.png" />';
 			    		}else{
 			    			return '';
 			    		}
@@ -39,15 +42,18 @@
 			    },
 				{field:'chk',width:10,checkbox:true},           
 				{field:'interId',title:'消息ID',width:25},           
-				{field:'type',title:'类型',width:_width*0.05},           
+				{field:'type',title:'类型',width:_width*0.05,
+					formatter:function(value,row,index){
+						if(value == 'process'){
+							return '流程消息';
+						}
+					}},           
 				{field:'name',title:'标题',width:_width*0.05},      
 				{field:'content',title:'内容',width:_width*0.2}, 
 				{field:'sender',title:'发送者',width:_width*0.05}, 
-				{field:'created',title:'创建日期',width:_width*0.1}
+				{field:'created',title:'创建时间',width:_width*0.1}
 			]],
-			//toolbar: '#tb'			
-		}).datagrid('getPager').pagination({
-			buttons:'#tb'
+			toolbar: '#tb'			
 		});
 	});
 	

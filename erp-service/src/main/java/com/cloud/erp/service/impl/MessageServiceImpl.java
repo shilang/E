@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -75,9 +76,10 @@ public class MessageServiceImpl implements MessageService{
 				String dest = "/topic/" + user;
 				this.template.convertAndSend(dest, message);
 				
-				persistence(message);
+				Message newmsg = new Message();
+				BeanUtils.copyProperties(newmsg, message);
+				persistence(newmsg);
 			}
-			
 		}
 	}
 

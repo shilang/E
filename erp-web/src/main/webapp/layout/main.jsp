@@ -272,9 +272,10 @@
 		stompClient.connect({},function(frame){
 			stompClient.subscribe('/topic/${sessionScope.shiroUser.account}',function(message){
 				var msgobj = $.parseJSON(message.body);	
-				var msgbody = '名称: ' + msgobj.name 
-				    msgbody	= msgbody + '<br/>内容: ' + msgobj.content 
+				var msgbody = '标题: ' + msgobj.name;
+				    msgbody	= msgbody + '<br/>内容: ' + msgobj.content;
 					msgbody = msgbody + '<br/>发送者: ' + msgobj.sender;
+					msgbody = msgbody + '<br/>创建时间: ' + msgobj.created;
 				
 				var title = '';
 				if(msgobj.type == 'process'){

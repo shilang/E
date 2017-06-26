@@ -3,7 +3,7 @@
   <process id="sales-returngoods-notice-process-apply" name="sales returngoods notice process apply" isExecutable="true">
     <startEvent id="startevent1" name="Start" activiti:initiator="initiator"></startEvent>
     <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="salesReturngoodsNoticeCheck-modify" name="退货通知审核-修改" activiti:candidateGroups="销售经理">
+    <userTask id="salesReturngoodsNoticeCheck-modify" name="退货通知审核-改单" activiti:candidateGroups="销售经理">
       <extensionElements>
         <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
       </extensionElements>

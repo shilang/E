@@ -3,7 +3,7 @@
   <process id="sales-outstock-notice-process-apply" name="sales outstock notice process apply" isExecutable="true">
     <startEvent id="startevent1" name="Start" activiti:initiator="initiator"></startEvent>
     <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="salesOutstockNoticeCheck-modify" name="发货通知审核-修改" activiti:candidateGroups="财务经理">
+    <userTask id="salesOutstockNoticeCheck-modify" name="发货通知审核-改单" activiti:candidateGroups="财务经理">
       <extensionElements>
         <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
       </extensionElements>
@@ -33,7 +33,7 @@
       <extensionElements>
         <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
           <activiti:field name="msg">
-            <activiti:string><![CDATA[已驳回修改]]></activiti:string>
+            <activiti:string><![CDATA[已驳回改单]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
       </extensionElements>
@@ -42,7 +42,7 @@
       <extensionElements>
         <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
           <activiti:field name="msg">
-            <activiti:string><![CDATA[已审核修改]]></activiti:string>
+            <activiti:string><![CDATA[已审核改单]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
       </extensionElements>
