@@ -8,8 +8,8 @@
         <activiti:formProperty id="result" name="result" type="string" expression="${auditModel.result}"></activiti:formProperty>
       </extensionElements>
     </userTask>
-    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="servicetask1"></sequenceFlow>
-    <sequenceFlow id="flow2" sourceRef="servicetask1" targetRef="salesOrderCheck-modify"></sequenceFlow>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="ChangeCommitServiceTask"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="ChangeCommitServiceTask" targetRef="salesOrderCheck-modify"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow3" sourceRef="salesOrderCheck-modify" targetRef="exclusivegateway1"></sequenceFlow>
     <sequenceFlow id="flow4" name="驳回" sourceRef="exclusivegateway1" targetRef="RecoverCheckServiceTask">
@@ -28,7 +28,15 @@
     <sequenceFlow id="flow6" sourceRef="CancelCheckServiceTask" targetRef="servicetask4"></sequenceFlow>
     <sequenceFlow id="flow7" sourceRef="MainCallActivity" targetRef="endevent2"></sequenceFlow>
     <sequenceFlow id="flow8" sourceRef="RecoverCheckServiceTask" targetRef="endevent1"></sequenceFlow>
-    <serviceTask id="servicetask1" name="Change Commit Service Task" activiti:class="com.cloud.erp.activiti.ChangeCommitJavaDelegate"></serviceTask>
+    <serviceTask id="ChangeCommitServiceTask" name="Change Commit Service Task" activiti:class="com.cloud.erp.activiti.ChangeCommitJavaDelegate">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
+          <activiti:field name="msg">
+            <activiti:string><![CDATA[改待审核]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </serviceTask>
     <serviceTask id="RecoverCheckServiceTask" name="Recover Check Service Task" activiti:class="com.cloud.erp.activiti.CheckJavaDelegate">
       <extensionElements>
         <activiti:executionListener event="end" class="com.cloud.erp.activiti.MessageJavaDelegate">
@@ -70,7 +78,7 @@
       <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
         <omgdc:Bounds height="35.0" width="35.0" x="870.0" y="430.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+      <bpmndi:BPMNShape bpmnElement="ChangeCommitServiceTask" id="BPMNShape_ChangeCommitServiceTask">
         <omgdc:Bounds height="55.0" width="105.0" x="200.0" y="120.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="RecoverCheckServiceTask" id="BPMNShape_RecoverCheckServiceTask">

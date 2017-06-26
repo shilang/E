@@ -1,6 +1,7 @@
 package com.cloud.erp.activiti;
 
 import java.util.Date;
+import java.util.List;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.Expression;
@@ -28,18 +29,26 @@ public class MessageJavaDelegate extends BaseJavaDelegate {
 		
 		AuditModel auditModel = getAuditModel();
 		
-	     HistoricTaskInstance historicTaskInstance = execution.getEngineServices()
+	     List<HistoricTaskInstance> historicTaskInstances = execution.getEngineServices()
 	    .getHistoryService()
 	    .createHistoricTaskInstanceQuery()
 	    .processInstanceId(execution.getProcessInstanceId())
 	    .orderByHistoricTaskInstanceStartTime()
 	    .desc()
-	    .list().get(0);
+	    .list();
+	     
+	    String initiator = execution.getVariable("initiator").toString();
 	    
-	    String assignee = historicTaskInstance.getAssignee();
+	    String assignee;
+	    if(historicTaskInstances != null && historicTaskInstances.size() > 0){
+	    	assignee = historicTaskInstances.get(0).getAssignee();
+	    }else {
+	    	assignee = initiator;
+		}
+	    
 	    
 	    String flag = execution.getProcessDefinitionId().split(":")[0] + ":" + execution.getCurrentActivityId();
-	    String creater = auditModel.getCreater();
+	    //String creater = auditModel.getCreater();
 	    String msgstr = msg.getValue(execution).toString();
 	    String content = /*"<"+ assignee + ">" + msgstr + */"单据: " + auditModel.getNumber();
 		
@@ -50,8 +59,6 @@ public class MessageJavaDelegate extends BaseJavaDelegate {
 		message.setContent(content);
 		message.setSender(assignee);
 		message.setCreated(new Date());
-		
-		String initiator = execution.getVariable("initiator").toString();
 		
 		getMessageService().sendMessage(message,initiator);
 	}
