@@ -267,7 +267,7 @@
 	}
 	
 	function connect(){
-		var socket = new SockJS('/stomp');
+		var socket = new SockJS('/erp-web/stomp');
 		stompClient = Stomp.over(socket);
 		stompClient.connect({},function(frame){
 			stompClient.subscribe('/topic/${sessionScope.shiroUser.account}',function(message){

@@ -11,7 +11,7 @@
 		</websocket:stomp-endpoint>
 		
 		<websocket:stomp-broker-relay prefix="/topic,/queue"
-		relay-host="127.0.0.1" relay-port="61613" heartbeat-receive-interval="20000"
+		relay-host="192.168.1.10" relay-port="61613" heartbeat-receive-interval="20000"
 		heartbeat-send-interval="20000" />
 		
 	</websocket:message-broker>

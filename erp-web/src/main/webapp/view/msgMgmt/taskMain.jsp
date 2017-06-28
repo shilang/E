@@ -128,22 +128,49 @@
 				parent.$.modalDialog.handler.dialog('destroy');
 				parent.$.modalDialog.handler = undefined;
 			}
+			
+			var $reviewDg = null;
+			var mainTbHeight = 0;
+			var reviewDlgHeight = 0;
+			var dgOrgHeight = 0;
+			
 			parent.$.modalDialog({
 				title: '订单评审',
 				width: 800,
 				height: 600,
+				maximizable: true,
 				href: auditModel.path,
 				onLoad: function(){
 					var $parentWindow = parent.$.modalDialog.handler;
 					if(row){
+						
+						var $mainTb = $parentWindow.find('table.simple');
+						if($mainTb.length > 0){
+							mainTbHeight = $mainTb.height();
+						}
+						
+						var $reviewDlg = $parentWindow.find('#reviewDiv');
+						if($reviewDlg.length > 0){
+							reviewDlgHeight = $reviewDlg.height();
+						}
+						
+						$reviewDg = $parentWindow.find('#reviewdg');
+						if($reviewDg.length > 0){
+						}else{
+							$reviewDg = null;
+						}
+						
+						if($reviewDg){
+							dgOrgHeight = $reviewDg.datagrid('options').height;
+						}
+						
 						//load form data
 						var $form = $parentWindow.find('#form');
 						$form.form('load', row);
 						
 						//load entry data
 						setTimeout(function(){
-							var $entry = $parentWindow.find('#reviewdg');
-							$entry.datagrid('reload', {interId: row.interId});
+							$reviewDg.datagrid('reload', {interId: row.interId});
 						},100);
 						
 						// test getReviewNodeName ajax request.
@@ -153,6 +180,17 @@
 								reviewFun("${sessionScope.shiroUser.account}",row.procInstId);
 							}
 						}, 100);
+					}
+				},
+				onMaximize: function(){
+					if($reviewDg){
+						var newHeight = $(window.top).height() - mainTbHeight - reviewDlgHeight - 160;
+						$reviewDg.datagrid('resize',{width:'auto',height:newHeight});
+					}
+				},
+				onRestore: function(){
+					if($reviewDg){
+						$reviewDg.datagrid('resize',{width:'auto',height:dgOrgHeight});
 					}
 				},
 				buttons: [{
@@ -273,16 +311,33 @@
 			 vWidth = 400;
 			 vHeight = 200;
 		}
+		
+		var $dg = null;
+		var dgOrgHeight = 0;
+		var mainTbHeight = 0;
+		
 	    parent.$.modalDialog({
 			title: taskName,
 			width: vWidth,
 			height: vHeight,
+			maximizable: true,
 			href: 'view/msgMgmt/taskPanel.jsp',
 			//cache: false,
 			modal: true,
 			buttons: '#chkcnt',
 			onLoad: function(){
 				parent.updateAuditContent(taskId, taskForm, auditModel, $dg);
+			},
+			onMaximize: function(){
+				if($dg){
+					var newHeight = $(window.top).height() - mainTbHeight - 100;
+					$dg.datagrid('resize',{width:'auto',height:newHeight});
+				}
+			},
+			onRestore: function(){
+				if($dg){
+					$dg.datagrid('resize',{width:'auto',height:dgOrgHeight});
+				}
 			}
 		});
 	}

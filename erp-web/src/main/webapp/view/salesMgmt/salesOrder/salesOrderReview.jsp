@@ -24,7 +24,7 @@
 	}
 	
 	div #reviewDiv ul li textarea{
-		width: 700px;
+		width: 99%;
 		height: 30px;
 	}
 	
