@@ -37,19 +37,19 @@ public class LoginFilter extends FormAuthenticationFilter {
 	@Override
 	protected boolean onAccessDenied(ServletRequest request,
 			ServletResponse response) throws Exception {
-		if(isLoginRequest(request, response)){
-			if(isLoginSubmission(request, response)){
-				HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-				String captcha = (String) httpServletRequest.getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
-				String input = httpServletRequest.getParameter(Constants.CAPTCHA);
-				if(null != input && null != captcha){
-					if(!input.equalsIgnoreCase(captcha)){
-						httpServletRequest.setAttribute("shiroLoginFailure", Constants.CAPTCHA_ERR);
-						return true;
-					}
-				}
-			}
-		}
+		//if(isLoginRequest(request, response)){
+		//	if(isLoginSubmission(request, response)){
+		//		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+				//String captcha = (String) httpServletRequest.getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+				//String input = httpServletRequest.getParameter(Constants.CAPTCHA);
+				//if(null != input /*&& null != captcha*/){
+					//if(!input.equalsIgnoreCase(captcha)){
+					//	httpServletRequest.setAttribute("shiroLoginFailure", Constants.CAPTCHA_ERR);
+				//		return true;
+					//}
+				//}
+		//	}
+		//}
 		return super.onAccessDenied(request, response);
 	}
 

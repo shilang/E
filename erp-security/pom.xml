@@ -36,11 +36,13 @@
 			<artifactId>shiro-ehcache</artifactId>
 		</dependency>
 
+		<!--
 		<dependency>
 			<groupId>com.google.code.kaptcha</groupId>
 			<artifactId>kaptcha</artifactId>
 			<classifier>jdk15</classifier>
 		</dependency>
+		-->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
